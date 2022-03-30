@@ -1,125 +1,69 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EAA5614D
-	for <cryptsetup@lists.linux.dev>; Wed, 23 Mar 2022 18:10:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1648059019;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=XyjN8BpUNt3XiI129YvAEi2sn2M1CvwH3/OFcWvuVCs=;
-	b=WfX6rrwSwzSXosC8UT1oZqcHhhp52EkMnTdnjWfjy/pECpfAaDrYfufrgJvOh8rowsUBKv
-	yMEly+DhAYxIOjCXYcGi40m3em+36VDZ1vk50p8jbQT8b1MIdaalphbullkzjHFhAiKAoS
-	Acwnpad5X83GtbzIxYwd3YOXAlvhMJQ=
-Received: from mail-il1-f198.google.com (mail-il1-f198.google.com
- [209.85.166.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-108-GFR-szHVPv-YSSpXtV_Bag-1; Wed, 23 Mar 2022 14:10:17 -0400
-X-MC-Unique: GFR-szHVPv-YSSpXtV_Bag-1
-Received: by mail-il1-f198.google.com with SMTP id o17-20020a92c691000000b002c2c04aebe7so1337615ilg.8
-        for <cryptsetup@lists.linux.dev>; Wed, 23 Mar 2022 11:10:17 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776477C
+	for <cryptsetup@lists.linux.dev>; Wed, 30 Mar 2022 11:32:49 +0000 (UTC)
+Received: by mail-ed1-f43.google.com with SMTP id h4so16266731edr.3
+        for <cryptsetup@lists.linux.dev>; Wed, 30 Mar 2022 04:32:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:content-language:to:cc:from
+         :subject:content-transfer-encoding;
+        bh=sdZllzAggfFk0NcIxigOvKbuxb6rX7gN0eHKv+z7DCQ=;
+        b=MNSZM/H56NhE/OP3V5R0u7hrulDfilBwwZ4uiN6Dg1oIWpIyf5LpW8C8px5raLYe76
+         lWg4odw/Xk/6bGGbq4gEPURYmoNr/TABPwyxtofq15ZpS9lgAynUXO2ef99WD/gCEVRr
+         P/ODxwB2HsineoSaeLXS7sk9SIooQyrTDn0fd0jTsinXyz2og5siVwlB10Pa/fCF6iGE
+         A9U1YVwlHno50SXeZi5geZKZv6PtEmSgIKBq8EmFPQr3WilY7cOU7yU5Kq/JicYdUMXM
+         N8DopG3cP0BAUU22w0n0Cg/fPTy0NoqmUVUSFNL0TqQVjTv+6EjKhbu4dD9PMTIlwOjL
+         5r1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=XyjN8BpUNt3XiI129YvAEi2sn2M1CvwH3/OFcWvuVCs=;
-        b=Jh8wNbVbcd9olRa/i1PQWlINxNCFlqae58WgJx4bIYlSA9SkLYbxomPS3SVfHdTuxX
-         41XjpHdSxNxUu4FGzklL1F/0jVRb/dUDi5lr2OYXhPLvW2Wqnw1MdBWZPBzVnAGrfYPZ
-         8Ydo4FZLGArnBUUJEQ5bBzzwBB6TvuouZFWcBa75u0gqvKzdZzQ6xnhcOiXfVM/URm2h
-         Oe+uYuEZQrclxQV3D/49fLXzUpWKX4TrmyX2QRyz0gftUAXq7ZWJChnEGDtbaPTFN1mX
-         x4qOr/WNDeSDzDKmXvVxtuRRvwHEbBZHKryNeWQ5RqajNHE8Y56sOq7X2xEJ73FAKQ55
-         rO+g==
-X-Gm-Message-State: AOAM5309IjpXofueLWntQ0yysUBuUCjY/y7LMl0pwY3IEJG455noUd6s
-	VDBvt1HAPdJMQvzTI3etdYjhoK2I7lCa8nB8l3Fa1G44aISjz50UeGjHPJ2zfrpZ6ZyMq8LVKZy
-	8THWnVCm3g7UQdCQszBh4j2OmAlbZFSVZGL5+3g==
-X-Received: by 2002:a92:c691:0:b0:2be:8eab:9f7d with SMTP id o17-20020a92c691000000b002be8eab9f7dmr728970ilg.26.1648059016910;
-        Wed, 23 Mar 2022 11:10:16 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJzkYhLptVJK6MjJ2WHLXb6PnlQQA/d7Gx23CALRd2nT4yVUJgdZlI8a2Aaub9eaFnyqmgrWyB98c2XYF/6tWZQ=
-X-Received: by 2002:a92:c691:0:b0:2be:8eab:9f7d with SMTP id
- o17-20020a92c691000000b002be8eab9f7dmr728960ilg.26.1648059016724; Wed, 23 Mar
- 2022 11:10:16 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent
+         :content-language:to:cc:from:subject:content-transfer-encoding;
+        bh=sdZllzAggfFk0NcIxigOvKbuxb6rX7gN0eHKv+z7DCQ=;
+        b=PxkGZmfZmOjM66oBuiSZTqCPxAO/xjTeO5eGKdMXIgCATrmzMVWAMabu16frNdZjd7
+         Y3LlqHKRdATF4d7S6BIFmq/YSIZql1PnD1sGQkv0g3RwoBP1K6gS/+BKp3U9jV0JZs4o
+         PDWhf5elcTmjCruXKReFH3DCNJW0NwQvKhyL/VsS1YgDRpn2gBM6z471/aDl68mlhgVi
+         ddqGIbO18+5bIlJoX4NT8vF8IL5xqjznQSJux1A5T7wHk0TcpnWtZY7g89gqUjrKZia5
+         aon7xqt7tHE52ZZ15ogS2VZG4XG1oUXN7GvolA0KWiLOLXOiQ9S91ooYYGSdVOAEOYRJ
+         rrRg==
+X-Gm-Message-State: AOAM531MnJBjBNksUG+lgrrQd4oE1YpWFsdQMOJrGq6R/dEao6hHyfVf
+	IpPNSxyIJ7DMecGMQ1BmUVKndqisbZs=
+X-Google-Smtp-Source: ABdhPJxmcU1L1T3QMAGO1NSO8vz3ytPmcY9NKs/8ueLFG4Ie6fhZIFB80aRZ1LXI9/o9M244I0RqLQ==
+X-Received: by 2002:a05:6402:42c2:b0:419:1997:62b9 with SMTP id i2-20020a05640242c200b00419199762b9mr10173810edc.97.1648639967580;
+        Wed, 30 Mar 2022 04:32:47 -0700 (PDT)
+Received: from [192.168.2.27] (85-70-151-113.rcd.o2.cz. [85.70.151.113])
+        by smtp.gmail.com with ESMTPSA id qb24-20020a1709077e9800b006e029bd4c24sm8134177ejc.193.2022.03.30.04.32.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Mar 2022 04:32:47 -0700 (PDT)
+Message-ID: <70f2c6a0-b239-a3a3-bc6c-c0af224bc6ca@gmail.com>
+Date: Wed, 30 Mar 2022 13:32:45 +0200
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CAJCQCtSRe-nip3a6m+hzccXMYyKTP3AzPmAbHgnVPFJPLbdfCA@mail.gmail.com>
-In-Reply-To: <CAJCQCtSRe-nip3a6m+hzccXMYyKTP3AzPmAbHgnVPFJPLbdfCA@mail.gmail.com>
-From: Vojtech Trefny <vtrefny@redhat.com>
-Date: Wed, 23 Mar 2022 19:10:06 +0100
-Message-ID: <CAAkhNO1PUmg4JWnMocUeHMbQAZBom8RsXU_05xixbdt8wrxtBw@mail.gmail.com>
-Subject: Re: Bitlocker resize
-To: Chris Murphy <lists@colorremedies.com>
-Cc: cryptsetup@lists.linux.dev
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=vtrefny@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Content-Language: en-US
+To: cryptsetup development <cryptsetup@lists.linux.dev>
+Cc: dm-crypt <dm-crypt@saout.de>
+From: Milan Broz <gmazyland@gmail.com>
+Subject: Cryptsetup git main default branch
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Mar 15, 2022 at 5:51 PM Chris Murphy <lists@colorremedies.com> wrote:
->
-> Hi,
->
-> I'm curious how Linux distro installers should go about supporting the
-> increasingly common case of Bitlocker enabled by default.
->
-> Is the Bitlocker format similar to LUKS in that the ciphertext volume
-> size is inferred from the underlying partition size?
->
-> I see in bitlkDump results of a Bitlocker volume there's no apparent
-> reference to its size so I'm thinking it might be conceptually the
-> same as LUKS, in which case the installer workflow would be the same
-> as LUKS. I know that cryptsetup doesn't support modifying a Bitlocker
-> header, but maybe it's not necessary?
+Hi,
 
-BitLocker metadata contain volume size, we are reading it and just not
-using the value (which is probably something we should fix). As Milan
-said, cryptsetup doesn't even allow changing the BitLocker FVE
-metadata areas when the device is active and we really don't want to
-touch these in cryptsetup at all. And the fact that we know about one
-place where the volume is stored, it doesn't mean there aren't other
-entries somewhere else or at other places like the BitLocker header or
-the encrypted NTFS header.
+I changed the default branch name in cryptsetup git
+   https://github.com/mbroz/cryptsetup
+to "main" branch -  the former "master" branch will be keep in sync with it.
 
->
-> pseudocode:
-> cryptsetup open /dev/ $name
-> ntfsresize --size $size /dev/mapper/$name
+The same applies for mirror on GitHub (https://github.com/mbroz/cryptsetup).
 
-I am afraid ntfsresize doesn't seem to be ready to work with
-BitLocker. Yes, there is a "normal" NTFS inside, but because the NTFS
-filesystem is not presented as smaller than the underlying device, the
-metadata areas are part of the NTFS format and visible as
-hidden/system files in the MFT and I'm not sure ntfsresize is ready to
-deal with this. I did a quick test and `ntfsresize -m` reports the
-minimal size of the format as "Minsize (in MB): 102". Which is
-definitely wrong -- the second FVE metadata area is around 1 GiB mark
-and the third at 2 GiB so at least this information cannot be used
-when resizing a BitLocker device.
+It will stay this way at least for one year from now, so everything should work.
+But better update your git or scripts now.
 
-And don't forget that it's not guaranteed that there will be NTFS
-inside. FAT and exFAT are also supported with BitLocker and people are
-also trying things like using Btrfs with BitLocker.
-
-> cryptsetup close $name
-> libfdisk/parted (resize the partition, create a new one in free space, etc)
->
-> Thanks,
->
-> --
-> Chris Murphy
->
-
-I'm not saying it would be impossible to implement resize support for
-BitLocker devices, but it definitely wouldn't be easy. And I agree
-with Milan that it shouldn't be part of cryptsetup because it needs to
-change the metadata. That doesn't mean it couldn't be a new small tool
-that uses libcryptsetup and ntfsresize. I'll be happy to help if
-someone works on something like that.
-
---
-Vojtech Trefny
-
+Thanks,
+Milan
