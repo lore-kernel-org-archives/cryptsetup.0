@@ -1,92 +1,88 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sonic317-20.consmr.mail.gq1.yahoo.com (sonic317-20.consmr.mail.gq1.yahoo.com [98.137.66.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C767E7C
-	for <cryptsetup@lists.linux.dev>; Mon,  4 Apr 2022 09:05:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1649063128;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=YkYirQq8T38RUwR25cJG/UrUp0jOVx8jeSDEIsBRXNg=;
-	b=L0MPcne9eufg0f89pIvBoGIC/DRvn68xDFvvqbCPTBJls935zXTi47JOW8xOi+d2oHRwnG
-	QcrevsjuJCjOmHtrLMHZPALkOwYSGW2lTUvP6KshVWmsqC8mi2p7kL2JfpuE+CUTS3756p
-	O/dMIsEECiuWzUP0PYdX5tWP5MWa3VM=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-411-lNlvhkU5Mf2RrYyO77EqJg-1; Mon, 04 Apr 2022 05:05:27 -0400
-X-MC-Unique: lNlvhkU5Mf2RrYyO77EqJg-1
-Received: by mail-ej1-f70.google.com with SMTP id hq25-20020a1709073f1900b006e7f39d46c3so691637ejc.4
-        for <cryptsetup@lists.linux.dev>; Mon, 04 Apr 2022 02:05:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent
-         :content-language:to:references:from:subject:in-reply-to
-         :content-transfer-encoding;
-        bh=YkYirQq8T38RUwR25cJG/UrUp0jOVx8jeSDEIsBRXNg=;
-        b=KWz+PCh7x2FlTqkyg28BoNTR5IuzBaFmeqKWiIt7vJr3LVs4nsd4bBr5uzizsjzdep
-         +FBA4DKG9SWGeigiXTdVzQKktRgYvI9HyQvC+bEDPqxvLnH6rjh+EEjpq13P8zgcC1GH
-         +nKu2wBurW65M5qwe50Dq1d4iCH8HlWZv9HoWakcAC4mv7PjuBkTyk4bRuIS33L+3sJD
-         WTNENUHbkoXVBkwqYrMpd7fETyviP2DD/UQ1xDhs/jp/anaPfvfFI6n3xK9W0kaT5ky1
-         CKJBSSTE+M++lGpjF23RhNDo92dTcZin1m2jNJxbm2S9qZO5BVMuP1DVnjkBfI/yT+My
-         qIlQ==
-X-Gm-Message-State: AOAM531ofKpQYfxqblVwJtsYxV+EDPUiKIZthvd0EasQm58ekIOIO0QR
-	d888jSuvYiWVz3R+77fkDRyZZZSvK4J612b8VY74vo5CeF+3Eje9TR1oxTtsWqJNPkC0fOoZ2Rx
-	0D6UuHzycxyjDz7Fzz+Tg
-X-Received: by 2002:aa7:c98c:0:b0:41c:bfbd:380 with SMTP id c12-20020aa7c98c000000b0041cbfbd0380mr6237876edt.313.1649063126169;
-        Mon, 04 Apr 2022 02:05:26 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJxy6nRkD7EMRDzWcqKdZCzuk11yvwBDIsb9NbZdQraf97f1/112cmRaw3vK07BUe7i4shynAQ==
-X-Received: by 2002:aa7:c98c:0:b0:41c:bfbd:380 with SMTP id c12-20020aa7c98c000000b0041cbfbd0380mr6237865edt.313.1649063125987;
-        Mon, 04 Apr 2022 02:05:25 -0700 (PDT)
-Received: from [10.43.17.42] (nat-pool-brq-t.redhat.com. [213.175.37.10])
-        by smtp.gmail.com with ESMTPSA id gl2-20020a170906e0c200b006a767d52373sm4044756ejb.182.2022.04.04.02.05.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Apr 2022 02:05:25 -0700 (PDT)
-Message-ID: <70ae3ef5-85dd-56bb-eebb-1e6f3f502534@redhat.com>
-Date: Mon, 4 Apr 2022 11:05:25 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FFF7A
+	for <cryptsetup@lists.linux.dev>; Mon,  4 Apr 2022 16:09:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1649088545; bh=TKq65rapDBJ9VLL3/MZLucUiG9bqHFb5EojG0IrMNYQ=; h=Date:From:To:Subject:References:From:Subject:Reply-To; b=tjVcHVGab/recQzeWVSuyf6CtrRzU51t7xx8axIOr4jtUdVbxQ6DkDv02RnQXP1tHA85pJMyLaEHZ001XVs9xVT9kEnToBscI2NUmo1o/SmINchIZS4dJlpHNw3fMZJzPsczp5qr/kqxKRQ5sYi7JsyYm5wpWLhQSSZjXMtP3wLolDUa+XjkUd1vw84AEUpyh4z38hndjjh+/8dxpqpnt+hpcz3Thj+I8k2LMPjPk6Iyo28rIvYhL4A+B9S48DHc3xFZXtVHBe/VmJJYPbXjpbl0cxzTVP8uz6jGAv4XhnHqwedqh2o4VlVXIr+3+/20DVjMujrsQa/bktOwYzm2Gg==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1649088545; bh=1pCAnXFRkATWee157G6bOOyq39XQkGS9QRMchnrJyGk=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=fwQugcDJ4+zywIpzkW4E+DM137gfZG+zWOqUWovgIfR5mW27cWNgKmIe2Vg+qT19U7tOEbfpw905KeIowLPzz/+X32IFitvOPfkd0rLrsVpMZAnlh8ef012tGv0SCzoqRzTujsTyg6xsifqU2OkYjL4jR3utBuroUZTEJomG3faAcWk2Uahm6Sh45XIWcVhRWA2riT6Z9C7UD8CX0wXU4J9NKrV7bnUOZv057kxDbpQ//AuDxB36wWeB08qi0x0XMHec5ByVjTpsBWIBeX36Cq842DEtxKBIBaLAyJnJk4yR/ZEWtgX5cjQcoToWehsw2COcPWQl/iEaVM2XcAx/jg==
+X-YMail-OSG: 328GNrYVM1mBSj5TDUIAlP57or7aSaoOYBvpWQ.NpYkFPM_2j94TQ4yJlHNJric
+ bnmrxEWd0wOTzvWaasJ6byy_6YJKaGQCZSpbkQVFe0TAYseUWTgKETmoveDImq7XMeuAdw8MvqyA
+ NbU1v4vlN4MK.NQidncOWd6vvNAy887lLVAKfLDxnil2XAzGRwekDbE8Lib8sJaoqsCmcZm.QZQ2
+ Otg5R_QFDAuk38GtjH5G2O2A0c.8Hl0Ra_CgCDZA_bbZ.Nz_Hn0Bkd5yNi6N48OFADONK_MiXNsG
+ 402nohfvR24tQByRv4jXKxOEiX52VTNkXo2cR5MZOZFKiebC.QUv0ATlqqMOC0aeysNyjgUHNUiS
+ wrKEN_ry9zMtktVFiGRrS7.2q8VHaQbvC9HLz9dFSOE2mleDaRxRwTsO9WymDr1mWLty.ZLUWg7Y
+ RnPEVwChdL2V.LPY7vsghhvOBUdiVjHRT5ERRMRMfXLtIHo_TTdqxFwSSGT1r.5Q1MW4KB5lqt0U
+ iEpl33YOPbhXy221cF3lHWAWbnlYaY8Ed4SAPIP6KQ2JvJUxDWAJpj014HVfc8aMZ_TEIyo.EBKy
+ 5PH_79BlKW6_LQ9hHpA9UXbpqNf84b6xb9O4HheM06TtK_k2eSV3RsDo1qXPGqRHRj_03WGgz4gz
+ BjBGUXcMqU0VVLAP3IP5ajPeQ0pZf68cLIaAHDamJ4uoVTHDOmrzDe9XO0_jxTyBFw2CcOAlB406
+ qxIq4cN1jmVzc0PTZHobOqY.3ZNZA05W8l20Gt3mOPe5Vi95ZMMlgXQk5rWjAYcMIFdACPrZo.Dv
+ _iv367dMyejno5nN14Inf0gG1QpoiCIMak74fWxsv7xwh5dfqe.CbMAM43hro1KgsSW44k_BhA6c
+ Ky2UYGwFqFpOQErpUd5AmdrVHeIF3n4ca62z2_fJnLgqbWumVOYTgcYZSUUdJZn3fGAt1AQAsXZp
+ 7Etu1FZlxwz3rhUJXX55.SYncoHMhC6aB8rM_zKRIItHYfZgi.3RfAvVQsJCSFHN_FUv0iMOX9zE
+ 1w.S73lh8Ki2Hz0Euw_LDtrQFoGPYXsAlC9CH2nO6oc3j_ASC_BoaG3eMsrRZoRVAFW6Nb5eoeqt
+ gxXFxTryPX8ut4me3OzkKdD5y6o9QuPL70_UfmMRP9xhbA5s_28mQi33oOd.hgiiIiK5PXvrWO42
+ IymnFK.ddww3eJNaIAxUIh6dOxjGm3K4iC6Wv5e4hmmRLhCGaDBliC4PeHl.atVLvmuQH5dMnsRA
+ Z_YawbGTBElnwaLOKWY_yLJfw9BBMR5IUdEOt7C5J7nYeqoHLwidjl8BV_PlZAvmsrTNdnWhAssb
+ bymqvXaOdEB98Qm9iumsvUqLKvLmVdSMs2.qI0gmv4M4zbSGoHMSaxY2UcqKHZ.9aFOG1bKdacdo
+ d_O9cDdXe2pUbtCE_jq2qtQomqSKBMnJ_glMFGrPmoV16OevBLJQksSZ41f99LxhwM7f7TsGhZnF
+ EW7d2nBh6DCKU172LxvsUt_5j4FUBfIpDXGveQx04aAszGWKSusBz7lqgavpN4qQPNXU6NPui3Xo
+ pLAFxMx4krCq3M5EPtHRBWpSPtAN6pTPNA3qkI9CxqDrN0z0quCGC909rH1QtLk9nqiYTQaEbaWx
+ KHZj28Sez8K1wDlhKvrKtHG7pcJ9aN..lzNyKSAqO9ASXB3bjBcqtd4CXKaakg8bSgL_a1joMyEq
+ qzEriBXjKi27EmIbESfuKw.Z.34Vpgxvk.sM85InD.OlTCVQVBHYQRCIy8lAlXmPePsLBHGDSX93
+ FDsULAiV1tBzy7czWhsZuizeJ_qzH9pTgPV14NStcnZZm7lWlb.NTmpZHMRV5dqCJVH8QtNqExug
+ .8JsxkC71mTbcga6LiZb8bEWlr4sh.kLjkVvZ.hy1C53T2eizqgo8f5kCFyFvQevZwNkJMOpYNM1
+ Z_m.lvk7jS18XwEoedc0PKE_H9U1uV.lJ8wdUw.0kBvH1ZwaIJLgTTiqo.N0pebwhuiT1AxjuET2
+ uD1TDyIvX4uUFXYgMLod6QD.8Q5OHIdTuj_AE3O4WC5NjOQAkEak61PoRUR1sQSEqJ_GwMLcDRgT
+ ymOn2k8ctusMlX4OIQbDf9lkLc.rhmV6D5fjMzkS9cP_WLFwJ2d72lvTpOwKPNwy7GPV5pkpDApX
+ Zu06DwdqNdHK6L8MPMG9YPie0QLhvKP7.Lx930NT9AWv7K55HRxv1i.qdJsHqqowWr8SomTBN0dD
+ P..8jN_7uE6U4EQ95W.njY7Vi0mrV.PAoM0MRAbMycqp6Pbb0YBOhlDj6RfjzMdHhUHXpbuYmypX
+ mhiWIatJ5ZknL0uX7uEhe3yZm
+X-Sonic-MF: <gbohus@yahoo.com>
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic317.consmr.mail.gq1.yahoo.com with HTTP; Mon, 4 Apr 2022 16:09:05 +0000
+Received: by kubenode509.mail-prod1.omega.ir2.yahoo.com (VZM Hermes SMTP Server) with ESMTPA ID f14c03bc4fc5f59121e0ef1bf81e8994;
+          Mon, 04 Apr 2022 16:08:59 +0000 (UTC)
+Date: Mon, 4 Apr 2022 18:08:52 +0200
+From: Geza Bohus <gbohus@yahoo.com>
+To: cryptsetup@lists.linux.dev
+Message-ID: <etPan.624b1819.7c3954eb.74ce@yahoo.com>
+Subject: cryptsetup: /lib/arm-linux-gnueabihf/libcryptsetup.so.12:
+ version `CRYPTSETUP_2.4' not found error
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-To: Surmont Jasper <jasper.surmont@aalto.fi>,
- "cryptsetup@lists.linux.dev" <cryptsetup@lists.linux.dev>
-References: <PR3P192MB1087367FCDE3417198711049F1E59@PR3P192MB1087.EURP192.PROD.OUTLOOK.COM>
-From: Ondrej Kozina <okozina@redhat.com>
-Subject: Re: Lib and Src directory
-In-Reply-To: <PR3P192MB1087367FCDE3417198711049F1E59@PR3P192MB1087.EURP192.PROD.OUTLOOK.COM>
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=okozina@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+References: <etPan.624b1819.7c3954eb.74ce.ref@yahoo.com>
+X-Mailer: WebService/1.1.20001 mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
 
-On 04. 04. 22 10:46, Surmont Jasper wrote:
-> Hey, newbie question here:
-> 
-> What is the interpretation between the src/ and lib/ directory?
+Hi all,
 
-The /lib directory contains source code for libcryptsetup library.
+I had to reinstall the OS on an old raspberry pi. (The new OS is Raspberry PI 32 bit OS, most recent version.)
 
-The /src contains sources for all cryptsetup project maintained command 
-line utilities: cryptsetup, integritysetup and veritysetup.
+I have installed cryptsetup-2.4.3 as described here: https://www.linuxfromscratch.org/blfs/view/svn/postlfs/cryptsetup.html. (It needed a bunch of dependencies which were also installed.)
 
-> For example, I see files like integrity.c or verity.c etc. Are these files also files written for the cryptsetup project,
-> or do these contain the same code that can be found in the linux kernel /drivers/md/dm-integrity.c for example?
+Now when I try
 
-Yes. It's internal libcryptsetup code. For example the integrity.c in 
-lib/integrity directory contains code for managing dm-integrity kernel 
-driver (DM target). The low level access to DM kernel drivers is done 
-via the libdevmapper library which the libcryptsetup links with. 
-Libdevmapper is maintained by lvm2 project.
+$ sudo cryptsetup luksOpen /dev/sda1 backup
 
-Regards
-O.
+which is how it used to work, I get the error in the subject:
 
+cryptsetup: /lib/arm-linux-gnueabihf/libcryptsetup.so.12: version `CRYPTSETUP_2.4' not found (required by cryptsetup)
+
+apt claims that I have the newest version, v2.3.7:
+
+$ apt search libcryptsetup
+Sorting... Done
+Full Text Search... Done
+libcryptsetup-dev/stable,now 2:2.3.7-1+deb11u1 armhf [installed]
+disk encryption support - development files
+
+libcryptsetup12/stable,now 2:2.3.7-1+deb11u1 armhf [installed]
+disk encryption support - shared library
+
+What am I missing? Thanks for any help.
+Geza
