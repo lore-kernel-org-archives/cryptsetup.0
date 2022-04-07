@@ -1,59 +1,79 @@
-Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0159A2100
-	for <cryptsetup@lists.linux.dev>; Thu,  7 Apr 2022 09:41:03 +0000 (UTC)
-Received: by mail-vk1-f170.google.com with SMTP id g41so2416666vkd.4
-        for <cryptsetup@lists.linux.dev>; Thu, 07 Apr 2022 02:41:03 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6392100
+	for <cryptsetup@lists.linux.dev>; Thu,  7 Apr 2022 10:05:48 +0000 (UTC)
+Received: by mail-wr1-f51.google.com with SMTP id m30so7114214wrb.1
+        for <cryptsetup@lists.linux.dev>; Thu, 07 Apr 2022 03:05:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=E60JwWTDDXJ0sv7FJ6X99FTdxMHKhQRPeAgP5au3jPA=;
-        b=j4QNwLabajyyaYYYOtCRNQYwMlWiGCGi79j15q50iga37V8M8FHD84UpFTtpAgkqXI
-         UwjbBadoJzu1vwEEm/e3F7e/HSWMZlOT99d9kxgWX4Zm/z4FES7lYjlkM2mbF+m1k8zf
-         xwU4U+Cb/mRYapYlZwa1/tSk+HybStBkJQ7NpTZxL8zQ8Ynb0iRlzJijaiLyB1ERT0ap
-         seqf1Va4s9fgWQg4zNMph+5v+USHD9q0dUdfXAYWHY5+hSnYM+Mjiw/GF9lvzSQ4jcjr
-         wSOat0M0/nupWHAI2O59lO3ZD3FRfQjGto1CtgNnd/H6GhmixOxPHx9KnTxfeNW1FCu5
-         9ptQ==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=B+xvppHm79/LdGZOmLDCKMKiI13IS55cgfeUu9O55J8=;
+        b=QfqtRxq6lOySLOwE/f8pvc8m1GBZnB05N5PsBkzN47iSdYtjcET2dqVmLPXSVgjzoc
+         Wra0TUx66sZKPLc7o5NGLfy1omeOK7Y/NX2m6tKGDjRPPOSfo8q562I8t6oJXpB2Vth/
+         4UAdRycDutLWOO87rVVm8DWwRIqGRSJh0I/W5A23Ne6A5Ykzr4PtBIuIxwh+rM4zjc9U
+         K3zjtJ56/kjr+sF9gwSzQqYDXzwWAijbopR7ixRozXFA89pKogGVRh1rffrFCaTqQGC1
+         49Bl2lD13x8+LXzNhZbzHRIF8Ntg8GgY3UhYZpn3wqvyP/qZuUybG3YHmMwh9sVaOTEi
+         wSDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=E60JwWTDDXJ0sv7FJ6X99FTdxMHKhQRPeAgP5au3jPA=;
-        b=HaNHCt6wGlji1UToi5AQ64TdUYMI042I3Ju4zDidlBhVxDz9mZM31RXGW/c1rlwi6G
-         CSEG+iOWnUJpnFua+d5/UoHOFtI548bcAYZXa97brRcd7xw56p6xZcsKRo7sNCEftC/j
-         T1X7MLPBkrPhTXjw4rFQr0LZAxMAEuT9q9FZeYADLY75ksI8qCCwK+YUZYEXNtXJOmbl
-         nrtu+OHxEAuARswdEu1slyfqUuQgCwh3PqmcNr1S7bKbeePRYYrVQ0RtsIYTOOE3dv+t
-         cIfVu8wIhaeTSKXOfna8z8YiKz/WWFCCP0KyMsG4O/t1BMLQt7sBlSXXn0VFpIA2fHpu
-         49dw==
-X-Gm-Message-State: AOAM533pPhOnOV57tVZ6cLfe//QwCjC/hsT1Q1B9dxAkbnW/2f8Kr1jd
-	yeDH0nPUoUYKd32duu1khJtUTWtxT56MdpMXWhgY45+OQghw5gShU7s=
-X-Google-Smtp-Source: ABdhPJwTodCH9QL9ImVLP2cfn/mCJyR2z7wCVVEVuiK/QKd088hGaneSNNLdHwVLHzAha2nS5bHIgYDbn0HeFUCIBfw=
-X-Received: by 2002:a05:6122:8d2:b0:344:541c:c8e5 with SMTP id
- 18-20020a05612208d200b00344541cc8e5mr4404757vkg.32.1649324462614; Thu, 07 Apr
- 2022 02:41:02 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=B+xvppHm79/LdGZOmLDCKMKiI13IS55cgfeUu9O55J8=;
+        b=EWc3Ih8rjDPJQXtKlF5yyZ1b4vgpTGdHai6pFvC9MeeXNci18Nn+iKYRRgjewQoTdX
+         IOEc/LkRIED9UUzHQPv4cwSGHqdVQLSBPxUFCq8FjVZlDm9jlIgw3Zl859O1JuTZuE1X
+         UUggfIzZj2/mFVBKpx9V4GVbY7pj4MeAos25iL47y/EqONswk1DlIqlH1LMQn/4u/NvM
+         lBeW6QEfDdb2TVduIo43k/W+XdiPZ2T0M/9lqXgiOh2+r8300Uy4K2blL3f/ETyLThc1
+         5OEP7CweF6infgWgSfgdJfLvMyd3wc1lFwf6mH0GYKx5ZA63oktNCwAZIB8g0xoInIJq
+         zDFw==
+X-Gm-Message-State: AOAM532rRDnnLHztsY1D37ctIPcwmmvixlfqpVSdSPqD5QAIRz11SUF6
+	RqkooaWDFUXGrDsYjKzJEEOzyRS3cxs=
+X-Google-Smtp-Source: ABdhPJwBNRn3bq5mG3N3FF1pnbNOEL5tLM526g7zFowgob5zEXy7QMoJhNbsMHRXjSGVbBink+gjig==
+X-Received: by 2002:a05:6000:1a85:b0:205:a4f1:dba4 with SMTP id f5-20020a0560001a8500b00205a4f1dba4mr10414740wry.381.1649325946107;
+        Thu, 07 Apr 2022 03:05:46 -0700 (PDT)
+Received: from [192.168.2.27] (85-70-151-113.rcd.o2.cz. [85.70.151.113])
+        by smtp.gmail.com with ESMTPSA id 185-20020a1c19c2000000b0038a1d06e862sm7407360wmz.14.2022.04.07.03.05.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 Apr 2022 03:05:45 -0700 (PDT)
+Message-ID: <b59b57b6-1468-1041-bdbd-ec9399329dd2@gmail.com>
+Date: Thu, 7 Apr 2022 12:05:44 +0200
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: Jasper Surmont <surmontjasper@gmail.com>
-Date: Thu, 7 Apr 2022 12:40:52 +0300
-Message-ID: <CAH4tiUt1_1B64=QgU7uXmnBZZw=4FYEHtN=rZcx-zANJSbaYSQ@mail.gmail.com>
-Subject: dm-verity setup on loop device
-To: cryptsetup@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: dm-verity setup on loop device
+Content-Language: en-US
+To: Jasper Surmont <surmontjasper@gmail.com>, cryptsetup@lists.linux.dev
+References: <CAH4tiUt1_1B64=QgU7uXmnBZZw=4FYEHtN=rZcx-zANJSbaYSQ@mail.gmail.com>
+From: Milan Broz <gmazyland@gmail.com>
+In-Reply-To: <CAH4tiUt1_1B64=QgU7uXmnBZZw=4FYEHtN=rZcx-zANJSbaYSQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Dear,
+On 07/04/2022 11:40, Jasper Surmont wrote:
+> While trying to understand the dm-verity code, I tried making a small
+> verity setup. I created 1 readonly loop device and 1 non-readonly loop
+> device. When I then try to create the verity target with the readonly
+> as data device (not using veritysetup because I want to experiment on
+> a low level), dmesg still says that the device is not in readonly
+> mode.
+> 
+> Is it possible what I'm trying to achieve?
 
-While trying to understand the dm-verity code, I tried making a small
-verity setup. I created 1 readonly loop device and 1 non-readonly loop
-device. When I then try to create the verity target with the readonly
-as data device (not using veritysetup because I want to experiment on
-a low level), dmesg still says that the device is not in readonly
-mode.
+Yes, it should be possible.
+(If you have device with Merkle-tree already prepared, if not, it will only
+activate in failed state - but it will allow creation of the DM device.)
 
-Is it possible what I'm trying to achieve?
-If so, what am I doing wrong?
+And if you post the exact command you are trying,
+maybe we can show you where is the problem :-)
 
-Thanks! Regards Jasper
+Both devices should be read only (dm-verity cannot be mapped for writes)
+and I guess you need to call dmsetup with -r (--readonly) option.
+
+Milan
