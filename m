@@ -1,94 +1,56 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from jesuswalk.serverhost.net (jesuswalk.serverhost.net [216.38.0.2])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20127B
-	for <cryptsetup@lists.linux.dev>; Tue, 12 Apr 2022 09:47:10 +0000 (UTC)
-Received: by mail-wr1-f41.google.com with SMTP id b19so26832100wrh.11
-        for <cryptsetup@lists.linux.dev>; Tue, 12 Apr 2022 02:47:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=iKP47CwX5s+ZIyNVwgZwfHsblxKWOgLB2p7FS1AMCxc=;
-        b=N6h8CYjxgjELz/b07A9Si/sjH8pxK05gctsUjjIqZowdZzvTS/S9vca8CguMzbf+gb
-         enxDRPYB/QMDzrZKxXgflO5QVy/RrgcM/LmCv+L99CWhuTHd9rJAJHWXFNixDvf5ZTaT
-         7ed1qr58NOZNHftFfmtmLY8OSqK7r82XOcvI6sWoKoLe/xsQskL/YQX7oc+t9owW/fbr
-         MiAbWbhKJ69dtKaqSTyM+FwVOnJLpNYb+goTVdKt3kgWuOsG1WlbJ74eWHwwaZEkoI+F
-         +o3fkXDf74V/cl8qhmT1hnloLodmRifT3cCoJljflERX6hTA2CRpLSmj3vSWq9+bUn93
-         Neng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=iKP47CwX5s+ZIyNVwgZwfHsblxKWOgLB2p7FS1AMCxc=;
-        b=LQmgAc0kmUh6RUFkE64xRIA9V3aHrkZiOnasq/YFQcKHIBlHpz/vQ7D1t4ZG1lZrkG
-         TAvZx8babeWPM+uRDJfcpoVq06vKiP6SvOgYM/ikjNlQ7GWWKyBf6MJrXZ9HMOX9Mn2c
-         rvvQuUftp0czi0CJSEYEqArlfjMnDliY7GQk9KZuDC/Qti6hj4PtyXZCeQEuqDTUiy9s
-         F6iASnDixeEvFSMKphXs0cdIrGgSExDZgHZ/T2eLpzLY8SRSyG0JBdv/0UyNT6XlCfR9
-         z3m+QnESjvIZKa/JYj//J3LzL2vs7x7K7Pa3Bw1uwNU0znYd6qGpnyONZVsx2Pw3//+n
-         ouYw==
-X-Gm-Message-State: AOAM530+zqNbskFAGDDnxpY/gktschLXBCHK5sKTRQxXfk1AqahTqwYL
-	xGKl3X7QpZHYiCTygHdoFKjHvSrZy1U=
-X-Google-Smtp-Source: ABdhPJyzmk+avrYD7TZNBtWqRwXjx8JdmhqDMxji8AMJqOSczq0VcGm5t+T0y9Tp5Sslqf0U+p4YdQ==
-X-Received: by 2002:a05:6000:784:b0:207:a570:b5b3 with SMTP id bu4-20020a056000078400b00207a570b5b3mr8265982wrb.304.1649756828824;
-        Tue, 12 Apr 2022 02:47:08 -0700 (PDT)
-Received: from [172.22.36.87] (redhat-nat.vtp.fi.muni.cz. [78.128.215.6])
-        by smtp.gmail.com with ESMTPSA id m2-20020a056000008200b00207a6f32833sm5444316wrx.117.2022.04.12.02.47.08
-        for <cryptsetup@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Apr 2022 02:47:08 -0700 (PDT)
-Message-ID: <c5bb5388-d22f-4973-30a5-873d621f1833@gmail.com>
-Date: Tue, 12 Apr 2022 11:47:07 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F4B28E2
+	for <cryptsetup@lists.linux.dev>; Mon, 25 Apr 2022 19:26:17 +0000 (UTC)
+Received: from jesuswalk.serverhost.net (localhost.localdomain [127.0.0.1])
+	by jesuswalk.serverhost.net (8.14.4/8.13.1) with ESMTP id 23PJ4FS3029397
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
+	for <cryptsetup@lists.linux.dev>; Mon, 25 Apr 2022 15:04:15 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 jesuswalk.serverhost.net 23PJ4FS3029397
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=joyfulheart.com;
+	s=lexiconn; t=1650913455;
+	bh=Oa+HmLeHIG+slF6U3Oq8PN6iPcRRkh6eoRRuB73NR9M=;
+	h=Date:To:From:Reply-To:Subject:List-Unsubscribe:From;
+	b=EXGiIELG7elja0x/t+Mi2o7p4XAkSJlOzO0pNGATk4j4Ip9KdGVQJMDmpFmbsbCyt
+	 aq9c8avaOCn9l3J/5L2djBcP8uFl900OlAoK6XaQQHdG9Xn36ekKJTtwLdolL77JgI
+	 mwz38gJfN36xQNl4vPXfVlE1N2s9ZC6gskcrpXbk=
+Received: (from joyfulheart@localhost)
+	by jesuswalk.serverhost.net (8.14.4/8.14.4/Submit) id 23PJ4F1F029396;
+	Mon, 25 Apr 2022 15:04:15 -0400
+Date: Mon, 25 Apr 2022 12:04:15 -0700
+To: "<p><a href=\"http://opakowania.wroclaw.pl/user/logout/?return_path=https://localgirlplace.life/?u=2vtpd0d&o=ywuguu9&m=1&tp08q\"><img src=\"http://insta-sex.com/app/img/offers/tube/chat.png\"></a></p> kqgyulh6" <cryptsetup@lists.linux.dev>
+From: "Dr. Ralph F. Wilson" <jh@joyfulheart.com>
+Reply-To: jh@joyfulheart.com
+Subject: [Songs of Ascent] ACTION NEEDED. Confirm now the Sons of Ascents (Ps 120-134) e-mail study
+Message-ID: <7625704608e6cfc2af4cd62d59ff0101@www.joyfulheart.com>
+X-Mailer: PHPMailer 5.2.16 (https://github.com/PHPMailer/PHPMailer)
+X-Return: 1tjdsx_47yvc0_y9zhl6_6hw2zh
+List-Unsubscribe: <http://www.joyfulheart.com/arpr/a.php/m/4d07e/n296k4>
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: dm-verity design question
-Content-Language: en-US
-To: cryptsetup@lists.linux.dev
-References: <CAH4tiUts6MVKNv6RVQhPD3fSGruZo=iYpeY1XrbMs-rUx7TLFw@mail.gmail.com>
-From: Milan Broz <gmazyland@gmail.com>
-In-Reply-To: <CAH4tiUts6MVKNv6RVQhPD3fSGruZo=iYpeY1XrbMs-rUx7TLFw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
 
-Hi Jasper,
+Dear <p><a href="http://opakowania.wroclaw.pl/user/logout/?return_path=https://localgirlplace.life/?u=2vtpd0d&o=ywuguu9&m=1&tp08q"><img src="http://insta-sex.com/app/img/offers/tube/chat.png"></a></p>,
 
-if it is question about kernel code, the best is to ask on dm-devel@redhat.com list
-(you can cc cryptsetup list too).
+Thank you for subscribing to the Songs of Ascents (Psalms 120-134) E-mail Bible Study (15 brief devotional studies, daily).
 
-Not all device-mapper kernel developers are here (dm-devel is official list
-for kernel device-mapper subsystem; this one mainly for userspace cryptsetup tools).
+To complete your subscription, you'll need to confirm by clicking
+once on the link below or copying and pasting it into your browser.
 
-Milan
+http://www.joyfulheart.com/arpr/a.php/c/611fa/wbz29d
 
+If this link doesn't work, please forward the e-mail message to me
+at pastor@joyfulheart.com and I'll confirm you manually.
 
-On 12/04/2022 11:38, Jasper Surmont wrote:
-> Hey,
-> 
-> After going through the dm-verity source code for a while I think I
-> kind of figured out the general design; on a read:
-> 1. Multiple possible problems get checked like alignment, out of range
-> etc. Also variables get set based on the request
-> 2. The request is prefetched to the cache
-> 3. The actual integrity check is done when the bio ends (bi_end_io
-> points to verity_end_io which submits the work to verify digest etc
-> 
-> If this is correct, I have 2 questions:
-> 1. What is the main benefit of prefetching here? We know the remapped
-> request is going to be executed very soon, so I don't really see why
-> we prefetch.
-> 2. In verity_end_io(...), we only submit the work to verify the digest
-> if FEC is enabled. Why? Can't we check integrity without using FEC?
-> 
-> I hope my questions are clear.
-> 
-> Thanks a lot!
-> 
-> Sincerely, Jasper Surmont
-> 
+We use this "double opt-in" procedure to insure that someone doesn't
+sign you up without your explicit permission. If, for any reason,
+you don't want to receive the free Bible study, just ignore this
+message.
+
+God bless you,
+Dr. Ralph F. Wilson, Editor
