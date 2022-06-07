@@ -1,56 +1,129 @@
-Received: from jesuswalk.serverhost.net (jesuswalk.serverhost.net [216.38.0.2])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F4B28E2
-	for <cryptsetup@lists.linux.dev>; Mon, 25 Apr 2022 19:26:17 +0000 (UTC)
-Received: from jesuswalk.serverhost.net (localhost.localdomain [127.0.0.1])
-	by jesuswalk.serverhost.net (8.14.4/8.13.1) with ESMTP id 23PJ4FS3029397
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
-	for <cryptsetup@lists.linux.dev>; Mon, 25 Apr 2022 15:04:15 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 jesuswalk.serverhost.net 23PJ4FS3029397
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=joyfulheart.com;
-	s=lexiconn; t=1650913455;
-	bh=Oa+HmLeHIG+slF6U3Oq8PN6iPcRRkh6eoRRuB73NR9M=;
-	h=Date:To:From:Reply-To:Subject:List-Unsubscribe:From;
-	b=EXGiIELG7elja0x/t+Mi2o7p4XAkSJlOzO0pNGATk4j4Ip9KdGVQJMDmpFmbsbCyt
-	 aq9c8avaOCn9l3J/5L2djBcP8uFl900OlAoK6XaQQHdG9Xn36ekKJTtwLdolL77JgI
-	 mwz38gJfN36xQNl4vPXfVlE1N2s9ZC6gskcrpXbk=
-Received: (from joyfulheart@localhost)
-	by jesuswalk.serverhost.net (8.14.4/8.14.4/Submit) id 23PJ4F1F029396;
-	Mon, 25 Apr 2022 15:04:15 -0400
-Date: Mon, 25 Apr 2022 12:04:15 -0700
-To: "<p><a href=\"http://opakowania.wroclaw.pl/user/logout/?return_path=https://localgirlplace.life/?u=2vtpd0d&o=ywuguu9&m=1&tp08q\"><img src=\"http://insta-sex.com/app/img/offers/tube/chat.png\"></a></p> kqgyulh6" <cryptsetup@lists.linux.dev>
-From: "Dr. Ralph F. Wilson" <jh@joyfulheart.com>
-Reply-To: jh@joyfulheart.com
-Subject: [Songs of Ascent] ACTION NEEDED. Confirm now the Sons of Ascents (Ps 120-134) e-mail study
-Message-ID: <7625704608e6cfc2af4cd62d59ff0101@www.joyfulheart.com>
-X-Mailer: PHPMailer 5.2.16 (https://github.com/PHPMailer/PHPMailer)
-X-Return: 1tjdsx_47yvc0_y9zhl6_6hw2zh
-List-Unsubscribe: <http://www.joyfulheart.com/arpr/a.php/m/4d07e/n296k4>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5A415A2
+	for <cryptsetup@lists.linux.dev>; Tue,  7 Jun 2022 02:41:36 +0000 (UTC)
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-e5e433d66dso21443444fac.5
+        for <cryptsetup@lists.linux.dev>; Mon, 06 Jun 2022 19:41:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=zmp87gjpTaUVzkpuumY6PhtqS809hIML3UvcL+Js6iY=;
+        b=TipgSTNuk+A+K6FuI1Nb/ihYEKkXDkMw9RmdiUJ5lzKQTFKLzbeKCVuYRavKVEV+Un
+         er5blBf2Pfth+HKMNpRnW5l1QVsIniS4T8ZMzJIEMWI4+zzUAEP0x3XsUn3TSJFAXmXU
+         nQNkXsgsMUR+MhGgpOHGE9gaFJ0XBvVJJYm1clAzggabS9+cKeN+67A6F4WLTV1VY4Jh
+         q1dwPR68e5BJnYDUwU1g7WlcmeUMtYfI6rRZzqevtbuBE15NDvFedVvhDZqaqfSTPDA9
+         OAuReVWA9bk/aj7D3a/AVaxdIYNoZclfBzlsLGFga0Mcpi3vZaNYMoIMlfS9A6viAiaL
+         kxLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=zmp87gjpTaUVzkpuumY6PhtqS809hIML3UvcL+Js6iY=;
+        b=PYl49BoR3XJqwC6KmIP59jRGEeOFiJHQ7CAhwXMwK7NOz00jCA4Gt6TDiQnGWS1zZW
+         3kUkLv5Y3t2UfW0dppYtQWpzeg2vbw8mF+Zhp6ydp6J77IcWgQDpR2ieEAqn3VK1CkWG
+         P/q/GFlE14JPG/tYXLz/pbQNeTzFojLbKRnwv8ZXtBtZpLrGIZr35pigIcKT0DDM+ucd
+         2lfZLKg/gOQ64UcMliXUT1avTjPA7PFuMG+gBM7FwMhSEIqVRrcGjhvcTohG4pRmbq16
+         4s7aSHcdrlEJeLSU5pS6coM08NaBC4DEsOfAy9ZshU7Ti3tjQfRP/yERNub1sEMRP/Kj
+         EdLg==
+X-Gm-Message-State: AOAM533oWaNuf/fJ8tkUepFBlASh0rfnytBAZgMb3O28T5OhpelFToiM
+	zsj9EEahpfxRK7cLITkeY13LpUv2IDaHzu5S2tu63AxwaE0=
+X-Google-Smtp-Source: ABdhPJz9c/bz85FXlBtOvD6QLkD8PBjj0WKnFRyZx/fJcn7Xxp9hdbMsl2lRdm6VOp7HH+1G0brF9uSdJxW6cPk7JXw=
+X-Received: by 2002:a05:6870:42c7:b0:f3:1803:6306 with SMTP id
+ z7-20020a05687042c700b000f318036306mr26385478oah.233.1654569695884; Mon, 06
+ Jun 2022 19:41:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: midnite zandiro <midnite.hk@gmail.com>
+Date: Tue, 7 Jun 2022 10:41:15 +0800
+Message-ID: <CAF_ETu7+LtGw-i9=tCPJTixRM3Jz+-49cWdfsLOVJBJ7kzRAwQ@mail.gmail.com>
+Subject: To make LUKS detached header even more secure?
+To: cryptsetup@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-Dear <p><a href="http://opakowania.wroclaw.pl/user/logout/?return_path=https://localgirlplace.life/?u=2vtpd0d&o=ywuguu9&m=1&tp08q"><img src="http://insta-sex.com/app/img/offers/tube/chat.png"></a></p>,
+Dear LUKS Creators,
 
-Thank you for subscribing to the Songs of Ascents (Psalms 120-134) E-mail Bible Study (15 brief devotional studies, daily).
+First of all, thank you very much for creating the powerful LUKS
+program. Please accept  my deepest gratitude for your great works.
 
-To complete your subscription, you'll need to confirm by clicking
-once on the link below or copying and pasting it into your browser.
+I have an enquiry about the volume master key and the keyslot digest.
+And also a security aspect discussion on a detached header setup.
 
-http://www.joyfulheart.com/arpr/a.php/c/611fa/wbz29d
+1. How are the volume master key and the keyslot digest generated?
 
-If this link doesn't work, please forward the e-mail message to me
-at pastor@joyfulheart.com and I'll confirm you manually.
+I have skimmed through the source code. Please correct me if I am
+wrong. I thought the volume masker key was generated from the
+passphrase/the keyfile. But I found out that the volume master key is
+actually generated by random, at /lib/volumekey.c line 141 in
+crypt_generate_volume_key() -
+https://gitlab.com/cryptsetup/cryptsetup/-/blob/main/lib/volumekey.c#L141
+. This makes sense because LUKS enables us to specify the
+--master-key-file directly. If MK is not generated independent to the
+passphrase, we have to work reversely from MK and passphrase to obtain
+the keyslot digest.
 
-We use this "double opt-in" procedure to insure that someone doesn't
-sign you up without your explicit permission. If, for any reason,
-you don't want to receive the free Bible study, just ignore this
-message.
+For the keyslot digest, I guess it is generated at
+/lib/luks2/luks2_digest.c line 85 from LUKS2_digest_find_free() -
+https://gitlab.com/cryptsetup/cryptsetup/-/blob/main/lib/luks2/luks2_digest.c#L85
+. But I cannot trace any further as I cannot find the function body of
+json_object_object_get_ex().
 
-God bless you,
-Dr. Ralph F. Wilson, Editor
+2. To achieve an even more secure design than the LUKS2 detached header?
+
+With the header detached onto the USB Key, and volume locked with an
+user passphrase, it is so-called a two-factor authentication setup.
+However I find a weakness scenario in this setup. An attacker who
+gains a clone of the USB Key can start his attack, without the need to
+wait for an acquisition of encrypted disk. This weakness is mainly
+because, with solely the header, we can verify if our passphrase is
+correct.
+
+IF the volume master key is generated from the user passphrase, please
+consider another setup. Stored in the USB Key are the hashing options
+(like PBKDF=argon2id, iteration cost=19, memory cost=4G, thread
+cost=4) and also the salt. This is basically the LUKS2 header without
+the digest. Using the passphrase, the salt, and the PBKDF options, we
+can generate the volume master key as usual. However, there is no way
+for the attacker to verify if the passphrase is correct. Until the
+attacker obtains both the USB Key and the encrypted disk, he can
+verify if the guessed volume master key reveals meaningful bytes (e.g.
+by file system signatures) from the disk.
+
+My suggested setup has its drawbacks. It cannot support multiple keys
+obviously. If we store two sets of hashing options and salts in the
+USB Key, the attacker will be able to verify if his guesses of the
+volume master keys match.
+
+However it is possible to change the user passphrase without
+re-encryption. The setup needs to be tweaked a bit. Similarly we use
+the user passphrase, hashing options, and the salt to generate a MK1.
+With this MK1, we generate a series of random bits (MK). This series
+of random bits is actually the volume master key (MK). MK will never
+be stored plainly on the USB Key. Instead, the encrypted version,
+encrypt(MK1, MK), is stored on the USB Key. Upon passphrase change, we
+generate MK2 with the new passphrase, new hashing options, and new
+salt. With MK1 also unlocked, we simply copy the MK to the new MK2's
+container. Then another encrypted version, encrypt(MK2, MK), is stored
+on the USB Key. This is very similar to the LUKS keyslot digests.
+However, with only one set of hashing options and salt present in the
+USB Key, the attacker is still impossible to verify his guesses of the
+MK.
+
+I would like to point out that this suggested setup is stronger than
+using LUKS plain mode. It is because it inherits the same passphrase
+hashing, with salting, and also AF diffusion. It performs everything
+as what LUKS2 does. It intentionally drops the ability to store
+multiple keys. In return, an attacker who gets only the USB Key (i.e.
+the header) will not be able to start passphrase hacking.
+
+In fact LUKS is already very secure, in addition to very convenient.
+IF we can disable passphrase checking in the LUKS header, we can
+tighten the security of a detached header setup even further.
+
+Thank you very much for your time. Hope you are doing well everyday.
+
+Best wishes,
+midnite
