@@ -1,163 +1,175 @@
-Received: from pio-pvt-msa3.bahnhof.se (pio-pvt-msa3.bahnhof.se [79.136.2.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF7F7C
-	for <cryptsetup@lists.linux.dev>; Tue,  7 Jun 2022 06:42:42 +0000 (UTC)
-Received: from localhost (localhost [127.0.0.1])
-	by pio-pvt-msa3.bahnhof.se (Postfix) with ESMTP id 9568D3F4DA
-	for <cryptsetup@lists.linux.dev>; Tue,  7 Jun 2022 08:36:26 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at bahnhof.se
-X-Spam-Flag: NO
-X-Spam-Score: -1.91
-X-Spam-Level:
-X-Spam-Status: No, score=-1.91 tagged_above=-999 required=6.31
-	tests=[BAYES_00=-1.9, T_SCC_BODY_TEXT_LINE=-0.01]
-	autolearn=ham autolearn_force=no
-Received: from pio-pvt-msa3.bahnhof.se ([127.0.0.1])
-	by localhost (pio-pvt-msa3.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 26IUTezey977 for <cryptsetup@lists.linux.dev>;
-	Tue,  7 Jun 2022 08:36:25 +0200 (CEST)
-Received: 
-	by pio-pvt-msa3.bahnhof.se (Postfix) with ESMTPA id 70F123F38E
-	for <cryptsetup@lists.linux.dev>; Tue,  7 Jun 2022 08:36:25 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by localhost (Postfix) with ESMTPS id D10312E0077
-	for <cryptsetup@lists.linux.dev>; Tue,  7 Jun 2022 08:36:24 +0200 (CEST)
-Date: Tue, 7 Jun 2022 06:36:23 +0000
-From: Michael =?utf-8?B?S2rDtnJsaW5n?= <michael@kjorling.se>
-To: cryptsetup@lists.linux.dev
-Subject: Re: To make LUKS detached header even more secure?
-Message-ID: <54cc6381-7c40-471e-a902-1dadfb95c5d0@home.arpa>
-References: <CAF_ETu7+LtGw-i9=tCPJTixRM3Jz+-49cWdfsLOVJBJ7kzRAwQ@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069087B
+	for <cryptsetup@lists.linux.dev>; Wed,  8 Jun 2022 00:05:48 +0000 (UTC)
+Received: by mail-ot1-f50.google.com with SMTP id a21-20020a9d4715000000b0060bfaac6899so5243166otf.12
+        for <cryptsetup@lists.linux.dev>; Tue, 07 Jun 2022 17:05:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=mNKgKDURaQuNrF32Ybm12hR9WVoTnrLzl5jtL69MJKU=;
+        b=D6OiklN7NIqMAyYv7/DPlv8z37Yh5bvwt70L2drhHw0raO/4k69YIQRe48wTBxIbBG
+         lQGf5sZcXe75d9d/MBf+7vnXaNyG6WgPUIR21SAuNcwB09AI6LIOcXv2UBPeSi6dOOxo
+         OxFaOzbjBqDf4d+uD7OahMmJVdDJhJUNjIb6PzGQifEUngGoc/noE0pnD9bYkMLOFD6Y
+         E9EXJ+20HNF4FOaOryNPAdDT7ZAXv/sExMCbJ5weczrjyJDDDRU8fDWe97P1gtbjuIvR
+         UixMJxj4tF/vwteScfxj0CAouFKkYjVXJBeyyHtSI/RoyOqjJ3ewvMKUqXikl0ycucFG
+         vHBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=mNKgKDURaQuNrF32Ybm12hR9WVoTnrLzl5jtL69MJKU=;
+        b=Qt/ODO/dcolUQG2Nsz4Qt69/RyYw6AC7gO1t0DvNVsc89fdd62UXfPRCeDogSGjpA0
+         RRQBNSbcsp3z/dK91i4Uz9i0RVKTpiDmDVx4LtNPxM00QP1ZFfqsh2mJoycadY96VBLV
+         0PbBno+mRPMDwQpoFyUCPb0GmgC+TpArCqL2keGGbI5NOutxlAwlG9piEKyA724ZMb46
+         piyxxepdLUfbvqpWUA/NA1GiY8GHGAaQSQMUyAiA/tPbp9K7Jig+rkljq+mVfQhvJW6I
+         x2koUfvLGNm721ywEej07nrg4Okevq0QnEflk9aYXCTyvZo9FVXXRfPurWcLV7WaD57Q
+         OLUA==
+X-Gm-Message-State: AOAM531wWBgoQqFePxKAGj6nik5J41zDrC2qDRw9UBeWVeYuyPzb9dvz
+	728El0bWxuuvPzknLW3dvmgiUjEeN0PQHkhzAKAD53eSlGY=
+X-Google-Smtp-Source: ABdhPJwixbYNLNQvoBqY4YCVrHiqCkhoYzxxIlwHX2GDtyWSoWIjh/ko5UfZl8fAvsMGbajaojOn1Hmzshl7OLxVjwA=
+X-Received: by 2002:a9d:7d95:0:b0:60b:c0d:4fac with SMTP id
+ j21-20020a9d7d95000000b0060b0c0d4facmr13646668otn.188.1654646747747; Tue, 07
+ Jun 2022 17:05:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAF_ETu7+LtGw-i9=tCPJTixRM3Jz+-49cWdfsLOVJBJ7kzRAwQ@mail.gmail.com>
+From: midnite zandiro <midnite.hk@gmail.com>
+Date: Wed, 8 Jun 2022 08:05:26 +0800
+Message-ID: <CAF_ETu5COFQ8D09K3YrqOD4XnFb7MzLrJXvSqMGenw_DFcaJiw@mail.gmail.com>
+Subject: Re: To make LUKS detached header even more secure?
+To: michael@kjorling.se
+Cc: cryptsetup@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 7 Jun 2022 10:41 +0800, from midnite.hk@gmail.com (midnite zandiro):
-> 1. How are the volume master key and the keyslot digest generated?
-> 
-> I have skimmed through the source code. Please correct me if I am
-> wrong. I thought the volume masker key was generated from the
-> passphrase/the keyfile. But I found out that the volume master key is
-> actually generated by random, at /lib/volumekey.c line 141 in
-> crypt_generate_volume_key() -
-> https://gitlab.com/cryptsetup/cryptsetup/-/blob/main/lib/volumekey.c#L141
-> . This makes sense because LUKS enables us to specify the
-> --master-key-file directly. If MK is not generated independent to the
-> passphrase, we have to work reversely from MK and passphrase to obtain
-> the keyslot digest.
+Dear Michael Kj=C3=B6rling,
 
-There is an even bigger reason for generating the master key
-independently of the passphrase: it preserves security when changing
-the passphrase without requiring a full reencryption, which on large
-media can take _days_. (A read/write pass over 8 TB at an average of
-100 MB/s works out to about 1.8 days.) There's also the fact that LUKS
-supports more than one passphrase, any one of which can be used to
-unlock a container.
+Thank you very much for your prompt reply. You have given me a better
+insight of LUKS.
 
+> So, if I understand correctly, what you are proposing is basically a
+> _split_ header, with part of the data stored in one location and part
+> of the data stored in another location, and one (but not both) of
+> those partial headers possibly detached from the container?
 
-> 2. To achieve an even more secure design than the LUKS2 detached header?
-> 
-> With the header detached onto the USB Key, and volume locked with an
-> user passphrase, it is so-called a two-factor authentication setup.
+My apologies that I did not present my suggested setups clearly. Let
+me explain by the pseudo code which I copied from the LUKS1
+specification.
+https://mirrors.edge.kernel.org/pub/linux/utils/cryptsetup/LUKS_docs/on-dis=
+k-format.pdf
 
-No, that is not proper 2FA. As is clearly demonstrated by your
-argument about how the second storage device can be copied (and
-relatively easily, at that), both are "something you know".
+In the partition header, during creation:
 
-> However I find a weakness scenario in this setup. An attacker who
-> gains a clone of the USB Key
+(C1) phdr.mk=E2=88=92digest =3D
+PBKDF2( masterKey , phdr.mk=E2=88=92digest=E2=88=92salt , phdr.mk=E2=88=92d=
+igest=E2=88=92iter ,
+LUKS_DIGESTSIZE )
 
-There you have it.
+In each keyslot, during creation:
 
-> can start his attack, without the need to
-> wait for an acquisition of encrypted disk. This weakness is mainly
-> because, with solely the header, we can verify if our passphrase is
-> correct.
-> 
-> IF the volume master key is generated from the user passphrase,
+(C2) pwd=E2=88=92PBKDF2ed =3D
+PBKDF2( password , ks.salt , ks.iteration=E2=88=92count , masterKeyLength )
 
-Well, since it isn't, the remainder of that paragraph becomes moot.
+(C3) splitKey =3D
+AFsplit( masterKey , masterKeyLength , ks.stripes )
 
+(C4) encryptedKey =3D
+encrypt( phdr.cipherSpec , pwd=E2=88=92PBKDF2ed , splitKey , splitKeyLength=
+ )
 
-> However it is possible to change the user passphrase without
-> re-encryption. The setup needs to be tweaked a bit. Similarly we use
-> the user passphrase, hashing options, and the salt to generate a MK1.
-> With this MK1, we generate a series of random bits (MK). This series
-> of random bits is actually the volume master key (MK). MK will never
-> be stored plainly on the USB Key. Instead, the encrypted version,
-> encrypt(MK1, MK), is stored on the USB Key. Upon passphrase change, we
-> generate MK2 with the new passphrase, new hashing options, and new
-> salt. With MK1 also unlocked, we simply copy the MK to the new MK2's
-> container. Then another encrypted version, encrypt(MK2, MK), is stored
-> on the USB Key. This is very similar to the LUKS keyslot digests.
-> However, with only one set of hashing options and salt present in the
-> USB Key, the attacker is still impossible to verify his guesses of the
-> MK.
+In each keyslot, during decryption:
 
-So, if I understand correctly, what you are proposing is basically a
-_split_ header, with part of the data stored in one location and part
-of the data stored in another location, and one (but not both) of
-those partial headers possibly detached from the container?
+(D2) pwd=E2=88=92PBKDF2ed =3D
+PBKDF2( password , ks.salt , ks.iteration=E2=88=92count , masterKeyLength )
 
-This requires storing some header data separate from the detached
-header, which either requires some kind of "two detached headers"
-setup (at which point we're back to your original threat model about
-being able to copy both, since we're already assuming an attacker who
-has access to the detached header) or causes a detached-header LUKS
-container to no longer be length-preserving.
+(D4) splitKey =3D
+decrypt( phdr.cipherSpec , pwd=E2=88=92PBKDF2ed , encryptedKey , encryptedK=
+eyLength )
 
-I'm struggling to see what the benefit of this would be in practice.
-You claim increased resistance to passphrase guessing by an attacker
-who has access to the detached header but not the encrypted (locked)
-container itself, but there's already a simple way to do that:
-increase iteration count, passphrase length, or both. Take as an
-example a seven-word standard Diceware passphrase, which is hardly
-onerous; that already gives you about 90 bits' worth of security,
-which on its own is _almost_ sufficient. Throw in a few extra seconds'
-worth of key derivation iteration, and that's likely very much
-sufficient against a _cryptographic_ attack even by a highly
-determined, powerful adversary. (The master key can be assumed to be
-sufficiently secure against a cryptographic attack, because if it
-wasn't, then the attacker would just go for that and not bother with
-the passphrase at all.) Since this would be aimed only or primarily at
-users who use a detached header stored on a separate device, who seem
-likely to already care more about security than the average user, I
-don't think either is an unreasonable assumption. At that point
-something simple like a key logger or rubber hose cryptanalysis
-appears a more likely threat.
+(D3) masterKeyCandidate =3D
+AFmerge( splitKey , masterkeyLength , ks.stripes )
 
-https://xkcd.com/538/ applies.
+During decryption, check against the MK digest:
 
-None of this is to say that the security of LUKS couldn't _possibly_
-be improved upon somehow (such a claim would be naiive), but there's
-ample reason already to not add complexity based on what appears at
-least to me to be a rather contrived threat model.
+(D1) MKCandidate=E2=88=92PBKDF2ed =3D
+PBKDF2( masterKeyCandidate , phdr.mk=E2=88=92digest=E2=88=92salt , phdr.mk=
+=E2=88=92digest=E2=88=92iter
+, LUKS_DIGESTSIZE )
 
-Some form of TPM integration, possibly coupled with secure
-attestation, seems a more reasonable approach to guard against the
-kind of attack against a detached header that you postulate.
+As I am far from a professional in cryptography, I aim to replicate
+the algorithms of LUKS, hoping to achieve the same level of
+cryptographic strength. From the above, the phdr.mk=E2=88=92digest (C1), he=
+nce
+the first (C1) and the last operations (D1), are unnecessary for the
+MK encryption and the MK decryption. My proposed design is just DO NOT
+STORE phdr.mk=E2=88=92digest in the header. This leads to a problem that we
+cannot verify the masterKeyCandidate (D3). But it can avoid hacking
+solely on the header.
 
+> (Detached header) No, that is not proper 2FA. As is clearly demonstrated =
+by your
+> argument about how the second storage device can be copied (and
+> relatively easily, at that), both are "something you know".
 
-> I would like to point out that this suggested setup is stronger than
-> using LUKS plain mode.
+I would like to point out that, even if the detached header is in the
+hand of another person who does not know the passphrase, an attacker
+who acquired the detached header is sufficient to start the cracking.
+It is identical to the non-detached header scenario. The attacker is
+just yet to obtain the actual data. Given that (as far as I can find)
+no security advice on the Internet which encourages re-encryption of
+the entire volume on a regular basis, the data is at plain risk until
+the hard disk dies. In which, a patient attacker can have 3 to 5 more
+years to work on cracking.
 
-There is no "LUKS plain mode". Sticking to what's reasonably available
-in present-day-supported implementations, there's plain dm-crypt
-(which is a straight one-to-one mapping between blocks; encryption
-metadata is retained elsewhere, such as in /etc/crypttab or on a piece
-of paper kept in the user's wallet), there's LUKS 1, and there's LUKS
-2; the latter two with integrated or detached headers, for a total of
-five combinations.
+P.S. I do re-encryption regularly.
 
--- 
-Michael Kjörling • https://michael.kjorling.se • michael@kjorling.se
- “Remember when, on the Internet, nobody cared that you were a dog?”
+> You claim increased resistance to passphrase guessing by an attacker
+> who has access to the detached header but not the encrypted (locked)
+> container itself, but there's already a simple way to do that:
+> increase iteration count, passphrase length, or both.
 
+I do agree that the current LUKS, with the contemporary hashes, is
+already very strong. But the strengths of encryption algorithms depend
+mostly on the speed of processing power. It is strong today. It may be
+breakable next year.
+
+In my proposed design, an attacker can do nothing if he gets the
+header. If an attacker gets the encrypted disk, he can hack on the MK,
+the tough way. Only when an attacker gets BOTH the header and the
+encrypted disk, then he can start a normal cryptographic attack.
+
+One more point to note in real life scenarios, users tend to have
+multiple copies (the need of backups) of the header USB Keys carrying
+around, to the office, to the cafe, etc. It is a lot easier to get a
+clone of the header without the users' awareness. On the contrary,
+cloning the encrypted disks usually involve breaking into premises and
+take longer times.
+
+> Since this would be aimed only or primarily at
+> users who use a detached header stored on a separate device, who seem
+> likely to already care more about security than the average user, I
+> don't think either is an unreasonable assumption.
+> ...
+> None of this is to say that the security of LUKS couldn't _possibly_
+> be improved upon somehow (such a claim would be naiive), but there's
+> ample reason already to not add complexity based on what appears at
+> least to me to be a rather contrived threat model.
+
+I do agree that there is not an urge to update the current LUKS. I do
+like a quote from the FAQ, " It is better to have less protection
+against low-entropy passphrases and ***people actually use LUKS, than
+having them do without encryption altogether.*** ". Convenience plays
+an important role in the real world too.
+
+Thank you again for your informative reply. It is my pleasure to
+discuss the concepts with you. In the future, I will fork the project
+for a few paranoids like me.
+
+Best regards,
+midnite
