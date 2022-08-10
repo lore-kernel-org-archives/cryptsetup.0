@@ -1,91 +1,96 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756A746BD
-	for <cryptsetup@lists.linux.dev>; Tue,  9 Aug 2022 21:54:13 +0000 (UTC)
-Received: by mail-ej1-f51.google.com with SMTP id gb36so24479825ejc.10
-        for <cryptsetup@lists.linux.dev>; Tue, 09 Aug 2022 14:54:13 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50E5160
+	for <cryptsetup@lists.linux.dev>; Wed, 10 Aug 2022 06:58:39 +0000 (UTC)
+Received: by mail-ej1-f44.google.com with SMTP id gb36so25983153ejc.10
+        for <cryptsetup@lists.linux.dev>; Tue, 09 Aug 2022 23:58:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc;
-        bh=l8mItsoJ7etzPl1TkEcDBEUPOAPKpcnQ1A9L7bLe39A=;
-        b=l/67mpgR3BjC95/tBf+Xl0WXwjM6QvdtUqNbvpQOu75OTPyNCakzZsGTiwnc9Wd62Y
-         tS/vowTnmRZkwWkiG5j+2OAROf+7GnJpunGg9RtHIKr6isYNp/1gHekQnneTqkDKpgWW
-         tfy3BQ14DvJrOOD8RZn4DasuumroAinpDG0CB408tf38I4sfT4v9WQMGT75T6kWl0EAr
-         PfAW1mqM3/sHeW7pwmoUCs5Y/PKGRy+6TLHdLLEi7kLI8t/LBC9vzbNI/6yDi9Th1B3Q
-         Y1ZczGEtF20NtpXu1/bGTSDKhDnfE8JcOXxPKvgi9FfCLM2DZSspsdJi7rb4yVfuROV1
-         cMuA==
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=hAp65lXUs4L1JcmAvHwCQu6BG8sHB7anGYDWSNyXAMs=;
+        b=F3pH3UPMjmlN6in0iZgR0PWv53VInZnRqpld1RzYdDQiuYvWpLr0tAa+k0/wbVCcdj
+         JhlhYAtgUQvRBHgo34ieRSLYyC4zFGaXzFLGWk8Ocl9jAMKEU0KiYS2rnFa95DDKaquS
+         CV06o9aeipGzgQAobRmcSCLhaNnhuAk0Egd9jHjKwz2ZLcyDOr1XSCJ6BXqfGEkEZ9jU
+         I/mdicR85Ul/GBOkSrYWoion9ZgjIBx8reGOrn6aJ6BRg/wEGvUfu0ZVsM3EOoICUP3N
+         iYkiYbUcLD6aRqYp5xm1Q4szuXGLCk5RwRWmivXy9vXomXOgEywTuXoJQbFVg8sWJWTf
+         OZiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc;
-        bh=l8mItsoJ7etzPl1TkEcDBEUPOAPKpcnQ1A9L7bLe39A=;
-        b=0NXxQG40F+y062eeF45PSnahPZkXm+VN/QE+g51BnlvoX25L8ySq0uNzAhk/WlAxuo
-         hiR5k8upbBxMyBiGjyUOmr0GQaaUkIFesJ9cZ7EWCuTIT5DaESAYISNaJN4BWSRpxBt0
-         oFIa1jIk2jmNWUWQA5YyvT7nMrp8kuZ3VwIFLWxQgljtpKzx3MikB577d+XQKW4UnN4T
-         5axU2IcX6x0ESv+w4N0OzMxTijNGl2jrma03X6NBOcxYNnZ5pzixjn8jJtwWwRmt+jx8
-         Srj9UYhbSHQMbEX+2S69+sx+Tipf66xBplawW51DT1XwPObTNeEM6YEOTC7CR2yffnx2
-         qmmQ==
-X-Gm-Message-State: ACgBeo20nXGdrnL8RnorKrL8LWfYxZCgcdYbE7YXEP7Qj6ZuytCKcB/R
-	C/cbY0B3Dy7SueUbRLZapacj5kP0YdNf3De2//K4EVE7JsZKAnPuQMo=
-X-Google-Smtp-Source: AA6agR6n7hnZvJYFOUgQDmCjM3NJUuGIb/4VYPX95FjWpz7GpaJUgczYj5y+Jp5CloXcAof/yZM6Kehx4TYRFBwgGsE=
-X-Received: by 2002:a17:907:2722:b0:731:2aeb:7942 with SMTP id
- d2-20020a170907272200b007312aeb7942mr11297379ejl.734.1660082051155; Tue, 09
- Aug 2022 14:54:11 -0700 (PDT)
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=hAp65lXUs4L1JcmAvHwCQu6BG8sHB7anGYDWSNyXAMs=;
+        b=c/zuufcaylxmoAtG8u1qW5Pc32RJsE13ukNL/cA89ZFFGVECMe984afwcRTvuqaPPp
+         D3OColgRVNwwaf1QPirTo+bJ4jJSqqNekffw97a7KczOv7BRn1e0FXqMfNe3BqSLinp9
+         ORHLv0OPXJXvskhbkic1XN6a1ukTxNi7rSTAhMDB3IpHPdr3rdWR/oKA22w2uwN8TPta
+         3//GW2UVMdXxFkDKQjZisnNuU8qHuAA7LqGYtEIIiJjVm6zYX+K0tpkBeQeOvWiCnr2F
+         1o44ETwWwVxvGvO9/FN9SMqpwSh/+bX3bVoaoswg3LZt6wJgHGQ1x+Wjm1cAzAn3LHPY
+         x4qA==
+X-Gm-Message-State: ACgBeo0BDGGsApJ5mvMHZCif9rHB8RdSq910cEeNZMWf8SoPmg3TFa0s
+	X8EMecP7+PHB13eISDAR/YYobrm1bjk=
+X-Google-Smtp-Source: AA6agR5l97KwOkYK1yYvD8aYNWQE1HClDouwj3nEup+5CPvhpfrxN73bVe3+i4QQelpsRLfWaIRYJw==
+X-Received: by 2002:a17:906:9beb:b0:730:8e6c:a8fa with SMTP id de43-20020a1709069beb00b007308e6ca8famr18487639ejc.258.1660114717823;
+        Tue, 09 Aug 2022 23:58:37 -0700 (PDT)
+Received: from [192.168.2.27] (85-70-151-113.rcd.o2.cz. [85.70.151.113])
+        by smtp.gmail.com with ESMTPSA id y14-20020a170906448e00b00722e603c39asm1980744ejo.31.2022.08.09.23.58.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Aug 2022 23:58:37 -0700 (PDT)
+Message-ID: <df769461-e347-9abd-7195-556e22f5d481@gmail.com>
+Date: Wed, 10 Aug 2022 08:58:36 +0200
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: "doffloster@gmail.com" <doffloster@gmail.com>
-Date: Wed, 10 Aug 2022 00:53:54 +0300
-Message-ID: <CACHosL9ri_XGPoLxsAb4vEnav1-w3B=YWCE1YidhRn-ONrW=fw@mail.gmail.com>
-Subject: Bug: luksClose search LUKS header but it is detached
-To: cryptsetup@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: Bug: luksClose search LUKS header but it is detached
+Content-Language: en-US
+To: "doffloster@gmail.com" <doffloster@gmail.com>, cryptsetup@lists.linux.dev
+References: <CACHosL9ri_XGPoLxsAb4vEnav1-w3B=YWCE1YidhRn-ONrW=fw@mail.gmail.com>
+From: Milan Broz <gmazyland@gmail.com>
+In-Reply-To: <CACHosL9ri_XGPoLxsAb4vEnav1-w3B=YWCE1YidhRn-ONrW=fw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi all,
+On 09/08/2022 23:53, doffloster@gmail.com wrote:
+> Hi all,
+> 
+> I noticed that cryptsetup LUKS extensions is searching for a LUKS
+> header in the device.
+> This is expected when the LUKS header should be in the device.
+> But I used a detached LUKS header, so I wasn't expecting to see
+> cryptsetup searching for the LUKS header in the device.
+> 
+> You can see that in the log file "log.txt" - in the URL:
+> https://drive.google.com/file/d/1DcrpklgE75oE5znAxHAlp9CPikkYbVq1/view?usp=sharing
+> 
+> You may notice that I used a "--header" flag, but I also tried without
+> it - still, cryptsetup behaved the same.
+> 
+> The incriminating lines from the attached log are as follows:
 
-I noticed that cryptsetup LUKS extensions is searching for a LUKS
-header in the device.
-This is expected when the LUKS header should be in the device.
-But I used a detached LUKS header, so I wasn't expecting to see
-cryptsetup searching for the LUKS header in the device.
+...
+> Do you consider it to be a bug?
 
-You can see that in the log file "log.txt" - in the URL:
-https://drive.google.com/file/d/1DcrpklgE75oE5znAxHAlp9CPikkYbVq1/view?usp=sharing
+Hi,
 
-You may notice that I used a "--header" flag, but I also tried without
-it - still, cryptsetup behaved the same.
+No, this is expected. But for close (deactivation) it proceeds even
+if it does not find the detached header.
 
-The incriminating lines from the attached log are as follows:
-"
-# Trying to read primary LUKS2 header at offset 0x0.
-# Opening locked device /dev/sdb1
-# Verifying locked device handle (bdev)
-# Trying to read secondary LUKS2 header at offset 0x4000.
-# Reusing open ro fd on device /dev/sdb1
-# Trying to read secondary LUKS2 header at offset 0x8000.
-# Reusing open ro fd on device /dev/sdb1
-# Trying to read secondary LUKS2 header at offset 0x10000.
-# Reusing open ro fd on device /dev/sdb1
-# Trying to read secondary LUKS2 header at offset 0x20000.
-# Reusing open ro fd on device /dev/sdb1
-# Trying to read secondary LUKS2 header at offset 0x40000.
-# Reusing open ro fd on device /dev/sdb1
-# Trying to read secondary LUKS2 header at offset 0x80000.
-# Reusing open ro fd on device /dev/sdb1
-# Trying to read secondary LUKS2 header at offset 0x100000.
-# Reusing open ro fd on device /dev/sdb1
-# Trying to read secondary LUKS2 header at offset 0x200000.
-# Reusing open ro fd on device /dev/sdb1
-# Trying to read secondary LUKS2 header at offset 0x400000.
-# Reusing open ro fd on device /dev/sdb1
-# LUKS2 header read failed (-22).
-"
+The reason is that even close need some information from the header
+(for example UUID).
 
-Do you consider it to be a bug?
+Is there any functional problem with this or it just looks strange?
 
-Best Regards,
-David.
+If it is problem, you can always use low-level access through
+"dmsetup remove <device>" here, but it can keeps some underlying device
+active (for LUKS2 this is used only for integrity protected devices).
+
+Milan
+
+
