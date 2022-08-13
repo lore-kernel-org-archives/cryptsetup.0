@@ -1,176 +1,78 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B11B97E
-	for <cryptsetup@lists.linux.dev>; Sat, 13 Aug 2022 15:50:46 +0000 (UTC)
-Received: by mail-pl1-f180.google.com with SMTP id p18so3086679plr.8
-        for <cryptsetup@lists.linux.dev>; Sat, 13 Aug 2022 08:50:46 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A2E7E
+	for <cryptsetup@lists.linux.dev>; Sat, 13 Aug 2022 16:11:55 +0000 (UTC)
+Received: by mail-ed1-f48.google.com with SMTP id x21so4635732edd.3
+        for <cryptsetup@lists.linux.dev>; Sat, 13 Aug 2022 09:11:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc;
-        bh=dtaoVGj0gErFJSMNDpEBc69M0QadTdJm0pNfnJNowmM=;
-        b=MTfIj/abJqLtiMWIxuhhMIgNeqknBD0DBYiw9IKfC9MW8O4OnM9i9te+ofKYLucNdf
-         4UVcTA9O4rGJn880/n7yDiivvOB2yCDHz4T3Yau59X/XwyLEcUKgc+gNCe9lxHbz/lYo
-         RyLvdwflE90HOQKqKhuY3RPUfbmNP/pwbSWmxTsXSKBNS5iQtiPONnc2eWvqs1zaawYV
-         MUqworMLBPIlmSZ0Ank8M3Bw2x8QCNS6eQVVJmsKAzk58unuS7vYNrEbhoquvIWHjM/o
-         nXGvsHo+T35FBhf4rUEmbz0b0jb7KTZAMqW9MXm3+mT70Ur3+/h3G5U2/RdYTYewzXtR
-         Tq4A==
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=/0LCTNaZENXNYYlAuiLbY9JIbAXQUXwCIpu/dvG/rjA=;
+        b=Glkick37TIJWtoRXT5AiGYD4Ym/7pcRczBW5456PYmE/6baKey1UoB6Au0Ue9L0HdZ
+         f2PMq7Hft8Fo+HS5H9tnFZnOXcmuXtttTidkslMyHaRQi3ExyuRzDqHGit+E/WCnkMzf
+         QBvg8AeF07w9DYjNT5SQgf6/5PrXp1qCpKI+bsvf1XQ66iTMYvmhtrjuX/ZHAkGme0tN
+         y1AUNePKyn/7zI8m4wAJ+MtnP/NzRjWpoF2yeRPYRvBO28pynQGR59qz9aDzK3jN7Zlv
+         /V2kPrhd5PhFQvIdTR2qX3Iil3+WlaFZmWBCw9GQL8ZrQ2YrXbERqfkwQMSYemXiSs6j
+         Fbfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc;
-        bh=dtaoVGj0gErFJSMNDpEBc69M0QadTdJm0pNfnJNowmM=;
-        b=5qJMxCWUFxjbfoFe9O9eAv0NhBx8+bgmCy0kRD3EVVzP9PCwZxYWHmp0FEh9dh31Ti
-         cJwbfnbUQ96lgBHavO1fhTjSsfzLl7oO47yWSEK5SUe9Bekil3rJaBDZlBHbMlHyPOav
-         XrQXZIlmb5DeK+BulmmbCtFEO3e+zp+wANsRgl1sI2Ew9uKEs2eoGlwYmpjHwaRmLFJQ
-         Ci5Himp7QB4zweVH9CObPQItKjlI6UmC37/05EipJQc5h647GZzGRk3rLbBQ0YiPFmAN
-         pMyvdSw/L/ar4PDmU3nVcx7fTN/RlPXJeuuODmYK9Zf6DlApb5ZHV+Rir6a1LLpOhodV
-         Cz1Q==
-X-Gm-Message-State: ACgBeo1y8SnQ1hpqoe0f+7LQWwYbqfPeLeqsi3XQY4wPjkGYddu9Avoh
-	ozeV6sX1htilUpTHcT5zddoNVUcgUtI/o30WfFfcyvaZ/dg=
-X-Google-Smtp-Source: AA6agR4QwuHTlaMAzI1J/sevOVMiCRmCjWA2icarFTlJyBT+JzZpWq4djRYs6fnh9gG42ewAsP/Zf1lS1EvQ9SwNsSE=
-X-Received: by 2002:a17:90a:d585:b0:1f4:f9a5:22a9 with SMTP id
- v5-20020a17090ad58500b001f4f9a522a9mr19688856pju.49.1660405845745; Sat, 13
- Aug 2022 08:50:45 -0700 (PDT)
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=/0LCTNaZENXNYYlAuiLbY9JIbAXQUXwCIpu/dvG/rjA=;
+        b=xz4WYUTUXtdTwGiYryXimoqLfb3CufDAQYqY892DGcfEGAPdi2jT5YSA+mGKM+naY8
+         2cROSjIWZaxLQ1Se9wiQqosNoRrIKeQq22uA1NMTKCfwWf7evVDQWxZXSLKUBO+ZZPx0
+         Ai+Kzd0++qNO2TUj7V9KJtBTDsSLzkySpNb2gzgU8LWJz/SqkREcybkdIvNcTzJtNzZ2
+         jttrLh7M2f9RdoWG8NFWyYydiDoOEiOwrBuunb36aDX4d5Tr3yyewr6l1bO+ej+alFnM
+         d/gpDW+5Eny+Bz4Fr1iLC3PJX4ddYDR/jVRaNWgmSdQqfzCavuYkNug2mp0tJDDfBt8c
+         2wlA==
+X-Gm-Message-State: ACgBeo0bKEX1WVcKCiNij1obQLZPiRPLSG6n4oZaX5Tk4UQjYNp9Q5es
+	L/FFP62VV4qPTnFXo8Zh8Rs=
+X-Google-Smtp-Source: AA6agR6J6YpYgAsdFfg8bRbCwSZizo2fY1FimwwOzdro+zJV69A9mysE9bL3+4Vb7/Ufwf7TlM06YA==
+X-Received: by 2002:a05:6402:3546:b0:43e:466c:d4ed with SMTP id f6-20020a056402354600b0043e466cd4edmr7980416edd.48.1660407113872;
+        Sat, 13 Aug 2022 09:11:53 -0700 (PDT)
+Received: from [192.168.8.100] (78-80-28-162.customers.tmcz.cz. [78.80.28.162])
+        by smtp.gmail.com with ESMTPSA id fx18-20020a170906b75200b007306d3c338dsm2005061ejb.164.2022.08.13.09.11.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 13 Aug 2022 09:11:53 -0700 (PDT)
+Message-ID: <de150ba2-46fe-36f6-86b5-37411af760e6@gmail.com>
+Date: Sat, 13 Aug 2022 18:11:48 +0200
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: "doffloster@gmail.com" <doffloster@gmail.com>
-Date: Sat, 13 Aug 2022 18:50:29 +0300
-Message-ID: <CACHosL-U7pWY95fHP08D7FGoCk7=kZfRTudfSs4E1h8buxjaLQ@mail.gmail.com>
-Subject: cryptsetup LUKS: Too low iteration count: only 14
-To: cryptsetup@lists.linux.dev
-Content-Type: multipart/mixed; boundary="0000000000009eca9705e6215cbd"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: cryptsetup LUKS: Too low iteration count: only 14
+Content-Language: en-US
+To: "doffloster@gmail.com" <doffloster@gmail.com>, cryptsetup@lists.linux.dev
+References: <CACHosL-U7pWY95fHP08D7FGoCk7=kZfRTudfSs4E1h8buxjaLQ@mail.gmail.com>
+From: Milan Broz <gmazyland@gmail.com>
+In-Reply-To: <CACHosL-U7pWY95fHP08D7FGoCk7=kZfRTudfSs4E1h8buxjaLQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---0000000000009eca9705e6215cbd
-Content-Type: text/plain; charset="UTF-8"
+On 13/08/2022 17:50, doffloster@gmail.com wrote:
+> Hi all,
+> 
+> I was playing around with LUKS extension in cryptsetup and noticed
+> that the iteration count was 14 in my case.
+> The iteration time that I chose (arbitrarily) is 4123ms which is above
+> 4 seconds!
+> So I was astonished to see an iteration count which is very low.
+> As far as I know, using a modern computer, the iteration count should
+> be above 100k.
 
-Hi all,
+Please do not confuse iteration for PBKDF2 (default in LUKS1) and memory-hard Argon2 KDF.
 
-I was playing around with LUKS extension in cryptsetup and noticed
-that the iteration count was 14 in my case.
-The iteration time that I chose (arbitrarily) is 4123ms which is above
-4 seconds!
-So I was astonished to see an iteration count which is very low.
-As far as I know, using a modern computer, the iteration count should
-be above 100k.
+These are completely different algorithms, you cannot compare iteration costs here.
 
-Please see the attached log for the details - it contains two
-operations: luksFormat and luksDump.
+If you set 100k iteration with 1G memory cost for Argon2, you will get
+unlocking time that is perhaps in years... :-)
 
-In the log, notice the following line:
-> # Benchmark returns argon2id() 14 iterations, 1048576 memory, 4 threads (for 512-bits key).
-
-
-Best regards,
-David.
-
---0000000000009eca9705e6215cbd
-Content-Type: text/plain; charset="US-ASCII"; name="log.txt"
-Content-Disposition: attachment; filename="log.txt"
-Content-Transfer-Encoding: base64
-Content-ID: <f_l6s2qmy10>
-X-Attachment-Id: f_l6s2qmy10
-
-CiMgY3J5cHRzZXR1cCAyLjQuMyBwcm9jZXNzaW5nICJjcnlwdHNldHVwIC0tdmVyYm9zZSAtLWRl
-YnVnIC0taGFzaCBzaGE1MTIgLS1rZXktc2l6ZSA1MTIgLS10eXBlPWx1a3MyIC0taXRlci10aW1l
-PTQxMjMgLS1rZXktZmlsZSAvcGF0aC90by9rZXlmaWxlIC0ta2V5LXNsb3QgNCBsdWtzRm9ybWF0
-IC9kZXYvc2RhMSIKIyBSdW5uaW5nIGNvbW1hbmQgbHVrc0Zvcm1hdC4KIyBMb2NraW5nIG1lbW9y
-eS4KIyBJbnN0YWxsaW5nIFNJR0lOVC9TSUdURVJNIGhhbmRsZXIuCiMgVW5ibG9ja2luZyBpbnRl
-cnJ1cHRpb24gb24gc2lnbmFsLgojIEFsbG9jYXRpbmcgY29udGV4dCBmb3IgY3J5cHQgZGV2aWNl
-IC9kZXYvc2RhMS4KIyBUcnlpbmcgdG8gb3BlbiBhbmQgcmVhZCBkZXZpY2UgL2Rldi9zZGExIHdp
-dGggZGlyZWN0LWlvLgojIEluaXRpYWxpc2luZyBkZXZpY2UtbWFwcGVyIGJhY2tlbmQgbGlicmFy
-eS4KIyBGaWxlIGRlc2NyaXB0b3IgcGFzc3BocmFzZSBlbnRyeSByZXF1ZXN0ZWQuCiMgQ3J5cHRv
-IGJhY2tlbmQgKE9wZW5TU0wgMy4wLjIgMTUgTWFyIDIwMjIgW2RlZmF1bHRdW2xlZ2FjeV0pIGlu
-aXRpYWxpemVkIGluIGNyeXB0c2V0dXAgbGlicmFyeSB2ZXJzaW9uIDIuNC4zLgojIERldGVjdGVk
-IGtlcm5lbCBMaW51eCA1LjE1LjAtMjUtZ2VuZXJpYyB4ODZfNjQuCiMgUEJLREYgYXJnb24yaWQs
-IHRpbWVfbXMgNDEyMyAoaXRlcmF0aW9ucyAwKSwgbWF4X21lbW9yeV9rYiAxMDQ4NTc2LCBwYXJh
-bGxlbF90aHJlYWRzIDQuCiMgRm9ybWF0dGluZyBkZXZpY2UgL2Rldi9zZGExIGFzIHR5cGUgTFVL
-UzIuCiMgQXV0by1kZXRlY3RlZCBvcHRpbWFsIGVuY3J5cHRpb24gc2VjdG9yIHNpemUgZm9yIGRl
-dmljZSAvZGV2L3NkYTEgaXMgNTEyIGJ5dGVzLgojIFRvcG9sb2d5OiBJTyAoNTEyLzApLCBvZmZz
-ZXQgPSAwOyBSZXF1aXJlZCBhbGlnbm1lbnQgaXMgMTA0ODU3NiBieXRlcy4KIyBDaGVja2luZyBp
-ZiBjaXBoZXIgYWVzLXh0cy1wbGFpbjY0IGlzIHVzYWJsZS4KIyBVc2luZyB1c2Vyc3BhY2UgY3J5
-cHRvIHdyYXBwZXIgdG8gYWNjZXNzIGtleXNsb3QgYXJlYS4KIyBGb3JtYXR0aW5nIExVS1MyIHdp
-dGggSlNPTiBtZXRhZGF0YSBhcmVhIDEyMjg4IGJ5dGVzIGFuZCBrZXlzbG90cyBhcmVhIDE2NzQ0
-NDQ4IGJ5dGVzLgojIENyZWF0aW5nIG5ldyBkaWdlc3QgMCAocGJrZGYyKS4KIyBTZXR0aW5nIFBC
-S0RGMiB0eXBlIGtleSBkaWdlc3QgMC4KIyBSdW5uaW5nIHBia2RmMihzaGE1MTIpIGJlbmNobWFy
-ay4KIyBQQktERiBiZW5jaG1hcms6IG1lbW9yeSBjb3N0ID0gMCwgaXRlcmF0aW9ucyA9IDEyNjAz
-MDcsIHRocmVhZHMgPSAwICh0b29rIDI2IG1zKQojIFBCS0RGIGJlbmNobWFyazogbWVtb3J5IGNv
-c3QgPSAwLCBpdGVyYXRpb25zID0gMTI5Nzc0MiwgdGhyZWFkcyA9IDAgKHRvb2sgNDA0IG1zKQoj
-IFBCS0RGIGJlbmNobWFyazogbWVtb3J5IGNvc3QgPSAwLCBpdGVyYXRpb25zID0gMTI4ODE3Niwg
-dGhyZWFkcyA9IDAgKHRvb2sgODE0IG1zKQojIEJlbmNobWFyayByZXR1cm5zIHBia2RmMihzaGE1
-MTIpIDEyODgxNzYgaXRlcmF0aW9ucywgMCBtZW1vcnksIDAgdGhyZWFkcyAoZm9yIDUxMi1iaXRz
-IGtleSkuCiMgU2VnbWVudCAwIGFzc2lnbmVkIHRvIGRpZ2VzdCAwLgojIFdpcGluZyBMVUtTIGFy
-ZWFzICgweDAwMDAwMCAtIDB4MTAwMDAwMCkgd2l0aCB6ZXJvZXMuCiMgV2lwaW5nIGtleXNsb3Rz
-IGFyZWEgKDB4MDA4MDAwIC0gMHgxMDAwMDAwKSB3aXRoIHJhbmRvbSBkYXRhLgojIFJldXNpbmcg
-b3BlbiBydyBmZCBvbiBkZXZpY2UgL2Rldi9zZGExCiMgRGV2aWNlIHNpemUgMjU2MzU0Nzk1MDA4
-LCBvZmZzZXQgMTY3NzcyMTYuCiMgQWNxdWlyaW5nIHdyaXRlIGxvY2sgZm9yIGRldmljZSAvZGV2
-L3NkYTEuCiMgT3BlbmluZyBsb2NrIHJlc291cmNlIGZpbGUgL3J1bi9jcnlwdHNldHVwL0xfODox
-CiMgVmVyaWZ5aW5nIGxvY2sgaGFuZGxlIGZvciAvZGV2L3NkYTEuCiMgRGV2aWNlIC9kZXYvc2Rh
-MSBXUklURSBsb2NrIHRha2VuLgojIFRyeWluZyB0byB3cml0ZSBMVUtTMiBoZWFkZXIgKDE2Mzg0
-IGJ5dGVzKSBhdCBvZmZzZXQgMC4KIyBSZXVzaW5nIG9wZW4gcncgZmQgb24gZGV2aWNlIC9kZXYv
-c2RhMQojIENoZWNrc3VtOjEyODJlNDNlMTczMDgwODllNWY4ZTQ5Mzk5YmYzYzc4MjM5NTVhZmQx
-NjBkMzJmZTJiYTQ1M2I4OTRlOGUxNGMgKGluLW1lbW9yeSkKIyBUcnlpbmcgdG8gd3JpdGUgTFVL
-UzIgaGVhZGVyICgxNjM4NCBieXRlcykgYXQgb2Zmc2V0IDE2Mzg0LgojIFJldXNpbmcgb3BlbiBy
-dyBmZCBvbiBkZXZpY2UgL2Rldi9zZGExCiMgQ2hlY2tzdW06YTg1YmJhNzIxMjFlNWZkNzk4YWMz
-N2NlNTRhMjI3YzY5NWJkOTU2MDUxZWViZmVmY2U3MmM0NDQ0ZTNkZDA3YSAoaW4tbWVtb3J5KQoj
-IERldmljZSAvZGV2L3NkYTEgV1JJVEUgbG9jayByZWxlYXNlZC4KIyBBZGRpbmcgbmV3IGtleXNs
-b3QgNCB1c2luZyB2b2x1bWUga2V5LgojIEFkZGluZyBuZXcga2V5c2xvdCA0IHdpdGggdm9sdW1l
-IGtleSBhc3NpZ25lZCB0byBhIGNyeXB0IHNlZ21lbnQuCiMgU2VsZWN0ZWQga2V5c2xvdCA0Lgoj
-IEtleXNsb3QgNCBhc3NpZ25lZCB0byBkaWdlc3QgMC4KIyBUcnlpbmcgdG8gYWxsb2NhdGUgTFVL
-UzIga2V5c2xvdCA0LgojIEZvdW5kIGFyZWEgMzI3NjggLT4gMjkwODE2CiMgUnVubmluZyBhcmdv
-bjJpZCgpIGJlbmNobWFyay4KIyBQQktERiBiZW5jaG1hcms6IG1lbW9yeSBjb3N0ID0gNjU1MzYs
-IGl0ZXJhdGlvbnMgPSA0LCB0aHJlYWRzID0gNCAodG9vayA3NiBtcykKIyBQQktERiBiZW5jaG1h
-cms6IG1lbW9yeSBjb3N0ID0gMjE1NTc4LCBpdGVyYXRpb25zID0gNCwgdGhyZWFkcyA9IDQgKHRv
-b2sgMjMxIG1zKQojIFBCS0RGIGJlbmNobWFyazogbWVtb3J5IGNvc3QgPSAyMzMzMDksIGl0ZXJh
-dGlvbnMgPSA0LCB0aHJlYWRzID0gNCAodG9vayAyNTIgbXMpCiMgUEJLREYgYmVuY2htYXJrOiBt
-ZW1vcnkgY29zdCA9IDEwNDg1NzYsIGl0ZXJhdGlvbnMgPSAxNCwgdGhyZWFkcyA9IDQgKHRvb2sg
-NDIwNyBtcykKIyBCZW5jaG1hcmsgcmV0dXJucyBhcmdvbjJpZCgpIDE0IGl0ZXJhdGlvbnMsIDEw
-NDg1NzYgbWVtb3J5LCA0IHRocmVhZHMgKGZvciA1MTItYml0cyBrZXkpLgojIENhbGN1bGF0aW5n
-IGF0dHJpYnV0ZXMgZm9yIExVS1MyIGtleXNsb3QgNC4KIyBBY3F1aXJpbmcgd3JpdGUgbG9jayBm
-b3IgZGV2aWNlIC9kZXYvc2RhMS4KIyBPcGVuaW5nIGxvY2sgcmVzb3VyY2UgZmlsZSAvcnVuL2Ny
-eXB0c2V0dXAvTF84OjEKIyBWZXJpZnlpbmcgbG9jayBoYW5kbGUgZm9yIC9kZXYvc2RhMS4KIyBE
-ZXZpY2UgL2Rldi9zZGExIFdSSVRFIGxvY2sgdGFrZW4uCiMgQ2hlY2tpbmcgY29udGV4dCBzZXF1
-ZW5jZSBpZCBtYXRjaGVzIHZhbHVlIHN0b3JlZCBvbiBkaXNrLgojIFJldXNpbmcgb3BlbiBybyBm
-ZCBvbiBkZXZpY2UgL2Rldi9zZGExCiMgUnVubmluZyBrZXlzbG90IGtleSBkZXJpdmF0aW9uLgoj
-IFVwZGF0aW5nIGtleXNsb3QgYXJlYSBbMHg4MDAwXS4KIyBSZXVzaW5nIG9wZW4gcncgZmQgb24g
-ZGV2aWNlIC9kZXYvc2RhMQojIERldmljZSBzaXplIDI1NjM1NDc5NTAwOCwgb2Zmc2V0IDE2Nzc3
-MjE2LgojIERldmljZSAvZGV2L3NkYTEgV1JJVEUgbG9jayBhbHJlYWR5IGhlbGQuCiMgVHJ5aW5n
-IHRvIHdyaXRlIExVS1MyIGhlYWRlciAoMTYzODQgYnl0ZXMpIGF0IG9mZnNldCAwLgojIFJldXNp
-bmcgb3BlbiBydyBmZCBvbiBkZXZpY2UgL2Rldi9zZGExCiMgQ2hlY2tzdW06ZDA5Zjg4MWQyYmIx
-NmMxOGQ5Y2I3ZjgxY2RkMzM2YzVjZTFhODIzOGJiMzBhMjI2YmMxNDNmNWMxN2ExMWE4ZSAoaW4t
-bWVtb3J5KQojIFRyeWluZyB0byB3cml0ZSBMVUtTMiBoZWFkZXIgKDE2Mzg0IGJ5dGVzKSBhdCBv
-ZmZzZXQgMTYzODQuCiMgUmV1c2luZyBvcGVuIHJ3IGZkIG9uIGRldmljZSAvZGV2L3NkYTEKIyBD
-aGVja3N1bToxNmE4NjVhZDM4NDMwY2UzOWExMTMyZmZhMzQxNzcwYjc2OTNjMTM3MzdiZTA1MmYz
-OTNhNGVjZDUxMTlkMDYyIChpbi1tZW1vcnkpCiMgRGV2aWNlIC9kZXYvc2RhMSBXUklURSBsb2Nr
-IHJlbGVhc2VkLgpLZXkgc2xvdCA0IGNyZWF0ZWQuCiMgUmVsZWFzaW5nIGNyeXB0IGRldmljZSAv
-ZGV2L3NkYTEgY29udGV4dC4KIyBSZWxlYXNpbmcgZGV2aWNlLW1hcHBlciBiYWNrZW5kLgojIENs
-b3NpbmcgcmVhZCBvbmx5IGZkIGZvciAvZGV2L3NkYTEuCiMgQ2xvc2luZyByZWFkIHdyaXRlIGZk
-IGZvciAvZGV2L3NkYTEuCiMgVW5sb2NraW5nIG1lbW9yeS4KQ29tbWFuZCBzdWNjZXNzZnVsLgoK
-CgoKCkR1bXBpbmcgaGVhZGVyIGluZm9ybWF0aW9uIG9uIExVS1MgZGV2aWNlICIvZGV2L3NkYTEi
-OgpMVUtTIGhlYWRlciBpbmZvcm1hdGlvbgpWZXJzaW9uOiAgICAgICAJMgpFcG9jaDogICAgICAg
-ICAJMwpNZXRhZGF0YSBhcmVhOiAJMTYzODQgW2J5dGVzXQpLZXlzbG90cyBhcmVhOiAJMTY3NDQ0
-NDggW2J5dGVzXQpVVUlEOiAgICAgICAgICAJZWNmMzlkNWUtNmFkMC00NTlkLThmMTYtMjZhNTM0
-ZDNkZGQ4CkxhYmVsOiAgICAgICAgIAkobm8gbGFiZWwpClN1YnN5c3RlbTogICAgIAkobm8gc3Vi
-c3lzdGVtKQpGbGFnczogICAgICAgCShubyBmbGFncykKCkRhdGEgc2VnbWVudHM6CiAgMDogY3J5
-cHQKCW9mZnNldDogMTY3NzcyMTYgW2J5dGVzXQoJbGVuZ3RoOiAod2hvbGUgZGV2aWNlKQoJY2lw
-aGVyOiBhZXMteHRzLXBsYWluNjQKCXNlY3RvcjogNTEyIFtieXRlc10KCktleXNsb3RzOgogIDQ6
-IGx1a3MyCglLZXk6ICAgICAgICA1MTIgYml0cwoJUHJpb3JpdHk6ICAgbm9ybWFsCglDaXBoZXI6
-ICAgICBhZXMteHRzLXBsYWluNjQKCUNpcGhlciBrZXk6IDUxMiBiaXRzCglQQktERjogICAgICBh
-cmdvbjJpZAoJVGltZSBjb3N0OiAgMTQKCU1lbW9yeTogICAgIDEwNDg1NzYKCVRocmVhZHM6ICAg
-IDQKCVNhbHQ6ICAgICAgIDZkIDM2IDAyIDNmIGUxIGYyIGExIDk0IGQ5IGVlIGM1IDc1IGEyIDc5
-IDczIGUwIAoJICAgICAgICAgICAgZmQgZDggYjAgMWEgYWYgMmQgMDQgZTcgM2MgMmUgYzAgZDYg
-ZmQgZTkgMWUgYmYgCglBRiBzdHJpcGVzOiA0MDAwCglBRiBoYXNoOiAgICBzaGE1MTIKCUFyZWEg
-b2Zmc2V0OjMyNzY4IFtieXRlc10KCUFyZWEgbGVuZ3RoOjI1ODA0OCBbYnl0ZXNdCglEaWdlc3Qg
-SUQ6ICAwClRva2VuczoKRGlnZXN0czoKICAwOiBwYmtkZjIKCUhhc2g6ICAgICAgIHNoYTUxMgoJ
-SXRlcmF0aW9uczogMTYxMDIyCglTYWx0OiAgICAgICA3MiBiMiA5ZiA0NSAyZCA0MyA2OCAxZCBk
-MCA5MSAyMyBjMSA2MyA3MiAzYyA1ZSAKCSAgICAgICAgICAgIDc4IDlmIDM4IGE2IGNiIGI5IGRl
-IDA3IDhjIDAxIDM2IGIzIGEyIDNiIDNmIDUxIAoJRGlnZXN0OiAgICAgYWEgNGMgNWQgOWQgZGUg
-YzkgZjYgNDUgY2MgOWUgNDAgYjUgYTUgYmEgNWEgNWUgCgkgICAgICAgICAgICA2YSAwYiBmZiBk
-YSAwZSAzNyAwMCAwMiBiMiA0MiA1ZCAyMSA1NiA5MCA0OCBhOCAKCSAgICAgICAgICAgIGIzIDcx
-IGQ5IDg4IDY5IDkwIDk4IGRmIDA5IDczIDExIDAxIDAyIGYzIGJhIDllIAoJICAgICAgICAgICAg
-MTggN2UgNDggNDkgMGYgZWEgOWEgZjkgNGMgODYgNzQgOGUgNDggNmYgMjAgM2MgCgoK
---0000000000009eca9705e6215cbd--
+m.
