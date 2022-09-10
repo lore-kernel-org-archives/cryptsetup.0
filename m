@@ -1,125 +1,120 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ste-pvt-msa1.bahnhof.se (ste-pvt-msa1.bahnhof.se [213.80.101.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80596A40
-	for <cryptsetup@lists.linux.dev>; Sat, 10 Sep 2022 07:27:10 +0000 (UTC)
-Received: by mail-pj1-f46.google.com with SMTP id n23-20020a17090a091700b00202a51cc78bso1161535pjn.2
-        for <cryptsetup@lists.linux.dev>; Sat, 10 Sep 2022 00:27:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=x/MDF86QDcfZjHjmskg9dOPrxByx2NsrzJtjEyRspYk=;
-        b=Ko+OYUfxsWNjvxlzoob3bf/O8UsK4cFzG38KdlLb8vEy/RSZoZ7Hi1Zsh71k1m/GLr
-         JCgIOL+rpN2Vbb0YkJGbYxQ5nwz1tJJBQx2FxozOUDG2OH4rlTrNaqgp7ob2Gy+39X9T
-         rAfKcF3reMqiBKL79dl8AKDHmyoz4nhYaIOY1uzSMiXNppoGqdrMV1Tfmlgjd1GwH8UB
-         0g3ctdQVVnyxcQ8dGt+E1+2YESB9gCG6QPMi4c4lUKhkWrnYqf2S8FH+2glfOVGOcbbz
-         IhrwN+5vzgxRxAzt24G6G6/NTtlG+FDfyE36/B+PNQNHjLJ5DaK2Bpn+y5i6W6gMqTIc
-         SWQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=x/MDF86QDcfZjHjmskg9dOPrxByx2NsrzJtjEyRspYk=;
-        b=rqlPgdVNaq8ZM/ZU8SGB5lVfX6i58zhBQzY+DYeix6VoCs1CU9vNaEgy62wJk5GTIV
-         5vk2CDlxJk9n6FWuPXtU3FcRs2ZDgsxXe1bw9tY4kOEJY0zXFig2EjeGAJZ3yBAZ5UuQ
-         Opz86EEA5aSbRemwtD661M0n94Iiq6KiAn7HAp3CQeKhPSZ8ujhXC8+egs6zw8c3vUKB
-         jnEoeBhjLLBEhGBzu05nAOcPkFodMRKizo+4m7TZ/N0oaRfkqbapKKu2Tj0uQAbPUdGP
-         nBlgEmcupkFWuRS2v8prh+NvBXsPlXqzzKaGECD4SBfDCzlbRlPx6NrGyfgJi1z2IHFR
-         2ZdQ==
-X-Gm-Message-State: ACgBeo0j/E47/mx8w6lkKx82+vr+yvpWXUBrM+zreu1gPBzH1dWjYThC
-	jDOVjwHlmcSpXa7IAEIW/okJWgPUCZ5WJxZ4b14=
-X-Google-Smtp-Source: AA6agR5RGNwYVMOmkAIZtMBeCf4FFvuXc6yknelF41iYXtEx5XlRvC6ZaDmvlrffeAdN6FP9618RuYdELNvKHNWUxS4=
-X-Received: by 2002:a17:902:f7d2:b0:176:ca6b:eadb with SMTP id
- h18-20020a170902f7d200b00176ca6beadbmr17436098plw.173.1662794829802; Sat, 10
- Sep 2022 00:27:09 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D093EA2
+	for <cryptsetup@lists.linux.dev>; Sat, 10 Sep 2022 09:29:02 +0000 (UTC)
+Received: from localhost (localhost [127.0.0.1])
+	by ste-pvt-msa1.bahnhof.se (Postfix) with ESMTP id 95EDC3FB38
+	for <cryptsetup@lists.linux.dev>; Sat, 10 Sep 2022 11:21:32 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at bahnhof.se
+X-Spam-Flag: NO
+X-Spam-Score: -1.909
+X-Spam-Level:
+X-Spam-Status: No, score=-1.909 tagged_above=-999 required=6.31
+	tests=[BAYES_00=-1.9, T_SCC_BODY_TEXT_LINE=-0.01, URIBL_BLOCKED=0.001]
+	autolearn=ham autolearn_force=no
+Received: from ste-pvt-msa1.bahnhof.se ([127.0.0.1])
+	by localhost (ste-pvt-msa1.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id YybI4F8G0qzF for <cryptsetup@lists.linux.dev>;
+	Sat, 10 Sep 2022 11:21:31 +0200 (CEST)
+Received: 
+	by ste-pvt-msa1.bahnhof.se (Postfix) with ESMTPA id 4E1F73F57C
+	for <cryptsetup@lists.linux.dev>; Sat, 10 Sep 2022 11:21:30 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by localhost (Postfix) with ESMTPS id 7EC532E01B4
+	for <cryptsetup@lists.linux.dev>; Sat, 10 Sep 2022 11:21:30 +0200 (CEST)
+Date: Sat, 10 Sep 2022 09:21:29 +0000
+From: Michael =?utf-8?B?S2rDtnJsaW5n?= <michael@kjorling.se>
+To: cryptsetup@lists.linux.dev
+Subject: Re: sha256 in "AF hash" despite using sha512 during luksFormat
+Message-ID: <4ab9a956-3da1-4f54-ba38-66f741ba5eeb@home.arpa>
+References: <CACHosL-Nxs5dHJddw8RjqnK4d7OewzA2FT6G1ZQcAhw=PzLLpQ@mail.gmail.com>
+ <7f403984-bd0d-9b75-d0eb-0cacbb41810d@gmail.com>
+ <CACHosL8YcOXCouZvhTX4rn_F7buVj7tdiefEbHvgGwbfC3t-CQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CACHosL-Nxs5dHJddw8RjqnK4d7OewzA2FT6G1ZQcAhw=PzLLpQ@mail.gmail.com>
- <7f403984-bd0d-9b75-d0eb-0cacbb41810d@gmail.com>
-In-Reply-To: <7f403984-bd0d-9b75-d0eb-0cacbb41810d@gmail.com>
-From: "doffloster@gmail.com" <doffloster@gmail.com>
-Date: Sat, 10 Sep 2022 10:26:53 +0300
-Message-ID: <CACHosL8YcOXCouZvhTX4rn_F7buVj7tdiefEbHvgGwbfC3t-CQ@mail.gmail.com>
-Subject: Re: sha256 in "AF hash" despite using sha512 during luksFormat
-To: Milan Broz <gmazyland@gmail.com>
-Cc: cryptsetup@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACHosL8YcOXCouZvhTX4rn_F7buVj7tdiefEbHvgGwbfC3t-CQ@mail.gmail.com>
 
-Hi Milan,
+On 10 Sep 2022 10:26 +0300, from doffloster@gmail.com:
+> I prefer sha512 over sha256 only because I've read that it is slightly
+> more difficult for GPUs to brute force, because they normally have
+> 32bit operations.
 
-I appreciate your reply.
-
-Note that I don't have a very good knowledge in crypto.
-
-I prefer sha512 over sha256 only because I've read that it is slightly
-more difficult for GPUs to brute force, because they normally have
-32bit operations.
-Links to two sources (same author, "Thomas Pornin"):
-https://security.stackexchange.com/questions/86082/hashing-algorithm-for-cryptsetup
-https://security.stackexchange.com/questions/40208/recommended-options-for-luks-cryptsetup
-
-I don't mind the relatively minor performance impact for read/write operations.
-
-> it is much
-> faster to try to decrypt some sector where you can detect correct plaintext
-> than to use slow digest PBKDF2 here.
-
-Do you mean that in the given scenario it is much faster to find the
-LUKS master key by decrypting a plaintext sector which is encrypted
-with AES rather than trying to find the LUKS master key via PBKDF2?
-Which means that in the given scenario AES is "weaker" than PBKDF2?
-Also, I assume it is difficult to find an encrypted sector which has a
-high chance to be plaintext when it is decrypted.
-I assume that plaintext sectors probably are the least common type of
-sector (there are images, videos, executables etc. which easily take
-space on the storage )
-
-Best regards,
-David.
+Someone correct me if I'm wrong, but my understanding is that GPUs per
+se excel at vector operations, because that's a big part of what's
+needed for 3D graphics. (They also happen to be very useful for some
+other types of workloads.) The SHA* series of hashes, including SHA3,
+rely primarily on simple integer arithmetic; addition and subtraction
+modulo some value, XOR, and similar operations. That can of course be
+offloaded to GPUs, and it might be easier to parallelize GPU workloads
+in a single system, but it's not a GPU's primary strong suit.
 
 
+>> it is much
+>> faster to try to decrypt some sector where you can detect correct plaintext
+>> than to use slow digest PBKDF2 here.
+> 
+> Do you mean that in the given scenario it is much faster to find the
+> LUKS master key by decrypting a plaintext sector which is encrypted
+> with AES rather than trying to find the LUKS master key via PBKDF2?
+> Which means that in the given scenario AES is "weaker" than PBKDF2?
 
+If you have a candidate key, a hash of the correct key, and some
+amount of ciphertext encrypted with the correct key, then to check if
+the candidate key is likely correct you can choose between hashing the
+key and comparing H(K)=h, or decrypting the ciphertext with it and see
+if D_K(C) is a probable plaintext. Which you choose depends on which
+is faster on the system you're running on. Since AES is already
+hardware-accelerated on many modern CPUs, it may well be faster. Once
+H(K) is an expensive operation, such as with iterated hashes or hashes
+designed to be expensive (such as Argon2), it's highly likely to be
+faster. Keep in mind that in both cases, the search space is the same.
+The search space also isn't really affected by the output hash size of
+the hash algorithm, especially if that is larger than the unknown
+portion of the input; in the latter case, the hash serves largely as a
+diffuser.
 
+> Also, I assume it is difficult to find an encrypted sector which has a
+> high chance to be plaintext when it is decrypted.
+> I assume that plaintext sectors probably are the least common type of
+> sector (there are images, videos, executables etc. which easily take
+> space on the storage )
 
+Most useful data has some bias. Encrypted data, including when
+decrypted with the wrong key, is essentially random; this is a
+property of almost any good encryption algorithm (without knowledge of
+the key, encrypted data is indistinguishable from random data).
+Therefore, if the decrypted data has more than some threshold of one
+bit value compared to the other (for example, more than 60% of bits
+are of either value), then it's plausibly plaintext and you can apply
+more expensive checks. Counting the number of bits of each value is a
+rather simple operation that is commonly implemented in hardware; GCC,
+for example, offers __builtin_popcount() for the purpose.
 
-On Sat, Sep 10, 2022 at 8:25 AM Milan Broz <gmazyland@gmail.com> wrote:
->
-> On 10/09/2022 00:50, doffloster@gmail.com wrote:
-> > Dear cryptsetup/LUKS Team,
-> >
-> > I was using sha512 in the luksFormat command.
-> > Later I used luksAddKey while thinking that it should be using the
-> > sha512 hash that I defined in luksFormat.
-> > But, when I did luksDump, then I noticed that the field "AF hash" for
-> > the second key (which was added via luksAddKey ; its keyslot is #1)
-> > contains the value "sha256".
->
-> The digest hash remains the same. it is changed only if the digest
-> is recalculated later (reencryption).
->
-> (In LUKS1 there was only one hash algorithm used for everything,
-> in LUKS2 you can have different algorihms per keyslots, digest and AF but
-> for digest and AF there is no API co change it later.)
->
-> BTW SHA512, specially for AF, is overkill, it will not help anything.
-> Why do you want to use it there? The whole idea for AF is just to
-> diffuse the key on a larger area - any hash algorithm here works ok.
->
-> For digest it has no security improvement either, as the input is
-> randomly generated key and if you want to run bruteforce on it, it is much
-> faster to try to decrypt some sector where you can detect correct plaintext
-> than to use slow digest PBKDF2 here.
->
-> m.
-
-
+Also, if the device hasn't been filled with random data for padding,
+storage allocation patterns can give a lot away even if you can't tell
+what exactly is there. A volume holding an ext3 file system looks
+_very_ different in terms of allocation patterns compared to, say, a
+Btrfs volume or a NTFS volume. Once you have a reasonable guess as to
+what file system a container holds, there are usually signatures in
+known locations that you can use to hugely narrow down the set of
+possible plaintexts and therefore confirm whether a candidate key is
+plausibly correct. Or you can take a shot and look for signatures for
+any of the few dozen most common file systems. "Known plaintext"
+sounds like it would be a meaningless attack against encrypted data
+(why try to decrypt the ciphertext if you already have the
+plaintext?), but surprisingly often, it's a _very_ practical starting
+point precisely because you can make very good educated guesses about
+what the plaintext might look like.
 
 -- 
+Michael Kjörling • https://michael.kjorling.se • michael@kjorling.se
+ “Remember when, on the Internet, nobody cared that you were a dog?”
 
-Best regards,
-David.
