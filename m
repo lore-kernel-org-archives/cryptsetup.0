@@ -1,105 +1,98 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB57FEDA
-	for <cryptsetup@lists.linux.dev>; Sat, 10 Sep 2022 12:57:09 +0000 (UTC)
-Received: by mail-pj1-f43.google.com with SMTP id s14-20020a17090a6e4e00b0020057c70943so7896768pjm.1
-        for <cryptsetup@lists.linux.dev>; Sat, 10 Sep 2022 05:57:09 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6824683
+	for <cryptsetup@lists.linux.dev>; Thu, 15 Sep 2022 14:17:33 +0000 (UTC)
+Received: by mail-ej1-f43.google.com with SMTP id lc7so42591035ejb.0
+        for <cryptsetup@lists.linux.dev>; Thu, 15 Sep 2022 07:17:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=mZfKHuauH8dpswUht4DhyaeLhlSdGiANeLPSv3bD8hg=;
-        b=Kmq5gCBqYiQh/eeIRZ/d/O8tB43D3fMeDaJ8HKdmw5GO/SnrRYi4XwRJ4tCR57K1Ps
-         OgN/oiyQJyVDq2N83lQqCC47iOdj+PiBx8X2Np5+lXS6Ai9dDXxHml1labfveXKEMY6h
-         eIT5iP8w7FW1HbcUr7ZSEkY7SAcxQfKRx40pR99oSXqMhvW896AKff/MmVmwFKzlQ4xE
-         OyP4uT2uumpiqLxBMbOBcrOG8GuQYxCDfdVh1S47jEWo4gJgwYL6XPM+v03z21rAupWy
-         +9LKg/XeD5iQG8vOHureZU6OLuv5VJMEPVtzbT7BP+gE6e/IW1cSJJ4uHvkHB0upp9cA
-         vumA==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=uK5lT5fhFhKy1JpR6sS7jaBJZtK5f4DjhkLIjuaF7EI=;
+        b=KyafTOTo3UrYUoT9VpKNnPKxBCZwKUA9f+SggLZvEmcN5JlpEVtp4Xr7bumD7GQjsB
+         3v99UIYEEnP5rg6i2RO6RUVIsuG4Su+rQxwYIt16fmQ8tgvLLI0ae3hk0RnNCSdwSMCi
+         /zbSNqydZXh9ASMab7WtNiPGa8+1hgD4Jci4R0QLkJqU/mElKVz6jgVto024LXavfuIj
+         CktuFsdXtnw+veDkUjiwkLMikzn0fXN5/xfDbnIsZaT3Cj+dA9NVYqVwvl6CmrEN+Wzu
+         oZuOvmSzjpnI0xdBCO0bEZDMLKYiiE/IRQuiZtBzij6zF+iVQ5dCr0iqOcIluN+blr1e
+         xfzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=mZfKHuauH8dpswUht4DhyaeLhlSdGiANeLPSv3bD8hg=;
-        b=tNjkIiHhpkERZbUdJoTsKV1g3InVnj/eqW6FYTu1npw9R9zz1jfsz3lSwwf59VtkNK
-         zpIhXS9r0mp5XDVTBbVT3L+tS97Qmv+zgAu7/jzABruBSd5IQFsLXN5pprjkn3PVSx/O
-         9QKNxSR5oWvNohkKMHMwJUlA5poKSeTiJ4W5gD/C0SIJ1LxGkw8dbhS4N/8dsWE9gqf1
-         /UwpOJI8WPeJu/aZ0yc0tF1ETjsSpI6S4WfgMh9uOIRoFoNF4Y9KYf+XMgw+RBNJF1+a
-         zzcdd2pBMEuO4Xie5562KPn3MIGs8sdJqzwDwctBTnk6c0eOKQ/aBrJQ1ap3gTjdM5FA
-         OQ/g==
-X-Gm-Message-State: ACgBeo0swqclDB4AvVmu7RprTtJkNUAIWx0bO1NkBMT4sTNYkbbp1d4U
-	cdAMJv2ONa0rHapdEJ2se5NFh3YJJ3tKxn29VEA=
-X-Google-Smtp-Source: AA6agR7MyU+XcVPHMyi4XnbyftiCXZ6wl7t3LKPXZx9Y+yqsKJwGaY8JJV+8fHKn4SqHkvzYj3+N65CCzG23oxFmPNE=
-X-Received: by 2002:a17:902:a409:b0:176:a717:4d5d with SMTP id
- p9-20020a170902a40900b00176a7174d5dmr17857831plq.148.1662814629443; Sat, 10
- Sep 2022 05:57:09 -0700 (PDT)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=uK5lT5fhFhKy1JpR6sS7jaBJZtK5f4DjhkLIjuaF7EI=;
+        b=MD/7W0t22I+NDbMD81jO+gL/ts5+cgl6lYccsFTxNTP2wPDj7gHXSV31nLMbWoLuBv
+         0kEz8qeWi5eed+D3kB/w1yBXJgFANJiwwhyrf4LXa/6he53cJ2yy+/GfElZbZvdUi8VC
+         Xc94A8Xyxvds074tT+a0dyCeEMx/1XK8UU8oa5sE3DkWwaMdcr95VfyvUsl/L6Mkh46X
+         d2rYC/JFXXXUyyq4MU0cQWGBBfZ3mPXQED4H0Am3LtjiuF/ylDa/N5dYkrbkcbR6f6Ka
+         8mwWVPuy3Fzg/LBw7vnOlEOL9XC48DQUSmOUMPDRA5f0o0Ya4YdzBvLA1xQQTFS2jwah
+         6Afw==
+X-Gm-Message-State: ACrzQf22gANMT+xPOgR/f0my6uPW36KReuqo/Anbp0zJ4PrTH31X2vSO
+	I1MX5ZFoF7h1AJxeQLGX4zN7WDAxvXY=
+X-Google-Smtp-Source: AMsMyM4biCO2EzzYS3Qa6RYhH8gpkpXedGwZ9BHTdAhK4g25buxk+geAn+BD5/7K/hnRBbR71I+nNA==
+X-Received: by 2002:a17:907:75e1:b0:73c:2333:7135 with SMTP id jz1-20020a17090775e100b0073c23337135mr121795ejc.495.1663251451217;
+        Thu, 15 Sep 2022 07:17:31 -0700 (PDT)
+Received: from [147.251.42.105] (nbbroz.fi.muni.cz. [147.251.42.105])
+        by smtp.gmail.com with ESMTPSA id p20-20020a056402155400b004479cec6496sm11940578edx.75.2022.09.15.07.17.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Sep 2022 07:17:30 -0700 (PDT)
+Message-ID: <aef47dfb-e253-114e-e4a1-fa6c4bf369f1@gmail.com>
+Date: Thu, 15 Sep 2022 16:17:29 +0200
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CACHosL-Nxs5dHJddw8RjqnK4d7OewzA2FT6G1ZQcAhw=PzLLpQ@mail.gmail.com>
- <6f804ddc-a6ed-a784-3ca1-5126b5d8f4cf@gmail.com>
-In-Reply-To: <6f804ddc-a6ed-a784-3ca1-5126b5d8f4cf@gmail.com>
-From: "doffloster@gmail.com" <doffloster@gmail.com>
-Date: Sat, 10 Sep 2022 15:56:53 +0300
-Message-ID: <CACHosL-eTO=N-sLTOquZM+8XUFVx3_2dZXPhwnR+yH-v0S0hoA@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
 Subject: Re: sha256 in "AF hash" despite using sha512 during luksFormat
-To: Milan Broz <gmazyland@gmail.com>
-Cc: cryptsetup development <cryptsetup@lists.linux.dev>
-Content-Type: text/plain; charset="UTF-8"
+Content-Language: en-US
+To: "doffloster@gmail.com" <doffloster@gmail.com>
+Cc: cryptsetup@lists.linux.dev
+References: <CACHosL-Nxs5dHJddw8RjqnK4d7OewzA2FT6G1ZQcAhw=PzLLpQ@mail.gmail.com>
+ <7f403984-bd0d-9b75-d0eb-0cacbb41810d@gmail.com>
+ <CACHosL8YcOXCouZvhTX4rn_F7buVj7tdiefEbHvgGwbfC3t-CQ@mail.gmail.com>
+ <8d17f923-271f-d0a2-f28a-5cbc910b6513@gmail.com>
+ <CACHosL_rLDJss0N1rmszEEtsaxpTdXwV9mXHbTNMWO62AauYTQ@mail.gmail.com>
+From: Milan Broz <gmazyland@gmail.com>
+In-Reply-To: <CACHosL_rLDJss0N1rmszEEtsaxpTdXwV9mXHbTNMWO62AauYTQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Thank you for inspecting my log.
-I used the low iteration time just for the reproduction example - in
-the script there is the following line:
+On 10/09/2022 14:53, doffloster@gmail.com wrote:
+> 
+> Do you mean that the choice of 'sha512' for the flag '--hash' is
+> reducing the security strength?
+>  From what I could understand, it shouldn't reduce the security strength.
 
-> ITER_TIME=50 # Just to make it fast
+No, I said it will not increase security (while it can increase processing
+time and keyslot storage space).
 
-So, I am aware of the iteration time issue.
-In reality I use an iteration time which is higher than the default
-(default iteration time is 2000ms).
+> I executed "cryptsetup --help" and found that the following default
+> values are defined:
+> 
+> "
+> Default compiled-in key and passphrase parameters:
+...
 
-On Sat, Sep 10, 2022 at 1:34 PM Milan Broz <gmazyland@gmail.com> wrote:
->
-> And just reading your log...
->
-> # cryptsetup 2.4.3 processing "cryptsetup --type=luks2 --verbose --debug --hash sha512 --key-size 512 --header /tmp/header.img --key-file - --iter-time=50 luksFormat /dev/sdb1"
->
-> If you want to improve security DO NOT decrease keyslot iteration time!
->
-> You set 50ms (--iter-time=50) that will cause all KDF parameters to use absolute *minimum*.
-> (Default is 2000 = 2 seconds!)
->
-> The whole discussion about changing hash is pointless then...
->
-> m.
->
-> On 10/09/2022 00:50, doffloster@gmail.com wrote:
-> > Dear cryptsetup/LUKS Team,
-> >
-> > I was using sha512 in the luksFormat command.
-> > Later I used luksAddKey while thinking that it should be using the
-> > sha512 hash that I defined in luksFormat.
-> > But, when I did luksDump, then I noticed that the field "AF hash" for
-> > the second key (which was added via luksAddKey ; its keyslot is #1)
-> > contains the value "sha256".
-> > I expected it to contain sha512.
-> > Notice that keyslot#0 has "sha512" in its corresponding "AF hash" field.
-> >
-> > Attached script which reproduces that issue, filename
-> > "reproduce_commands_without_hash.sh".
-> > Attached output of the script, filename
-> > "reproduce_commands_without_hash.log.txt".
-> >
-> > Did I miss something?
-> >
-> > Best regards,
-> > David.
+> As far as I understand, for LUKS2 the default PBKDF algorithm is
+> 'argon2id' and default hash is 'sha256'.
+> So, I only changed the default hash to 'sha512' by using the flag
+> '--hash', though I didn't change the PBKDF algorithm, so it should
+> stay the default value, i.e. 'argon2id'.
+
+Yes, it is visible in the luksDump output.
+SHA hash was used only for AF for that keyslot.
+
+> Also, I didn't find any mention of the 'Blake64b' hash.
+
+Sorry, my mistake, I meant Blake2b; it uses 64bit words.
+
+See Argon2 RFC:
+https://www.rfc-editor.org/rfc/rfc9106.html
 
 
-
--- 
-
-Best regards,
-David.
+Milan
