@@ -1,100 +1,132 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bumble.maple.relay.mailchannels.net (bumble.maple.relay.mailchannels.net [23.83.214.25])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A813D74
-	for <cryptsetup@lists.linux.dev>; Sat, 17 Sep 2022 18:15:30 +0000 (UTC)
-Received: by mail-pj1-f50.google.com with SMTP id m10-20020a17090a730a00b001fa986fd8eeso2934086pjk.0
-        for <cryptsetup@lists.linux.dev>; Sat, 17 Sep 2022 11:15:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=8VmOny/RuViKm9WKKjvyED7Murb+6oTs3XyedVk4uXQ=;
-        b=e46hHSiUi2ZOIwK0e4YAh+vXf20FEpXz/acf0dq7+9G16Si4rCsw52czNtdOktXYvu
-         p6N3zhYkepyrkljocAWEyHtNdFIQF+nBqak7SvH9LHJ4zgyfCU8qXBXF/yeP2a317FZh
-         /LYYBr5/psrNUk+Rf/Rvm/o8FnuX+wh0TZGN1anJAyKUeXByItsd6JR3HrQj2pMmkA8F
-         u9PsxAyMgoTM4MWaC2C9Dp6DTbugMOHGpEpFeB5UDQSnyTMXr5aBUh0IrQpD0NZSXj7x
-         XO2bVR6B9gsDY1078q54bT3AqBPZbI5VyqT44WWm1aaEveQ4bOfvoy1N/CjPDAqGh4U9
-         nxWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=8VmOny/RuViKm9WKKjvyED7Murb+6oTs3XyedVk4uXQ=;
-        b=7aI/sd9zSu/9BbwX2Z4eql/4MNajtZklUBybyoshqHD8gGdbY4vHcVJp1sOrLp0ISQ
-         xX66wqE7fwLrbJnERxC1S+ZuezI6zCS6c2bpAlaoOSbiFTYPQh6jGm61dxW57nx66R5U
-         Lc6SKitDguXOciwSjwlLRbqH73h+QPtgoKMsLPB69IXYrm8zK4EpD25iTTeQJeLZMSSs
-         gQCrAmYhVDgDmBJXsZ7FCmwbETaW6wyfr886SHxxvaEqY0rRfXQkJayI+f6BH2i4B+Sk
-         FJ38DSminU0v9w+mvR5d3WQd6z1cPp9rwK9KyKEzcsUX1kz2JeEdZaQzVlCR495KuN/m
-         RATw==
-X-Gm-Message-State: ACrzQf2e7RbXhnrqZloWgeMVRlUkbwwOOVN2k+ewJgf9DNrIIDpy8ikj
-	NxRwQYnGmhsToy3RT3tjzEZHycJdppSUvRSQNhfjsbMnr40=
-X-Google-Smtp-Source: AMsMyM6uHioC8onNJ1Ii80uXyqNC2aw/VoQiHbHzpKFzXoNNMpFdGJw/q0kuTj+sDx7zCqfOW6iKcXny9S4Sk5aKf90=
-X-Received: by 2002:a17:90b:3e87:b0:203:19a9:e534 with SMTP id
- rj7-20020a17090b3e8700b0020319a9e534mr11397398pjb.222.1663438530220; Sat, 17
- Sep 2022 11:15:30 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB407C
+	for <cryptsetup@lists.linux.dev>; Thu, 22 Sep 2022 17:48:17 +0000 (UTC)
+X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id 2F060501357
+	for <cryptsetup@lists.linux.dev>; Thu, 22 Sep 2022 17:40:17 +0000 (UTC)
+Received: from cpanel-007-fra.hostingww.com (unknown [127.0.0.6])
+	(Authenticated sender: instrampxe0y3a)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 59275501137
+	for <cryptsetup@lists.linux.dev>; Thu, 22 Sep 2022 17:40:16 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1663868416; a=rsa-sha256;
+	cv=none;
+	b=6VvuHXDkKvJpcTjMjix0Oq0NBN6Z3g0vOiZykQ16JecpSim6WHl6FIcd4YKAX626c1d2PA
+	xsQBFn35nGBvLaQe88nkkPMHvUKTQtjJfv4sCoMAhuZg/9xM56CHvqqaXGlcsGSfERjB60
+	nQ+VPlsIG91xMprQMQifaW96HeqcKjA1UOxkPiqFViSdyZtR3om0Mz6YBjZ72MUKTF+xvR
+	iCYkH5McwobEZ7KwdXJL1nmSOLy/hmgimcWjo0zI7xg6hLQwcVhV602YUK4Ev+0SgaHidD
+	DZOE6umz4hnhM1VGZjkBj2a1yz1Agry4CwSXsvXtK1KtYC30uOREbEPTdBmxLA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1663868416;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=klbvI08zAJPB1zOJa0E7/O7b4zkg1LzMHBgjJ8mz0Ak=;
+	b=Qqun/4qr6EiYgIkTSxrmenux3JMcG3A/utdk3IIZlds38LfcvgCbS/QdB94b6oDVcNb9UD
+	V+iF6YVqYyaZ9ExdSw9s53M0AAwPupSS6v8EzIfEeQqAqM62xXWJrsAp7S8rOq2EdZZ3m6
+	pXykqQqHdUO4mLLpFoLKywgTocZBL68C5c3Rhx/D0OJWcvVI9QnZ1j5k9psdJDZi/nwL+I
+	5p5C6QYZH5kY5NEVlTkhOCcTAf+UZ0lMsxRPgJHrAcDjreeiF8y3liXZBWIyst/LPnUkGb
+	oFx5wMHATRJOmXnjBGK7jPcEwic4a8z3OYQQg90Rs+ZkcVBkKAGE1qamovlD7w==
+ARC-Authentication-Results: i=1;
+	rspamd-85d65fb7c-v9tzt;
+	auth=pass smtp.auth=instrampxe0y3a smtp.mailfrom=calestyo@scientia.org
+X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: instrampxe0y3a|x-authuser|calestyo@scientia.org
+X-MailChannels-Auth-Id: instrampxe0y3a
+X-Glossy-Cooperative: 127b610d0eb2c59b_1663868416853_1126877439
+X-MC-Loop-Signature: 1663868416853:538134246
+X-MC-Ingress-Time: 1663868416853
+Received: from cpanel-007-fra.hostingww.com (cpanel-007-fra.hostingww.com
+ [3.69.87.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384)
+	by 100.119.144.146 (trex/6.7.1);
+	Thu, 22 Sep 2022 17:40:16 +0000
+Received: from ppp-46-244-242-250.dynamic.mnet-online.de ([46.244.242.250]:33644 helo=heisenberg.fritz.box)
+	by cpanel-007-fra.hostingww.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <calestyo@scientia.org>)
+	id 1obQBI-0000TJ-Uv
+	for cryptsetup@lists.linux.dev;
+	Thu, 22 Sep 2022 17:40:14 +0000
+Message-ID: <3c9bf07f1cb05f2cfb15adb184fbf161737a148e.camel@scientia.org>
+Subject: [X]ChaCha20+Poly1305 usable?
+From: Christoph Anton Mitterer <calestyo@scientia.org>
+To: cryptsetup@lists.linux.dev
+Date: Thu, 22 Sep 2022 19:40:09 +0200
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.0-2 
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CACHosL-Nxs5dHJddw8RjqnK4d7OewzA2FT6G1ZQcAhw=PzLLpQ@mail.gmail.com>
- <7f403984-bd0d-9b75-d0eb-0cacbb41810d@gmail.com> <CACHosL8YcOXCouZvhTX4rn_F7buVj7tdiefEbHvgGwbfC3t-CQ@mail.gmail.com>
- <8d17f923-271f-d0a2-f28a-5cbc910b6513@gmail.com> <CACHosL_rLDJss0N1rmszEEtsaxpTdXwV9mXHbTNMWO62AauYTQ@mail.gmail.com>
- <aef47dfb-e253-114e-e4a1-fa6c4bf369f1@gmail.com>
-In-Reply-To: <aef47dfb-e253-114e-e4a1-fa6c4bf369f1@gmail.com>
-From: "doffloster@gmail.com" <doffloster@gmail.com>
-Date: Sat, 17 Sep 2022 21:15:14 +0300
-Message-ID: <CACHosL8fho_0m=cgCzL69Bnp5TG0CkB0p48JvkJiN1CTRABC-A@mail.gmail.com>
-Subject: Re: sha256 in "AF hash" despite using sha512 during luksFormat
-To: Milan Broz <gmazyland@gmail.com>
-Cc: cryptsetup development <cryptsetup@lists.linux.dev>
-Content-Type: text/plain; charset="UTF-8"
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AuthUser: calestyo@scientia.org
 
-I understand.
-Thank you for all the help!
+Hey there.
 
-On Thu, Sep 15, 2022 at 5:17 PM Milan Broz <gmazyland@gmail.com> wrote:
->
-> On 10/09/2022 14:53, doffloster@gmail.com wrote:
-> >
-> > Do you mean that the choice of 'sha512' for the flag '--hash' is
-> > reducing the security strength?
-> >  From what I could understand, it shouldn't reduce the security strength.
->
-> No, I said it will not increase security (while it can increase processing
-> time and keyslot storage space).
->
-> > I executed "cryptsetup --help" and found that the following default
-> > values are defined:
-> >
-> > "
-> > Default compiled-in key and passphrase parameters:
-> ...
->
-> > As far as I understand, for LUKS2 the default PBKDF algorithm is
-> > 'argon2id' and default hash is 'sha256'.
-> > So, I only changed the default hash to 'sha512' by using the flag
-> > '--hash', though I didn't change the PBKDF algorithm, so it should
-> > stay the default value, i.e. 'argon2id'.
->
-> Yes, it is visible in the luksDump output.
-> SHA hash was used only for AF for that keyslot.
->
-> > Also, I didn't find any mention of the 'Blake64b' hash.
->
-> Sorry, my mistake, I meant Blake2b; it uses 64bit words.
->
-> See Argon2 RFC:
-> https://www.rfc-editor.org/rfc/rfc9106.html
->
->
-> Milan
+When using LUKS with integrity protection, there used to be that
+problem that some of the available "well known" algos SHOULDN'T be used
+because of security reasons, e.g.:
+
+- --cipher aes-gcm-random --integrity aead
+  =3D> nonce in the kernel's GCM only 96 bit, considered too small
+
+- --cipher chacha20-random --integrity poly1305
+  =3D> the same than above was used to be said, though when looking at:
+     /proc/crypto:
+     name         : chacha20
+     driver       : chacha20-simd
+     module       : chacha_x86_64
+     priority     : 300
+     refcnt       : 1
+     selftest     : passed
+     internal     : no
+     type         : skcipher
+     async        : no
+     blocksize    : 1
+     min keysize  : 32
+     max keysize  : 32
+     ivsize       : 16
+		=3D> doesn't that mean the nonce is 16*8 =3D 128 bit,
+                   which is the same than e.g. that of AEGIS128?
+                   OTOH, linux/include/crypto/chacha.h defines
+                   #define CHACHAPOLY_IV_SIZE	12
+     chunksize    : 64
+     walksize     : 64
 
 
+But since quite a while now there's XChaCha20 in the kernel:
+https://github.com/torvalds/linux/commit/de61d7ae5d3789dcba3749a418f76613fb=
+ee8414
+which should have a 192bits nonce.
 
--- 
+Wouldn't that solve the issues with the too small nonce?
 
-Best regards,
-David.
+At least it seems I cannot create such a LUKS volume:
+# cryptsetup --verbose --type luks2  --cipher xchacha20-random  --integrity=
+ poly1305   luksFormat TEST ; echo $?
+WARNING: Device TEST already contains a 'crypto_LUKS' superblock signature.
+Cipher xchacha20-random (key size 256 bits) is not available.
+Command failed with code -1 (wrong or missing parameters).
+
+
+btw, does it make (security-wise) any sense to use ChaCha20 without
+integrity? e.g.:
+--cipher xchacha20-random
+--cipher xchacha20-xts-random
+seem to work, but
+--cipher xchacha20-xts-plain64
+
+doesn't.
+
+
+Thanks,
+Chris.
+
