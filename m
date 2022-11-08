@@ -1,80 +1,71 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD02CA460
-	for <cryptsetup@lists.linux.dev>; Tue,  8 Nov 2022 20:10:32 +0000 (UTC)
-Received: by mail-pf1-f175.google.com with SMTP id m6so14799532pfb.0
-        for <cryptsetup@lists.linux.dev>; Tue, 08 Nov 2022 12:10:32 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCFCA495
+	for <cryptsetup@lists.linux.dev>; Tue,  8 Nov 2022 22:52:14 +0000 (UTC)
+Received: by mail-pj1-f52.google.com with SMTP id h14so15103185pjv.4
+        for <cryptsetup@lists.linux.dev>; Tue, 08 Nov 2022 14:52:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=a38GOfMYfvlcPORSE9QLOH661hnrAHUtM+MU/BIqhQw=;
-        b=Er0tVAn9tD51kAFbjpC4LcIXb36XWTn1m+LIelwVtH4/tv7gCRN1+2T8gdHUVyk1KX
-         mY9vDNkZrNFmhCE1B3fxwZRSKhknDsB2HM7oXow5COCvb98dgpornPfb32maU3GRDSD0
-         t4VxCo81LO7xeWzHVKAWLdapPWNwOdvfhz80gQROPas1AGeBy0ZBJz8rZpoWo1HFgCUA
-         KzX/N8T6EPz9STvb3N4NR1uHMTV0tgjSEoO1bCmTy4XzMtbA7YwY3WHxIDOTyhOpRzMF
-         4YDvOSvSf5FSn8fy1rSALRPck+8hKeTnoX/V6mu5yspq908zfFc82lTsVotNTvirFmNU
-         GQ3Q==
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=uUVZuGGc713jKo55pRp9JUPP3aH/h/vXTYbU9Kc5Lj8=;
+        b=Z9253yXjUdLU02vgNJg+rpOvg59o2GJ5j1Owh73oR5Y+aqYX7oCJdvZa8NeL6n6qm7
+         UbJGoHJglxI0kMsh+44oXKmJhyUQnb90lrbTDBp0pqcQkBg8y8dxB6Sc62N1cl3bx75u
+         cbvWkG3T/Joc99yk81hkzhPZkgMqe+tM3pNHNZ9xVwGOXLax/1NxeLm2c9bw9praH9UR
+         uER3bDcdU7G9nEIyngK3EFuUEI0N5eHq89IJ/37iKJbRc5IgbloVFCdOYcPJrrZkZ2Oo
+         lcCKDJEAI2PZnUJVaqBEd0oL30BTgNV9BoeAKnka1uHS6oSN2pO7PvfT1YXymDr6bq5m
+         BALw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a38GOfMYfvlcPORSE9QLOH661hnrAHUtM+MU/BIqhQw=;
-        b=2Oo9x5Gg7wFimop2E/Ajxo+bCoBwd5YKWeRQoJSkBIDRR16Z/Rb7goVr4nhIzgE+0P
-         WH5oGILtneoK1g6y5eKRwZbrOrad8dhCtE4bK/qZPXE4cvV6587nuHnBgoxAMq5R5Tvv
-         ZhGphvWImC9jVdwmOUcRl0zSvGe7JBQNvRz5S/EiduZ9fjS+fEKKzT5oKpsP5p+yoVrN
-         QpLxtcskd/d8Y7UomclWudU/DwVmPdjvYKelFOeUzrg0mwNa7/6V7J3CL734oK1zTtxu
-         aSnXlz4XR6SW2/ikTmJWcaX5ehe5TnQ0SLAs2USC56mDczk7bI3JmajklM63utCj08OM
-         n0Hw==
-X-Gm-Message-State: ACrzQf2d0qVXzPgzPwa9ReogSM6Vl7A8MSHTrcRVOgzhbj47fSr8Dz8K
-	oHkiXBB1qi/mw31cgKm/2t7w9W8DShyENA5oWyu/n6uW
-X-Google-Smtp-Source: AMsMyM5lEFB6CRJdhi8yOTN4Ksl+pgiOxrfeOYKhg6+WtEnA1mD0aNfA+88Fu/mCXF2uaFjYzm5k3MyXHJISIt3X1rM=
-X-Received: by 2002:a65:5583:0:b0:461:25fe:e982 with SMTP id
- j3-20020a655583000000b0046125fee982mr49275203pgs.4.1667938232168; Tue, 08 Nov
- 2022 12:10:32 -0800 (PST)
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=uUVZuGGc713jKo55pRp9JUPP3aH/h/vXTYbU9Kc5Lj8=;
+        b=nvb7rV9sKRzfU7nk32R2KBHolljaitZE/TpJI3TJNp64PHrGdkwxPFuq3xHl9V6ghW
+         pOcJXDSjGYawssTYoU73nhxXkHnkpDli9rayMKaLh4+qu1kP1uF7LJuw9Bo73mlFWwWO
+         hdFV1lz3ciH2zof206H/Cdneq1jv6UNAkjsaQccfnToQbyF7bN1EfVB/7eh5vo8T0Etz
+         hyJ1ZLAMi0/hs3fwxHJWzouT9hvyIx+q3qvYIydvDrHehbLuIAaBzjRyZK9lZbq/VrJK
+         qEra1Vaf64e5l9xWH0ZLt3Tg/oGfkHzz0kl9J3HWI0UxAnX0CYVQXHhjDp8szs1exwbU
+         X+3w==
+X-Gm-Message-State: ACrzQf0zsY0MaBK1u4JT/GG5PxpCvfIJq5BwDC87IDUsybvo9yW7tNyr
+	6Q+jW+7x+RdQa7g0pPBSWvytTq2EQhxp0zRnqCg9TvnW
+X-Google-Smtp-Source: AMsMyM4tuiZaEgZifJQTI8ZzJJBTD6KjC+mQqrbwdlyRjqtgo/wrXT+w4CZKRz14PEWVZ07rigJgGGKkUspnRzdY2cs=
+X-Received: by 2002:a17:903:41cf:b0:187:1a3c:517a with SMTP id
+ u15-20020a17090341cf00b001871a3c517amr50208923ple.7.1667947933750; Tue, 08
+ Nov 2022 14:52:13 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CAN+za=M8rBabbD841n=L55bP9KdCjiPDAAgGDtoUM6ydje0few@mail.gmail.com>
-In-Reply-To: <CAN+za=M8rBabbD841n=L55bP9KdCjiPDAAgGDtoUM6ydje0few@mail.gmail.com>
 From: Philippe Cerfon <philcerf@gmail.com>
-Date: Tue, 8 Nov 2022 21:10:21 +0100
-Message-ID: <CAN+za=PQpm8MiUYpbB_aYqEnTRz2Do2sqr2yZthEp3oO4qGSPw@mail.gmail.com>
-Subject: Re: security of re-encryption
+Date: Tue, 8 Nov 2022 23:52:02 +0100
+Message-ID: <CAN+za=OaHi939USLRp8DttVjamBx7qSxOp-LPm6uNtMN7oek8A@mail.gmail.com>
+Subject: reencrypt: how to specify old and new key-files?
 To: cryptsetup@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 
-Hey Michael.
+Hey.
 
-Thanks for your reply! :-)
+Sorry for having to ask again.
 
-> Consider just that the first several bytes of the HTTP
-> request portion of a HTTPS transaction are not just guessable, but
-> can
-> pretty much be considered to be _known_ since they are essentially
-> dictated by the HTTP standard.
+When I'm reencrypting a device in order to change the volume key and
+also the keyslot (say from PBKDF2 to Argon2) wouldn't there need to be
+some way to specify two different --key-file?
 
-I had thought about that, too, but imagined that the following might
-make a difference:
-- With HTTP, only the first few bytes are the same (more or less)
-unless one transmits large files or so (but then again, wouldn't TLS
-renegotiations hapen after a while)? With LUKS one migh have many TB
-of ciphertext (before and after). So I wondered whether that could
-make a difference.
-- With TLS, doesn't one typically have some ephemeral key, and even if
-that was compromised only that particular session (or part thereof)
-would be compromised. For cryptsetup the key is "static", so the
-effect would be much bigger.
+One for the old keyslot with the old VK, and one for the new keyslot
+to be generated?
 
-Of course I didn't want to imply, that I'd knew of any such attack.
-I'm not an expert, so I merely asked whether something is known and
-whether re-recryption is recommended from a security point of view!
+Especially if with --key-slot <old slot ID>, the old slot is
+overwritten and all others removed, as explained by the manpage:
+> For reencryption mode it selects specific keyslot (and passphrase)
+> that can be used to unlock new volume key. If used all other keyslots
+> get removed after reencryption operation is finished.
 
-So I guess it is. Thanks for your help.
+But it seems there is only the --key-file option, for which it's even
+unclear to me, whether it's for the old or new keyslot/VK?
 
-Sincerely,
+
+Thanks,
 Philippe
