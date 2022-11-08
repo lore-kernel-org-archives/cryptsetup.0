@@ -1,61 +1,74 @@
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ste-pvt-msa2.bahnhof.se (ste-pvt-msa2.bahnhof.se [213.80.101.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775A6190
-	for <cryptsetup@lists.linux.dev>; Tue,  8 Nov 2022 02:40:54 +0000 (UTC)
-Received: by mail-pg1-f171.google.com with SMTP id q1so12190013pgl.11
-        for <cryptsetup@lists.linux.dev>; Mon, 07 Nov 2022 18:40:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=FiFUJCXC/XsBsWFOMiwr6HA3tDNyeQFH4a3t8q19Q+4=;
-        b=ONXYq5LjUM2H8wb/MsP+hw+yXS/zdlcCgb7o+5UlAkcMF4NMAH6g2tVUHwef7Y1J70
-         HURZvGvftIhuj3GYVh0nqjZZzEE3HNMwJrEKuYCrRJAGNBjQmdEGaieC1cFWCr/7hbQ4
-         PsiIRn4AQyJiI+v9OSg0upAUoyT7PJI59pMERvKALEZJLopFli5rKtZWpiTAEp8aD0Cz
-         lVv0hMdZOzMVoyWH/0aaj7YAjLsamdlnuo2IvqHPlASiARMULW+i5oPIbJqxiXM8ZOEe
-         F2mdIQCi0XDGfUmklAhkwInGVVmI2/FLxTX+DkR+KDQBPqfVT+EeqHQSx5NY/xUEgLx0
-         3GXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FiFUJCXC/XsBsWFOMiwr6HA3tDNyeQFH4a3t8q19Q+4=;
-        b=F+Z9t/1wVlJQpLkCNwL5p33k19rx8AWwY6ln5I4ooU5Fh1H3JGodbRmFiDn9koOxUO
-         fYCgjmcGBuRNKvVR5dSUu+J1KehS4Nb64vwauvHU/xqgiUGgZqNaNgKUj/bqi81itBNq
-         0kq4XMLK8uDDiH5VxNvBduypmb0SGhF9W0OXO9jF8AQNCF/OexxQd4evPUtVru8S/PW1
-         LujWO3TQoHbcsv2jYaDZeoQAnrHw86c1iGHlBeLKHOal+oRijvSBqebkYXqqQshwJpEt
-         iEEoOmUhgqyRUtNDgaqKgL9tZE0IYcZC+rhyAwY6Alb+aFGuzUpG9sz/OtnGQR/Rupt5
-         i/ew==
-X-Gm-Message-State: ACrzQf0+ghDTFnIXAJyMSBwQVA7ecEQ+NA0fh/C20bEZHr115IGsEjPI
-	UjvXhkY+7vUG2PYL22bmoboziITx+wLuWl1ColYWt9VX
-X-Google-Smtp-Source: AMsMyM7pF+7o+rTGbjzwZOobOh8WnQBymKXIy/rvIBzhOu8I0JPp9asntRX0vjPxiX7cCU396RC5nNC+tzSI8eoKYIk=
-X-Received: by 2002:a62:d412:0:b0:56c:6f25:8b12 with SMTP id
- a18-20020a62d412000000b0056c6f258b12mr53643546pfh.60.1667875253884; Mon, 07
- Nov 2022 18:40:53 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401195CB3
+	for <cryptsetup@lists.linux.dev>; Tue,  8 Nov 2022 08:53:32 +0000 (UTC)
+Received: from localhost (localhost [127.0.0.1])
+	by ste-pvt-msa2.bahnhof.se (Postfix) with ESMTP id 3A752402AB
+	for <cryptsetup@lists.linux.dev>; Tue,  8 Nov 2022 09:53:25 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at bahnhof.se
+X-Spam-Flag: NO
+X-Spam-Score: -1.155
+X-Spam-Level:
+X-Spam-Status: No, score=-1.155 tagged_above=-999 required=6.31
+	tests=[BAYES_00=-1.9, FROM_LOCAL_HEX=0.006,
+	FROM_STARTS_WITH_NUMS=0.738, URIBL_BLOCKED=0.001]
+	autolearn=no autolearn_force=no
+Received: from ste-pvt-msa2.bahnhof.se ([127.0.0.1])
+	by localhost (ste-ftg-msa2.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id J83GALS3NGBa for <cryptsetup@lists.linux.dev>;
+	Tue,  8 Nov 2022 09:53:24 +0100 (CET)
+Received: 
+	by ste-pvt-msa2.bahnhof.se (Postfix) with ESMTPA id 2F8C640D1E
+	for <cryptsetup@lists.linux.dev>; Tue,  8 Nov 2022 09:53:23 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by localhost (Postfix) with ESMTPS id B177C2E0293
+	for <cryptsetup@lists.linux.dev>; Tue,  8 Nov 2022 09:53:23 +0100 (CET)
+Date: Tue, 8 Nov 2022 08:53:22 +0000
+From: Michael =?utf-8?B?S2rDtnJsaW5n?= <152cc69a347e@ewoof.net>
+To: cryptsetup@lists.linux.dev
+Subject: Re: security of re-encryption
+Message-ID: <4a629a87-9e30-44b4-b314-dd7f3caf926d@home.arpa>
+References: <CAN+za=M8rBabbD841n=L55bP9KdCjiPDAAgGDtoUM6ydje0few@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: Philippe Cerfon <philcerf@gmail.com>
-Date: Tue, 8 Nov 2022 03:40:42 +0100
-Message-ID: <CAN+za=M8rBabbD841n=L55bP9KdCjiPDAAgGDtoUM6ydje0few@mail.gmail.com>
-Subject: security of re-encryption
-To: cryptsetup@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAN+za=M8rBabbD841n=L55bP9KdCjiPDAAgGDtoUM6ydje0few@mail.gmail.com>
 
-Hey list.
+On 8 Nov 2022 03:40 +0100, from philcerf@gmail.com (Philippe Cerfon):
+> I mean if the payload data stays mostly or exactly the same and an
+> attacker would be able to make an image (of the encrypted volume)
+> before and after [re-encryption], could that help for statistical attacks in order to
+> get the key?
 
-I've just wondered whether there are any security implications of
-re-encrypting a LUKS volume?
+Personally, while I am certainly open to being proved wrong in this, I
+doubt it. That would imply that, with two unrelated keys both selected
+at random, something in the underlying cipher (most likely AES) causes
+the two ciphertexts of an identical plaintext to have correlations
+that would provide an adversary with a significant advantage in
+deriving either key. (Even just a few bits' work factor worth would
+very likely count as significant here.)
 
-I mean if the payload data stays mostly or exactly the same and an
-attacker would be able to make an image (of the encrypted volume)
-before and after, could that help for statistical attacks in order to
-get the key?
+Even if it was mode-specific (for example, applies only to AES-XTS, or
+does not apply to any currently defined chaining modes), that would be
+a _major_ break of any encryption algorithm, let alone of AES, and
+something I would expect to be presented at a major cryptography
+conference or at the very least in a field-relevant journal; certainly
+not in a post on a mailing list.
 
+It would also potentially have implications _far_ beyond full-disk
+encryption. Consider just that the first several bytes of the HTTP
+request portion of a HTTPS transaction are not just guessable, but can
+pretty much be considered to be _known_ since they are essentially
+dictated by the HTTP standard.
 
-Thanks,
-Philippe.
+-- 
+🪶 Michael Kjörling                  🏡 https://michael.kjorling.se
+“Remember when, on the Internet, nobody cared that you were a dog?”
+
