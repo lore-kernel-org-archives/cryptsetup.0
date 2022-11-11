@@ -1,103 +1,137 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535A82F23
-	for <cryptsetup@lists.linux.dev>; Thu, 10 Nov 2022 14:52:40 +0000 (UTC)
-Received: by mail-pj1-f42.google.com with SMTP id e7-20020a17090a77c700b00216928a3917so4840374pjs.4
-        for <cryptsetup@lists.linux.dev>; Thu, 10 Nov 2022 06:52:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=imEtVzgrg8NpaOfNSk9m4OyPmg4KyiK3N3SbgpPjKSk=;
-        b=bdbst+JKHllx4J5h1LIc+gpuEKOjHjGw4Ym2kgINYEB7ru5UoabwcxDyH1ScIY4xCk
-         qjptcp+gu1X0ePaD9WF5PxhUtlQmsWMDeNMMsjbX/Zw36uy6ArLiU/tDGRimw4xrVneV
-         1Q/a4GwDhzUJMJ+WH3BHVM04dZbAGFM0V+YuNQfx9Fc7i0QwkeKn9E47dyZStCVij9QO
-         /LNojsgmqU5l5LiRO/h5p9pgIrV/BfDAJGnC2Rgb7JO1onq0AYmImB5M7z+DI/scZELC
-         LDD4ZigK+0dpj1JDSeuYM9UJ6zU6c7wOMGjqvkzTxGeSgkXSHwCi5pAgemb26H7pwnDH
-         sIeg==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4C0369
+	for <cryptsetup@lists.linux.dev>; Fri, 11 Nov 2022 10:39:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1668163158;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=BWdwzl0JJH108Sq7mZqsn6TJemmNO78msL/CJ3BI/ec=;
+	b=IK7KSeg0I6vtnjcuoggcE9fFpuGG2vbQvRihY3dvJZnPKFp49N0Kxj6usjhDpy9XeGX563
+	LByIG14lFTY9p/006TU355Jzf7d4cip/Bf6szkSmzfCuL1Gt0tcJ/2HVTSZRjfexX4P13A
+	4cp7dlsXtjSGljS3ravyeyFSHrY6ZVU=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-43-Zd7VZ-SxPZ2eQ1y0ib5gaA-1; Fri, 11 Nov 2022 05:39:17 -0500
+X-MC-Unique: Zd7VZ-SxPZ2eQ1y0ib5gaA-1
+Received: by mail-ej1-f70.google.com with SMTP id nc4-20020a1709071c0400b0078a5ceb571bso2819807ejc.4
+        for <cryptsetup@lists.linux.dev>; Fri, 11 Nov 2022 02:39:17 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=imEtVzgrg8NpaOfNSk9m4OyPmg4KyiK3N3SbgpPjKSk=;
-        b=JmECouT8La0U76Bl7blmOGVyYYn++muIolAgCAt24iShPWAJD/varlsmprrI2LkK9Y
-         haSBCZs9HAWwfoRTW9CzazzkjfzoPslPnWJIR5g7XMFXBl/CjAldu0kkmLyDG9FfAwCB
-         6FvNRZqFUQqIM2xY3OshTSzHkpTHnXsy/PKguTUhBGm1VddsEMavvIuvzoL2R+N4KAAj
-         46j53LJx50JoDal1lvucd6k3hjfx6rQKP4zXeW7LO0ZNDfj7efJm54QYHeVcZkBy05Qv
-         qlkUBsixj7yeB8FMn3SO5B7XjoYD/895cavuNS6Gh++NAJn+px8SDzH39QwjBKNYFwoT
-         kMGg==
-X-Gm-Message-State: ACrzQf0JYj0Ix5S1++9Vav+51G5KHUiFQ4gdOgTHIOh7v4jhIIJnkNMG
-	9Opm8m5f6d1pnIzDBEYnBaqmZWM8UEffyoVYj3haay6L
-X-Google-Smtp-Source: AMsMyM7stwZ9kAua/I6bh/8kcA81rkzyUFljo8FVaX+xiM6qRZk1VaxhQjO3sGfqFRWhbeZRsObPHXc27Cp8BqX+O5w=
-X-Received: by 2002:a17:90a:4212:b0:215:eee3:bb10 with SMTP id
- o18-20020a17090a421200b00215eee3bb10mr39320062pjg.130.1668091959668; Thu, 10
- Nov 2022 06:52:39 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:subject:from:content-language
+         :references:cc:to:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BWdwzl0JJH108Sq7mZqsn6TJemmNO78msL/CJ3BI/ec=;
+        b=ldI6zeL/BU+vstrQiiS6spG15ZK/CMGsAOvpiZHZHgbAF9edHnhYo42BJdBkeKeA8J
+         AAhndNsKvIpygv62LOf4qeKfpkjGB7c9HLZqHCkFaRepx9Eks+mQlif9pnpJ0zJuozLL
+         YKxPQt0ZFKdFTdVmeaD780oT32U16ABHyGMkVtxzBgoIWNaB5uIerGIhO1GcYVCrYZHN
+         VCmVElVCUcxNBrexgDA+lTV4SoKSZgMZyEEqTkbWQi6SBejDodBd9Z+Vh6H6X99lSyks
+         zXfJ55UaHfjD1x03RZylvhk86m9mOFWGXL99+cQsyhj2aDAHdQ52yRU7wBPbsKXpNoVb
+         H7og==
+X-Gm-Message-State: ANoB5pmm5VIHrK9klWpe7TkApdregzD/1FW+Y1SDTHto5f5SlVbnbohd
+	nlwWybtefwS8glyT15FaZnmE+1VYX/OYUIcOIu6032zSsVzwdDWvPjFzUgtvpaYD2HG90lDvgki
+	qakzCqE7nD5Yl039Uc25d+EVSL9A9fy9gPwCoyryxa1rVMNxbvak1LzFwn0Yte1JgdFtYr+w=
+X-Received: by 2002:a17:906:6051:b0:78d:9325:55b5 with SMTP id p17-20020a170906605100b0078d932555b5mr1300812ejj.618.1668163155543;
+        Fri, 11 Nov 2022 02:39:15 -0800 (PST)
+X-Google-Smtp-Source: AA0mqf4M1iw4yq6rL6N/tmqhNAZRZ4jz039gUama7CweCPj8m3cNNJEOnUOGAMS/ARYCmElLrwp9iA==
+X-Received: by 2002:a17:906:6051:b0:78d:9325:55b5 with SMTP id p17-20020a170906605100b0078d932555b5mr1300800ejj.618.1668163155250;
+        Fri, 11 Nov 2022 02:39:15 -0800 (PST)
+Received: from [192.168.50.107] ([83.240.62.170])
+        by smtp.gmail.com with ESMTPSA id r10-20020a17090609ca00b0077077c62cadsm758900eje.31.2022.11.11.02.39.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Nov 2022 02:39:14 -0800 (PST)
+Message-ID: <480cac2f-f20a-e769-f33f-3d1a57e62b01@redhat.com>
+Date: Fri, 11 Nov 2022 11:39:13 +0100
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+To: cryptsetup@lists.linux.dev
+Cc: Philippe Cerfon <philcerf@gmail.com>
 References: <CAN+za=OaHi939USLRp8DttVjamBx7qSxOp-LPm6uNtMN7oek8A@mail.gmail.com>
  <37ecbf51-9c83-eb17-ef98-a68a9975ecd8@redhat.com>
-In-Reply-To: <37ecbf51-9c83-eb17-ef98-a68a9975ecd8@redhat.com>
-From: Philippe Cerfon <philcerf@gmail.com>
-Date: Thu, 10 Nov 2022 15:52:28 +0100
-Message-ID: <CAN+za=P-XaUsM2Xjy2Bip64PHKvYxCi8_d1wKiN_1o9AhEheLg@mail.gmail.com>
+ <CAN+za=P-XaUsM2Xjy2Bip64PHKvYxCi8_d1wKiN_1o9AhEheLg@mail.gmail.com>
+From: Ondrej Kozina <okozina@redhat.com>
 Subject: Re: reencrypt: how to specify old and new key-files?
-To: Ondrej Kozina <okozina@redhat.com>
-Cc: cryptsetup@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAN+za=P-XaUsM2Xjy2Bip64PHKvYxCi8_d1wKiN_1o9AhEheLg@mail.gmail.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hey Ondrej.
+On 10. 11. 22 15:52, Philippe Cerfon wrote:
+> Hey Ondrej.
+> 
+> Thanks for your reply.
+> 
+> On Thu, Nov 10, 2022 at 10:24 AM Ondrej Kozina <okozina@redhat.com> wrote:
+>> It's not necessary. With LUKS2 you may change keyslot parameters without
+>> need for full device reencryption. You may split your goal into two
+>> individual steps. Reencrypt the device to refresh volume key and later
+>> change keyslot parameters as you see fit.
+> 
+> Wouldn't especially this order have some security downsides?
+> 
+> If one has e.g. a "weak" KDF (or weaker settings for it), or a weak
+> (e.g. one that
+> could have been leaked) passphrase then first re-encrypting the volume would
+> also re-encrypt the new VK, but with the old weak KDF and/or passphrase.
 
-Thanks for your reply.
+Sorry, I did not mean in that particular order. I've forgotten the 
+golden rule of re-read the post first before you hit send. The idea I 
+was emphasizing is that changing keyslot parameters and volume key 
+refresh (aka reencryption) are two independent tasks.
 
-On Thu, Nov 10, 2022 at 10:24 AM Ondrej Kozina <okozina@redhat.com> wrote:
-> It's not necessary. With LUKS2 you may change keyslot parameters without
-> need for full device reencryption. You may split your goal into two
-> individual steps. Reencrypt the device to refresh volume key and later
-> change keyslot parameters as you see fit.
+> 
+> If one updates (I assume with luksChangeKey ?) the keyslot only afterwards,
+> the previously created new (intermediate) keyslot (with the new VK, but still
+> old KDF/passphrase) might have already been relocated to some other sector
+> on the HDD (or similar for SSD)?!
+> 
+> 
+>> It's for both, old and new keyslot. We do not want to support
+>> reencryption where old and new keyslot is unlocked by different
+>> passphrase for compatibility reasons. If LUKS2 reencryption gets
+>> interrupted (no matter the reason) it would be difficult to re-activate
+>> the device again unless it's fully reencrypted. Most libcryptsetup
+>> applications (including e.g. systemd) does not expect two different
+>> passphrase prompts while unlocking the device. So two passphrases prompt
+>> would break system boot, cryptsetup open scripts and so on.
+> 
+> Hmm I see, but at least from security point of view, I think - if my above
+> assumptions are correct - that this is rather unfortunate.
+> 
+> Cause even if we'd add some line describing the issue to the manpage or FAQ
+> it's all too likely that many people will never see it.
 
-Wouldn't especially this order have some security downsides?
+Yup, we should mention it somewhere. Also we may add an example in 
+cryptsetup-reencrypt man page. Could you create an issue on 
+https://gitlab.com/cryptsetup/cryptsetup please?
 
-If one has e.g. a "weak" KDF (or weaker settings for it), or a weak
-(e.g. one that
-could have been leaked) passphrase then first re-encrypting the volume would
-also re-encrypt the new VK, but with the old weak KDF and/or passphrase.
+Thanks
+O.
 
-If one updates (I assume with luksChangeKey ?) the keyslot only afterwards,
-the previously created new (intermediate) keyslot (with the new VK, but still
-old KDF/passphrase) might have already been relocated to some other sector
-on the HDD (or similar for SSD)?!
+> Still, when I'm right, such documentation should be added and emphasized.
+> 
+> 
+>> Either you provide all passphrases for all currently active
+>> keyslots (and all keyslots get recreated storing new/future volume key),
+> 
+> But as far as I understand, this mode wouldn't help with the above
+> problem, right?
 
+> 
+> 
+> Thanks,
+> Philippe.
+> 
 
-> It's for both, old and new keyslot. We do not want to support
-> reencryption where old and new keyslot is unlocked by different
-> passphrase for compatibility reasons. If LUKS2 reencryption gets
-> interrupted (no matter the reason) it would be difficult to re-activate
-> the device again unless it's fully reencrypted. Most libcryptsetup
-> applications (including e.g. systemd) does not expect two different
-> passphrase prompts while unlocking the device. So two passphrases prompt
-> would break system boot, cryptsetup open scripts and so on.
-
-Hmm I see, but at least from security point of view, I think - if my above
-assumptions are correct - that this is rather unfortunate.
-
-Cause even if we'd add some line describing the issue to the manpage or FAQ
-it's all too likely that many people will never see it.
-
-Still, when I'm right, such documentation should be added and emphasized.
-
-
-> Either you provide all passphrases for all currently active
-> keyslots (and all keyslots get recreated storing new/future volume key),
-
-But as far as I understand, this mode wouldn't help with the above
-problem, right?
-
-
-Thanks,
-Philippe.
