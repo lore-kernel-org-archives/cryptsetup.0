@@ -1,45 +1,46 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869383201
-	for <cryptsetup@lists.linux.dev>; Mon, 28 Nov 2022 11:46:29 +0000 (UTC)
-Received: by mail-ej1-f48.google.com with SMTP id e27so25014255ejc.12
-        for <cryptsetup@lists.linux.dev>; Mon, 28 Nov 2022 03:46:29 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD52AD5E
+	for <cryptsetup@lists.linux.dev>; Tue, 29 Nov 2022 19:50:40 +0000 (UTC)
+Received: by mail-ej1-f44.google.com with SMTP id ho10so36430865ejc.1
+        for <cryptsetup@lists.linux.dev>; Tue, 29 Nov 2022 11:50:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-language:to:subject:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=+DNEfHH/rSbNs+TWHhMrmF5kfzkvFcHVRs5G+HivCzc=;
-        b=CO2k8ZI/wHBxnX+GKSLMOtZhYUTmhobN5eya5gsYteU3JgeSpy/2ZrzmhpjCvDjpDm
-         HOqRxIvDeij6HUHdB1m/NOO6Gu6sNqObsDLoh5wv8zEejL15RBK2H/+aWwwjwfGZc3w+
-         NC2StiFivOesiMkcLErMx1obUxHVaylydnuTn1ZfjJ1hkbgf2kF2kBcXg8UIba172Eg7
-         Ej9VlsycZj99PYZw2yGbawpgP0CnT97Jt7SKX2Ah/tPVToSAJprYJMyVlnpPdlscuej3
-         b50q0FM/HKdAPM1zB6fumN11oK/WX9vz9H/yqPvNO7u9RKYzf3qgbHtGfb7N/wQUgntD
-         RCxw==
+        h=content-transfer-encoding:subject:from:content-language:to
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jgVdjKf/ojM2QdXxU9dBIYuLzHd1hvilopZB2pi6Z2k=;
+        b=BhMyaPz3j8K/flsoCI7JjgHjSytA2pX4g39vWYYFEoX2LrXuZkoQSGPYt2N+Hyub1I
+         qKhRWPScpoqxKxhxG2oHM3E9XLYTdz4pCapFXRPqLBJaIlo46F5G1db4mXA8ogreqM17
+         /xBmoPI2Uq8AbcZhsWNAJm62YzpTbhP05inSzQEcKpByM3WTmrzx0ruYiH5lpOhG2c/h
+         iG30vPRJilfHtgn/V49pYX8C5be73Hvs8EBJQPM9sokHYJN2PmjNzhkgOIe7f3esMq4h
+         oG3bWjZgTanKt7wHq0U9EsaUvSuqjjk2SMT2FFFixNfcRw4JgRiUuNhKV0weRtPycDkU
+         mSHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-language:to:subject:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+DNEfHH/rSbNs+TWHhMrmF5kfzkvFcHVRs5G+HivCzc=;
-        b=OYnbCIHin3O4CS891TcyiB4VdqBRfLOSVThVm9QUpVAZJoacYCB4H39LWWN5GdOQKs
-         W7CQ/M/p1cqHTDz7nGt5rR1Mf9yHLd9JGeupeSIbsQQ9Ix4jYNg1EzNqWGzZErQppxQU
-         9FJWaj4ThLdcToRuGn18hZE7orzBMsDYp7OsqPS53cHo3yFmM68JSJNyfFIHa/Zf0D33
-         Ysmshi84TuswhOwNbi0ry/MlTLoevoldsp3FCvEQRQL3xNUAgHiUjTg+6F24rYXnbeaf
-         fY/joMldLpKPwIbbxXRj/5SdMhzyzgrtG4dmy9ySfSBUf982IoKmchnflim/00htaKZF
-         Jxdg==
-X-Gm-Message-State: ANoB5pmMVI7rQADwoBDhxAGQjFNnh/bRJnThIqCqHyF6JpoY+2hd/3xL
-	NvnhK5WVQIdakrpt1Cg5xpVg9eC20LM=
-X-Google-Smtp-Source: AA0mqf5ustRAi+GUaYoLj1kd54zjw3OiyAb0mZD57eJP5LAjCuf/VPZ67oNVX2UN9bM8gHwKnmITcw==
-X-Received: by 2002:a17:906:6782:b0:7ad:7d50:dec2 with SMTP id q2-20020a170906678200b007ad7d50dec2mr44787861ejp.37.1669635987559;
-        Mon, 28 Nov 2022 03:46:27 -0800 (PST)
-Received: from [147.251.42.107] (nbbroz2.fi.muni.cz. [147.251.42.107])
-        by smtp.gmail.com with ESMTPSA id la21-20020a170907781500b007c03fa39c33sm936797ejc.71.2022.11.28.03.46.26
+        h=content-transfer-encoding:subject:from:content-language:to
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=jgVdjKf/ojM2QdXxU9dBIYuLzHd1hvilopZB2pi6Z2k=;
+        b=Dect2ZuWPK5RKkGdbfI62LLRMe4Dt1yES3flXo5UALo4bJwqGBx2tr9cnGFu7uyJpH
+         CNpfTtCX4CFeXDqT4VReQezLRvlCbjOqp+Vx7T6zJy+fnnHTNP18fX4DUcLp7dU1YlTy
+         fgOVbviIEC+1fq/SJPUEX4gbkkhIcMkyTLNWoTjrhfO2vzf7aitejY8gqGrpgtvVfM3U
+         S59SaEX9p00HUBve94sL920dXTUcYnYj/n5dmOUVuX8xv8AYicIMA0cy/Z4K+e5uqxtK
+         08zci1UqCckCZ1dYALAqa8MGtO1oHj+Hhcz9GGuM4ypX7o5Sw/zbb/py6vzPeJ0lWXRw
+         4g1g==
+X-Gm-Message-State: ANoB5pk4vbcuXsUbIZYja/DzgcoY69sfQBRxldw/YuKgSlJ2sa3DmJSA
+	izhsP8KhvPSRV/S6ENQFaAmIml/WVWw=
+X-Google-Smtp-Source: AA0mqf7Aa5gBV6SJG6c+jDEi5zfNZBk0FWtZi0Y5xVTG9U8ibCcw4QiebeezaAznU32nyrFX7sEOJg==
+X-Received: by 2002:a17:907:d383:b0:7c0:9973:20a3 with SMTP id vh3-20020a170907d38300b007c0997320a3mr912006ejc.30.1669751438986;
+        Tue, 29 Nov 2022 11:50:38 -0800 (PST)
+Received: from ?IPV6:2001:a61:ac8:e002:982f:781e:b730:5a95? ([2001:a61:ac8:e002:982f:781e:b730:5a95])
+        by smtp.gmail.com with ESMTPSA id ba12-20020a0564021acc00b0046b847d6a1csm1016577edb.21.2022.11.29.11.50.38
         for <cryptsetup@lists.linux.dev>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Nov 2022 03:46:26 -0800 (PST)
-Message-ID: <6d6f9516-244c-a63a-27ee-07d9888dd56d@gmail.com>
-Date: Mon, 28 Nov 2022 12:46:02 +0100
+        Tue, 29 Nov 2022 11:50:38 -0800 (PST)
+Message-ID: <15a19597-423a-8fc0-02d9-3ea4da34b490@gmail.com>
+Date: Tue, 29 Nov 2022 20:50:35 +0100
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
@@ -48,224 +49,180 @@ List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.0
-From: Milan Broz <gmazyland@gmail.com>
-Subject: [ANNOUNCE] cryptsetup 2.6.0
-To: cryptsetup development <cryptsetup@lists.linux.dev>
-Content-Language: en-US
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------1NRxxp1lndPd53MaDVSyX0kG"
-
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------1NRxxp1lndPd53MaDVSyX0kG
-Content-Type: multipart/mixed; boundary="------------zxsa2jOY0kP8KiAc1DL8wIeg";
- protected-headers="v1"
-From: Milan Broz <gmazyland@gmail.com>
-To: cryptsetup development <cryptsetup@lists.linux.dev>
-Message-ID: <6d6f9516-244c-a63a-27ee-07d9888dd56d@gmail.com>
-Subject: [ANNOUNCE] cryptsetup 2.6.0
-
---------------zxsa2jOY0kP8KiAc1DL8wIeg
+To: cryptsetup@lists.linux.dev
+Content-Language: en-US, de-DE
+From: Lamy Geier <lamyergeier@gmail.com>
+Subject: Slow unlock of the LUKS device at boot
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 7bit
 
-VGhlIGNyeXB0c2V0dXAgMi42LjAgc3RhYmxlIHJlbGVhc2UgaXMgYXZhaWxhYmxlIGF0DQoN
-CiAgICAgICAgICBodHRwczovL2dpdGxhYi5jb20vY3J5cHRzZXR1cC9jcnlwdHNldHVwDQoN
-ClBsZWFzZSBub3RlIHRoYXQgcmVsZWFzZSBwYWNrYWdlcyBhcmUgbG9jYXRlZCBvbiBrZXJu
-ZWwub3JnDQoNCiAgICAgICAgICBodHRwczovL3d3dy5rZXJuZWwub3JnL3B1Yi9saW51eC91
-dGlscy9jcnlwdHNldHVwL3YyLjYvDQoNCkZlZWRiYWNrIGFuZCBidWcgcmVwb3J0cyBhcmUg
-d2VsY29tZWQuDQoNCkNyeXB0c2V0dXAgMi42LjAgUmVsZWFzZSBOb3Rlcw0KPT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09DQpTdGFibGUgcmVsZWFzZSB3aXRoIG5ldyBmZWF0dXJl
-cyBhbmQgYnVnIGZpeGVzLg0KDQpDaGFuZ2VzIHNpbmNlIHZlcnNpb24gMi41LjANCn5+fn5+
-fn5+fn5+fn5+fn5+fn5+fn5+fn5+fg0KDQoqIEludHJvZHVjZSBzdXBwb3J0IGZvciBoYW5k
-bGluZyBtYWNPUyBGaWxlVmF1bHQyIGRldmljZXMgKEZWQVVMVDIpLg0KDQogICBDcnlwdHNl
-dHVwIG5vdyBzdXBwb3J0cyB0aGUgbWFwcGluZyBvZiBGaWxlVmF1bHQyIGZ1bGwtZGlzayBl
-bmNyeXB0aW9uDQogICBieSBBcHBsZSBmb3IgdGhlIG1hY09TIG9wZXJhdGluZyBzeXN0ZW0g
-dXNpbmcgYSBuYXRpdmUgTGludXgga2VybmVsLg0KICAgWW91IGNhbiBvcGVuIGFuIGV4aXN0
-aW5nIFVTQiBGaWxlVmF1bHQgcG9ydGFibGUgZGV2aWNlIGFuZCAod2l0aA0KICAgdGhlIGhm
-c3BsdXMgZmlsZXN5c3RlbSBkcml2ZXIpIGFjY2VzcyB0aGUgbmF0aXZlIGRhdGEgcmVhZC93
-cml0ZS4NCg0KICAgQ3J5cHRzZXR1cCBzdXBwb3J0cyBvbmx5IChsZWdhY3kpIEZpbGVWYXVs
-dDIgYmFzZWQgb24gQ29yZSBTdG9yYWdlDQogICBhbmQgSEZTKyBmaWxlc3lzdGVtIChpbnRy
-b2R1Y2VkIGluIE1hY09TIFggMTAuNyBMaW9uKS4NCiAgIEl0IGRvZXMgTk9UIHN1cHBvcnQg
-dGhlIG5ldyB2ZXJzaW9uIG9mIEZpbGVWYXVsdCBiYXNlZCBvbiB0aGUgQVBGUw0KICAgZmls
-ZXN5c3RlbSB1c2VkIGluIHJlY2VudCBtYWNPUyB2ZXJzaW9ucy4NCg0KICAgSGVhZGVyIGZv
-cm1hdHRpbmcgYW5kIGNoYW5nZXMgYXJlIG5vdCBzdXBwb3J0ZWQ7IGNyeXB0c2V0dXAgbmV2
-ZXINCiAgIGNoYW5nZXMgdGhlIG1ldGFkYXRhIG9uIHRoZSBkZXZpY2UuDQoNCiAgIEZWQVVM
-VDIgZXh0ZW5zaW9uIHJlcXVpcmVzIGtlcm5lbCB1c2Vyc3BhY2UgY3J5cHRvIEFQSSBhbmQg
-a2VybmVsDQogICBkcml2ZXIgZm9yIEhGUysgKGhmc3BsdXMpIGZpbGVzeXN0ZW0gKGF2YWls
-YWJsZSBvbiBtb3N0IHN5c3RlbXMgdG9kYXkpLg0KDQogICBFeGFtcGxlIG9mIHVzaW5nIEZp
-bGVWYXVsdDIgZm9ybWF0dGVkIFVTQiBkZXZpY2U6DQoNCiAgIEEgdHlwaWNhbCBlbmNyeXB0
-ZWQgZGV2aWNlIGNvbnRhaW5zIHRocmVlIHBhcnRpdGlvbnM7IHRoZSBGaWxlVmF1bHQNCiAg
-IGVuY3J5cHRlZCBwYXJ0aXRpb24gaXMgaGVyZSBzZGEyOg0KDQogICAkIGxzYmxrIC1vIE5B
-TUUsRlNUWVBFLExBQkVMIC9kZXYvc2RhDQogICAgIE5BTUUgICBGU1RZUEUgIExBQkVMDQog
-ICAgIHNkYQ0KICAgICB8LXNkYTEgdmZhdCAgICBFRkkNCiAgICAgfC1zZGEyDQogICAgIGAt
-c2RhMyBoZnNwbHVzIEJvb3QgT1MgWA0KDQogICBOb3RlOiBibGtpZCBkb2VzIG5vdCByZWNv
-Z25pemUgRmlsZVZhdWx0MiBmb3JtYXQgeWV0Lg0KDQogICBUbyBkdW1wIG1ldGFkYXRhIGlu
-Zm9ybWF0aW9uIGFib3V0IHRoZSBkZXZpY2UsIHlvdSBjYW4gdXNlDQogICB0aGUgZnZhdWx0
-MkR1bXAgY29tbWFuZDoNCg0KICAgJCBjcnlwdHNldHVwIGZ2YXVsdDJEdW1wIC9kZXYvc2Rh
-Mg0KICAgICBIZWFkZXIgaW5mb3JtYXRpb24gZm9yIEZWQVVMVDIgZGV2aWNlIC9kZXYvc2Rh
-Mi4NCiAgICAgUGh5c2ljYWwgdm9sdW1lIFVVSUQ6ICAgNmYzNTNjMDUtZGFhZS00ZTc2LWEw
-ZWUtNmE5NTY5YTIyZDgxDQogICAgIEZhbWlseSBVVUlEOiAgICAgICAgICAgIGY4MmNjZWIw
-LWE3ODgtNDgxNS05NDVhLTUzZDU3ZmNkNTVhOA0KICAgICBMb2dpY2FsIHZvbHVtZSBvZmZz
-ZXQ6ICA2NzEwODg2NCBbYnl0ZXNdDQogICAgIExvZ2ljYWwgdm9sdW1lIHNpemU6ICAgIDMy
-ODgzMzQzMzYgW2J5dGVzXQ0KICAgICBDaXBoZXI6ICAgICAgICAgICAgICAgICBhZXMNCiAg
-ICAgQ2lwaGVyIG1vZGU6ICAgICAgICAgICAgeHRzLXBsYWluNjQNCiAgICAgUEJLREYyIGl0
-ZXJhdGlvbnM6ICAgICAgOTc5NjINCiAgICAgUEJLREYyIHNhbHQ6ICAgICAgICAgICAgMTcz
-YTRlYzc0NDc2NjJlYzc5Y2E3YTQ3ZGY2YzJhMDENCg0KICBUbyBhY3RpdmF0ZSB0aGUgZGV2
-aWNlLCB1c2Ugb3BlbiAtLXR5cGUgZnZhdWx0MiBvcHRpb246DQoNCiAgJCBjcnlwdHNldHVw
-IG9wZW4gLS10eXBlIGZ2YXVsdDIgL2Rldi9zZGEyIHRlc3QNCiAgICBFbnRlciBwYXNzcGhy
-YXNlIGZvciAvZGV2L3NkYTI6IC4uLg0KDQogIEFuZCBjaGVjayB0aGUgc3RhdHVzIG9mIHRo
-ZSBhY3RpdmUgZGV2aWNlOg0KDQogICQgY3J5cHRzZXR1cCBzdGF0dXMgdGVzdA0KICAgIC9k
-ZXYvbWFwcGVyL3Rlc3QgaXMgYWN0aXZlLg0KICAgIHR5cGU6ICAgIEZWQVVMVDINCiAgICBj
-aXBoZXI6ICBhZXMteHRzLXBsYWluNjQNCiAgICBrZXlzaXplOiAyNTYgYml0cw0KICAgIGtl
-eSBsb2NhdGlvbjogZG0tY3J5cHQNCiAgICBkZXZpY2U6ICAvZGV2L3NkYTINCiAgICBzZWN0
-b3Igc2l6ZTogIDUxMg0KICAgIG9mZnNldDogIDEzMTA3MiBzZWN0b3JzDQogICAgc2l6ZTog
-ICAgNjQyMjUyOCBzZWN0b3JzDQogICAgbW9kZTogICAgcmVhZC93cml0ZQ0KDQogIE5vdywg
-aWYgdGhlIGtlcm5lbCBjb250YWlucyBoZnNwbHVzIGZpbGVzeXN0ZW0gZHJpdmVyLCB5b3Ug
-Y2FuIG1vdW50DQogIGRlY3J5cHRlZCBjb250ZW50Og0KDQogICQgbW91bnQgL2Rldi9tYXBw
-ZXIvdGVzdCAvbW50L3Rlc3QNCg0KICBGb3IgbW9yZSBpbmZvIGFib3V0IGltcGxlbWVudGF0
-aW9uLCBwbGVhc2UgcmVmZXIgdG8gdGhlIG1hc3RlciB0aGVzaXMNCiAgYnkgUGF2ZWwgVG9i
-aWFzLCB3aGljaCB3YXMgdGhlIHNvdXJjZSBmb3IgdGhpcyBleHRlbnNpb24uDQogIGh0dHBz
-Oi8vaXMubXVuaS5jei90aC9wMGFvay8/bGFuZz1lbg0KDQoqIGxpYmNyeXB0c2V0dXA6IG5v
-IGxvbmdlciB1c2UgZ2xvYmFsIG1lbW9yeSBsb2NraW5nIHRocm91Z2ggbWxvY2thbGwoKQ0K
-DQogICBGb3IgbWFueSB5ZWFycywgbGliY3J5cHRzZXR1cCBsb2NrZWQgYWxsIG1lbW9yeSAo
-aW5jbHVkaW5nIGRlcGVuZGVudA0KICAgbGlicmFyeSBhZGRyZXNzIHNwYWNlKSB0byBwcmV2
-ZW50IHN3YXBwaW5nIHNlbnNpdGl2ZSBjb250ZW50IG91dHNpZGUNCiAgIG9mIFJBTS4NCg0K
-ICAgVGhpcyBzdHJhdGVneSBubyBsb25nZXIgd29ya3MgYXMgdGhlIGxvY2tpbmcgb2YgYmFz
-aWMgbGlicmFyaWVzIGV4Y2VlZHMNCiAgIHRoZSBtZW1vcnkgbG9ja2luZyBsaW1pdCBpZiBy
-dW5uaW5nIGFzIGEgbm9uLXJvb3QgdXNlci4NCg0KICAgTGliY3J5cHRzZXR1cCBub3cgbG9j
-a3Mgb25seSBtZW1vcnkgcmFuZ2VzIGNvbnRhaW5pbmcgc2Vuc2l0aXZlDQogICBtYXRlcmlh
-bCAoa2V5cykgdGhyb3VnaCBjcnlwdF9zYWZlX2FsbG9jKCkgY2FsbHMuDQoNCiAgIFRoaXMg
-Y2hhbmdlIHNvbHZlcyBtYW55IHJlcG9ydGVkIG15c3RlcmlvdXMgcHJvYmxlbXMgb2YgdW5l
-eHBlY3RlZA0KICAgZmFpbHVyZXMuIElmIHRoZSBpbml0aWFsIGxvY2sgd2FzIHN0aWxsIHVu
-ZGVyIHRoZSBsaW1pdCBhbmQgc3VjY2VlZGVkLA0KICAgc29tZSBmb2xsb3dpbmcgbWVtb3J5
-IGFsbG9jYXRpb24gY291bGQgZmFpbCBsYXRlciBhcyBpdCBleGNlZWRlZA0KICAgdGhlIGxv
-Y2tpbmcgbGltaXQuIElmIHRoZSBpbml0aWFsIGxvY2tpbmcgZmFpbHMsICBtZW1vcnkgbG9j
-a2luZw0KICAgd2FzIHF1aWV0bHkgaWdub3JlZCBjb21wbGV0ZWx5Lg0KDQogICBUaGUgd2hv
-bGUgY3J5cHRfbWVtb3J5X2xvY2soKSBBUEkgY2FsbCBpcyBkZXByZWNhdGVkOyBpdCBubyBs
-b25nZXINCiAgIGNhbGxzIG1lbWxvY2thbGwoKS4NCg0KKiBsaWJjcnlwdHNldHVwOiBwcm9j
-ZXNzIHByaW9yaXR5IGlzIGluY3JlYXNlZCBvbmx5IGZvciBrZXkgZGVyaXZhdGlvbg0KICAg
-KFBCS0RGKSBjYWxscy4NCg0KICAgSW5jcmVhc2luZyBwcmlvcml0eSB3YXMgdGlnaHQgdG8g
-bWVtb3J5IGxvY2tpbmcgYW5kIHdvcmtzIG9ubHkgaWYNCiAgIHJ1bm5pbmcgdW5kZXIgc3Vw
-ZXJ1c2VyLg0KICAgT25seSBQQktERiBjYWxscyBhbmQgYmVuY2htYXJraW5nIG5vdyBpbmNy
-ZWFzZSB0aGUgcHJvY2VzcyBwcmlvcml0eS4NCg0KKiBBZGQgbmV3IExVS1Mga2V5c2xvdCBj
-b250ZXh0IGhhbmRsaW5nIGZ1bmN0aW9ucyBhbmQgQVBJLg0KDQogICBJbiBwcmFjdGljZSwg
-dGhlIGx1a3NBZGRLZXkgYWN0aW9uIGRvZXMgdHdvIG9wZXJhdGlvbnMuDQogICBJdCB1bmxv
-Y2tzIHRoZSBleGlzdGluZyBkZXZpY2Ugdm9sdW1lIGtleSBhbmQgc3RvcmVzIHRoZSB1bmxv
-Y2tlZA0KICAgdm9sdW1lIGtleSBpbiBhIG5ldyBrZXlzbG90Lg0KICAgUHJldmlvdXNseSB0
-aGUgb3B0aW9ucyB3ZXJlIGxpbWl0ZWQgdG8ga2V5IGZpbGVzIGFuZCBwYXNzcGhyYXNlcy4N
-Cg0KICAgTmV3bHkgYXZhaWxhYmxlIG1ldGhvZHMgKGtleXNsb3QgY29udGV4dHMpIGFyZSBw
-YXNzcGhyYXNlLCBrZXlmaWxlLA0KICAga2V5IChiaW5hcnkgcmVwcmVzZW50YXRpb24pLCBh
-bmQgTFVLUzIgdG9rZW4uDQoNCiAgIFRvIHVubG9jayBhIGtleXNsb3QgdXNlciBtYXk6DQog
-ICAgIC0gcHJvdmlkZSBleGlzdGluZyBwYXNzcGhyYXNlIHZpYSBpbnRlcmFjdGl2ZSBwcm9t
-cHQgKGRlZmF1bHQgbWV0aG9kKQ0KICAgICAtIHVzZSAtLWtleS1maWxlIG9wdGlvbiB0byBw
-cm92aWRlIGEgZmlsZSB3aXRoIGEgdmFsaWQgcGFzc3BocmFzZQ0KICAgICAtIHByb3ZpZGUg
-dm9sdW1lIGtleSBkaXJlY3RseSB2aWEgLS12b2x1bWUta2V5LWZpbGUNCiAgICAgLSB1bmxv
-Y2sga2V5c2xvdCB2aWEgYWxsIGF2YWlsYWJsZSBMVUtTMiB0b2tlbnMgYnkgLS10b2tlbi1v
-bmx5DQogICAgIC0gdW5sb2NrIGtleXNsb3QgdmlhIHNwZWNpZmljIHRva2VuIHdpdGggLS10
-b2tlbi1pZA0KICAgICAtIHVubG9jayBrZXlzbG90IHZpYSBzcGVjaWZpYyB0b2tlbiB0eXBl
-IGJ5IC0tdG9rZW4tdHlwZQ0KDQogICBUbyBwcm92aWRlIHRoZSBwYXNzcGhyYXNlIGZvciBh
-IG5ldyBrZXlzbG90LCBhIHVzZXIgbWF5Og0KICAgICAtIHByb3ZpZGUgZXhpc3RpbmcgcGFz
-c3BocmFzZSB2aWEgaW50ZXJhY3RpdmUgcHJvbXB0IChkZWZhdWx0IG1ldGhvZCkNCiAgICAg
-LSB1c2UgLS1uZXcta2V5ZmlsZSB0byByZWFkIHRoZSBwYXNzcGhyYXNlIGZyb20gdGhlIGZp
-bGUNCiAgICAgLSB1c2UgLS1uZXctdG9rZW4taWQgdG8gc2VsZWN0IExVS1MyIHRva2VuIHRv
-IGdldCBwYXNzcGhyYXNlDQogICAgICAgZm9yIG5ldyBrZXlzbG90LiBUaGUgbmV3IGtleXNs
-b3QgaXMgYXNzaWduZWQgdG8gdGhlIHNlbGVjdGVkIHRva2VuDQogICAgICAgaWQgaWYgdGhl
-IG9wZXJhdGlvbiBpcyBzdWNjZXNzZnVsLg0KDQoqIFRoZSB2b2x1bWUga2V5IG1heSBub3cg
-YmUgZXh0cmFjdGVkIHVzaW5nIGEgcGFzc3BocmFzZSwga2V5ZmlsZSwgb3INCiAgIHRva2Vu
-LiBGb3IgTFVLUyBkZXZpY2VzLCBpdCBhbHNvIHJldHVybnMgdGhlIHZvbHVtZSBrZXkgYWZ0
-ZXINCiAgIGEgc3VjY2Vzc2Z1bCBjcnlwdF9mb3JtYXQgY2FsbC4NCg0KKiBGaXggLS1kaXNh
-YmxlLWx1a3MyLXJlZW5jcnlwdGlvbiBjb25maWd1cmF0aW9uIG9wdGlvbi4NCg0KKiBjcnlw
-dHNldHVwOiBQcmludCBhIGJldHRlciBlcnJvciBtZXNzYWdlIGFuZCB3YXJuaW5nIGlmIHRo
-ZSBmb3JtYXQNCiAgIHByb2R1Y2VzIGFuIGltYWdlIHdpdGhvdXQgc3BhY2UgYXZhaWxhYmxl
-IGZvciBkYXRhLg0KDQogICBBY3RpdmF0aW9uIG5vdyBmYWlscyBlYXJseSB3aXRoIGEgbW9y
-ZSBkZXNjcmlwdGl2ZSBtZXNzYWdlLg0KDQoqIFByaW50IGVycm9yIGlmIGFudGktZm9yZW5z
-aWMgTFVLUzIgaGFzaCBzZXR0aW5nIGlzIG5vdCBhdmFpbGFibGUuDQogICBJZiB0aGUgc3Bl
-Y2lmaWVkIGhhc2ggd2FzIG5vdCBhdmFpbGFibGUsIGFjdGl2YXRpb24gcXVpZXRseSBmYWls
-ZWQuDQoNCiogRml4IGludGVybmFsIGNyeXB0IHNlZ21lbnQgY29tcGFyZSByb3V0aW5lIGlm
-IHRoZSB1c2VyDQogICBzcGVjaWZpZWQgY2lwaGVyIGluIGtlcm5lbCBmb3JtYXQgKGNhcGk6
-IHByZWZpeCkuDQoNCiogY3J5cHRzZXR1cDogQWRkIHRva2VuIHVuYXNzaWduIGFjdGlvbi4N
-Cg0KICAgVGhpcyBhY3Rpb24gYWxsb3dzIHJlbW92aW5nIHRva2VuIGJpbmRpbmcgb24gc3Bl
-Y2lmaWMga2V5c2xvdC4NCg0KKiB2ZXJpdHlzZXR1cDogYWRkIHN1cHBvcnQgZm9yIC0tdXNl
-LXRhc2tsZXRzIG9wdGlvbi4NCg0KICAgVGhpcyBvcHRpb24gc2V0cyB0cnlfdmVyaWZ5X2lu
-X3Rhc2tsZXQga2VybmVsIGRtLXZlcml0eSBvcHRpb24NCiAgIChhdmFpbGFibGUgc2luY2Ug
-TGludXgga2VybmVsIDYuMCkgdG8gYWxsb3cgc29tZSBwZXJmb3JtYW5jZQ0KICAgaW1wcm92
-ZW1lbnQgb24gc3BlY2lmaWMgc3lzdGVtcy4NCg0KKiBQcm92aWRlIHBrZ2NvbmZpZyBSZXF1
-aXJlLnByaXZhdGUgc2V0dGluZ3MuDQoNCiAgIFdoaWxlIHdlIGRvIG5vdCBjb21wbGV0ZWx5
-IHByb3ZpZGUgc3RhdGljIGJ1aWxkIG9uIHVkZXYgc3lzdGVtcywNCiAgIGl0IGhlbHBzIHBy
-b2R1Y2Ugc3RhdGljYWxseSBsaW5rZWQgYmluYXJpZXMgaW4gY2VydGFpbiBzaXR1YXRpb25z
-Lg0KDQoqIEFsd2F5cyB1cGRhdGUgYXV0b21ha2UgbGlicmFyeSBmaWxlcyBpZiBhdXRvZ2Vu
-LnNoIGlzIHJ1bi4NCg0KICAgRm9yIHNldmVyYWwgcmVsZWFzZXMsIHdlIGRpc3RyaWJ1dGVk
-IG9sZGVyIGF1dG9tYWtlIHNjcmlwdHMgYnkgbWlzdGFrZS4NCg0KKiByZWVuY3J5cHRpb246
-IEZpeCB1c2VyIGRlZmluZWQgbW92ZWQgc2VnbWVudCBzaXplIGluIExVS1MyIGRlY3J5cHRp
-b24uDQoNCiAgIFRoZSAtLWhvdHpvbmUtc2l6ZSBhcmd1bWVudCB3YXMgaWdub3JlZCBpbiBj
-YXNlcyB3aGVyZSB0aGUgYWN0dWFsIGRhdGENCiAgIHNpemUgd2FzIGxlc3MgdGhhbiB0aGUg
-b3JpZ2luYWwgTFVLUzIgZGF0YSBvZmZzZXQuDQoNCiogRGVsZWdhdGUgRklQUyBtb2RlIGRl
-dGVjdGlvbiB0byBjb25maWd1cmVkIGNyeXB0byBiYWNrZW5kLg0KICAgU3lzdGVtIEZJUFMg
-bW9kZSBjaGVjayBubyBsb25nZXIgZGVwZW5kcyBvbiAvZXRjL3N5c3RlbS1maXBzIGZpbGUu
-DQoNCiogdGVzdHM6IGV4dGVybmFsbHkgcHJvdmlkZWQgc3lzdGVtZCBwbHVnaW4gaXMgbm93
-IG9wdGlvbmFsbHkgY29tcGlsZWQNCiAgIGZyb20gc3lzdGVtZCBnaXQgYW5kIHRlc3RlZCB3
-aXRoIGNyeXB0c2V0dXANCg0KKiB0ZXN0czogaW5pdGlhbCBpbnRlZ3JhdGlvbiB0byBPU1Mt
-ZnV6eiBwcm9qZWN0IHdpdGggYmFzaWMgY3J5cHRfbG9hZCgpDQogICB0ZXN0IGZvciBMVUtT
-MiBhbmQgSlNPTiBtdXRhdGVkIGZ1enppbmcuDQoNCiAgIEZvciBtb3JlIGluZm8sIHNlZSBS
-RUFETUUgaW4gdGVzdHMvZnV6eiBkaXJlY3RvcnkuDQoNCiogVXBkYXRlIGRvY3VtZW50YXRp
-b24sIGluY2x1ZGluZyBGQVEgYW5kIG1hbiBwYWdlcy4NCg0KTGliY3J5cHRzZXR1cCBBUEkg
-ZXh0ZW5zaW9ucw0Kfn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fg0KVGhlIGxpYmNyeXB0
-c2V0dXAgQVBJIGlzIGJhY2t3YXJkIGNvbXBhdGlibGUgd2l0aCBleGlzdGluZyBzeW1ib2xz
-Lg0KDQpOZXcgc3ltYm9sczoNCiAgIGNyeXB0X2tleXNsb3RfY29udGV4dF9pbml0X2J5X3Bh
-c3NwaHJhc2UNCiAgIGNyeXB0X2tleXNsb3RfY29udGV4dF9pbml0X2J5X2tleWZpbGUNCiAg
-IGNyeXB0X2tleXNsb3RfY29udGV4dF9pbml0X2J5X3Rva2VuDQogICBjcnlwdF9rZXlzbG90
-X2NvbnRleHRfaW5pdF9ieV92b2x1bWVfa2V5DQogICBjcnlwdF9rZXlzbG90X2NvbnRleHRf
-Z2V0X2Vycm9yDQogICBjcnlwdF9rZXlzbG90X2NvbnRleHRfc2V0X3Bpbg0KICAgY3J5cHRf
-a2V5c2xvdF9jb250ZXh0X2dldF90eXBlDQogICBjcnlwdF9rZXlzbG90X2NvbnRleHRfZnJl
-ZQ0KICAgY3J5cHRfa2V5c2xvdF9hZGRfYnlfa2V5c2xvdF9jb250ZXh0DQogICBjcnlwdF92
-b2x1bWVfa2V5X2dldF9ieV9rZXlzbG90X2NvbnRleHQNCg0KTmV3IGRlZmluZXM6DQogICBD
-UllQVF9GVkFVTFQyICJGVkFVTFQyIiAoRmlsZVZhdWx0MiBjb21wYXRpYmxlIG1vZGUpDQoN
-CktleXNsb3QgY29udGV4dCB0eXBlczoNCiAgIENSWVBUX0tDX1RZUEVfUEFTU1BIUkFTRQ0K
-ICAgQ1JZUFRfS0NfVFlQRV9LRVlGSUxFDQogICBDUllQVF9LQ19UWVBFX1RPS0VODQogICBD
-UllQVF9LQ19UWVBFX0tFWQ0KDQogICBDUllQVF9BQ1RJVkFURV9UQVNLTEVUUyAoZG0tdmVy
-aXR5OiB1c2UgdGFza2xldHMgYWN0aXZhdGlvbiBmbGFnKQ0KDQpXQVJOSU5HIQ0Kfn5+fn5+
-fn4NClRoZSBuZXh0IHZlcnNpb24gb2YgY3J5cHRzZXR1cCB3aWxsIGNoYW5nZSB0aGUgZW5j
-cnlwdGlvbiBtb2RlIGFuZCBrZXkNCmRlcml2YXRpb24gb3B0aW9uIGZvciB0aGUgUExBSU4g
-Zm9ybWF0Lg0KDQpUaGlzIGNoYW5nZSB3aWxsIGNhdXNlIGJhY2t3YXJkIGluY29tcGF0aWJp
-bGl0eS4NCkZvciB0aGlzIHJlYXNvbiwgdGhlIHVzZXIgd2lsbCBoYXZlIHRvIHNwZWNpZnkg
-dGhlIGV4YWN0IHBhcmFtZXRlcnMNCmZvciBjaXBoZXIsIGtleSBzaXplLCBhbmQga2V5IGRl
-cml2YXRpb24gcGFyYW1ldGVycyBmb3IgcGxhaW4gZm9ybWF0Lg0KDQpUaGUgZGVmYXVsdCBl
-bmNyeXB0aW9uIG1vZGUgd2lsbCBiZSBBRVMtWFRTIHdpdGggNTEyYml0IGtleSAoQUVTLTI1
-NikuDQpUaGUgQ0JDIG1vZGUgaXMgbm8gbG9uZ2VyIGNvbnNpZGVyZWQgdGhlIGJlc3QgZGVm
-YXVsdCwgYXMgaXQgYWxsb3dzIGVhc3kNCmJpdC1mbGlwcGVkIGNpcGhlcnRleHQgbW9kaWZp
-Y2F0aW9uIGF0dGFja3MgYW5kIHBlcmZvcm1hbmNlIHByb2JsZW1zLg0KDQpGb3IgdGhlIHBh
-c3NwaHJhc2UgaGFzaGluZyBpbiBwbGFpbiBtb2RlLCB0aGUgZW5jcnlwdGlvbiBrZXkgaXMg
-ZGlyZWN0bHkNCmRlcml2ZWQgdGhyb3VnaCBpdGVyYXRpdmUgaGFzaGluZyBmcm9tIGEgdXNl
-ci1wcm92aWRlZCBwYXNzcGhyYXNlDQooZXhjZXB0IGEga2V5ZmlsZSB0aGF0IGlzIG5vdCBo
-YXNoZWQpLg0KDQpUaGUgZGVmYXVsdCBoYXNoIGlzIFJJUEVNRDE2MCwgd2hpY2ggaXMgbm8g
-bG9uZ2VyIHRoZSBiZXN0IGRlZmF1bHQNCm9wdGlvbi4gVGhlIGV4YWN0IGNoYW5nZSB3aWxs
-IGJlIHlldCBkaXNjdXNzZWQgYnV0IHNob3VsZCBpbmNsdWRlDQp0aGUgcG9zc2liaWxpdHkg
-b2YgdXNpbmcgYSBwYXNzd29yZC1iYXNlZCBrZXkgZGVyaXZhdGlvbiBmdW5jdGlvbg0KaW5z
-dGVhZCBvZiBpdGVyYXRpdmUgaGFzaGluZy4NCg==
+My boot partition (/dev/nvme0n1p1) is using LUKS1. And another partition 
+(/dev/nvme0n1p5) is using LUKS2 which has LVM with root volume,  home 
+volume and swap volumes. Both of these have same passphrase.
 
---------------zxsa2jOY0kP8KiAc1DL8wIeg--
+I am using Grub. While booting I enter the passphrase to unlock the boot 
+partition. To automatically unlock the partition with LVM volumes, I 
+have created a keyfile (boot_os.keyfile) which is stored in the device 
+itself, which is used to unlock it. I have created it as follows:
 
---------------1NRxxp1lndPd53MaDVSyX0kG
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+```bash
+# echo "KEYFILE_PATTERN=/etc/luks/*.keyfile" >> 
+/etc/cryptsetup-initramfs/conf-hook
+# echo "UMASK=0077" >> /etc/initramfs-tools/initramfs.conf
+```
 
------BEGIN PGP SIGNATURE-----
+- Create a randomised key-file of 4096 bits (512 bytes), secure it, and 
+add it to the LUKS volumes (Man-pages for dd chmod):
 
-iQIzBAEBCAAdFiEEKikYJD/eRmSNBob52bBXe9k+mPwFAmOEn3oACgkQ2bBXe9k+
-mPxAkw//TDTJp2I++lP3hAlwzVEDC/PjFjS6iqAiWSvALYXSrHIUfXi881apoM2I
-M4dVpqx2bKFtlX6x6YIJKZCN36DLEj+oK0f/giggGVNUfrm3LT5B5635lxoIf8aC
-5FvlikPoRCAXFH8wGh6NvGk26BPbbj3sSHYyBiOxCE0n8nNg2MiUoLdNjxVspRvh
-qChJjpyU3QI1Vd3s+NBvOkfMJ7orM+RrpknEV43EHVN8G3g4K59nsMc73IK2Sj5A
-REQxnhOzOWWc/L859Op9+1avhN+mQx+QyjEgug36G4NnGMnx3yt9xoF8WkUDc+iv
-H/A7k0DNRRCpqUzE+IPPp7TdsbZw+VokKQchJ2osPFG8kg445Hdk+XDkb6Fn9P/H
-/HNoZwkZA9BX5/mMp89MRHlifqf2HVoxfSB8jNFd/BgWpVpn+LX+awluCAG2p7mE
-psrnP5mrR1SNkGgA1ot3fsO/CSA6uTsbFwGo7lVg14IoO0q4lw9MQBd5EmBKorpf
-SGF8rDqaU+jbATmkj8V4SVUlhkwXzYFd+Oi+xNxlPLUf/nWZn+4hvB76HpcSEtYu
-bkvhW1oKNvQT9naSHxCSmYb3OCgNqXDmFU0Av1VDOtRJ4UvlPtRV/nXm7a8KS/fB
-3kz/HODa4k9kRSzBWHpYZKJTG/KsiQl+ApE5G4FmAhjdJZ0eaQQ=
-=VEU+
------END PGP SIGNATURE-----
+```bash
+# mkdir /etc/luks
+# dd if=/dev/urandom of=/etc/luks/boot_os.keyfile bs=512 count=1
+1+0 records in u=rx,go-rwx /etc/luks
+1+0 records out
+512 bytes (0.5 kB, 0.5 KiB) copied, 0.0002368 s, 17.3 MB/s
 
---------------1NRxxp1lndPd53MaDVSyX0kG--
+# chmod u=rx,go-rwx /etc/luks
+# chmod u=r,go-rwx /etc/luks/boot_os.keyfile
+
+# cryptsetup luksAddKey /dev/nvme0n1p1 /etc/luks/boot_os.keyfile
+Enter any existing passphrase:
+
+# cryptsetup luksAddKey /dev/nvme0n1p5 /etc/luks/boot_os.keyfile
+Enter any existing passphrase:
+```
+
+Add the keys to the crypttab:
+
+```bash
+# echo "LUKS_BOOT UUID=$(blkid -s UUID -o value ${DEVP}1) 
+/etc/luks/boot_os.keyfile luks,discard" >> /etc/crypttab
+# echo "${DM}5_crypt UUID=$(blkid -s UUID -o value ${DEVP}5) 
+/etc/luks/boot_os.keyfile luks,discard" >> /etc/crypttab
+```
+
+The above is taken from: [Full_Disk_Encryption_Howto_2019 - Community 
+Help 
+Wiki](https://help.ubuntu.com/community/Full_Disk_Encryption_Howto_2019#Post-Installation_Steps)
+
+---
+
+# Issue
+
+The boot partition unlocks very quickly (5 seconds) but the LVM volume 
+takes about 6 minutes to unlock.
+
+Following are the key dump of both these partitions. With the keyslot 0 
+in both being the same passphrase, and keyslot 1 being the key file:
+
+```
+$ sudo cryptsetup luksDump /dev/nvme0n1p1
+Place your right index finger on the fingerprint reader
+LUKS header information for /dev/nvme0n1p1
+
+Version:        1
+Cipher name:    aes
+Cipher mode:    xts-plain64
+Hash spec:      sha256
+Payload offset: 4096
+MK bits:        512
+MK digest:      ec 22 27 de c1 ef 40 0f a5 cf 37 d3 96 5c d5 b2 6e c8 dd 90
+MK salt:        62 1a 05 81 ba 60 3b 0d b1 8a 9f f0 04 98 27 54
+                 06 b6 8d 72 53 23 09 47 ea 5f 80 1d d7 c5 ca 50
+MK iterations:  305173
+UUID:           586de9a0-14c7-40d7-b721-7fdba2e3b184
+
+Key Slot 0: ENABLED
+         Iterations:             1000
+         Salt:                   4b f1 99 85 84 a5 00 d6 a4 e8 e1 07 35 
+b4 da a1
+                                 fc 97 59 5f 4c f8 e1 9b 49 71 29 af e5 
+56 b1 19
+         Key material offset:    8
+         AF stripes:             4000
+Key Slot 1: ENABLED
+         Iterations:             4848906
+         Salt:                   91 70 85 49 f3 31 e8 53 1f 39 aa 6d 7a 
+3e 84 de
+                                 e4 3f bd 3d 65 bf f6 b1 e6 8c 15 fa 34 
+b9 e3 e0
+         Key material offset:    512
+         AF stripes:             4000
+```
+
+```
+$ sudo cryptsetup luksDump /dev/nvme0n1p5
+LUKS header information
+Version:        2
+Epoch:          10
+Metadata area:  16384 [bytes]
+Keyslots area:  16744448 [bytes]
+UUID:           ee8854e8-54f6-4f7b-b326-02fdee357d0e
+Label:          (no label)
+Subsystem:      (no subsystem)
+Flags:          (no flags)
+
+Data segments:
+   0: crypt
+         offset: 16777216 [bytes]
+         length: (whole device)
+         cipher: aes-xts-plain64
+         sector: 512 [bytes]
+
+Keyslots:
+   0: luks2
+         Key:        512 bits
+         Priority:   normal
+         Cipher:     aes-xts-plain64
+         Cipher key: 512 bits
+         PBKDF:      argon2id
+         Time cost:  1000
+         Memory:     1048576
+         Threads:    4
+         Salt:       93 17 44 b3 39 82 ab 0c 20 81 0b 2b 8d 38 b1 42
+                     57 53 bf ad 11 5c d5 f5 8e 42 47 45 21 73 74 84
+         AF stripes: 4000
+         AF hash:    sha256
+         Area offset:806912 [bytes]
+         Area length:258048 [bytes]
+         Digest ID:  0
+   1: luks2
+         Key:        512 bits
+         Priority:   normal
+         Cipher:     aes-xts-plain64
+         Cipher key: 512 bits
+         PBKDF:      argon2id
+         Time cost:  9
+         Memory:     1048576
+         Threads:    4
+         Salt:       b9 84 4c ee e5 38 5d 3e 7e c3 1f 12 b3 6c 42 9b
+                     a4 61 7c f8 12 55 99 25 fe d6 76 15 4b 65 11 66
+         AF stripes: 4000
+         AF hash:    sha256
+         Area offset:32768 [bytes]
+         Area length:258048 [bytes]
+         Digest ID:  0
+Tokens:
+Digests:
+   0: pbkdf2
+         Hash:       sha256
+         Iterations: 305529
+         Salt:       db 22 26 2b b0 dc 12 19 a1 e1 13 d2 98 92 43 2c
+                     d3 e6 f2 da 9a 08 e5 a3 56 42 f5 e7 b0 89 bc 75
+         Digest:     bb e0 6e 95 50 0c 86 ce 3a 1b bd 7e 7b da 16 ba
+                     84 c7 9a 41 a2 09 9c b1 a5 a6 3d 80 31 5a 27 64
+```
+
+# Help request?
+
+Can you please suggest if I need to change the order of the keys or 
+change the iteration time cost or any other parameter to make my LVM 
+volume to unlock faster?
+
+Note: My passphrase has high entropy and the keyfile also has high 
+entropy as it is generated with random numbers.
+
+
+-- 
+Thanks and Regards
+
+Lamy
