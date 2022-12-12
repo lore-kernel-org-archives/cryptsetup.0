@@ -1,46 +1,45 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D2F7E
-	for <cryptsetup@lists.linux.dev>; Fri,  9 Dec 2022 22:57:47 +0000 (UTC)
-Received: by mail-wr1-f43.google.com with SMTP id h10so6666214wrx.3
-        for <cryptsetup@lists.linux.dev>; Fri, 09 Dec 2022 14:57:47 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750C47B
+	for <cryptsetup@lists.linux.dev>; Mon, 12 Dec 2022 08:10:34 +0000 (UTC)
+Received: by mail-ed1-f41.google.com with SMTP id m19so11698750edj.8
+        for <cryptsetup@lists.linux.dev>; Mon, 12 Dec 2022 00:10:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:subject:from:content-language:to
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3snNedA3E765z/Ih+zcapKMQIY6u8L3ONLx5RoQmGxQ=;
-        b=qxvx5oTouPD3/QXxcNKvFWpZe6u5jqEr+npBhOub7AFDZ0jDNx0ihIxFFs5cYMR/8n
-         KyXBocMHLNrWA6x7p1Co5ow5pqKUCsbk08bTkriM4AjzO/+FciQBJTd2KdFXbPjQAMfg
-         B1hj+CFKwyjJhCtD07uhi0TGCaofpqU1P9qm6S742NvsN9PdFI5ibjasCccrr2G5sEZd
-         olzwy4E6FH3Itxq5207ulkgWku00DQ+AvyhIrZzelah6bc9SjANF+a17gFKuXdOZMWKo
-         QBTOGRFmBJxrB6/Eupv0JfRFKpd9LMRBpf2xaSNvpWrFMsQvWkpFFXR0Nu500QeXsVWK
-         c1Jg==
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QqzYWhlsA+7mlASnTGH2JlNftqT+BUN7RDjFJ8KdYX4=;
+        b=jJQGhl6vEllmrgil1xuILUIc5Zz77vE0roWlpEKrbnxul6MTuTFNX2HWHYDVJ8izx0
+         FZaU3Q5mtQxaxBuBzN8yL2Vj+Nr5odPE2Lem628JUQILlu7tYCzpy8gvSEo16csX5DMt
+         gTEkaCmFv1Q0BU7kN5ryCezs2rX5XfYOZZ6ZF6sujWI+LYBr2B6DZVdpKfmIdRKgZiEr
+         lloYADAtD/SfjzvP7R+j0X6gbNFbFXcqbWHJrSDz3OJCn4ZrJuFO+u//kLl/1ELa+ckK
+         P2wuZUCxa68FzEs3RNsVrsccu+MxsnR5fjFhWDlGZEK7c5coMogc+bmhrdaouw+y13yw
+         zZVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:subject:from:content-language:to
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=3snNedA3E765z/Ih+zcapKMQIY6u8L3ONLx5RoQmGxQ=;
-        b=T7XyVajJlbXmiaEWX+ydj2xYK9/+bKrqHh1G8lpeDJ6rQSlaSV40dofyKEolUmEX7b
-         9l9oilF/7BSU2Zy52XM0nxzVMOvrpcRnUjIzlf0q1XyCWhu0tomqcXQgxe5V272TPSCa
-         TLF2iBng2M+AOTpvCQcRsokDvhONxVbNmLVowsuRl1kt2IA96tVTWCRFbG7SlXMciLd0
-         iS6UFU013nwzSxeCUZTlk/mWIs2r8MxCeIpFrQZM6B9Tn1GVSbxatFtzkcJL0RNYNrmT
-         lR64NNE86kBZwQb3ZuKsvG3N5cV1A7dAMa6i0epk5F7SZi1jLW2MnCDOieLTFb24pgxf
-         hbLg==
-X-Gm-Message-State: ANoB5pm5iGF7anY8/9pr6GVRxVei88T6V0E2YgtX696KPP81o0rn2uSe
-	2M4Zpkn10Ht09ePVAL4pE0ZZWzOAHQg=
-X-Google-Smtp-Source: AA0mqf4bKYyiszsppNHjQKF1o0uZGjG9T42Dwl2gwt7CDc1XetYLQO8JHcxaeV4qhRvLAe3x13oA2A==
-X-Received: by 2002:adf:a4c4:0:b0:242:83a:6f98 with SMTP id h4-20020adfa4c4000000b00242083a6f98mr4974392wrb.16.1670626665505;
-        Fri, 09 Dec 2022 14:57:45 -0800 (PST)
-Received: from ?IPV6:2a09:80c0:192:0:7d40:97e3:68d0:9a5d? ([2a09:80c0:192:0:7d40:97e3:68d0:9a5d])
-        by smtp.gmail.com with ESMTPSA id bt4-20020a056000080400b002365cd93d05sm2425091wrb.102.2022.12.09.14.57.44
-        for <cryptsetup@lists.linux.dev>
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QqzYWhlsA+7mlASnTGH2JlNftqT+BUN7RDjFJ8KdYX4=;
+        b=odxra9TEIyUevo04KUsKRrDsg+GmJ29JNr9xssCd61GVtO6kp9uRas6IT59RH1qDV3
+         +dRV55zLbHNp+bSSRvF65FauwWzg3YeaLavLeRSrp/XB5J7kTt2nXlDPjy3MlGy5DZmt
+         FFdjcM/HjjKcAu8XI6bUT2ySKI8MM/mVMdX1Zsjw/F4N0t+/SrlYFklftDHBuXGKVDEN
+         3HnSPr6EdVLZqLVe1T+TFUgQyUSH/il5Wf3mSOL/ks+xuMMazpApaX7vvKBu2iMgdubV
+         Xo3jO7nuHYhFZHz5BCEitdKrG5WoSUiIxkb8KabgdIHBH7B77dIqQ3VjHyf9hll+nhvj
+         yiTA==
+X-Gm-Message-State: ANoB5plXKiTu5yKp4th3ytZ5CfTq6k13LHvjwn0DBTD1tMzbzxYLc/4Y
+	HKGWdT9wCR7yiy0lcu/3M5maDwUJh00=
+X-Google-Smtp-Source: AA0mqf6nDWLquGhHYbyBFUK5SFt5sotbYI9p02sp1RGUSM6p0q3S4UvYfYMEMuclsvkpKdFzfMrvxQ==
+X-Received: by 2002:a05:6402:2986:b0:45c:835b:7991 with SMTP id eq6-20020a056402298600b0045c835b7991mr12226629edb.18.1670832632563;
+        Mon, 12 Dec 2022 00:10:32 -0800 (PST)
+Received: from [147.251.42.107] (nbbroz2.fi.muni.cz. [147.251.42.107])
+        by smtp.gmail.com with ESMTPSA id q26-20020aa7da9a000000b0046b25b93451sm3522363eds.85.2022.12.12.00.10.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Dec 2022 14:57:44 -0800 (PST)
-Message-ID: <69f9a846-4f28-0cc2-95b9-0e826093d3ce@gmail.com>
-Date: Fri, 9 Dec 2022 23:57:35 +0100
+        Mon, 12 Dec 2022 00:10:32 -0800 (PST)
+Message-ID: <70676296-dc41-b8f5-cb4d-6b7657e8a806@gmail.com>
+Date: Mon, 12 Dec 2022 09:10:31 +0100
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
@@ -49,28 +48,25 @@ List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.1
-To: cryptsetup@lists.linux.dev
-Content-Language: en-US, de-DE
-From: Lamy Geier <lamyergeier@gmail.com>
-Subject: LUKS container inside Full Disk encrypted Drive
+Subject: Re: LMS verification support
+Content-Language: en-US
+To: "Mike Luken (mluken)" <mluken@cisco.com>,
+ "cryptsetup@lists.linux.dev" <cryptsetup@lists.linux.dev>
+References: <95080015-BD73-49C4-88D0-23502B75A532@cisco.com>
+From: Milan Broz <gmazyland@gmail.com>
+In-Reply-To: <95080015-BD73-49C4-88D0-23502B75A532@cisco.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hello!
+On 12/2/22 16:06, Mike Luken (mluken) wrote:
+> NIST and NSA have both recommended the use of the LMS algorithm for
+> firmware and software signatures and verification.  NSA stated
+> vendors should have this supported in products in 2025.  What are the
+> plans to add LMS support into the kernel for things like secure boot
+> (I guess this is done via the SHIM which I don’t know if this is
+> covered by kernel.org or not) , signed kernel modules and IMA?
+This is really not a question for this list, I guess you should write
+to some kernel list (I guess kernel-integrity, archive here
+https://lore.kernel.org/linux-integrity/ )
 
-I have used Full disk Encryption using LUKS. But with login the entire 
-drive is unencrypted.
-
-I want to lock some sensitive data (about 1 GB) and access it only when 
-I want it. Is it recommended to create a LUKS container of 1.5 GB inside 
-the partition? Is there any other best practice associated with LUKS 
-container inside another LUKS device?
-
-Note: I found the procedure at [LUKS Encrypted Container Chuck 
-Nemeth](https://www.chucknemeth.com/encryption/luks-container), which 
-uses dd to create an image file and then encrypts it with LUKS.
-
--- 
-Thanks and Regards
-
-Lamy
+Milan
