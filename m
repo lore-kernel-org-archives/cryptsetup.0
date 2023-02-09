@@ -1,97 +1,143 @@
-Received: from ste-pvt-msa1.bahnhof.se (ste-pvt-msa1.bahnhof.se [213.80.101.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A494679F8
-	for <cryptsetup@lists.linux.dev>; Thu,  9 Feb 2023 15:47:10 +0000 (UTC)
-Received: from localhost (localhost [127.0.0.1])
-	by ste-pvt-msa1.bahnhof.se (Postfix) with ESMTP id 668F1400C5
-	for <cryptsetup@lists.linux.dev>; Thu,  9 Feb 2023 16:37:59 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at bahnhof.se
-X-Spam-Flag: NO
-X-Spam-Score: -1.155
-X-Spam-Level:
-X-Spam-Status: No, score=-1.155 tagged_above=-999 required=6.31
-	tests=[BAYES_00=-1.9, FROM_LOCAL_HEX=0.006,
-	FROM_STARTS_WITH_NUMS=0.738, URIBL_BLOCKED=0.001]
-	autolearn=no autolearn_force=no
-Received: from ste-pvt-msa1.bahnhof.se ([127.0.0.1])
-	by localhost (ste-pvt-msa1.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id NBu75T3d-gHK for <cryptsetup@lists.linux.dev>;
-	Thu,  9 Feb 2023 16:37:58 +0100 (CET)
-Received: 
-	by ste-pvt-msa1.bahnhof.se (Postfix) with ESMTPA id 634913FFCC
-	for <cryptsetup@lists.linux.dev>; Thu,  9 Feb 2023 16:37:58 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by localhost (Postfix) with ESMTPS id 7495C2E01B0
-	for <cryptsetup@lists.linux.dev>; Thu,  9 Feb 2023 16:37:57 +0100 (CET)
-Date: Thu, 9 Feb 2023 15:37:56 +0000
-From: Michael =?utf-8?B?S2rDtnJsaW5n?= <152cc69a347e@ewoof.net>
-To: cryptsetup@lists.linux.dev
-Subject: Re: Filling a device with random data
-Message-ID: <c2a2929d-29dd-48c4-9b37-b3ac7a6f072f@home.arpa>
-References: <aec223f2-34f1-45ca-83a4-024e66490ee5@app.fastmail.com>
- <20230209040200.GA3642@tansi.org>
- <d30a4af6-8a91-42ea-973d-f16f1f361023@app.fastmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4935764A
+	for <cryptsetup@lists.linux.dev>; Thu,  9 Feb 2023 16:36:22 +0000 (UTC)
+Received: by mail-ej1-f44.google.com with SMTP id p26so8014566ejx.13
+        for <cryptsetup@lists.linux.dev>; Thu, 09 Feb 2023 08:36:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-language:to:subject:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=VsMst8gW1Pxu/KOX5DEfD3JHwt9CXI/UEnWu05LqM6g=;
+        b=ZAHN3Z05FMpuwebh/vkIklrG2BHaBSm+ClLHwL5ZKLFJpUmV+iRmqF740kBVeVnscV
+         3RDHTe+QilUfgs4Y5VYIOACF1KlPIWc707sd/qA48FtX/JchnCenmyJv5E3hCxK0sj7I
+         gH2S7hNkQxCO/ThkAbrdvMA0aL4TIVYLxK7QGTvy8Z1Pv2rHwM1tplgZVgcWAjELsfNx
+         ZG2ZZa+XU8EUYTiNZVGgCDMdwFnh71v442reQhldkUugnth8mqfKGKxmScZb5Mpn80X8
+         YI801pdlXnqhHEcUBrwSar2fDJcT7g11nNnJsiaKPh8W7EilY2MMcWJnqcGiyjvsVzsk
+         ypVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-language:to:subject:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VsMst8gW1Pxu/KOX5DEfD3JHwt9CXI/UEnWu05LqM6g=;
+        b=kqiZOu1Hy9bC5giApO6XFcP9mP7uDGLRemrIOt/z16pz1qWRcCEqpBfA8sP/FGMKqg
+         FuY+C0BQI9H1oODN/xcJ/3DeiBSeXBUYXmJ/A6wVy+GctHw9L7oeRjm/6//B/fih3F47
+         SGwXjIL+9AB6+tj6nep3hwVqvXQObMMHl8iAwlPuK/3IzJU/V0i3lGpZRxMcRtgVQ51K
+         q+Fcavvr6xBBRaFc/4513o5N5U1SJvus9DCUy9n40nmv3Ofb6VD8J8nBrO4xUekeBtRp
+         4i8dN+m0N/Vxtq0lk5JSmvscrH23qEIdvBXosV8YADPxqIfRvhOe10VpNNl+T+ghHJsk
+         FD8Q==
+X-Gm-Message-State: AO0yUKUdtYX1MWQReKLuAoLAdtCDgoL0MRusfTVx0Ph94CuV+GjeLpiQ
+	Hg2rtg5cO6174/DHt2MxubXbTEM3PRE=
+X-Google-Smtp-Source: AK7set9gkNSI5WNvdsjSAV3/h98+l+GIU1yi+B4NpEI4A0ns+IyXQzESlh+hs2DQ1ZUpv62+VeCqYg==
+X-Received: by 2002:a17:906:6a1b:b0:8af:b63:b4bf with SMTP id qw27-20020a1709066a1b00b008af0b63b4bfmr7378250ejc.27.1675960580528;
+        Thu, 09 Feb 2023 08:36:20 -0800 (PST)
+Received: from [147.251.42.107] (nbbroz2.fi.muni.cz. [147.251.42.107])
+        by smtp.gmail.com with ESMTPSA id p11-20020a1709066a8b00b0087f68a2681bsm1087471ejr.96.2023.02.09.08.36.19
+        for <cryptsetup@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Feb 2023 08:36:19 -0800 (PST)
+Message-ID: <bcf06d0a-8c0d-1e03-d84d-c78ab46eb393@gmail.com>
+Date: Thu, 9 Feb 2023 17:36:11 +0100
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <d30a4af6-8a91-42ea-973d-f16f1f361023@app.fastmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+From: Milan Broz <gmazyland@gmail.com>
+Subject: [ANNOUNCE] cryptsetup 2.6.1
+To: cryptsetup development <cryptsetup@lists.linux.dev>
+Content-Language: en-US
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------8vduVqW508vSVL5uQ20xnLNo"
 
-On 9 Feb 2023 16:01 +0100, from david@djsp.eu (David Joaquín Shourabi Porcel):
-> $ dd if=/dev/urandom of=/dev/null status=progress
-> 4819285504 bytes (4,8 GB, 4,5 GiB) copied, 12 s, 402 MB/s^C
-> 9708379+0 records in
-> 9708378+0 records out
-> 4970689536 bytes (5,0 GB, 4,6 GiB) copied, 12,379 s, 402 MB/s
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------8vduVqW508vSVL5uQ20xnLNo
+Content-Type: multipart/mixed; boundary="------------AjsBjBqMvhC177KNHEkcOyBM";
+ protected-headers="v1"
+From: Milan Broz <gmazyland@gmail.com>
+To: cryptsetup development <cryptsetup@lists.linux.dev>
+Message-ID: <bcf06d0a-8c0d-1e03-d84d-c78ab46eb393@gmail.com>
+Subject: [ANNOUNCE] cryptsetup 2.6.1
 
-That's doing I/O in blocks of 512 bytes, so syscall overhead is likely
-to be a large limiting factor. (Each block requires at least a few
-kernel/userspace context switches through syscalls; at an _absolute_
-minimum, for each block, it's likely going to go through userspace dd
-to kernel read through kernel /dev/urandom driver to userspace dd to
-kernel write through kernel /dev/null driver to userspace dd.) Compare
-and contrast that to a cryptsetup benchmark which is likely (I haven't
-looked) primarily one or the other. If you want to gauge the
-performance of /dev/urandom, I suggest trying with something like
-bs=1M to reduce that overhead. Going from bs=512 to bs=1M I get an
-about 60% speed increase, although it still comes up far short of a
-cryptsetup benchmark (with bs=1M at about a quarter of the throughput
-of the cryptsetup benchmark on my particular system). So for fast
-storage media, going through a crypt mapping can still be beneficial,
-although the degree of benefit will obviously depend on the relative
-performance of CPU (including encryption instructions) and storage
-device. Whether you use a plain dm-crypt mapping or a LUKS container
-should be largely irrelevant for these purposes, however.
+--------------AjsBjBqMvhC177KNHEkcOyBM
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Similarly, when you're writing to a real-life storage device, doing so
-in blocks of 512 bytes is going to utterly devastate performance
-compared to using blocks on the order of tens of megabytes or even
-larger. (I realize that's not what either of your tests do.)
+VGhlIGNyeXB0c2V0dXAgMi42LjEgc3RhYmxlIHJlbGVhc2UgaXMgYXZhaWxhYmxlIGF0DQoN
+CiAgIGh0dHBzOi8vZ2l0bGFiLmNvbS9jcnlwdHNldHVwL2NyeXB0c2V0dXANCg0KUGxlYXNl
+IG5vdGUgdGhhdCByZWxlYXNlIHBhY2thZ2VzIGFyZSBsb2NhdGVkIG9uIGtlcm5lbC5vcmcN
+Cg0KICAgaHR0cHM6Ly93d3cua2VybmVsLm9yZy9wdWIvbGludXgvdXRpbHMvY3J5cHRzZXR1
+cC92Mi42Lw0KDQpGZWVkYmFjayBhbmQgYnVnIHJlcG9ydHMgYXJlIHdlbGNvbWVkLg0KDQpD
+cnlwdHNldHVwIDIuNi4xIFJlbGVhc2UgTm90ZXMNCj09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PQ0KU3RhYmxlIGJ1Zy1maXggcmVsZWFzZSB3aXRoIG1pbm9yIGV4dGVuc2lvbnMu
+DQoNCkFsbCB1c2VycyBvZiBjcnlwdHNldHVwIDIuNi4wIHNob3VsZCB1cGdyYWRlIHRvIHRo
+aXMgdmVyc2lvbi4NCg0KQ2hhbmdlcyBzaW5jZSB2ZXJzaW9uIDIuNi4wDQp+fn5+fn5+fn5+
+fn5+fn5+fn5+fn5+fn5+fn4NCg0KKiBiaXRsazogRml4ZXMgZm9yIEJpdExvY2tlci1jb21w
+YXRpYmxlIG9uLWRpc2sgbWV0YWRhdGEgcGFyc2VyDQogICAoZm91bmQgYnkgbmV3IGNyeXB0
+c2V0dXAgT1NTLUZ1enogZnV6emVycykuDQogICAtIEZpeCBhIHBvc3NpYmxlIG1lbW9yeSBs
+ZWFrIGlmIHRoZSBtZXRhZGF0YSBjb250YWlucyBtb3JlIHRoYW4NCiAgICAgb25lIGRlc2Ny
+aXB0aW9uIGZpZWxkLg0KICAgLSBIYXJkZW4gcGFyc2luZyBvZiBtZXRhZGF0YSBlbnRyaWVz
+IGZvciBrZXkgYW5kIGRlc2NyaXB0aW9uIGVudHJpZXMuDQogICAtIEZpeCBicm9rZW4gbWV0
+YWRhdGEgcGFyc2luZyB0aGF0IGNhbiBjYXVzZSBhIGNyYXNoIG9yIG91dCBvZiBtZW1vcnku
+DQoNCiogRml4IHBvc3NpYmxlIGl0ZXJhdGlvbiBvdmVyZmxvdyBpbiBPcGVuU1NMMiBQQktE
+RjIgY3J5cHRvIGJhY2tlbmQuDQogICBPcGVuU1NMMiB1c2VzIGEgc2lnbmVkIGludGVnZXIg
+Zm9yIFBCS0RGMiBpdGVyYXRpb24gY291bnQuDQogICBBcyBjcnlwdHNldHVwIHVzZXMgYW4g
+dW5zaWduZWQgdmFsdWUsIHRoaXMgY2FuIGxlYWQgdG8gb3ZlcmZsb3cgYW5kDQogICBhIGRl
+Y3JlYXNlIGluIHRoZSBhY3R1YWwgaXRlcmF0aW9uIGNvdW50Lg0KICAgVGhpcyBzaXR1YXRp
+b24gY2FuIGhhcHBlbiBvbmx5IGlmIHRoZSB1c2VyIHNwZWNpZmllcw0KICAgLS1wYmtkZi1m
+b3JjZS1pdGVyYXRpb25zIG9wdGlvbi4NCiAgIE9wZW5TU0wzIChhbmQgb3RoZXIgc3VwcG9y
+dGVkIGNyeXB0byBiYWNrZW5kcykgYXJlIG5vdCBhZmZlY3RlZC4NCg0KKiBGaXggY29tcGls
+YXRpb24gZm9yIG5ldyBJU08gQyBzdGFuZGFyZHMgKGdjYyB3aXRoIC1zdGQ9YzExIGFuZCBo
+aWdoZXIpLg0KDQoqIGZ2YXVsdDI6IEZpeCBjb21waWxhdGlvbiB3aXRoIHZlcnkgb2xkIHV1
+aWQuaC4NCg0KKiB2ZXJpdHk6IEZpeCBwb3NzaWJsZSBoYXNoIG9mZnNldCBzZXR0aW5nIG92
+ZXJmbG93Lg0KDQoqIGJpdGxrOiBGaXggdXNlIG9mIHN0YXJ0dXAgQkVLIGtleSBvbiBiaWct
+ZW5kaWFuIHBsYXRmb3Jtcy4NCg0KKiBGaXggY29tcGlsYXRpb24gd2l0aCBsYXRlc3QgbXVz
+bCBsaWJyYXJ5Lg0KICAgUmVjZW50IG11c2wgbm8gbG9uZ2VyIGltcGxlbWVudHMgbHNlZWs2
+NCgpIGluIHNvbWUgY29uZmlndXJhdGlvbnMuDQogICBVc2UgbHNlZWsoKSBhcyA2NC1iaXQg
+b2Zmc2V0IGlzIG1hbmRhdG9yeSBmb3IgY3J5cHRzZXR1cC4NCg0KKiBEbyBub3QgaW5pdGlh
+dGUgZW5jcnlwdGlvbiAocmVlbmNyeXB0aW9uIGNvbW1hbmQpIHdoZW4gdGhlIGhlYWRlciBh
+bmQNCiAgIGRhdGEgZGV2aWNlcyBhcmUgdGhlIHNhbWUuDQogICBJZiBkYXRhIGRldmljZSBy
+ZWR1Y3Rpb24gaXMgbm90IHJlcXVzdGVkLCB0aGlzIGxlYWRzIHRvIGRhdGEgY29ycnVwdGlv
+bg0KICAgc2luY2UgTFVLUyBtZXRhZGF0YSB3YXMgd3JpdHRlbiBvdmVyIHRoZSBkYXRhIGRl
+dmljZS4NCg0KKiBGaXggcG9zc2libGUgbWVtb3J5IGxlYWsgaWYgY3J5cHRfbG9hZCgpIGZh
+aWxzLg0KDQoqIEFsd2F5cyB1c2UgcGFzc3BocmFzZXMgd2l0aCBhIG1pbmltYWwgOCBjaGFy
+cyBsZW5ndGggZm9yIGJlbmNobWFya2luZy4NCiAgIFNvbWUgZW50ZXJwcmlzZSBkaXN0cmli
+dXRpb25zIGRlY2lkZWQgdG8gc2V0IGFuIHVuY29uZGl0aW9uYWwgY2hlY2sNCiAgIGZvciBQ
+QktERjIgcGFzc3dvcmQgbGVuZ3RoIHdoZW4gcnVubmluZyBpbiBGSVBTIG1vZGUuDQogICBU
+aGlzIHF1ZXN0aW9uYWJsZSBjaGFuZ2UgbGVkIHRvIHVuZXhwZWN0ZWQgZmFpbHVyZXMgZHVy
+aW5nIExVS1MgZm9ybWF0DQogICBhbmQga2V5c2xvdCBvcGVyYXRpb25zLCB3aGVyZSBzaG9y
+dCBwYXNzd29yZHMgd2VyZSB1c2VkIGZvcg0KICAgYmVuY2htYXJraW5nIFBCS0RGMiBzcGVl
+ZC4NCiAgIFBCS0RGMiBiZW5jaG1hcmsgY2FsY3VsYXRpb25zIHNob3VsZCBub3QgYmUgYWZm
+ZWN0ZWQgYnkgdGhpcyBjaGFuZ2UuDQo=
 
-Also, what kernel version are you running?
+--------------AjsBjBqMvhC177KNHEkcOyBM--
 
-The major advantage to doing a separate full-disk write with a
-throwaway key is that the data is going to be meaningless also through
-the eyes of the final LUKS container mapping. Depending on your use
-case, this can provide a slight confidentiality advantage.
+--------------8vduVqW508vSVL5uQ20xnLNo
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
 
-Doing a full-disk overwrite pass on SSDs has its problems, though;
-primarily that it forces the SSD to consider every user-accessible
-block as being in use, hampering wear leveling. That becomes a far
-more delicate balancing act between storage metadata confidentiality
-(the full-disk overwrite hampers an attacker's ability to determine
-what blocks are in use) and giving the SSD's firmware a decent chance
-of doing wear leveling (for which you want to leave the underlying
-storage pristine and perhaps also allow TRIM passthrough, but which
-leaks information about which parts of the storage device are in use).
+-----BEGIN PGP SIGNATURE-----
 
--- 
-Michael Kjörling                     🔗 https://michael.kjorling.se
-“Remember when, on the Internet, nobody cared that you were a dog?”
+iQIzBAEBCAAdFiEEKikYJD/eRmSNBob52bBXe9k+mPwFAmPlIPsACgkQ2bBXe9k+
+mPy8zBAAx9YTWE/KcBVAHwh5u9u1cMn4Yia529Rza86BoVd1pX7T4dh59d/2OYJ/
+vkYw20stb9x91TIfKnuYLQqBgPMSnYzQ3H98nao/x+oa3DA32YlZOxcW0fLyhExC
+gTBPKA9IZoy5EXPPw91KpXYRBm0PlmuH1lCcRAVa6fAvd1HkqFfGgZBKQUthZ+Bz
+lGUkQRSKWZLbmU7yw2gEeMHvq/nrtgTFUn5N+g8xNi+6OYuiUy8bwGb2tA6UnIq1
+QIE6SV7ViTWgd9E1sCFTV8HxwcHRd52lkQDxc5DcNn6fF3CZt5O9LPf/0FnttIha
+ZtFrjnPnhoFXu4Pzitb1WH8Sxf0NzBTHn9PaBdNzKkptmS3X1lwvChPjfHHvn42w
+mrCk930Frbf/6YNVpIbnogvl5QZXtl/S/qKsb3T5EXsdVYWPmph7XMcLhtaN7d1d
+2ThQsv6eCCZYVR/x6qumVHZX4h2q25bbEWpmi1Ygt2hVGLAlZBaBQkkGwBMEFl0P
+yyxmmK1FbamOJebHVBi9nZ6/RnARTB6an2zMWQTt0C1q0j8qe4yrgUP0Vh5BNOkM
+iRCGBW/UTOltQdZtoelKMOluNVuP9E0Hf/7flySaeRnMAVRXPkjxRU9skrsitjsu
+80CrpYW+0qDqtRpQMFfwxTc+TkjnhcVCrLAkfQW79HUAnWo+TG0=
+=40Vy
+-----END PGP SIGNATURE-----
 
+--------------8vduVqW508vSVL5uQ20xnLNo--
