@@ -1,38 +1,38 @@
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759EDD305
-	for <cryptsetup@lists.linux.dev>; Wed, 15 Feb 2023 23:43:25 +0000 (UTC)
-Received: by mail-pg1-f172.google.com with SMTP id 7so195076pga.1
-        for <cryptsetup@lists.linux.dev>; Wed, 15 Feb 2023 15:43:25 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7FB43D72
+	for <cryptsetup@lists.linux.dev>; Wed, 15 Feb 2023 23:44:42 +0000 (UTC)
+Received: by mail-pl1-f173.google.com with SMTP id r8so345297pls.2
+        for <cryptsetup@lists.linux.dev>; Wed, 15 Feb 2023 15:44:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=aaubFzyBl/C+NS0SuBY+0eDYPOGkopecosUT4XjZWBE=;
-        b=E8nPXXnUpPAMAQDqsC0EF5p4z9sHp2F8auSztmA60bwr7XTBirVuA4oAyWc1jOJ7vU
-         9+nyKrdH2QMIGcxQeGgVKh8ZF7fP0iGEdbpcJ7UuY8adEDuXH2CuZ1HXg/c53CNwOkdi
-         PfjOB0u+Hm9yEpI/BhcB4YtuwiBBaDNUnuZEUG7HXO8kgd7ZPdt4QTSqBRY84yWJYS04
-         4rHcx9rNVroxFiWff5AOP8nXXcw8T+tSuz4zStsdUYQc/Z6daMd3hhUOWsuCRIRBU68/
-         5dk5uq5973UQHiXt3/gFEdzeefrW4Q2qh10Gqo7aoGBhLtRtzshK+uRWbJFn2jGlbKbo
-         H60g==
+        h=to:subject:message-id:date:from:references:in-reply-to:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ARJKr+dcGGOn73nImFqpLck6tziy4qZmjLgXPPJGuxU=;
+        b=f6/ENn2ucZ00lA7rKQW0BJmv4oS3zgvjW6kec4tfuBF+0bwOHH+qfDwr8urHWTJ2Hj
+         DKixvWCvVTaUwYHQnoxXrq/xrIuiQ9Wm4zJ8T/O7GWwIP3ivkWuHwceyAX+oMyg1jP0H
+         6RAweCgjH+wgVZhHiX/XXzsQLHH07a+zczR4UrwUqaUPZbSHkx9BIddYtFL5hN5OPWbw
+         kik6N/PRthF0fi/u9tLe/wcRSfTXpFDHmyTAUscbuinbELYpKqCDnyu7OUHbgMz1d3gX
+         QeK0YfWxTPzBDBgmiBNZxWl7S1HH81YYBji33UGUZg4jrXS3Dkx0+rchVf3AiG9zJvT3
+         1W2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aaubFzyBl/C+NS0SuBY+0eDYPOGkopecosUT4XjZWBE=;
-        b=qL06VHbNSvF6K7+EACBue/EHJNNphioWtnyGLvw7tfJK/bAZIlPH+/0mV2Sycu5p7e
-         SZI4ovAa3rwmadQ/kL3uAaLNS0p8kbSxdP7eQfzMPKxFf9otdjse1KGVCT/x2RkTu0/q
-         4N6EkWDUGplzxh+U4JG9V8UAv1MU7Pq43KeoNLOBXc6mxpPK23uOm+88nPDcUoaqE6pc
-         MHQDLv7LPVQ7UivgHWtNlAvnn3qhi2tSYOfPWAgumvT6Sb8DeRrQXM7Re5J5Hy88XHgC
-         jUUVnFd+up/41+FadPdqF4ZYnCdCQNFOEq6i0UgqmaXgcEx9YRWpbSaSCIGjX03eespC
-         9OoQ==
-X-Gm-Message-State: AO0yUKWcGeSVi4hWfFM5XeH4XAuD5a/ORA0/Ya/VigR0oKrX18KO/Rmc
-	Ih6eiIBi352Ti8yCiGy2gu49dKiypF5P+opeFOU=
-X-Google-Smtp-Source: AK7set9az2xm72dhpsuKKr4+OgzymoO/eKEL2kk3uJmKjU3aOD3UmMT5l7QQl4RS5t3Klo3h4KOsk4Wi1fvgD6PstOA=
-X-Received: by 2002:a63:af1e:0:b0:4fa:d445:6486 with SMTP id
- w30-20020a63af1e000000b004fad4456486mr426360pge.51.1676504604802; Wed, 15 Feb
- 2023 15:43:24 -0800 (PST)
+        h=to:subject:message-id:date:from:references:in-reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ARJKr+dcGGOn73nImFqpLck6tziy4qZmjLgXPPJGuxU=;
+        b=FFAZm1yFFJuHE93JJ6ifSElK8XKp41fakanLwBsx8ha4RU4O4J0WoVz40qM4wqChon
+         /OUuRqX+N1OVt0jEAPdL7koQYq9VI0fcvlKACdGhcOPc05o8rnK8PoteeQPhFqWDY8Ir
+         DusMMYTCvcCh4LZ5KdM7XoXYmQ6MoeRXDi7yxF06FVsvBIAtXLruQrp5TxsQeRPy9uxA
+         EDU2ozC/aHQwPQbCthM0kipf9fUyMv4TMfwNAkzKAztIEuVpOM0HHSOhAi+/A43z06r/
+         Lrc3u9aZUDW5pAuRmKxZUFDEpEK/Im38/LDtWKUctt/Oi+mt/a+EmuMRKHQbEds4esTo
+         wldQ==
+X-Gm-Message-State: AO0yUKWGKZwBWjav2oec9DYxWdSYnm5T0jc78LrKvawzkke8bVVPKOJL
+	h6fd+wxV5u0GpbpnjOqYejkXBmGHSTS4Y0jxcTYhl594JQN9Hw==
+X-Google-Smtp-Source: AK7set9jkrwiBl8N4SYUbK8dGDAH40Iojy7nK4QpqfoLZTILJJpk+aVwBl9iyirOE5JT68ILi4lAPi7YuP0ZdruN1Kg=
+X-Received: by 2002:a17:90b:384e:b0:233:d280:1f38 with SMTP id
+ nl14-20020a17090b384e00b00233d2801f38mr62914pjb.80.1676504681792; Wed, 15 Feb
+ 2023 15:44:41 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
@@ -40,18 +40,29 @@ List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Received: by 2002:a05:7022:f8b:b0:5e:61ba:8807 with HTTP; Wed, 15 Feb 2023
- 15:43:23 -0800 (PST)
+ 15:44:40 -0800 (PST)
+In-Reply-To: <CADo9pHjtMrBydk4wPpfeAkMRxBd9TTf_6AJx=a4dxRQB-y5i7g@mail.gmail.com>
+References: <CADo9pHjtMrBydk4wPpfeAkMRxBd9TTf_6AJx=a4dxRQB-y5i7g@mail.gmail.com>
+From: Luna Jernberg <droidbittin@gmail.com>
+Date: Thu, 16 Feb 2023 00:44:40 +0100
+Message-ID: <CADo9pHgvjSdQ7QRG41niXiRqHt-oa4iQsnRyH48dNav3utv9Mg@mail.gmail.com>
+Subject: Fwd: [Tp-sv] New: cryptsetup-2.6.1-rc0 (100%, 0 untranslated) - Swedish
+To: cryptsetup@lists.linux.dev
+Content-Type: multipart/mixed; boundary="00000000000005ed8405f4c5aa7c"
+
+--00000000000005ed8405f4c5aa7c
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+---------- Forwarded message ----------
 From: Luna Jernberg <droidbittin@gmail.com>
 Date: Thu, 16 Feb 2023 00:43:23 +0100
-Message-ID: <CADo9pHjtMrBydk4wPpfeAkMRxBd9TTf_6AJx=a4dxRQB-y5i7g@mail.gmail.com>
-Subject: Re: [Tp-sv] New: cryptsetup-2.6.1-rc0 (100%, 0 untranslated) - Swedish
-To: =?UTF-8?Q?Diskussioner_om_=C3=B6vers=C3=A4ttning_till_svenska?= <tp-sv@listor.tp-sv.se>, 
-	Josef A <josef.andersson@gmail.com>, droidbittin@gmail.com, 
-	cryptsetup@lists.linux.dev
-Content-Type: multipart/mixed; boundary="0000000000006f4b3605f4c5a597"
-
---0000000000006f4b3605f4c5a597
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [Tp-sv] New: cryptsetup-2.6.1-rc0 (100%, 0 untranslated) - Swe=
+dish
+To: Diskussioner om =C3=B6vers=C3=A4ttning till svenska <tp-sv@listor.tp-sv=
+.se>,
+Josef A <josef.andersson@gmail.com>, droidbittin@gmail.com,
+cryptsetup@lists.linux.dev
 
 Hey!
 
@@ -81,7 +92,8 @@ On 2/2/23, Translation Project Robot <robot@translationproject.org> wrote:
 > You can find a tarball of the package at:
 >
 >
-> https://www.kernel.org/pub/linux/utils/cryptsetup/cryptsetup_translation/cryptsetup-2.6.1-rc0.tar.xz
+> https://www.kernel.org/pub/linux/utils/cryptsetup/cryptsetup_translation/=
+cryptsetup-2.6.1-rc0.tar.xz
 >
 > Thank you for all your work,
 >
@@ -96,7 +108,7 @@ On 2/2/23, Translation Project Robot <robot@translationproject.org> wrote:
 > http://listor.tp-sv.se/mailman/listinfo/tp-sv_listor.tp-sv.se
 >
 
---0000000000006f4b3605f4c5a597
+--00000000000005ed8405f4c5aa7c
 Content-Type: text/x-gettext-translation; charset="UTF-8"; 
 	name="cryptsetup-2.6.1-rc0.sv.po"
 Content-Disposition: attachment; filename="cryptsetup-2.6.1-rc0.sv.po"
@@ -3046,4 +3058,4 @@ c2l2ZSBpZ25vcmVyYXMuXG4iCgojfiBtc2dpZCAiUmVhZCB0aGUga2V5IGZyb20gYSBmaWxlIChj
 YW4gYmUgL2Rldi9yYW5kb20pIgojfiBtc2dzdHIgIkzDpHMgbnlja2VsbiBmcsOlbiBlbiBmaWwg
 KGthbiB2YXJhIC9kZXYvcmFuZG9tKSIKCiN+IG1zZ2lkICIoT2Jzb2xldGVkLCBzZWUgbWFuIHBh
 Z2UuKSIKI34gbXNnc3RyICIoRsO2csOlbGRyYWQsIHNlIG1hbnVhbHNpZGEpIgo=
---0000000000006f4b3605f4c5a597--
+--00000000000005ed8405f4c5aa7c--
