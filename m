@@ -1,129 +1,86 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95034D524
-	for <cryptsetup@lists.linux.dev>; Thu,  2 Mar 2023 22:12:53 +0000 (UTC)
-Received: by mail-qt1-f182.google.com with SMTP id d7so906075qtr.12
-        for <cryptsetup@lists.linux.dev>; Thu, 02 Mar 2023 14:12:53 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40391FA1
+	for <cryptsetup@lists.linux.dev>; Fri,  3 Mar 2023 07:55:53 +0000 (UTC)
+Received: by mail-wm1-f41.google.com with SMTP id ay29-20020a05600c1e1d00b003e9f4c2b623so3304683wmb.3
+        for <cryptsetup@lists.linux.dev>; Thu, 02 Mar 2023 23:55:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1677795172;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cLU57gGnKbYtTPcoBDXhf8kk1hZyzrN9NYfoqb4KPVk=;
-        b=SJimYgOchvLKHUq67WdeLLmJsCjFjXFeaoQyWNHL7vMaoTnfF9RE5J/rlaYHifLG4l
-         m2Ep1KsYU/rTbgSCphOFz00qakgo6vKPCrSZuETk+gBMncnJHGciI2U8n8uM9guKvXau
-         x/0qUJjXrEKKXZMr2cMS6kCGshmZj8zW5p6ZQxlBEXg9lWYjRj25mwb4vtH6aiImGsjC
-         7QOoIIZMXYfNYgYAjygoMGwxqmh85sPCZ1GkcaCjP5aFW2PO5JkE6eA3FzqKDjF/WhLt
-         CILLei1mLWlnqCos+4XvYD/+Rpw6gOvCZMeWdumjS5YLZ7olXQ4J+sOUhbf+2mLSoDRi
-         bamg==
+        d=gmail.com; s=20210112; t=1677830152;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=e63wfQav+SCFvs9LHKFqMdhmyW29t+evbk12Ak+xedo=;
+        b=V/Ps53PG/Q7wpD1lTyUEboiBEKx0eNWeMsF9EcVt05EFfHbexxXYU/kNpCVyLl1VtC
+         tNh6OERHN2eIi5cBw+V/dDkhA9La+qYTdsTzJE8SIplzwJmNk8dmWXiwQQ8gyGsP38qg
+         TOuo2N2zzUOEHR3IfEeqMx0/5B8Vbm++tX/ZtEkee2RNKQUX6qMSsDzgW5qJi80aL5IW
+         Y8MFIzEKVcKhWGLbl5MQuNgzF4Kn25v3S65g6LfTzBkymqd5qhiMVUkhWlAsahoE4MQV
+         G6tB8RlYP2gaFL/ud7goJbm2pk9d0a3XP4Cwe2pMkbVo0fvsdmMczm11XuLcHtbkNgHk
+         C2Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677795172;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cLU57gGnKbYtTPcoBDXhf8kk1hZyzrN9NYfoqb4KPVk=;
-        b=v/iPjjW6V/2Fh6ww7yJTWfSiIn+oajQ1D//rgbWY2+Yp5pVcftJUd16LGr/sQ9EN8Z
-         5KCQxGSJd8dUYMatb572P97cNhlHcPbes8NqjOuwgBR8H+HaV94kuVk9SnWo27g/Ijj4
-         sjoZC6HUQfisElsqqGZAfKZoOWW2ojFlkcvgv38+kQjf8gN+zmNZeHMCd4MR0nXM+TzL
-         LdPWVZa5arLUvlVmL286tLncGZH4sQf/OJ2XTg8u9e+SPRObr9q/t+nrW/fEGLZt1312
-         IpyEgDwMlGRTPmnrTKPPbu/GFCShKan1FHP3xP+rUuMumsevzUqvt3HrHcLiN7Z5Yoph
-         +llw==
-X-Gm-Message-State: AO0yUKVlE+uurCKI6eD8wS6DQ5TldiFPh/qvCr4U925fYAaOsQZ7jx7+
-	oBry85pACsFHyo0ri5E4Pf1gQJWM76uQIWPrEUeJBW2sA1k=
-X-Google-Smtp-Source: AK7set/NOjYT+uVXyCaYoRXctoNc1djTagzP3TYLFxJh1cqp2iA+m7XaQAKPvTUeDFLLiTFCizHkJvxNKoBNzV7OFoA=
-X-Received: by 2002:ac8:116:0:b0:3b7:fda4:c86e with SMTP id
- e22-20020ac80116000000b003b7fda4c86emr933464qtg.3.1677795172416; Thu, 02 Mar
- 2023 14:12:52 -0800 (PST)
+        d=1e100.net; s=20210112; t=1677830152;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=e63wfQav+SCFvs9LHKFqMdhmyW29t+evbk12Ak+xedo=;
+        b=2nbCLoqVpM6MhcbQ4tSR2NQpTChkOH7WzFnYQH3ht7dccRWkwQXUEXUohzzYgc0fD7
+         CTMaznCR/MLTxHnrGKUGdCPeFDnIRO0bVq9xJ80JCeeRTSeCJzSjnFN/4hnoPDRziyqA
+         35owYn3Nk25NRWcWRwOimy4EKDCO2rpaohD5fWSgNmOJHgUSo72p/5SC6GkNflgM2lGq
+         1RyGoPvN0btOzl53i2mQ2EfHN/Q4ZQLINDJy5AI4/6Oc3y6Tb1chJw+Pk/9haPp1xnYu
+         5bw+fNedNJh9+zu0wtTH51mqT4oDIn7gEiOJiy2Vp3OmI+uxpTebksroe3ZYH4HSc/H+
+         joAg==
+X-Gm-Message-State: AO0yUKXJZ9SNA4hYNUDMeSLuUwUepYmtf1uhWf+zZw54ygDUdK9syple
+	4gM6okCWWkhqcMd5nTvS1Ay9AqSH8UM=
+X-Google-Smtp-Source: AK7set/yitVu7s5qGAOK5XnaZsiX8Xje8UuF7B2FxMKl1KdP9q4QDKGqwEDVTPHtlbq8793s3ODhjg==
+X-Received: by 2002:a05:600c:5127:b0:3ea:dbdd:66df with SMTP id o39-20020a05600c512700b003eadbdd66dfmr752885wms.2.1677830152020;
+        Thu, 02 Mar 2023 23:55:52 -0800 (PST)
+Received: from [192.168.2.30] (85-70-151-113.rcd.o2.cz. [85.70.151.113])
+        by smtp.gmail.com with ESMTPSA id j18-20020a5d6052000000b002c53f6c7599sm1424670wrt.29.2023.03.02.23.55.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Mar 2023 23:55:51 -0800 (PST)
+Message-ID: <47da0423-7e8c-c059-c65c-fe6252b0e384@gmail.com>
+Date: Fri, 3 Mar 2023 08:55:50 +0100
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CAD-Ua_hj1hkymLbyEyT-eNyCj_naiqHqg7nr3nos8tp9XCERDg@mail.gmail.com>
- <64fc6294-ca5e-f7a9-302f-63b09d569586@gmail.com> <CAD-Ua_h2GDZexz=DC3YA88nO-OhXKyGp1v2D6rWvHHQVwtCgFw@mail.gmail.com>
- <3b08eace-b038-bab1-4f65-f9c322dc90a4@gmail.com> <CAD-Ua_j_AR4BJWJPXs9Lv+qO1-c33M59UPg_1_XQdB60s0MEXg@mail.gmail.com>
- <46a11902-fdbd-4c75-a589-840e4e1f3e27@home.arpa>
-In-Reply-To: <46a11902-fdbd-4c75-a589-840e4e1f3e27@home.arpa>
-From: Lars Francke <lars.francke@gmail.com>
-Date: Thu, 2 Mar 2023 23:12:15 +0100
-Message-ID: <CAD-Ua_gQLB+6a8=eRQd7B8u76hmvGFH+xPtzJKXPwn=gjuF=uw@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.8.0
 Subject: Re: cryptsetup - No key available with passphrase
-To: =?UTF-8?Q?Michael_Kj=C3=B6rling?= <152cc69a347e@ewoof.net>
+To: Lars Francke <lars.francke@gmail.com>,
+ =?UTF-8?Q?Michael_Kj=c3=b6rling?= <152cc69a347e@ewoof.net>
 Cc: cryptsetup@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+References: <CAD-Ua_hj1hkymLbyEyT-eNyCj_naiqHqg7nr3nos8tp9XCERDg@mail.gmail.com>
+ <64fc6294-ca5e-f7a9-302f-63b09d569586@gmail.com>
+ <CAD-Ua_h2GDZexz=DC3YA88nO-OhXKyGp1v2D6rWvHHQVwtCgFw@mail.gmail.com>
+ <3b08eace-b038-bab1-4f65-f9c322dc90a4@gmail.com>
+ <CAD-Ua_j_AR4BJWJPXs9Lv+qO1-c33M59UPg_1_XQdB60s0MEXg@mail.gmail.com>
+ <46a11902-fdbd-4c75-a589-840e4e1f3e27@home.arpa>
+ <CAD-Ua_gQLB+6a8=eRQd7B8u76hmvGFH+xPtzJKXPwn=gjuF=uw@mail.gmail.com>
+Content-Language: en-US
+From: Milan Broz <gmazyland@gmail.com>
+In-Reply-To: <CAD-Ua_gQLB+6a8=eRQd7B8u76hmvGFH+xPtzJKXPwn=gjuF=uw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Michael,
+Hi,
 
-thank you very much for the ramfs idea and your input.
-I would have done this next (and I still might) but it could be that I
-found the issue.
+On 3/2/23 23:12, Lars Francke wrote:
+> Thank you both for your help and sorry for raising this unrelated
+> issue - cryptsetup was probably just so early in the installation
+> phase, other steps would probably have failed later as well.
+> I can't think of anything cryptsetup could  have done to prevent this.
 
-I'm running more detailed tests now.
-This Github issue[1] made me run a memtest and that did show errors,
-but those errors went away as soon as I enabled the AMD EXPO mode to
-overclock the memory.
-It's the next rabbit hole I'm looking at now. But using that
-overclocked memory I am able to run all the commands from this thread
-successfully (at least when I tried it just now, I'll reset everything
-and will try again).
-Next test was disabling the EXPO mode again and it still worked and
-memtest shows no errors. That is weird.
-I _did_ update the BIOS yesterday. All PC components are brand new....
-it worked before the BIOS update, the problems started after the BIOS
-update but because there were a few hours in between I didn't make the
-connection until now.
+It is related - as it is definitely only you who experienced it.
 
-I have to admit: I did not think about memory as being a potential
-problem but it makes sense that cryptsetup/LUKS/dm-crypt need a lot of
-memory for some of the operations.
+Actually it is quite interesting issue. Argon2 KDF uses a lot of memory
+and any glitch (even one bit flip) will change it's output.
+So memory failure explains what you see here.
+(You should see this rarely if --type luks1 was used for format,
+as LUKS1 does not use Argon2. But memory failure is just a recipe
+for disaster later...)
 
-I'll update here should I find more.
-For now I hope I have a stable configuration.
-
-Thank you both for your help and sorry for raising this unrelated
-issue - cryptsetup was probably just so early in the installation
-phase, other steps would probably have failed later as well.
-I can't think of anything cryptsetup could  have done to prevent this.
-
-Cheers,
-Lars
-
-
-[1] <https://github.com/systemd/systemd/issues/14927#issuecomment-636415564=
->
-
-
-On Thu, Mar 2, 2023 at 10:55 PM Michael Kj=C3=B6rling <152cc69a347e@ewoof.n=
-et> wrote:
->
-> On 2 Mar 2023 21:34 +0100, from lars.francke@gmail.com (Lars Francke):
-> > I honestly don't understand what the problem could be. All of this did
-> > work last week and it did work _once_ earlier today for some reason.
-> > I checked smartctl to make sure that the hard drive is not reporting
-> > any errors and it doesn't
->
-> SMART data unfortunately is not always conclusive; particularly, it's
-> not always conclusive in indicating the _absence_ of a problem. Plain
-> and simple, storage devices _lie_, some more than others.
->
-> I would try again, but this time creating the LUKS container using a
-> file in a ramfs (not tmpfs, which is allowed to be swapped out) as
-> backing store, possibly mapped to a loopback device. Doing so will
-> eliminate persistent storage from the equation.
->
-> If that works, then my suspicion would be on the drive itself.
->
-> If that doesn't work either, then there's likely something problematic
-> about the software stack, at which point exact versions of everything
-> becomes interesting. Kernel, cryptsetup, libcryptsetup, ...
->
-> --
-> Michael Kj=C3=B6rling                     =F0=9F=94=97 https://michael.kj=
-orling.se
-> =E2=80=9CRemember when, on the Internet, nobody cared that you were a dog=
-?=E2=80=9D
->
->
+Thanks,
+Milan
