@@ -1,121 +1,59 @@
-Received: from v1.tansi.org (mail.tansi.org [84.19.178.47])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EECCAD306
-	for <cryptsetup@lists.linux.dev>; Tue, 21 Mar 2023 17:52:53 +0000 (UTC)
-Received: from gatewagner.dyndns.org (81-6-44-245.init7.net [81.6.44.245])
-	by v1.tansi.org (Postfix) with ESMTPA id 37B14140026;
-	Tue, 21 Mar 2023 18:52:23 +0100 (CET)
-Received: by gatewagner.dyndns.org (Postfix, from userid 1000)
-	id 24E4017A283; Tue, 21 Mar 2023 18:52:50 +0100 (CET)
-Date: Tue, 21 Mar 2023 18:52:50 +0100
-From: Arno Wagner <arno@wagner.name>
-To: Michael =?iso-8859-1?Q?Kj=F6rling?= <152cc69a347e@ewoof.net>
-Cc: cryptsetup@lists.linux.dev
-Subject: Re: Password hash as LUKS key
-Message-ID: <20230321175249.GA29177@tansi.org>
-References: <1738775229.2387123.1678372528163.ref@mail.yahoo.com>
- <1738775229.2387123.1678372528163@mail.yahoo.com>
- <20230310011952.GA1141@tansi.org>
- <885982240.717525.1678893078734@mail.yahoo.com>
- <06e718ed-b377-4b8d-b1f1-31abd40a4dc7@home.arpa>
- <20230320170642.dscsp2nlqos55cpk@debian64.Core>
- <20230320185351.GC32226@tansi.org>
- <1cc08835-9878-4a38-94e0-ea812fa22c37@home.arpa>
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A7A17C3
+	for <cryptsetup@lists.linux.dev>; Wed, 12 Apr 2023 06:19:54 +0000 (UTC)
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-632384298b3so5075494b3a.0
+        for <cryptsetup@lists.linux.dev>; Tue, 11 Apr 2023 23:19:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681280394; x=1683872394;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=XVh54cOUnDO9XdRRZaYwjocjn2dehDOHNKXPnV7ItIA=;
+        b=d9qLONaO+rNpJYFaePOkl924nIgtNx0jgYmiDteQpxJJeJKutkPcoNsNoVG71hZZ/d
+         kWS5I8iN3GVpL6EHD9Q/lz1hTEbPMF9eTBAbCUm7A1CFDJ6OBWkd2iOFuHvxGFGr34Js
+         2WX1Kk+8h3HPeyISg+jYeNK3CVVom9orX9JnHgwYLsPtc9KoOPXuAr0VQTOjJTE98VGs
+         Is6EOUSJPZTZ+qw3l+THNNu6F8EGaiwCXDNdyFhqsR7diIZIb4veSgXwV/5l0DdkO/DU
+         jnuFcQIaT5YU8c12TQE5nN2ElLqMXlJSpfmivmt9oFsciYqDjG8rI+WJArmyt7DpZVO9
+         3bDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681280394; x=1683872394;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XVh54cOUnDO9XdRRZaYwjocjn2dehDOHNKXPnV7ItIA=;
+        b=NtCRzu62mLtoZCNQ009ypu2KFGomXQ2sG5JANzDr775dUWqvQRW3zgq67Jr/5JUWop
+         oXXSD8He2Aq0PyauXnF+/k4RffThacDvvAoxQPwKvWQe9XAudO/IzhcrLLUyxJmbVOvL
+         4/4BBY7KUnwrO3WnIeakJAGJNnDiwcuG4tMZW8EfB49UKVXM3BdiIKud9m2XHwNhvW7Z
+         lxEjuxVoysftbw4MYRqkiIOTaJYOlHiZC53KDWIxoPHv/YDVSbPwrFOvabu+BK0gpCsx
+         BQy1NrG3qxhSRzAMPqRSAOFl3Yzc3otXeoXbQ1Eg9tAnE0cC3yagJbE7U5btLrgg7VHj
+         mICA==
+X-Gm-Message-State: AAQBX9egmKuo78dikwm3kj+9ndsiSpc68fnmzl7OSq0/IahzlvgB1Sgo
+	QCtiHVeY+nnquzBapD68eOqYBBW6tWlJnI/8BmIeii32XrS6VMue
+X-Google-Smtp-Source: AKy350YQO9Y/9TeelhVY89mClkPSWe0VYBHBe/bXZFUDS2wv07gWdcFWqtAaQaFQonlfOIN9Io9B0fOk09mxZI4rgNE=
+X-Received: by 2002:a05:6a00:22c2:b0:636:d095:1a8 with SMTP id
+ f2-20020a056a0022c200b00636d09501a8mr841127pfj.0.1681280393771; Tue, 11 Apr
+ 2023 23:19:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1cc08835-9878-4a38-94e0-ea812fa22c37@home.arpa>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+From: ARAVINTHKUMAR JAYAPRAKASAM <aravinthkumarj1@gmail.com>
+Date: Wed, 12 Apr 2023 11:49:17 +0530
+Message-ID: <CAFsAJjiZZtTJC5ZsqEEMjDMKFG7beFvFU8N5yRFGQfdf=KOCYg@mail.gmail.com>
+Subject: i.MX6DL dm-verity support on Yocto build
+To: cryptsetup@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Mar 20, 2023 at 21:38:56 CET, Michael Kjörling wrote:
-> On 20 Mar 2023 19:53 +0100, from arno@wagner.name (Arno Wagner):
-> > As long as you pipe in the same thing on slot password setup and 
-> > on slot unlock, it should work. Does not matter what it looks
-> > like. So using an encrypted password works as long as it is
-> > encrypted the same way each time and the rules for giving
-> > it to cryptsetup are observed.
-> > 
-> >> "I want to encrypt a drive for a user and I don't want the user to send me
-> >> their password in clear text."
-> > 
-> > Sure. See above. You may want to have a look at the section
-> > "NOTES ON PASSPHRASE PROCESSING FOR LUKS" in the cryptsetup
-> > man page.
-> 
-> But then the encrypted or hashed value corresponding to the passphrase
-> _becomes_ the container passphrase, and the plaintext passphrase that
-> was used to generate that value never figures into container creation
-> or usage.
-> 
-> If I understand correctly what Martin is trying to do, it is more
-> along the lines of:
-> 
-> 1. Alice picks a secret LUKS container passphrase x.
-> 
-> 2. Alice generates value x' = f(x), for some f(), such that x cannot
-> be derived from x'.
-> 
-> 3. Alice provides Bob with the value x'.
-> 
-> 4. Bob somehow uses the value x' to create a LUKS container and
-> ideally also populates the container with data based on plaintext data
-> provided by Alice.
-> 
-> 5. Bob provides Alice with the container created in step 4.
-> 
-> 6. Alice uses the secret value x to open the container and use it.
-> 
-> 7. Eve, having seen the value x' and the full LUKS container
-> ciphertext including the LUKS header, is unable to use this knowledge
-> to access the plaintext contents of the LUKS container. (Eve may be
-> Bob.)
-> 
-> The question then boils down to: is there a way to provide especially
-> luksFormat with _something_ that is _not_ itself the passphrase, and
-> from which the desired passphrase cannot be derived (because if the
-> passphrase can be derived from what's provided, then there's really no
-> point to all this), yet which results in a known passphrase being
-> usable for unlocking the resultant LUKS container?
-> 
-> My gut feeling is that no, there isn't. 
+Hello Team,
+We are working on an imx6dl sabresd board with Yocto Linux 5.15
+version. We would like to use the dm-verity feature, but we haven't
+found proper steps to do so.
+Could you please guide us on the proper steps to enable the dm-verity
+feature on our board?
 
-Ah. If that is the intent, no there very likely is not. As 
-the container is created by Bob and hence the container 
-needs to be written by Bob and the container uses symmetric 
-crypto, Bob can read it now and in the future, unless 
-the master-key gets changed after Bob passes the container 
-onwards. I sort-of ruled this use-case out as it is likely 
-impossible to implement. 
-
-This use-case would need a public-key scheme right at the 
-base of the encryption (no symmetric layer) and that would be 
-a different thing than the dm-crypt base used by LUKS and it
-would have absolutely horrible performance.
-
-The only way I see here is to create a setup-program that 
-Alice can run at her site to create the container. Of course
-if Bob does that program, he can still include various forms
-of backdoors. If Bob is honest at container creation, he can
-just forget the passwords handed to him. And if this is about
-transport security during passphrase transfer, use any of the 
-established solution for that.
-
-Bottom line: You typically do not get any security against the
-person creating your encrypted containers.
 
 Regards,
-Arno
-
--- 
-Arno Wagner,     Dr. sc. techn., Dipl. Inform.,    Email: arno@wagner.name
-GnuPG: ID: CB5D9718  FP: 12D6 C03B 1B30 33BB 13CF  B774 E35C 5FA1 CB5D 9718
-----
-A good decision is based on knowledge and not on numbers. -- Plato
-
-If it's in the news, don't worry about it.  The very definition of 
-"news" is "something that hardly ever happens." -- Bruce Schneier
+Aravinthkumar,
+Mb:8508139500.
