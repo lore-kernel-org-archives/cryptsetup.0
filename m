@@ -1,113 +1,71 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD213220
-	for <cryptsetup@lists.linux.dev>; Fri, 28 Apr 2023 16:35:41 +0000 (UTC)
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-2478485fd76so118167a91.2
-        for <cryptsetup@lists.linux.dev>; Fri, 28 Apr 2023 09:35:41 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD7F7C
+	for <cryptsetup@lists.linux.dev>; Mon, 29 May 2023 02:03:02 +0000 (UTC)
+Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-3f6c81cc112so31301251cf.2
+        for <cryptsetup@lists.linux.dev>; Sun, 28 May 2023 19:03:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682699741; x=1685291741;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aeNQl5VJGIT32pBfhtLwl2Q2JBCJ+DppPozdjQBoECI=;
-        b=cZzTsn3gUCQu55HSlBEot5ZGKDi7zVzZly3OILdKr0NOXrjEM7gjgT9ZFTG9Sa0Oj1
-         MB2CyOwYgPSIrH0OoSOZtINqiwa1/tKNXMzQd2XLblEHrHF7k3l9XYkGpzsb/LHqRDGd
-         zJMGywwR+D2klFFPTDrMtxIXqtvCPuhX+hlw+AyvcT8z4GEd42+z+zU6r0N92XRdN0IE
-         GFJ09t04BRKy2bnEGuMp1i+syyGhCvh1HwIPPdba4XJAxoB4urla8RVpclhJc7BM7SfU
-         OHKF0Z9JTgyST/D9AZQlAwbolT7Ff3WNKW99tG/XwR5VvsnZLvg1dOhEiG91fKCIoeJm
-         4rfA==
+        d=gmail.com; s=20221208; t=1685325781; x=1687917781;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=LcDTCNBBLcLACkU0xM7m65KCfqwk4YULIfOYOpS0OU0=;
+        b=eccW/geb/+qPjndqvoHqB+B/pU0deER1KH3WoktXqQyTZRx8pVoWEj4ok8Me67Y5mf
+         Fr4n4mcSPvrbQl5iZjPZ/Bs+NFd/H7t3m2XgorpyWAUe/0R+oF40JRNKRbK7ug6kKd9u
+         ON3CBGdDNib7iP88Na+6fJyATYqFQCzXQ/TNNJ72n43ZGt4mpDObTFwrGz0viIw9CPG+
+         h8K0HKLv+gsDfm09nEBgGOYrO4vUI+kH0cshGIsHRDWbNiPhqGC/AD2OS7E6Kwr/Bfg0
+         w/0mvY4Hrhg0LMCHJVnEfz+kqcdfr9Kyl1h3TTxd2AZZadQ0M3etGwKlhCrlsRoN30Tt
+         ob2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682699741; x=1685291741;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aeNQl5VJGIT32pBfhtLwl2Q2JBCJ+DppPozdjQBoECI=;
-        b=i/9VydrtvLm34JIvs8K6Fp6hG09R4oTBJ4kHtsc0n+N9R1HTWzUc6UgjtGY1dzHUX6
-         lvMP/btrsMZUcky2BmlQfC+P1dXPsuHzXmCxYNHmjbMpMIFyDzW7euAlk7xcn6HUxJcW
-         +41jvIC0dygp4tUSVWycdmdITXe/OIpM4WZQHJpghB/UN51s1YcUlmkF7m3pEP3WXt0N
-         FZoTkslWTfRsZn+/BgiokSbp8qqTchnMFS8VU2+0ngzAyYqBYDJTXt6KIbyB+ytNvCVj
-         UD7kxC0DfXj0NEux49cLLnS5uZr3+h5VSnXGN8o2ipfa2KnEWcNR6H3TP6E28EGZ3EaR
-         I4hg==
-X-Gm-Message-State: AC+VfDx5Ple6wpceefBtWHkpf1LEv6fclTMGX0Qx3FuQs7oCtpk8ZARX
-	3zADPDcpgFbq2O5SkZen1mgK9a5I1XgFKUcxLko=
-X-Google-Smtp-Source: ACHHUZ4kDD8pmFK2ZlOKNoXjjeZujMJHoPyO015TDuvYYatAHxAtB0Cxtdv9A16qgZ9yeZMegWgxjVCOkP21sD53tUY=
-X-Received: by 2002:a17:90b:1bc9:b0:246:91d0:9e6f with SMTP id
- oa9-20020a17090b1bc900b0024691d09e6fmr6000346pjb.3.1682699740726; Fri, 28 Apr
- 2023 09:35:40 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1685325781; x=1687917781;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LcDTCNBBLcLACkU0xM7m65KCfqwk4YULIfOYOpS0OU0=;
+        b=cqNoiEhWXyTW4tQ4r7czD+qWsP7Y9hBSpplOKRStic0MOmc5VKJD/zlGRPFBC289NJ
+         ts4KMM555ro/xYXYNfmuXQDe/oceOumMwOJw6HovhkxnM/rXBJ+Baumqz1q8w0PDDpg0
+         jsfVf3VO5BC316xMHZTjz3ccnJaA62Rg74wlqNQUqg2I/lcnYYV1YqgwQU2oG1ow8PlL
+         liHw9ngn2Tg6/ErfhyuLTWCn5B63LHGBGJeEQ21OMtvNNqRnHKTuJQRfEn4Y6OSRwxWn
+         +5XCXqBDU44O0aElzVmJo94BasvpIE6TEHtFMJp1P6u97IszdK3OGqU5mznGtCLxZpr7
+         ErOw==
+X-Gm-Message-State: AC+VfDxs0v8ms+My6sjDV6Bn7d8pcWjWQqN2Yb+Y4FBtErXw2cE5Fa8C
+	3l+5iVA578gySp1cLoilWZa/btGzLyKW49jSidHySK7MrGSraw==
+X-Google-Smtp-Source: ACHHUZ488tSCCg1O5cLlnuzM8iXh5FuQFO25Gk0N0i+bhb6gIdAvD7MxsP4i2IbGWBT13Kcrz7D9K7/v9bLAVIDy1SI=
+X-Received: by 2002:a05:622a:2d5:b0:3f4:400d:5249 with SMTP id
+ a21-20020a05622a02d500b003f4400d5249mr10377527qtx.67.1685325781141; Sun, 28
+ May 2023 19:03:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CABOqr=M+uDDXC-xG_hnxGB-7MZnWUwONizC6c=r5NCYaCz6Pxg@mail.gmail.com>
- <eb371bc1-6210-95d7-ee63-d8dc243b7da6@gmail.com> <CABOqr=MqFcTn77WEg9XPHDPBx=Y7nD-fR+_=ujDzmRQq7LW67Q@mail.gmail.com>
- <b08003f6-b01f-d419-c771-28237dd9590e@redhat.com> <CABOqr=MFLfQsPg8sUJ2pYCkZSbtwXVcpRcakqiZQ1HEuLNX-KQ@mail.gmail.com>
-In-Reply-To: <CABOqr=MFLfQsPg8sUJ2pYCkZSbtwXVcpRcakqiZQ1HEuLNX-KQ@mail.gmail.com>
-From: Lodewyk van der Westhuizen <jl.westhuizen@gmail.com>
-Date: Fri, 28 Apr 2023 11:35:29 -0500
-Message-ID: <CABOqr=OEyA_gFycqG9_sGm8LmpahFeo9gWqgLfsP_=feGTGt5g@mail.gmail.com>
-Subject: Re: Performance issue LUKS1 vs LUKS2
-To: Ondrej Kozina <okozina@redhat.com>
-Cc: Milan Broz <gmazyland@gmail.com>, cryptsetup@lists.linux.dev
+From: Russell Harmon <eatnumber1@gmail.com>
+Date: Sun, 28 May 2023 19:02:35 -0700
+Message-ID: <CA+zrezRB-PewcH_-h8PZmGOc1RVBwdS-uReago8XXLkVTw+EDg@mail.gmail.com>
+Subject: DM-Integrity Under RAID Without Journalling
+To: cryptsetup@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-CORRECTION: the file blocksize (not actual size of the file)
+Hey all,
 
-On Fri, Apr 28, 2023 at 11:05=E2=80=AFAM Lodewyk van der Westhuizen
-<jl.westhuizen@gmail.com> wrote:
->
-> I can do that - what kind of information would be helpful to add.
->
-> An interesting observation (anecdotal at best) to add is that
-> initially there is a whole bunch of kworkers threads and then it goes
-> down to a few 2-4 whereas in RedHat 7 the kworker thread count is
-> exponentially more. I only see more kworker threads when increasing
-> the size of the files being created/deleted (1024K vs 2048K vs 4096K
-> etc).
->
-> I'm still hoping it's just a parameter/flag that needs to be tuned.
->
-> Thanks for all the help.
->
-> Regards,
-> JL
->
-> On Fri, Apr 28, 2023 at 2:28=E2=80=AFAM Ondrej Kozina <okozina@redhat.com=
-> wrote:
-> >
-> > On 27. 04. 23 18:08, Lodewyk van der Westhuizen wrote:
-> > > Hello Milan,
-> > >
-> > > Thank you for the response. I'll try to answer your questions as best=
- I can.
-> > >
-> > >> NOTE: LUKS1 is not cryptsetup version 1.x, it ia a metadata format.
-> > >> All recent cryptsetup 2.x versions can use LUKS1 as well - just use =
-"--type luks1"
-> > >> in format (so you will compare the same formats on different kernels=
-).
-> > > OK let me rephrase, when using luks1 or luks2 the performance slowdow=
-n
-> > > is still there. The only difference is the version of cryptsetup,
-> > > dm-crypt and the kernel.
-> > >
-> > >> You mean slowdown with access to encrypted data, not unlocking time,=
- right?
-> > > Correct, measuring the I/O (creating/deleting files)
-> > >
-> > >> Which crypto modules are used? What architecture it is - do you use =
-AES-NI
-> > > acceleration on both systems?
-> > > It's Red Hat for both machines (RHEL7 vs RHEL8).
-> >
-> > Please open bug on https://bugzilla.redhat.com/ (product RHEL8). It may
-> > be system configuration issue unrelated to dm-crypt/cryptsetup. If it
-> > turns out to be issue in upstream code as well, I will open upstrem
-> > issue for it myself later.
-> >
-> > Thank you
-> > Ondrej
-> >
+I'm looking to use dm-integrity with its journal turned off as the
+backing devices for a RAID-6 array. This is with two goals:
+Closing the RAID456 write hole (md.4 section "RAID WRITE HOLE").
+
+1. Detecting (other kinds of) silent data corruption coming from the drive.
+2. The resulting configuration will have no journaling (both for
+dm-integrity and for mdraid).
+
+If I understand things correctly, it seems like this covers all the
+cases I listed. If there's data corruption (either via the write hole,
+or coming from the drive), periodic scrubs will detect and repair the
+corruption (since mdraid will consider the corrupt data invalid).
+
+Does this seem like a correct/valid combination to achieve my goals?
+
+Aside, I see the value of dm-integrity's journal (in non-RAID
+configurations), but what's the point of the bitmap? It seems like
+that just reintroduces the potential for undiscovered data corruption
+on the drive (e.g. if there's data corruption in an unsynchronized
+region, at the next boot the corrupted data will falsely be considered
+valid).
