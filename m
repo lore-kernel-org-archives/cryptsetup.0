@@ -1,88 +1,103 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B9F27E
-	for <cryptsetup@lists.linux.dev>; Mon, 29 May 2023 04:32:59 +0000 (UTC)
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-3f6c81cc112so32070721cf.2
-        for <cryptsetup@lists.linux.dev>; Sun, 28 May 2023 21:32:59 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1E38F51
+	for <cryptsetup@lists.linux.dev>; Wed, 31 May 2023 10:45:44 +0000 (UTC)
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5149c76f4dbso5843648a12.1
+        for <cryptsetup@lists.linux.dev>; Wed, 31 May 2023 03:45:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685334778; x=1687926778;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=X5IxMsBxz/EFXYd2tHHP+U5kmgcs5RVf2CzEGSkHurY=;
-        b=HI50HgHJczkz9a8XGOjL/gkgbeQeVOm7c7lqcn0pphE0f7b8xzmqsjOcyAEjAQVCt1
-         tYeIBb85ebmtMaNihKsIZcgSOan6jRwJVbWRl95hwpeiV0kAKU0OQxmyGRoB8V/nyp1y
-         OEZzwRF2rh6d5l351RO1HySykvyktS+7HU3DZn4duvl7LqoE4b3eELkpW7LY0X+mSJDh
-         e95U43N84pnSviJBK0s/DHNUqrq1XO8ON9sHwvAUEun8H+FDpbzA7vYyvI4LBC75UyfM
-         khozTIXlInOoFvnW/AayXR641qFAzN9nmLT1f1sTmKsBJfRW1av2Ak18TFsNmjptCaIA
-         yUQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685334778; x=1687926778;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+        d=gmail.com; s=20221208; t=1685529943; x=1688121943;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=X5IxMsBxz/EFXYd2tHHP+U5kmgcs5RVf2CzEGSkHurY=;
-        b=Te/OsNZwA8VpKUYvzDR/BimJmiBbdAnFl6TqwzOKD5yoxhg6P12Eu1vBgX1hn8isOV
-         kAzbIAKtnz5Fl2WWE1mZ4aYkL2fuixFFJETXVY0wi8HDsFxJBwnuxN2LIDx50MZLYIbE
-         l/Y99DIIMhhc/HZL4xiHKeM3cByfDunb+5BiPpDojfvKBuPPkMA1mX9se7I/CyCF+XIz
-         gKzIZzQVim9YtPIxArHB2tk4jKngNEIK894F0aDVYzWzMmQsHNowP4YcsD7tKl8NEhmC
-         MX6gyAmBhLNuAVT52i+atWIpOrMdrKI+gYJ2TQCNobuHe0xA6m0/RT1oLuUHPxsslbda
-         Fkdw==
-X-Gm-Message-State: AC+VfDzFW3vUZh2mDlLxkM+WlXh0cM0FT1JhCNtaslTEUAmsuVHCg7WK
-	5WcrLGlV6QbxpgylZLhHgPHB6ABkR9D8IG9X51pKa9hwxCRR5g==
-X-Google-Smtp-Source: ACHHUZ65I7IfN221OvKR8Nhz3NJJ3nMsrbD8RcGwkImhEE/dHHC6uxCy86F2dHQIk1AtacErGAMQN9aU6zTirSZkojE=
-X-Received: by 2002:ac8:5981:0:b0:3ef:6c09:edcc with SMTP id
- e1-20020ac85981000000b003ef6c09edccmr9171648qte.22.1685334777900; Sun, 28 May
- 2023 21:32:57 -0700 (PDT)
+        bh=A1pfdIZsMBNLnkoxItO0qL358d0TriqJ2pkdWwaC+/4=;
+        b=OqXH4JVfF5AJjDwMdd0PiJs2rN2qYSI3Vmvc5dkD6HYrVx0NitEH9nutEcJH2I2bpV
+         9pkbSGHAhV+VCupMsZlPULh4C9jMLGfRsgdKrFYYwWzydFoP13CPs+TxnSc9EPBhMLLJ
+         Ep5Xzun4X7DjUYRQx8/woUZg4nzllsiBiKy9bqlzJVyIu5bhDUGE+XNALzaF9NkK2D+Z
+         njsR0OnaeLRJn9KkTRiyTWMsGj4Ak9RgncJ08EGgyi0T/GvaxIczgPKaeh2Qih38HxSy
+         Qcr40XFM6Wc6ZP76ippw5tc0DstXfip11KzKThYQUYCfWZ2CATF9z0zfWTqKT6KBGaYS
+         rJ0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685529943; x=1688121943;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=A1pfdIZsMBNLnkoxItO0qL358d0TriqJ2pkdWwaC+/4=;
+        b=l9/0yinj9RiWQ4FaAAVolzGcUK0SCkDCvPpzGtoyse7fdhGl2evLEZSsZjKqmyna5D
+         2crwuaTBHWlAuvY/egFCS9YmN73Oo9TuPpWlSLaC/t1dEbbHsoPRwf9T8ZGQx3DNXEWH
+         y6TX5aEO6nqzBov343hjBYCrtNZ6BahxrWl/wi+1kplyRRkYgoix7ZN23bkQU1F2kh9e
+         Ckkyfzt1HWVNvPHcTQojilszHJ85xMuldxKpKzSgel09xwbhK0Y/gmOeEak1MLR7Tm6t
+         YhdkQueLtO59Mh9xqVsDqZvtiXLSZyYhIcqPC1CeAWotlR7WXXHTWxD3zBLvwkPJkX/e
+         UzBg==
+X-Gm-Message-State: AC+VfDwKKx6C3HYoFi/G7Y6Q0ucFJXsuddnkB/Il9q6m8D72bkLu+R2n
+	UoSCvQGdNpQInS8fIrQBOab2i2PS5QM=
+X-Google-Smtp-Source: ACHHUZ5ITl1eZBisF1322t8aUNZs0RcW8W2ES1pMiTTJhOxphaaMWLPk0GqaiCa7nlMrbD5eShiUMQ==
+X-Received: by 2002:a17:907:ea7:b0:974:1ef1:81fb with SMTP id ho39-20020a1709070ea700b009741ef181fbmr4480909ejc.22.1685529942757;
+        Wed, 31 May 2023 03:45:42 -0700 (PDT)
+Received: from [147.251.42.107] (nbbroz2.fi.muni.cz. [147.251.42.107])
+        by smtp.gmail.com with ESMTPSA id oy11-20020a170907104b00b0096f7e6d0063sm8731724ejb.75.2023.05.31.03.45.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 31 May 2023 03:45:42 -0700 (PDT)
+Message-ID: <177b0fcf-1cb0-be45-5f4c-4038f785a1da@gmail.com>
+Date: Wed, 31 May 2023 12:45:41 +0200
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: Russell Harmon <eatnumber1@gmail.com>
-Date: Sun, 28 May 2023 21:32:31 -0700
-Message-ID: <CA+zrezRkXUtC3AVWBT_-tRH6TrtU2gUD_LSFRSh3t5iUkmerFQ@mail.gmail.com>
-Subject: dm-integrity: Documentation Improvements
-To: cryptsetup@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.11.0
+Subject: Re: DM-Integrity Under RAID Without Journalling
+Content-Language: en-US
+To: Russell Harmon <eatnumber1@gmail.com>, cryptsetup@lists.linux.dev
+References: <CA+zrezRB-PewcH_-h8PZmGOc1RVBwdS-uReago8XXLkVTw+EDg@mail.gmail.com>
+From: Milan Broz <gmazyland@gmail.com>
+In-Reply-To: <CA+zrezRB-PewcH_-h8PZmGOc1RVBwdS-uReago8XXLkVTw+EDg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-I've been trying to more deeply understand the behavior of
-dm-integrity, and want to drop some of my learnings here in the hopes
-it's useful for others in the future.
+Hi,
 
-I've got a 4k drive, and wanted to see the data+integrity. So after
-formatting I started writing a known pattern to the dm device using
+On 5/29/23 04:02, Russell Harmon wrote:
+> Hey all,
+> 
+> I'm looking to use dm-integrity with its journal turned off as the
+> backing devices for a RAID-6 array. This is with two goals:
+> Closing the RAID456 write hole (md.4 section "RAID WRITE HOLE").
+> 
+> 1. Detecting (other kinds of) silent data corruption coming from the drive.
+> 2. The resulting configuration will have no journaling (both for
+> dm-integrity and for mdraid).
+> 
+> If I understand things correctly, it seems like this covers all the
+> cases I listed. If there's data corruption (either via the write hole,
+> or coming from the drive), periodic scrubs will detect and repair the
+> corruption (since mdraid will consider the corrupt data invalid).
+> 
+> Does this seem like a correct/valid combination to achieve my goals?
 
-    badblocks -b 4096 -o ~/badblocks.integrity_sdc -t 464367618 -w -v
--s -c 128 /dev/mapper/integrity_sdc
+The dm-integrity journal ensures that all sectors data + metadata(auth. tags)
+are modified as atomic step (it is not stored in one place).
+In the case of power fail it uses either old or new versions.
+I do not think RAID keeps this relation correct after power fail
+(or another abrupt failure like kernel crash that happens during a write operation).
 
-I then inspected the drive using `xxd /dev/sdc1`. The following comes
-from several different tries with this combo, while varying the
-different format options.
+IOW, power fail can create a new corruption (note metadata are updated
+in chunks that includes auth. tags for other sectors).
 
-When you format the drive with `integritysetup format`, it's got
-several options. In my case I used:
+> Aside, I see the value of dm-integrity's journal (in non-RAID
+> configurations), but what's the point of the bitmap? It seems like
+> that just reintroduces the potential for undiscovered data corruption
+> on the drive (e.g. if there's data corruption in an unsynchronized
+> region, at the next boot the corrupted data will falsely be considered
+> valid).
 
-    integritysetup format /dev/sdc1 --sector-size 4096
---integrity-no-journal --journal-size=1 --interleave-sectors=8192
---no-wipe --verbose
+Well, I would like to know either :-)
 
-Note there's a bug, you cannot set --journal-size=0, if you do it just
-becomes the default size.
+There were some plans for dm-integrity bitmap in LVM LVs as some performance
+trade-off, but AFAIK it is not implemented yet (?).
+I just added support for integritysetup, so we can use all kernel available
+features, but I never understood why bitmap mode was implemented in the first place.
 
-Based on this, my findings are:
-
-* On a 4k drive, setting --sector-size 4096 fails to fully utilize the
-sectors reserved for integrity. In order to fully utilize the sectors,
-you've got to have 4M of data per integrity sector (assuming 4-byte
-tags).
-* --interleave-sectors is *always* denoted in 512-byte sectors,
-regardless of what you set --sector-size to
-* The output of `integritysetup dump /dev/sdc1` has a
-`log2_interleave_sectors 13` field. The way to interpret that is as
-2^13, or 8192 in my case, which matches the value I passed to
---interleave-sectors. Again, this is in *512 byte* sectors, regardless
-of what `sector_size` says.
-
-I intend to utilize these settings when configuring a RAID array.
-Please make mention if it seems like this is a bad idea.
+Milan
