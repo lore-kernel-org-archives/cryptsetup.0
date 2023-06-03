@@ -1,112 +1,65 @@
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpq4.tb.mail.iss.as9143.net (smtpq4.tb.mail.iss.as9143.net [212.54.42.167])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BFEE16435
-	for <cryptsetup@lists.linux.dev>; Wed, 31 May 2023 18:41:30 +0000 (UTC)
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-3f7fdbdf68eso66096041cf.1
-        for <cryptsetup@lists.linux.dev>; Wed, 31 May 2023 11:41:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685558489; x=1688150489;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DImIUwq3Hn/kOHPadEH4LVvwDbHUTk3mI0QaE3uGS6c=;
-        b=ZFGnxb8foxrSwtSj0EEL2lexTLaxSIBp4kBjtSp2A48OFGi2RYWPfpLgxBqtMI3vta
-         RFosmBSRelQEul1CwiNBr4bRNtOAkpnFb6YMJzld3+CraFMi7CfvX8RtEQsuPBz6o42T
-         8eOfuWVnPw/mkY90ZBgkKJoENaX4DIDC1jGi/n4zYJ659ZT5D9zYqP8UAABPFibZaW9G
-         fOh9Y457U11wANI9jzommhQrmft5nH56acDgjeqw9c1+gGCOfkgC30kgP+tvz3OPbJCo
-         KEb0rRB6FIU+XCjQ1A0EOFf389RPSsFAxfDRT0kQmURLmETRYJixcVi/OD+e4W/GE2ww
-         v9Hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685558489; x=1688150489;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DImIUwq3Hn/kOHPadEH4LVvwDbHUTk3mI0QaE3uGS6c=;
-        b=TV13hQr6MZzc+EvaGBmggqha0uvvaIXWLe/GibqqxXeEIZSj8DDdlTnR8sDW3xAsT8
-         CbYiI5yZ7BTmfUVzE3WvSO3Z3CK+FGKDpCBNpOVkWX8Fbx0x/SAxQWNc6jSzwQH1T/Bb
-         U42rBOWpGsDQYDIHq/l9bBylnpIAYVlu43xzIfRaZY30XgoL+IEswOeabwpcix3zj0KZ
-         G8lK9NwejEWjchSy2XaMf1MIovysxJU1a7adEwLrLjqUhtiGd3DlExe9XVvZ4HjrTEM8
-         AIlwWpQwbuMe79E+sE9awAZnNe6hvIAe6XhzrvY5TXkA6DvNi/1AGpchda/oFmd3gzZg
-         vbVQ==
-X-Gm-Message-State: AC+VfDzQUHxYcgqqCaGY12GMf9JFA2kSBtmCzo8R53CuuB55fl14xVwC
-	rjDPMwDaMmoflg5LmYR/DAmadWyrYWZEIwQ+JXjFAAZR+4w=
-X-Google-Smtp-Source: ACHHUZ6oCqUFtWoH8uBjArQVHBgCHOdDwlAMDKeNfni3yCHQ1kgMpcaPVoG7XJV0JvCSTAtOevN7ndADkj1CQPbBS8Q=
-X-Received: by 2002:ac8:5a07:0:b0:3f6:c0f7:a5c6 with SMTP id
- n7-20020ac85a07000000b003f6c0f7a5c6mr7766180qta.46.1685558489107; Wed, 31 May
- 2023 11:41:29 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DDE2257B
+	for <cryptsetup@lists.linux.dev>; Sat,  3 Jun 2023 08:09:17 +0000 (UTC)
+Received: from [212.54.42.105] (helo=smtp1.tb.mail.iss.as9143.net)
+	by smtpq4.tb.mail.iss.as9143.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.90_1)
+	(envelope-from <felix@kngnt.org>)
+	id 1q5LhT-0006Y0-0f
+	for cryptsetup@lists.linux.dev; Sat, 03 Jun 2023 09:29:23 +0200
+Received: from mail.kngnt.org ([82.217.117.151])
+	by smtp1.tb.mail.iss.as9143.net with ESMTPA
+	id 5LhSqrJxO8Mh15LhSqpmFl; Sat, 03 Jun 2023 09:29:23 +0200
+X-Env-Mailfrom: felix@kngnt.org
+X-Env-Rcptto: cryptsetup@lists.linux.dev
+X-SourceIP: 82.217.117.151
+X-CNFS-Analysis: v=2.4 cv=Y+A+8DSN c=1 sm=1 tr=0 ts=647aebd3 cx=a_exe
+ a=z4SNomP1wL5XVOMxzlLTBA==:117 a=z4SNomP1wL5XVOMxzlLTBA==:17
+ a=IkcTkHD0fZMA:10 a=LJM8hDkaJEGQ-buF2QQA:9 a=QEXdDO2ut3YA:10
+X-Authenticated-Sender: f.rubiodalmau@ziggo.nl
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kngnt.org; s=mail;
+	t=1685777362;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=4/7cTH+W9QQ0m103Yf/2omIpG69sktkiqZFaVtvmKGM=;
+	b=rAcl5tCKBHnebnEYE3wdkMKujEXs4qdJB+4KSDWTvmztYqEXkNKc8HnMfiRvtpJgDCDCK9
+	SZ7lM+deaZzHEz1opORnfvgkvuxvpZ/qzypcJiEeh/0RbRaolzNZWq7++Jsf8EleZsqi7x
+	tnhm2WLJlR4LOvU60cg+aGJFXUHj/X8qDUosFjhDwylCcTxsmWokS1Z7oipLm3mxhztwh3
+	79j62hY/Hl/i9sT1FczSs1v9EwQCELYWe3Nm/GQMDuvTLynpEmxg1PXk+HbYUcrykCsckH
+	eBn/ueayTxZByLXXMJs0VUjb5aSyiZ6oGMaIVrTNC80t3/i4NYMF+XTARxZGsQ==
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CA+zrezRB-PewcH_-h8PZmGOc1RVBwdS-uReago8XXLkVTw+EDg@mail.gmail.com>
- <177b0fcf-1cb0-be45-5f4c-4038f785a1da@gmail.com>
-In-Reply-To: <177b0fcf-1cb0-be45-5f4c-4038f785a1da@gmail.com>
-From: Russell Harmon <eatnumber1@gmail.com>
-Date: Wed, 31 May 2023 11:41:03 -0700
-Message-ID: <CA+zrezT8UaDpu5RcMc-Y+G8LiCx2MeJcuYE+BWYsc45ia-8vWw@mail.gmail.com>
-Subject: Re: DM-Integrity Under RAID Without Journalling
-To: Milan Broz <gmazyland@gmail.com>
-Cc: cryptsetup@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date: Sat, 03 Jun 2023 09:29:22 +0200
+From: Felix Rubio <felix@kngnt.org>
+To: cryptsetup@lists.linux.dev
+Subject: How to protect header and on.... paper?
+Message-ID: <7ea9a3bc2101154ba3f65e6f55c6fdc4@kngnt.org>
+X-Sender: felix@kngnt.org
+X-CMAE-Envelope: MS4xfOIm237pSvfCDjKhRZgMhFWhlxWyLiS/NPWQqi62zqEv4lLEOYBQzDCQ3xXyMG+0RKs6VsvZvks0LrcedmVvpQCE4HM2ds7BxN62JinLOfj87B7Afdqs
+ sB9A3RflrrND68YFdYeyql8hX0+RTuoMtyRIHBMh7sNfPIdq5yfLK+xVnXabVMUBkXh+/sIcPIFKuaN6i0hKLHdy+1WslcWh6c4=
 
-(re-sending in plain-text so it gets accepted by the list)
+Hi everybody,
 
-On Wed, May 31, 2023 at 3:45=E2=80=AFAM Milan Broz <gmazyland@gmail.com> wr=
-ote:
->
-> Hi,
->
-> On 5/29/23 04:02, Russell Harmon wrote:
-> > Hey all,
-> >
-> > I'm looking to use dm-integrity with its journal turned off as the
-> > backing devices for a RAID-6 array. This is with two goals:
-> > Closing the RAID456 write hole (md.4 section "RAID WRITE HOLE").
-> >
-> > 1. Detecting (other kinds of) silent data corruption coming from the dr=
-ive.
-> > 2. The resulting configuration will have no journaling (both for
-> > dm-integrity and for mdraid).
-> >
-> > If I understand things correctly, it seems like this covers all the
-> > cases I listed. If there's data corruption (either via the write hole,
-> > or coming from the drive), periodic scrubs will detect and repair the
-> > corruption (since mdraid will consider the corrupt data invalid).
-> >
-> > Does this seem like a correct/valid combination to achieve my goals?
->
-> The dm-integrity journal ensures that all sectors data + metadata(auth. t=
-ags)
-> are modified as atomic step (it is not stored in one place).
-> In the case of power fail it uses either old or new versions.
-> I do not think RAID keeps this relation correct after power fail
-> (or another abrupt failure like kernel crash that happens during a write =
-operation).
->
-> IOW, power fail can create a new corruption (note metadata are updated
-> in chunks that includes auth. tags for other sectors).
+I have setup a my FDE using LUKS, and tying the decryption key to my 
+TPM+recovery key. Now I am wondering: I know I can get a backup of the 
+LUKS header on a file, store it somewhere and done... but what happens 
+if the USB is corrupted by the time I need it? what if I put it on an 
+optical disk and has been scratched? This kept me thinking: is there any 
+possibility/process to have the required information for the header 
+printed on paper, that could be stored on a safe?
 
-RAID supports its own journal (see "DIRTY STRIPE JOURNAL" in md(4))
-that I plan on using.
-> > Aside, I see the value of dm-integrity's journal (in non-RAID
-> > configurations), but what's the point of the bitmap? It seems like
-> > that just reintroduces the potential for undiscovered data corruption
-> > on the drive (e.g. if there's data corruption in an unsynchronized
-> > region, at the next boot the corrupted data will falsely be considered
-> > valid).
->
-> Well, I would like to know either :-)
->
-> There were some plans for dm-integrity bitmap in LVM LVs as some performa=
-nce
-> trade-off, but AFAIK it is not implemented yet (?).
-> I just added support for integritysetup, so we can use all kernel availab=
-le
-> features, but I never understood why bitmap mode was implemented in the f=
-irst place.
->
-> Milan
+Thank you very much for your time,
+
+-- 
+Felix Rubio
+"Don't believe what you're told. Double check."
