@@ -1,91 +1,120 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpq5.tb.mail.iss.as9143.net (smtpq5.tb.mail.iss.as9143.net [212.54.42.168])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6AFEA0
-	for <cryptsetup@lists.linux.dev>; Sat,  3 Jun 2023 08:29:22 +0000 (UTC)
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-3f730c1253fso1483685e9.1
-        for <cryptsetup@lists.linux.dev>; Sat, 03 Jun 2023 01:29:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685780960; x=1688372960;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ES6rZi/J1lD0SMlDJGiwR1qdIlu7sGotskjJO75Bm/k=;
-        b=mdl0q8KoKQ4zXJ/LkvCSebDU4sPYqbj6k0q81X6H9MG82FKU0efMHaU7c2oXWOvsh0
-         DiYj8psXzKDUC71mCXHSy7U90R9/J4Hol6I/VPN0T5tZIc5s66YJ7yPplzq+7IkcFeW9
-         wYYq+dw9QIydZrfCGtkH3CLBgADikoyX4uq1cIvoCvX9TaqPw7HozsUPqbv/QAoaPH4N
-         yJ9BgLTArV75IClDzz1vuvr9TsCZhstYCqmmQWziMR9jDioMqUcz5XIXGC54INXanykM
-         PeCfj+k3wxPHsHkk00rWgu03raC2JzcggZJ/bYSVlAflDdjXDk4YjSGun+v4VtOusL44
-         I+TQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685780960; x=1688372960;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ES6rZi/J1lD0SMlDJGiwR1qdIlu7sGotskjJO75Bm/k=;
-        b=BEZ1ShRB7P8l73LGLCa/eW2/oBy39DqYzuINmFxknLxWLeg12ypFXH+zS1u+qrVzKJ
-         E6XrDM8JGanRnUrOxUIoh5z+mWV4zuy8CrBmSxbSSdQvSRSBJyu8lBvRulzsQiWu0u/z
-         ZLAN4L0chzFqQOjqygHv1eZgHFJXcQQmSa+atdA8QxxzBLyeZKF7XddUtwsuMBcxf3aL
-         g3Kxn/F5VT1DGsHieSyb0y8lr8a9hrOiTdKaga5HpKECVMcsn8rTeEkGbe6aYqKqgA+n
-         LDkuYQfSlMpYlfC8AF574xP8bQ67iFCjbOPLb4KNd9xRA4pH2gpPmxJM8FOU4HgxBuUK
-         sd9g==
-X-Gm-Message-State: AC+VfDySPXuU6IsG1hSWn0335MZwPzcBROwKXNvGVOk9FP+rktX4Wq7Q
-	lMFCUzwd8WcgdRZcoGprhU0glaxbJUk=
-X-Google-Smtp-Source: ACHHUZ4s9E/KvmQqemsFiZSsSRdC+ZAMrv49ArkMhSzjSQj38sc5YOcPgO5NeFX9hyqow/5Hk+6sdw==
-X-Received: by 2002:a7b:c4d7:0:b0:3f6:683:628b with SMTP id g23-20020a7bc4d7000000b003f60683628bmr3601368wmk.3.1685780960174;
-        Sat, 03 Jun 2023 01:29:20 -0700 (PDT)
-Received: from [192.168.2.30] (85-70-151-113.rcd.o2.cz. [85.70.151.113])
-        by smtp.gmail.com with ESMTPSA id bg22-20020a05600c3c9600b003f4283f5c1bsm17621424wmb.2.2023.06.03.01.29.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 03 Jun 2023 01:29:19 -0700 (PDT)
-Message-ID: <a4bc8457-c127-55b2-5a65-388c3d836bf2@gmail.com>
-Date: Sat, 3 Jun 2023 10:29:18 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8AF33330C
+	for <cryptsetup@lists.linux.dev>; Sat,  3 Jun 2023 10:46:46 +0000 (UTC)
+Received: from [212.54.42.105] (helo=smtp1.tb.mail.iss.as9143.net)
+	by smtpq5.tb.mail.iss.as9143.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.90_1)
+	(envelope-from <felix@kngnt.org>)
+	id 1q5OXg-0006MM-VL
+	for cryptsetup@lists.linux.dev; Sat, 03 Jun 2023 12:31:28 +0200
+Received: from mail.kngnt.org ([82.217.117.151])
+	by smtp1.tb.mail.iss.as9143.net with ESMTPA
+	id 5OXgqsRsh8Mh15OXgqqFPx; Sat, 03 Jun 2023 12:31:28 +0200
+X-Env-Mailfrom: felix@kngnt.org
+X-Env-Rcptto: cryptsetup@lists.linux.dev
+X-SourceIP: 82.217.117.151
+X-CNFS-Analysis: v=2.4 cv=Y+A+8DSN c=1 sm=1 tr=0 ts=647b1680 cx=a_exe
+ a=z4SNomP1wL5XVOMxzlLTBA==:117 a=z4SNomP1wL5XVOMxzlLTBA==:17
+ a=IkcTkHD0fZMA:10 a=oj0XgzxCAOR5GS1RrvAA:9 a=QEXdDO2ut3YA:10
+X-Authenticated-Sender: f.rubiodalmau@ziggo.nl
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kngnt.org; s=mail;
+	t=1685788286;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=MAbjcbnBNMwg7s0bEs/2Tl4cPlXWFIMgT3X4+ZKyPjk=;
+	b=nqlCIHiinsVrgNxu7n2b2+iSvz0hnFBXmfx9UJoiDK/E4VaIFGz8seGjbWqHe5T2DahNWT
+	s8pDyfhy47tF3gdczqkJwh0M9MxUM3gKfWnInk/a4yx5KxiPBu8Emhwb+0xICfyt73bdrj
+	evbip7+krLCE3g3/MzTllDMKjrKU5wRvz79s7Q0uFtpZO1pBt135Xn/QvVFi3SYGcPWzJI
+	Qv/HJH6OWpJ4zgi+mEGoTll6kWX35OWMBKJRzYHlJdgy+BdGhrmb2sOnL+U2dGGh4rSm9T
+	CBitwqbFpCTaw7tOnN5Bige3ZwGVdoB6GttNHea5wzPMBP3qio5iA7oeSLiVWA==
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.11.0
-Subject: Re: How to protect header and on.... paper?
-Content-Language: en-US
-To: Felix Rubio <felix@kngnt.org>, cryptsetup@lists.linux.dev
-References: <7ea9a3bc2101154ba3f65e6f55c6fdc4@kngnt.org>
-From: Milan Broz <gmazyland@gmail.com>
-In-Reply-To: <7ea9a3bc2101154ba3f65e6f55c6fdc4@kngnt.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date: Sat, 03 Jun 2023 12:31:26 +0200
+From: Felix Rubio <felix@kngnt.org>
+To: Milan Broz <gmazyland@gmail.com>
+Cc: cryptsetup@lists.linux.dev
+Subject: Re: How to protect header and on.... paper?
+In-Reply-To: <a4bc8457-c127-55b2-5a65-388c3d836bf2@gmail.com>
+References: <7ea9a3bc2101154ba3f65e6f55c6fdc4@kngnt.org>
+ <a4bc8457-c127-55b2-5a65-388c3d836bf2@gmail.com>
+Message-ID: <2b4a7cd077e772e546d2f1528764e054@kngnt.org>
+X-Sender: felix@kngnt.org
+X-CMAE-Envelope: MS4xfMxtm6fAmXd4H/+jMew2Q4Vi5oUUKNzC6yZmWTpDtQIhTK6xx50f9WcQv/wUHf/sbvChP6U3eP0SMz1hHe19/D4s0Ew9VBnLksQUNONlKNeHRrkwiM05
+ iZGM/GxwbjvoLegcfD+xZd5u/bQ3GSqMvoU4apKkFOQP9yytAvcDCxmgv4F3B7K3TM04t9izzmhh7whcwIkTm8uCpcNvt568c7BJLG+ZoaeFJWs6OroPNcLD
 
-Hi,
+Hi Milan,
 
-On 6/3/23 09:29, Felix Rubio wrote:
-> I have setup a my FDE using LUKS, and tying the decryption key to my
-> TPM+recovery key. Now I am wondering: I know I can get a backup of the
-> LUKS header on a file, store it somewhere and done... but what happens
-> if the USB is corrupted by the time I need it? what if I put it on an
-> optical disk and has been scratched? This kept me thinking: is there any
-> possibility/process to have the required information for the header
-> printed on paper, that could be stored on a safe?
+Thank you for your answer. In this case, would this be the correct 
+process?
 
-You cannot have full text backup of LUKS keyslot metadata, but you can dump
-volume encryption key that allows mapping data device without LUKS header.
+1. BACKUP: Get the master key, encoded, printed. The master key is 
+obtained by executing the command "cryptsetup luksDump --dump-master-key 
+<device>", and is the concatenated result of the lines on the entry "MK 
+dump"
 
-Actually, paper backup was motivation for --dump-volume-key option, use:
-  cryptsetup luksDump --dump-volume-key <device>
+2. RESTORE: In case LUKS header gets corrupted
+   2.1 create a file containing the master key (e.g., master.key)
+   2.2 convert the key from hex to binary "xxd -r -p master.key 
+master.bin"
+   2.3 Use the key to setup a new LUKS header "cryptsetup luksAddKey 
+--master-key-file master.bin <device>", will ask for a new wrapping key
+   2.4 Open the device with the new wrapping key "cryptsetup luksOpen 
+<device> luksrec"
+   2.5 Data should be accessible at /dev/mapper/luksrec
 
-(in very old cryptsetup use --dump-master-key instead)
+Thank you,
 
-There is no automated script that maps dm-crypt automatically from this
-info, but it is quite trivial and should contain all info dm-crypt needs
-to decrypt data area.
+---
+Felix Rubio
+"Don't believe what you're told. Double check."
 
-
-You can also dump metadata keyslot info with luksDump command, for LUKS2
-even in JSON format:
-  cryptsetup luksDump --dump-json-metadata <device>
-
-NOTE - this contains only configuration, not the binary area content
-of keyslots (but it can be useful anyway).
-
-Milan
+On 2023-06-03 10:29, Milan Broz wrote:
+> Hi,
+> 
+> On 6/3/23 09:29, Felix Rubio wrote:
+>> I have setup a my FDE using LUKS, and tying the decryption key to my
+>> TPM+recovery key. Now I am wondering: I know I can get a backup of the
+>> LUKS header on a file, store it somewhere and done... but what happens
+>> if the USB is corrupted by the time I need it? what if I put it on an
+>> optical disk and has been scratched? This kept me thinking: is there 
+>> any
+>> possibility/process to have the required information for the header
+>> printed on paper, that could be stored on a safe?
+> 
+> You cannot have full text backup of LUKS keyslot metadata, but you can 
+> dump
+> volume encryption key that allows mapping data device without LUKS 
+> header.
+> 
+> Actually, paper backup was motivation for --dump-volume-key option, 
+> use:
+>  cryptsetup luksDump --dump-volume-key <device>
+> 
+> (in very old cryptsetup use --dump-master-key instead)
+> 
+> There is no automated script that maps dm-crypt automatically from this
+> info, but it is quite trivial and should contain all info dm-crypt 
+> needs
+> to decrypt data area.
+> 
+> 
+> You can also dump metadata keyslot info with luksDump command, for 
+> LUKS2
+> even in JSON format:
+>  cryptsetup luksDump --dump-json-metadata <device>
+> 
+> NOTE - this contains only configuration, not the binary area content
+> of keyslots (but it can be useful anyway).
+> 
+> Milan
