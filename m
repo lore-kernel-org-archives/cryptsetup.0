@@ -1,42 +1,54 @@
-Received: from hera.malbolge.net (hera.malbolge.net [185.232.68.32])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98E093D7F
-	for <cryptsetup@lists.linux.dev>; Tue,  6 Jun 2023 21:07:52 +0000 (UTC)
-Received: from hermes.malbolge.net (hermes.malbolge.net [192.168.123.201])
-	by hera.malbolge.net (Postfix) with ESMTP id 2BDC27C4714
-	for <cryptsetup@lists.linux.dev>; Tue,  6 Jun 2023 23:07:51 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=malbolge.net;
-	s=hera; t=1686085671;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=Noomsi2/KIxAtrkYwjJZVOOtoBsvUCiJh5E+vaGYQLs=;
-	b=qKfx0Yq/baszJy6nCgXKU0GclzDVKKlvwyYy/VyWh+bmH2A5kYFOaZh7X7qIet+/J6l2j4
-	jYbvOaFnQ3Ep6ih/5OgrAPBgJIL4zVX13I889AQ87hmT66VnVrGThnsHPG3U6KAyQlr4Le
-	nJ8/oQNrIFN3hVrCfdcCpvDEEJ9/fVQ=
-Received: from moon (dynamic-089-014-099-230.89.14.pool.telefonica.de [89.14.99.230])
-	by hermes.malbolge.net (Postfix) with ESMTPSA id AF31A426851
-	for <cryptsetup@lists.linux.dev>; Tue,  6 Jun 2023 23:07:50 +0200 (CEST)
-Date: Tue, 6 Jun 2023 23:08:50 +0200
-From: bugcounterism@malbolge.net
-To: <cryptsetup@lists.linux.dev>
-Subject: Wiping disk vs. initializing container
-Message-ID: <20230606230850.630aa048@moon>
+Received: from arnowagner.info (mail.tansi.org [84.19.178.47])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 468457C
+	for <cryptsetup@lists.linux.dev>; Wed,  7 Jun 2023 03:36:17 +0000 (UTC)
+Received: from gatewagner.dyndns.org (81-6-44-245.init7.net [81.6.44.245])
+	by v1.tansi.org (Postfix) with ESMTPA id 41F971401A5;
+	Wed,  7 Jun 2023 05:30:06 +0200 (CEST)
+Received: by gatewagner.dyndns.org (Postfix, from userid 1000)
+	id 8DFD617A45F; Wed,  7 Jun 2023 05:30:38 +0200 (CEST)
+Date: Wed, 7 Jun 2023 05:30:38 +0200
+From: Arno Wagner <wagner@arnowagner.info>
+To: cryptsetup@lists.linux.dev
+Cc: bugcounterism@malbolge.net
+Subject: Re: Wiping disk vs. initializing container
+Message-ID: <20230607033038.GA26586@tansi.org>
+Reply-To: Arno Wagner <arno@wagner.name>
+References: <20230606230850.630aa048@moon>
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230606230850.630aa048@moon>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-Hi there,
+If it is crypto-grade randomness, yes.
+But note that Section 5.3 may still be faster.
 
-does overwriting an entire hard disk with random data before setting up
-encryption make initializing a LUKS container (as described in section
-5.3 of the FAQ) obsolete?
+Regards,
+Arno
 
 
-Thanks
-Michael
+On Tue, Jun 06, 2023 at 23:08:50 CEST, bugcounterism@malbolge.net wrote:
+> Hi there,
+> 
+> does overwriting an entire hard disk with random data before setting up
+> encryption make initializing a LUKS container (as described in section
+> 5.3 of the FAQ) obsolete?
+> 
+> 
+> Thanks
+> Michael
+> 
 
+-- 
+Arno Wagner,     Dr. sc. techn., Dipl. Inform.,    Email: arno@wagner.name
+GnuPG: ID: CB5D9718  FP: 12D6 C03B 1B30 33BB 13CF  B774 E35C 5FA1 CB5D 9718
+----
+A good decision is based on knowledge and not on numbers. -- Plato
+
+If it's in the news, don't worry about it.  The very definition of 
+"news" is "something that hardly ever happens." -- Bruce Schneier
