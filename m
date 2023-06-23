@@ -1,110 +1,61 @@
-Received: from arnowagner.info (mail.tansi.org [84.19.178.47])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A58256118
-	for <cryptsetup@lists.linux.dev>; Wed,  7 Jun 2023 19:23:34 +0000 (UTC)
-Received: from gatewagner.dyndns.org (81-6-44-245.init7.net [81.6.44.245])
-	by v1.tansi.org (Postfix) with ESMTPA id 2E864140119
-	for <cryptsetup@lists.linux.dev>; Wed,  7 Jun 2023 21:23:00 +0200 (CEST)
-Received: by gatewagner.dyndns.org (Postfix, from userid 1000)
-	id A21DF17A45F; Wed,  7 Jun 2023 21:23:32 +0200 (CEST)
-Date: Wed, 7 Jun 2023 21:23:32 +0200
-From: Arno Wagner <wagner@arnowagner.info>
-To: cryptsetup@lists.linux.dev
-Subject: Re: Wiping disk vs. initializing container
-Message-ID: <20230607192332.GA8511@tansi.org>
-Reply-To: Arno Wagner <arno@wagner.name>
-References: <20230606230850.630aa048@moon>
- <20230607033038.GA26586@tansi.org>
- <20230607120331.2125480b@moon>
- <ea574f22-87c0-4751-a59f-8e20a01e1e37@home.arpa>
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC838F5D
+	for <cryptsetup@lists.linux.dev>; Fri, 23 Jun 2023 14:02:06 +0000 (UTC)
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-668704a5b5bso487922b3a.0
+        for <cryptsetup@lists.linux.dev>; Fri, 23 Jun 2023 07:02:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1687528926; x=1690120926;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=YkVuSDR9DTpfPY4MEg4H1pXy5e4c3SzJl5YnFagaJSU=;
+        b=DVhqURF5fnmPxOblhI/7sFWBwp6DneKhJbz7aGkneTE5nRDG6foV2MVn/OYAuHTvMe
+         xOoNSdiplWMY2d4AZ1p248+02pjQuxWcWC36hHdCvHzhBwsjHiF3pwjGS/iSvRtQB2P4
+         7VKVNU1YkFGSUJ3OOvAXOIrOFxzitJp4uACvn93znTK67pqBRwWsCDHTbPPsIdAqBViv
+         2d0iPq6rc6RfcKN056NUc8x7VrBQJowiQl2gO9h2YuxEcjtxXnB4tGAXsGHri+ENDXgd
+         0WdrIAeDkDE/ZdkBuxo+9DkC6WCEAvUzMPNatDdewh/h21Fw8ikWRKASGrYFJPgSz7C1
+         ysng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687528926; x=1690120926;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=YkVuSDR9DTpfPY4MEg4H1pXy5e4c3SzJl5YnFagaJSU=;
+        b=j3a5IPi3z25o8jua94eIQVrrmyKaLOUou5vS0nP+C4W6BN4pjsyrdZHbKY5ALwT+jd
+         seZP0EaoSbAFoTtpFuGG0iBQZ94+Sfu3hpXIQ1wm33A81TwGTKX6aASd32Y7rdlbMKyn
+         7FcYsUjfE8gtwlWlSCRoYE0Fk9qBpF4ArzFDU6XAjIEMbW0xCKLMlG2mM84G5DBqHzb+
+         1O9EBIAZuF5p5lpAsEzvsOsdr9C+qIdcceiOiUzcJd5Bzyi5MUBTOrZD4oTpB1YVCZyI
+         16XxkvywKq55v0SRFx223zKi2Of0YiedpzM8ofIP9jokkVl77iilUMMuX0LbQFhRSrpd
+         l9tg==
+X-Gm-Message-State: AC+VfDxl3w6WxfR7fwkSzr92P0CwsPTlRgaC8wnMxTbkQSQetqNgtSJf
+	UmFMgZlY7KEopRGN/C0+5ZtevMde2asOi2h5XteH/1Nw6KO2Sg==
+X-Google-Smtp-Source: ACHHUZ5334E82Gef5iJpJ3i+TOi2JFCDu42iRzvksfUG59tikRFBPrPBLkr3Iq7j1qi3fRw8rTSJ+/R/SOm1EGonyu0=
+X-Received: by 2002:a17:90a:c7cc:b0:261:636:e101 with SMTP id
+ gf12-20020a17090ac7cc00b002610636e101mr6430533pjb.11.1687528925166; Fri, 23
+ Jun 2023 07:02:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ea574f22-87c0-4751-a59f-8e20a01e1e37@home.arpa>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+From: Rishi Dhupar <rishid@gmail.com>
+Date: Fri, 23 Jun 2023 10:01:29 -0400
+Message-ID: <CAJbs9BHP=bu37WAEM_ztReiFUP+rNUVLnPWBdNOmRzjW8Kb_OA@mail.gmail.com>
+Subject: Bypass kdf step with LUKS2
+To: cryptsetup@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Jun 07, 2023 at 13:09:11 CEST, Michael Kjörling wrote:
-> On 7 Jun 2023 12:03 +0200, from bugcounterism@malbolge.net:
-> > 2. Is initializing a LUKS container with zeroes equivalent to filling a
-> >    whole drive with crypto-grade random data if the LUKS container
-> >    spans the whole disk?
-> 
-> It should be. If not, that would be a more general vulnerability.
+Hi,
 
-Except for the header. There may be some space in the header or
-between header and data that does not get written this way.
-Hence I think I recommend using plain dm-crypt for a cyptsetup
-based wipe. The header and empty space is not a concern for
-data-patterns leaking from the container though. It is just a
-concern for removing old data.
+I have an unusual request. Is there any way to skip the PBKDF2 step
+when a device is being formatted with LUKS2 or an additional slot is
+being added?
 
-> > 3. The FAQ says:
-> > 
-> >      If the target was in use previously, it is a good idea to wipe it
-> >      before creating the LUKS container in order to remove any trace of
-> >      old file systems and data.
-> > 
-> >    So, isn't just filling the whole disk with random data before setting
-> >    up the LUKS container the simplest solution if you want to a) destroy
-> >    old data reliably, b) put the disk into a clean state, and c) make
-> >    sure that parts of the LUKS container that have not been written to
-> >    cannot be distinguished from those that have?
-> 
-> Generally, absent the key, ciphertext should be indistinguishable from
-> random data. So for an adversary who does not have access to the key,
-> the disk having been filled with random data (e.g. cat from
-> /dev/urandom) or a container having been filled with predictable data
-> (e.g. cat from /dev/zero) should be largely equivalent.
+Here's why I'm asking: I am using a high entropy 256-bit key as my
+keyfile and the KDF step is unnecessary and does not improve my
+security profile. If I am managing thousands of devices and want to
+rotate the passphrases on them, this KDF step is becoming the major
+bottleneck in performance.
 
-It is. Anything else would allow you to break the cipher used.
- 
-> Also, any random data should be as good as any other random data, so
-> there would be no easy way to tell whether a particular chunk of
-> random data is there because of an initial overwrite with random data,
-> or because of useful data being stored through the later-created LUKS
-> container.
-
-That depends. Good quality non-crypto random data often allows you 
-to determine the generator state and may even have blatantly obvious
-patterns. For example, I remember one generator that just toggled
-the smallest bit in the output stream. In that case, you can still 
-determine what was written within the container later, because the
-ovwerwrite randomness has those patterns while the encrypted data
-does not.
-
-> > 4. Should new hard disks that have not been used previously also be
-> >    filled with random data in order to achieve c)?
-> 
-> I would argue that it should, and by extension also for another
-> reason: allocation patterns can provide very strong clues both about
-> the amount of data stored, and the type of file system within the
-> container. A NTFS file system looks very different in terms of
-> allocation patterns from an ext4 or Btrfs or exfat file system.
-
-You put in the random data to reduce data leaking from 
-the encrypted container. A new disk should hence be treated the
-same.
- 
-> SSDs introduce other factors, particularly relating to wear leveling,
-> where a different trade-off might be reasonable.
-
-I would recommend to do it for SSDs also, just be aware it is not 
-as good as for spinning disks. Still should help. Maybe do several
-random overwrites with SSD. Usually you have a few hundred before
-the disks becomes worn out.
-
-Arno 
-
--- 
-Arno Wagner,     Dr. sc. techn., Dipl. Inform.,    Email: arno@wagner.name
-GnuPG: ID: CB5D9718  FP: 12D6 C03B 1B30 33BB 13CF  B774 E35C 5FA1 CB5D 9718
-----
-A good decision is based on knowledge and not on numbers. -- Plato
-
-If it's in the news, don't worry about it.  The very definition of 
-"news" is "something that hardly ever happens." -- Bruce Schneier
+Thanks
