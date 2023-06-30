@@ -1,70 +1,57 @@
-Received: from arnowagner.info (mail.tansi.org [84.19.178.47])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADF7CEC3
-	for <cryptsetup@lists.linux.dev>; Fri, 30 Jun 2023 02:50:28 +0000 (UTC)
-Received: from gatewagner.dyndns.org (81-6-44-245.init7.net [81.6.44.245])
-	by v1.tansi.org (Postfix) with ESMTPA id DF89C140080
-	for <cryptsetup@lists.linux.dev>; Fri, 30 Jun 2023 04:49:51 +0200 (CEST)
-Received: by gatewagner.dyndns.org (Postfix, from userid 1000)
-	id 6286017A22A; Fri, 30 Jun 2023 04:50:26 +0200 (CEST)
-Date: Fri, 30 Jun 2023 04:50:26 +0200
-From: Arno Wagner <wagner@arnowagner.info>
-To: cryptsetup@lists.linux.dev
+Received: from mail-200165.simplelogin.co (mail-200165.simplelogin.co [176.119.200.165])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF061FB8
+	for <cryptsetup@lists.linux.dev>; Fri, 30 Jun 2023 09:04:50 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; d=simplelogin.co; s=arc-20230626; t=1688115888;
+	cv=none; b=SxVtAjg0rQFV1AAALCTBGYN8aXNGblvDSh+H6SrX+letE9UNeuewbpAjxY8SqxGlumFSr45rkTt81qu6sPhmsLJR+bWBQp32aenEOeHOhv+4ykQwHQNCGpAEsP7O351Ej+eVBMSU7r4qCWUAfs3A/1vz24D0RmgeoV0ZiYa5sntTLTSf3MhLwWmVuE3tBsAEt6c64hmZvRmea6MtVEI29W4kgvUPr02eNbinZ44ptW5ZuHYpFfqKWRNXp+43Nab5OgLHF3ZEkJH7JUnN6dHhpWJ22A1QgD4hP6+B9e7PYXsFGrfKK1A3C47lS0mCkziZ25UamY7dzcdKxXNWnSZL/w==
+ARC-Message-Signature: i=1; a=rsa-sha256; d=simplelogin.co; s=arc-20230626;
+	t=1688115888; c=relaxed/simple;
+	bh=6ToJAkTDlx8uC6cwVCLdexQrfKldqv3YblO5j2wH1bU=;
+	h=DKIM-Signature:Date:Subject:In-Reply-To:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:From:To:Message-ID:References:
+	 X-SimpleLogin-Type:X-SimpleLogin-EmailLog-ID:
+	 X-SimpleLogin-Want-Signing; b=BjRu3RxLzGwj7Iv8hdgMWdY8mjhl+FWus6+XW4mIjwkAXrwvAgL94o+kX9LUkp7JfvSTdbe6PVGlnVHvvh5LMbt0qSQ2G7+8KN3Dn1YTxjzzLvhhBhTuja13bE8tIGkN6DMdZifwKuRyjn7NSysp1Fzm4k9SSCfgy8nMkBO4CtA0b1/wWbE7lfB+eTTCf6qifbOa8Yko80fvOZ3G0mnouG7nlvX4npFkz0t5V3d5TFD6QehUZbZFFRS5c7f0e1YOP2alkJEaNl9xvGF7CGMUfvNp1sMG/nbjBvTOypLP9BzMk/U+ttgcYhtkrlWT7AWe6jo5vvLW3rIccPPoua0WEw==
+ARC-Authentication-Results: i=1; mail.protonmail.ch
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aleeas.com; s=dkim;
+	t=1688115888;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=6ToJAkTDlx8uC6cwVCLdexQrfKldqv3YblO5j2wH1bU=;
+	b=t3vRL9z4DygDGJjBnCQI/hByWfej8qr9zrOJQgOushqhQz/lzQd6Xh5BKwilDjsVgrnfZQ
+	vDnkJv5iWPcjFNFrPUSgl19lc/DattiW/CmUIKTDd1VyphQ2eLmazmQhqHrw6EmsCac8Vj
+	K9Uyb9Wq/1twIpHMwZcydntBZmoyk0s=
+Date: Fri, 30 Jun 2023 09:04:34 +0000
 Subject: Re: Problem after detaching the header
-Message-ID: <20230630025026.GA3372@tansi.org>
-Reply-To: Arno Wagner <arno@wagner.name>
-References: <168806625127.6.2008140751957055524.147127853@aleeas.com>
+In-Reply-To: <20230630025026.GA3372@tansi.org>
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <168806625127.6.2008140751957055524.147127853@aleeas.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Darek Hisc <darek.hisc@aleeas.com>
+To: cryptsetup@lists.linux.dev
+Message-ID: <168811588839.6.11593174509180454664.147320636@aleeas.com>
+References: <168806625127.6.2008140751957055524.147127853@aleeas.com>
+ <20230630025026.GA3372@tansi.org>
+X-SimpleLogin-Type: Reply
+X-SimpleLogin-EmailLog-ID: 147320636
+X-SimpleLogin-Want-Signing: yes
 
-Looks like the initrd cannot deal with detached headers.
-Can you manually map the LUKS container from the 
-initrd console? If not, waht errot do you get?
 
-Arno
+> Looks like the initrd cannot deal with detached headers.
+Please note that until the luksErase operation everything is fine and the h=
+eader is read from the detached location (since the original slots no longe=
+r exist)
 
-On Thu, Jun 29, 2023 at 21:17:14 CEST, Darek Hisc wrote:
-> Hi
-> 
-> I am trying to move my current included header from sda2 to a separate raw
-> (no file system) partition of device sdb1, but after removing the original
-> header the system does not start and stops at the initramfs console.
-> 
-> OS: LMDE 5 (Linux Mint Debian Edition = de facto Debian 11)
-> Standard LVM installation on LUKS2
-> 
-> I did the following steps:
-> 1. cryptsetup luksHeaderBackup /dev/sda2 --header-backup-file /header.img
-> 2. dd if=/header.img of=/dev/sdb1
-> 3. option luks,discard,tries=3,header=/dev/sdb1 > /etc/crypttab
-> 4. update-initramfs -u -k all
-> 5. cryptsetup luksErase /dev/sda2
-> 
-> Up to this point, everything works fine and the system boots up properly
-> When, according to the instructions in the https://gitlab.com/cryptsetup/cryptsetup/-/blob/main/FAQ.md I do:
-> 6. cryptsetup luksDump /dev/sdb1 > Data segments: offfset: 16777216 bytes
-> 7. dd bs=512 count=32768 if=/dev/zero of=/dev/sda2
-> the system no longer starts.
-> 
-> Have I screwed something up or am I missing a step?
-> Please help!
-> 
-> Darek
-> 
-> 
+> Can you manually map the LUKS container from the
+> initrd console? If not, waht errot do you get?
+I'm sorry but I don't know how to do it :(
+Can you provide the command to type in the console initramfs?
 
--- 
-Arno Wagner,     Dr. sc. techn., Dipl. Inform.,    Email: arno@wagner.name
-GnuPG: ID: CB5D9718  FP: 12D6 C03B 1B30 33BB 13CF  B774 E35C 5FA1 CB5D 9718
-----
-A good decision is based on knowledge and not on numbers. -- Plato
 
-If it's in the news, don't worry about it.  The very definition of 
-"news" is "something that hardly ever happens." -- Bruce Schneier
