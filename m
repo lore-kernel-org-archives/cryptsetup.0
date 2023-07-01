@@ -1,105 +1,78 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-200165.simplelogin.co (mail-200165.simplelogin.co [176.119.200.165])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEFB23C17
-	for <cryptsetup@lists.linux.dev>; Sat,  1 Jul 2023 07:50:26 +0000 (UTC)
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-3fba5a8af2cso27647395e9.3
-        for <cryptsetup@lists.linux.dev>; Sat, 01 Jul 2023 00:50:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688197825; x=1690789825;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=JAfouDq3p7AIdduQMV5Ve28Rfg/XfvbSZ3RlykRa2zY=;
-        b=qSjIPJaDdF3hNOxCf9h8QVSJnOyL7/E1qZq20DkKkUWuCyCbI/35foVxmYzBifOqLB
-         L84f/OUHJdIW/HANo8+UNWzmbmv5x2ZYE2tvaQkuvL7Bap/tR7BzxZSQ3efR4ZdYq7CZ
-         wio05v0LZHc82EePDRfzkfqLXgri6HA1oAMMBh4ePna/5EM6EQ2EMFjXS8zhCu4bzjDt
-         EycKz+JEQUH7NFer54maAPAfa/jUyYaaf+hoLAHGCOvSdk7WVd+FIjrndFaxlBBcU/we
-         57ec3HrjLftkVuco6QyYGZXlYuJmhF3OsCcxj6xG5aKPobslsPNh4l1YjQs/ewUkxyIL
-         7PNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688197825; x=1690789825;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JAfouDq3p7AIdduQMV5Ve28Rfg/XfvbSZ3RlykRa2zY=;
-        b=F7PnvZrJDOuV5nwedA8Os3abiMd7MW7RqUiubZk2r7/pu1lPrgrtORFJq/Z6nKNuV5
-         KwEWFpHzz+TOgO+zdGUfuBlnw04bkyewXdYM/0XRrQKXhGp+w8T+X62P36qasHF9s7e7
-         G2WMn8gd3zqXEBlw+SIeAZrgavWCA5UY2Yp6ToYBlA4F6yyss2lR4qGJnV2YLRPglYCa
-         h9/7slQUKwFf/Ss5nD0SkiUIkOvK2kk7bjC7JF89hvZKocO7yNXxCD+3b40Ugauewl/4
-         Ohtu+rynupv4LhYQ+fKNNNyYg+hdBUXb5QmDRplh6Okv2lL23WpiZNUAFaZOhHZx2lCV
-         ZniA==
-X-Gm-Message-State: AC+VfDxAjwgvKGTV2dvZq9U6O5lEoHs4Bz+ICSKZieIGp5I8DWUMzoNz
-	nAlusofw5lryrLk3mLdwaTM=
-X-Google-Smtp-Source: ACHHUZ7k07quiQw5bvZ6kwoehREilps5lcZQ5uiaB+CSWn5sgTSnX0pOeuLWCqX0D4jAvDNek6r/nw==
-X-Received: by 2002:a05:600c:2117:b0:3fb:a616:76b6 with SMTP id u23-20020a05600c211700b003fba61676b6mr3165743wml.40.1688197824730;
-        Sat, 01 Jul 2023 00:50:24 -0700 (PDT)
-Received: from [192.168.8.101] (37-48-42-197.nat.epc.tmcz.cz. [37.48.42.197])
-        by smtp.gmail.com with ESMTPSA id u12-20020adfdd4c000000b0030903d44dbcsm20306202wrm.33.2023.07.01.00.50.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 01 Jul 2023 00:50:24 -0700 (PDT)
-Message-ID: <baaf0d13-97a2-8846-ca4f-8f89d96ef499@gmail.com>
-Date: Sat, 1 Jul 2023 09:50:22 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06F9D2EC
+	for <cryptsetup@lists.linux.dev>; Sat,  1 Jul 2023 17:14:57 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; d=simplelogin.co; s=arc-20230626; t=1688231234;
+	cv=none; b=OFwmExRRwGVfZ2oItZvnzAt6ngDPA8dqlgz/D9eEc42XvbMwRya5fcRuoB5sR/Wt2Z1jjjcCfION5xJraTho5FyY8FSK43jb9YtXbaoWopwj0sqEPr9VrbRw0afod1mqy1kCM1TtnD5adzFSPdVW6YrPA2md1f5ZLNIL7JCLQQqwWLoI/Kpsq86ygYSGdHNsXGIhxLW4HDXMCwVzWQMH8bY8EmmHzjRSC6UY908T2svE9lx6gJIUlxeYEGqoV9xxo0Czz0G+quq3PjooMzo9ZfigpPI53uoONxONiUZEtXmk9ovZ0qJdgaAnQrPE9MEEaAk8h6Y1yymIeRloMKa6Ww==
+ARC-Message-Signature: i=1; a=rsa-sha256; d=simplelogin.co; s=arc-20230626;
+	t=1688231234; c=relaxed/simple;
+	bh=n7TCqciIhRrN+4PtOLOKE/A529BksDVeWFxWZTttXTI=;
+	h=DKIM-Signature:Date:Subject:In-Reply-To:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:From:To:Message-ID:References:
+	 X-SimpleLogin-Type:X-SimpleLogin-EmailLog-ID:
+	 X-SimpleLogin-Want-Signing; b=2BtB9WUNm1DLWLCK5jWwkR9XhAjWuF+v6evhzAmgyqlz7GFZLFYlS4gFuF02df5csK7FBMEFzWbgHxFOjcgcnX+l2gJYNH8dYCTGiOjqXTE7Tc9e1MGIJucOe4ZhA3tMbRegiOV0u5BbBepKe8+j3ECmQ+lcnW5XDsU3HpNunkANe0ZMOgUGzB0nbPKMUFU1vMQSyYRwtNUDh4D0vs0TOzib1wv4z9tFr49omP/qharYpiKhzMTqaWWvHX0HO4hE+TOcXKvnCMDFyDJvp41Gg+izuT7jAfCRaUHdk9i6o3TcFospHSwBzq8+3h8x9YmIlS5jAsIXGOmgqZcKlKpFDg==
+ARC-Authentication-Results: i=1; mail.protonmail.ch
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aleeas.com; s=dkim;
+	t=1688231233;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=n7TCqciIhRrN+4PtOLOKE/A529BksDVeWFxWZTttXTI=;
+	b=ds61COUoq6BbUVTn6ybSijaV1jNdv3IFaVuEFoELWp9fgHcZPREkKcAlvvCUF5iPPAoo46
+	7uJ7Z3h4c4bdSKoxS35LtNN8Z6H9tzs7QELGbQ6HhO0XPMMFsoaH4UBCWlb0kNapOte6jj
+	RmeWm7Tw1RpMhbO1M3x8i+oBMvVdqug=
+Date: Sat, 01 Jul 2023 17:06:58 +0000
+Subject: Re: Problem after detaching the header
+In-Reply-To: <baaf0d13-97a2-8846-ca4f-8f89d96ef499@gmail.com>
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.12.0
-Subject: Re: Problem after detaching the header
-To: Darek Hisc <darek.hisc@aleeas.com>, cryptsetup@lists.linux.dev
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Darek Hisc <darek.hisc@aleeas.com>
+To: cryptsetup@lists.linux.dev
+Message-ID: <168823123339.9.10246224821676034944.147890655@aleeas.com>
 References: <168806625127.6.2008140751957055524.147127853@aleeas.com>
-Content-Language: en-US
-From: Milan Broz <gmazyland@gmail.com>
-In-Reply-To: <168806625127.6.2008140751957055524.147127853@aleeas.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ <baaf0d13-97a2-8846-ca4f-8f89d96ef499@gmail.com>
+X-SimpleLogin-Type: Reply
+X-SimpleLogin-EmailLog-ID: 147890655
+X-SimpleLogin-Want-Signing: yes
 
-On 6/29/23 21:17, Darek Hisc wrote:
-> Hi
-> 
-> I am trying to move my current included header from sda2 to a separate raw (no file system) partition of device sdb1, but after removing the original header the system does not start and stops at the initramfs console.
-> 
-> OS: LMDE 5 (Linux Mint Debian Edition = de facto Debian 11)
-> Standard LVM installation on LUKS2
-> 
-> I did the following steps:
-> 1. cryptsetup luksHeaderBackup /dev/sda2 --header-backup-file /header.img
-> 2. dd if=/header.img of=/dev/sdb1
-> 3. option luks,discard,tries=3,header=/dev/sdb1 > /etc/crypttab
-> 4. update-initramfs -u -k all
-> 5. cryptsetup luksErase /dev/sda2
 
-Just a comment here:
+> - luksErase will destroy keyslots (key material)
+Does it also destroy the Master Key?
 
-- luksErase will destroy keyslots (key material), but still keeps LUKS
-header on the device, including UUID (so you can reference the device through UUID
-even if it cannot be unlocked without detached header)
+> but still keeps LUKS header on the device, including UUID (so you can ref=
+erence the device through UUID
+> even if it cannot be unlocked without detached header)
+From the comments I've received here https://unix.stackexchange.com/questio=
+ns/750288/properly-detach-the-luks-header-from-the-existing-fdelvm-encrypti=
+on it also appears that the missing UUID is to blame after destroying the e=
+ntire header.
 
-- after you dd the LUKS header, UUID is of course no longer recognized, but,
-as you used another device for LUKS header, the new one will have former UUID
-Check that UUID is not referenced in config. (Also you can change it with
-luksUUID command)
+> Check that UUID is not referenced in config.
+How to check?
 
-But as Arno said, this is really question for your distro (note that cryptab
-file can be managed by systemd, but there are also non-systemd versions).
-Also without console log it is not clear what exactly fails.
+> But as Arno said, this is really question for your distro (note that cryp=
+tab
+> file can be managed by systemd, but there are also non-systemd versions).
+If it's not a cryptsetup problem, it probably affects many (or all) distrib=
+utions. I suggest to add the relevant information to FAQ 2.20 because the c=
+urrent wording suggests that the given procedure is sufficient and it is no=
+t (because it causes a UUID problem that needs to be solved somehow)
 
-Milan
+> Also without console log it is not clear what exactly fails.
+Please tell me what to enter in the initramfs console to check it and I wil=
+l give you the result
 
-> 
-> Up to this point, everything works fine and the system boots up properly
-> When, according to the instructions in the https://gitlab.com/cryptsetup/cryptsetup/-/blob/main/FAQ.md I do:
-> 6. cryptsetup luksDump /dev/sdb1 > Data segments: offfset: 16777216 bytes
-> 7. dd bs=512 count=32768 if=/dev/zero of=/dev/sda2
-> the system no longer starts.
-> 
-> Have I screwed something up or am I missing a step?
-> Please help!
-> 
-> Darek
-> 
-> 
-> 
+Another solution that looks very interesting:
+In a comment on stackexchange, someone suggested creating a dummy header in=
+stead of the original one, but using a detached one. Do you see any potenti=
+al problems and is this a good idea?
+
+
