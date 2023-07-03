@@ -1,100 +1,86 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D146D2F32
-	for <cryptsetup@lists.linux.dev>; Sat,  1 Jul 2023 21:00:20 +0000 (UTC)
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-314313f127fso382900f8f.1
-        for <cryptsetup@lists.linux.dev>; Sat, 01 Jul 2023 14:00:20 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BABF9C6
+	for <cryptsetup@lists.linux.dev>; Mon,  3 Jul 2023 13:18:42 +0000 (UTC)
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-569192fb4b2so2276587b3.1
+        for <cryptsetup@lists.linux.dev>; Mon, 03 Jul 2023 06:18:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688245219; x=1690837219;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NFim9WdsCKhI4HrccRxR01KN2kEl1ndLt/kOcEp6v/w=;
-        b=g/YZrvW1+XriAH3BAz7WpX8cHzPrqpIMOQCfOw66qtKimBAE7A85eRS8mZu2YywymH
-         41gQJLEq8XYjBnJ/ZGthKBZ8QicmNKsZoCm3m7tVka8wyrHPVD1lPvx4vZfQ3QbtFivL
-         q+Z8l5+6kJFxk97HI2F+vcz9IDMmyDDfQHvzy4TZqxXXAVt3IOMHyc2/fe0jKUl6dFdV
-         ZY7hm2w59zt05pQzZ6/CnhuJ8ysWO4ww3dtOyzYAa1sDgvo4hP/lfLDk8Ex2AuKPEqSc
-         IMYIhdQBRCuTfit/lQiFcHx9uSQ2M25gUprRPvirskcPkyR+kJVnguxTXQnxISeU5Pxk
-         iSIg==
+        d=gmail.com; s=20221208; t=1688390321; x=1690982321;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mX8lGsp2bwKMqBvnXPtDSrB9oQ82VYDhOdmPs+mVpQ8=;
+        b=PsxMHratQLcNmBkuGtq/uWOaI5tAFdzU2kZ1g7z2OnCjTbWZM5vL3iJWJY0ojve3sj
+         yRSRYEbFGMLtvFH8SXf1d+uO9lC8Wl2NXo7vIsB4LxZq32mQ0PJl0Ovn2Huf52ERxgZ2
+         wx0t2jqES93o/ubpyfWKsUaDlC/HfoUtyrPtg4Ffg30ByUNyEtKeXYJ2ToH2ngSTTUwY
+         HOL4wK9/ZjIEv/ME3Q468SkEhGajx8rdVdsA7xKDDOGC83KKG/57phWq/Qj65acsrzbR
+         AYeGbwA4ZOmTpc/glfG48HkuQSFmL9bos1cClDSWDeBsM4dvgLCJf4o8Kj2fCRd3EjsD
+         4CBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688245219; x=1690837219;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NFim9WdsCKhI4HrccRxR01KN2kEl1ndLt/kOcEp6v/w=;
-        b=EaVOxQ+7ZNYheUdMpO5dBvVDSRRNq4RHvkeejIugmkH/fA90YauWgJc71JgmTIDyGf
-         Y+iHze0QSvJxobBDvjWElBDackBnjCVmez2Hlzl10qyEou4jifXBhpLI4CyA6oaKvXKd
-         T8faCu1TW3a1koBIKKnk/XYl0+gjDSnMt+sYLsBM1xJC8l7yhW4aODw58UP9mkA/HzWa
-         aenVWPF8plEzOKB1mWCnlY1MQTaxA3Mb2TR5H5s67xvY1obUd4nlDwuk7m1hpFKdE1Ac
-         pyYwaCQLujyLlYSR0jwJPTr9iUr3iEdP/ecJs2p2+JkjceTdAHCsGO4BXens62kOirTj
-         t8Nw==
-X-Gm-Message-State: ABy/qLbhGfdmv0MFNhjhHBfEoOS8RJ4jj3XbUh+JbXMkhsEFUJ9I6OGt
-	kxSN3nBR0T9H+kX449RJscQ=
-X-Google-Smtp-Source: APBJJlFColukg4Nya/uG9EcLOzTywO1llvzev5+/Oi931QhKIrnpB09GmaDt1VNPrXX++ZPgLWydfQ==
-X-Received: by 2002:a5d:5543:0:b0:314:1dc1:6178 with SMTP id g3-20020a5d5543000000b003141dc16178mr4510097wrw.1.1688245218588;
-        Sat, 01 Jul 2023 14:00:18 -0700 (PDT)
-Received: from [192.168.8.101] (37-48-42-197.nat.epc.tmcz.cz. [37.48.42.197])
-        by smtp.gmail.com with ESMTPSA id x5-20020adff645000000b0031432f1528csm210165wrp.45.2023.07.01.14.00.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 01 Jul 2023 14:00:17 -0700 (PDT)
-Message-ID: <7424eaa5-ea88-d746-9bc6-e8b04cc48769@gmail.com>
-Date: Sat, 1 Jul 2023 23:00:16 +0200
+        d=1e100.net; s=20221208; t=1688390321; x=1690982321;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mX8lGsp2bwKMqBvnXPtDSrB9oQ82VYDhOdmPs+mVpQ8=;
+        b=Fsi9TlUAqL4hEns3OTipoOw8tGgsl9RNBi5JGeR4xUFwTIqFsT53b2aT8gWSTjoLVv
+         93Wc0D8oAeZCnPXAIcm8HtT6lc0djX7MUqLm8N+qtcU+epydcGskzDMKtR84KtNsmtoh
+         fJ4eaeFHUGBVGErF1DYaLaGLYGxIR5npggFCaljx770hxf/hHRFsM++1Uz4uzripsg0g
+         8ga0UgNVZK2vlhmez6AtE4h4ah3wqn0yJpxe5X9S5bmSKIenxL+p1/8PKZYMc/HvDo5f
+         oatK9mogZxO/qX0yXPMHGnSzmwPJWEoDa9IAqovxfTsuaBpmYmW92iLlbA5h25qIulUB
+         b8Sw==
+X-Gm-Message-State: ABy/qLZRetKp0w5vJDgqffjrDTxB0M/SX7JbqI4158DQ5opnYkCHZ0Vu
+	gF5w0V0CvSFuOG7BgmV/cNTy9FRVjl+hO+P+BTYks5dNXAgdHA==
+X-Google-Smtp-Source: APBJJlGuyPrCSwXtk6G21Oig12N/DE9iYdMPvWCR+PvRfAVRDeztm8TKjzU8mqryoQEZHIjpnebYdHTcCVGYtv8+zec=
+X-Received: by 2002:a25:dc10:0:b0:c4e:48eb:b8c8 with SMTP id
+ y16-20020a25dc10000000b00c4e48ebb8c8mr2392141ybe.6.1688390321441; Mon, 03 Jul
+ 2023 06:18:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.12.0
-Subject: Re: Problem after detaching the header
-Content-Language: en-US
-To: Darek Hisc <darek.hisc@aleeas.com>, cryptsetup@lists.linux.dev
-References: <168806625127.6.2008140751957055524.147127853@aleeas.com>
- <baaf0d13-97a2-8846-ca4f-8f89d96ef499@gmail.com>
- <168823123339.9.10246224821676034944.147890655@aleeas.com>
-From: Milan Broz <gmazyland@gmail.com>
-In-Reply-To: <168823123339.9.10246224821676034944.147890655@aleeas.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <CACJx3YoFZse7gyk=ZzuqKKRKr=r2_+3yuwRyOmuBZ=RnL=8BGw@mail.gmail.com>
+In-Reply-To: <CACJx3YoFZse7gyk=ZzuqKKRKr=r2_+3yuwRyOmuBZ=RnL=8BGw@mail.gmail.com>
+From: Alvaro a-m <alvaroam007@gmail.com>
+Date: Mon, 3 Jul 2023 15:18:30 +0200
+Message-ID: <CACJx3Yqq13sijSLdsGfjJ1bZigrfeP-oR79nXgbXw4_6mPt04A@mail.gmail.com>
+Subject: Re: QUESTION
+To: cryptsetup@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 7/1/23 19:06, Darek Hisc wrote:
-> 
->> - luksErase will destroy keyslots (key material)
-> Does it also destroy the Master Key?
+HI everyone,
 
-Volume Key (also known as Master Key) is stored in keyslot(s).
-luksErase removes all keyslots, thus removes all keys, see man cryptsetup-luksErase
+My name is =C3=81lvaro. I'm texting you this email about LUKS. I have a USB
+with 3 partitions (/efi, /boot and /data with LVMs encrypted by LUKS).
+I have a problem entering the password as I don't have a keyboard and
+I need to enter the password with a touch screen. I tried to search
+for information about that but nothing was successful.
 
->> but still keeps LUKS header on the device, including UUID (so you can reference the device through UUID
->> even if it cannot be unlocked without detached header)
->  From the comments I've received here https://unix.stackexchange.com/questions/750288/properly-detach-the-luks-header-from-the-existing-fdelvm-encryption it also appears that the missing UUID is to blame after destroying the entire header.
-> 
->> Check that UUID is not referenced in config.
-> How to check?
+Do you know any solution for this? Can I enable the touch screen
+before LUKS gets up?
+Thank you, have a nice day.
 
-It depends on your distro. Crypttab, bootloader config, old blkid cache, whatever.
-I have no idea, it was just a hint.
-The FAQ contains generic info, various distros can have various additional steps
-(we should update it to mention it, though).
+Kind regards,
+=C3=81lvaro
 
-> 
->> But as Arno said, this is really question for your distro (note that cryptab
->> file can be managed by systemd, but there are also non-systemd versions).
-> If it's not a cryptsetup problem, it probably affects many (or all) distributions. I suggest to add the relevant information to FAQ 2.20 because the current wording suggests that the given procedure is sufficient and it is not (because it causes a UUID problem that needs to be solved somehow)
-> 
->> Also without console log it is not clear what exactly fails.
-> Please tell me what to enter in the initramfs console to check it and I will give you the result
-> 
-> Another solution that looks very interesting:
-> In a comment on stackexchange, someone suggested creating a dummy header instead of the original one, but using a detached one. Do you see any potential problems and is this a good idea?
-
-LUKS header after calling luksErase is actually "dummy" header (if it means header without keyslots).
-So I think this is what you get after calling luksErase in your steps 1-5.
-
-Your device can be only unlocked with detached header, but data device is still visible marked as LUKS,
-that should be enough if your goal is to store key separately.
-
-Milan
-
+El mi=C3=A9, 28 jun 2023 a las 10:45, Alvaro a-m (<alvaroam007@gmail.com>) =
+escribi=C3=B3:
+>
+> HI everyone,
+>
+> My name is =C3=81lvaro. I'm texting you this email about LUKS. I have a U=
+SB
+> with 3 partitions (/efi, /boot and /data with LVMs encrypted by LUKS).
+> I have a problem entering the password as I don't have a keyboard and
+> I need to enter the password with a touch screen. I tried to search
+> for information about that but nothing was successful.
+>
+> Do you know any solution for this? Can I enable the touch screen
+> before LUKS gets up?
+> Thank you, have a nice day.
+>
+> Kind regards,
+> =C3=81lvaro
