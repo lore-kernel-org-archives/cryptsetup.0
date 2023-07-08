@@ -1,50 +1,70 @@
-Received: from mail-200165.simplelogin.co (mail-200165.simplelogin.co [176.119.200.165])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61520C8E6
-	for <cryptsetup@lists.linux.dev>; Fri,  7 Jul 2023 14:04:58 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; d=simplelogin.co; s=arc-20230626; t=1688738689;
-	cv=none; b=KGfF5cZEslNCnhtQ1FBzWNi6MQoeu+Z4xcJINNlMZSwUjKiAi/CkdGVThWE2EmuoED6wifDHprXdXFgAfvD6/15UFnVZp9qdaKeORdQTKKPjeK3qCvtcrrmjomj9YFteRVhCNh1Hz03EfLfXuYJqtWgQFhrUOWOIoPRWZ4rv4P+JPFymHnnTBZz5B1FYUJDDGLIawtha5oRB1I75/x0UadIHbvQiedy4YR4mXNZgwkMy9wD2BOLOjCH6SEuizfPiz4bvPhPfD6xwXpMyYJ6blBFqkE3xvlVBaGHzf8LXVfZLe/4P00SyswpUsOPy4uJVbVXYQQXguzaC0PChZa/6gQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; d=simplelogin.co; s=arc-20230626;
-	t=1688738689; c=relaxed/simple;
-	bh=/RBL6O/Klbdnd/YWJFEo5EqeGIqNIG+n3vyIVSoRTjw=;
-	h=DKIM-Signature:Date:Subject:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:From:To:Message-ID:X-SimpleLogin-Type:
-	 X-SimpleLogin-EmailLog-ID:X-SimpleLogin-Want-Signing; b=KEu0/8oQihh3TcTOsf1Q3m/9JCYRh/SjY6CSeVt7Shl6PwcqCz5/VZdLEO8p3gsEAgbkFbHNsUFsLNR9op+GAYiibZbDOowQJFhJHkAtg5uFNdmc6jIkGGxz7bE9leF/KD1ZlAW5Ueox/SurGfpTT7rAIFQxi6piEi1lCBuXAkLTbdvBEf3sWCQ0E/cCu2gqEjpwk5E3CdUiX4MdkekyYvxjYY2A4RW/zIYOmdHHgK/Ah3e0dHbtFe9xAzwEME5baB1kvmLVgr5StZY14WibHmgVxthZ4ree/aCiD+q6mCy2FNVDYT7onHzs5lHFta/PbTMMraawUEThQdC9hYElIQ==
-ARC-Authentication-Results: i=1; mail.protonmail.ch
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aleeas.com; s=dkim;
-	t=1688738689;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=/RBL6O/Klbdnd/YWJFEo5EqeGIqNIG+n3vyIVSoRTjw=;
-	b=WtiUjr33wsdXZUk40t1iM3ihWux5javt8Eef3x/sNNGKNQdlpKnzi6G9/K9i6Sq6jbu6NW
-	1vCvpqQ7GanOiXfjpXrfk1lQsItyszepZLL9PQyA3h9W4951w/qJgWxi+kpafkNCcuy1Uh
-	FmwfNPEYiNtzVWQAHOeipeoyITha+qE=
-Date: Fri, 07 Jul 2023 14:04:40 +0000
-Subject: When do any header interactions (read/write) occur?
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4494379FA
+	for <cryptsetup@lists.linux.dev>; Sat,  8 Jul 2023 15:41:05 +0000 (UTC)
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-3fbea147034so30030985e9.0
+        for <cryptsetup@lists.linux.dev>; Sat, 08 Jul 2023 08:41:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1688830864; x=1691422864;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=iRnf8iq9seK2K4yLOT8qWF90vGtQDWMPVJ6xdgIC/ok=;
+        b=ayS/++v1Eoqp1WcL/Zz12P/l6NriHj0XjTwYf6S5awpFiMKHWUC//8TfrsKdJjdEtT
+         mzqK7shK0VoJcCukT2Vm8MPnMvJkZ5BELeUiKGEc2SBgoH6/QLfkZLeZ8A5B4KKQadyx
+         XDNtJJAgjEr8EsesAaZE+FuCzTVIdUrmuKUwsWdonlHvPqd7m/Pa0AY1koyweTevmVsP
+         tH79iY8DFXXo1cJjeXfHWWLGUXZgHEnNqXUtEsko2bAp5DEpIfW/ONS+/hfSEhqh1CsI
+         X+nYwL8BxwhgggeDumi/IA0Acqd6ObPxxE8rANc7UqYEE9MZ1KOl4Xk73Q5lzrVLcnGd
+         4Tig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688830864; x=1691422864;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iRnf8iq9seK2K4yLOT8qWF90vGtQDWMPVJ6xdgIC/ok=;
+        b=EOfHlbkm+tDp9zUUzKNpZbSgO+8yjwnih/bU4rICH2RLCls8TWpFL2FDE7a5ADcbrV
+         3Rx7QpGyYW9uksghGgaf/J4ZLN0LuFfsQmJZDCcxiwDaMoDGqi+U3qcq5bdNqVsPmaNq
+         1s8A23fmaJdXNIbOxMoUsgMRg07/gqDiS7KReGg48HI1l62Kcpd3DTVDySJ4YzL0GvVi
+         MZYJGDF84oyTrLzIdy6dsQe+ptYxESTJBQARSLKJ3T8ravDutpYqmudewBRnOxLQnJwK
+         wgzJDB1UMXVftto4u5yecPprGLAHfSKMh2anx8NDzacg68Bv9zzyMRLBBFYT+sskSE/9
+         LYuA==
+X-Gm-Message-State: ABy/qLZUkltXxV3r4j/tDBxj2BrpCQLB8adsTLIeZIHMNsxW+uVM0/kk
+	PfHxWOXz/Xxzf5VB2CRCefoMIu8rA/8=
+X-Google-Smtp-Source: APBJJlE7U7Z4wiubYKa7+h/Wo574+aj938Wm2pjSdg5/KG+R39Ubz5lDEuAfXfIqMRJrg9a6Vlg5tA==
+X-Received: by 2002:a7b:cbd1:0:b0:3fb:d1c1:9b79 with SMTP id n17-20020a7bcbd1000000b003fbd1c19b79mr5998829wmi.30.1688830863949;
+        Sat, 08 Jul 2023 08:41:03 -0700 (PDT)
+Received: from [192.168.8.101] (37-48-56-15.nat.epc.tmcz.cz. [37.48.56.15])
+        by smtp.gmail.com with ESMTPSA id u10-20020a7bcb0a000000b003fb739d27aesm5356493wmj.35.2023.07.08.08.41.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 08 Jul 2023 08:41:03 -0700 (PDT)
+Message-ID: <9e13a2a4-0173-453b-c7dc-67e83dc63c6b@gmail.com>
+Date: Sat, 8 Jul 2023 17:41:02 +0200
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Darek Hisc <darek.hisc@aleeas.com>
-To: cryptsetup@lists.linux.dev
-Message-ID: <168873868918.7.12128827004291450369.150072076@aleeas.com>
-X-SimpleLogin-Type: Reply
-X-SimpleLogin-EmailLog-ID: 150072076
-X-SimpleLogin-Want-Signing: yes
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.12.0
+Subject: Re: When do any header interactions (read/write) occur?
+Content-Language: en-US
+To: Darek Hisc <darek.hisc@aleeas.com>, cryptsetup@lists.linux.dev
+References: <168873868918.7.12128827004291450369.150072076@aleeas.com>
+From: Milan Broz <gmazyland@gmail.com>
+In-Reply-To: <168873868918.7.12128827004291450369.150072076@aleeas.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi
+On 7/7/23 16:04, Darek Hisc wrote:
+> Do I understand correctly that the header is only needed when booting the OS + executing any cryptsetup commands?
+> If I have a detached header on a USB flashdrive, can I remove this flashdrive from the computer during routine work on the computer?
 
-Do I understand correctly that the header is only needed when booting the O=
-S + executing any cryptsetup commands?
-If I have a detached header on a USB flashdrive, can I remove this flashdri=
-ve from the computer during routine work on the computer?
+Basically, yes.
 
-Best Regards!
+For deactivation you do not need detached header; some status commands will print only active status (not detailed info).
 
+All keyslot commands (obviously) and luksResume will need path to header, though.
 
+Milan
