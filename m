@@ -1,37 +1,31 @@
-Received: from ste-pvt-msa1.bahnhof.se (ste-pvt-msa1.bahnhof.se [213.80.101.70])
+Received: from mail-200161.simplelogin.co (mail-200161.simplelogin.co [176.119.200.161])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427BE20FB2
-	for <cryptsetup@lists.linux.dev>; Wed, 12 Jul 2023 18:25:57 +0000 (UTC)
-Received: from localhost (localhost [127.0.0.1])
-	by ste-pvt-msa1.bahnhof.se (Postfix) with ESMTP id 9765F406A2
-	for <cryptsetup@lists.linux.dev>; Wed, 12 Jul 2023 20:25:50 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at bahnhof.se
-X-Spam-Flag: NO
-X-Spam-Score: -1.165
-X-Spam-Level:
-X-Spam-Status: No, score=-1.165 tagged_above=-999 required=6.31
-	tests=[BAYES_00=-1.9, FROM_LOCAL_HEX=0.006,
-	FROM_STARTS_WITH_NUMS=0.738, T_SCC_BODY_TEXT_LINE=-0.01,
-	UNPARSEABLE_RELAY=0.001] autolearn=no autolearn_force=no
-Received: from ste-pvt-msa1.bahnhof.se ([127.0.0.1])
-	by localhost (ste-pvt-msa1.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id rBDC_UZx7g6F for <cryptsetup@lists.linux.dev>;
-	Wed, 12 Jul 2023 20:25:49 +0200 (CEST)
-Received: 
-	by ste-pvt-msa1.bahnhof.se (Postfix) with ESMTPA id 8005640560
-	for <cryptsetup@lists.linux.dev>; Wed, 12 Jul 2023 20:25:48 +0200 (CEST)
-Received: from owner (uid 1000)
-	(envelope-from 152cc69a347e@ewoof.net)
-	id 60185
-	by home.arpa (DragonFly Mail Agent v0.13);
-	Wed, 12 Jul 2023 18:25:35 +0000
-Date: Wed, 12 Jul 2023 18:25:35 +0000
-From: Michael =?utf-8?B?S2rDtnJsaW5n?= <152cc69a347e@ewoof.net>
-To: cryptsetup@lists.linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5F61ED55
+	for <cryptsetup@lists.linux.dev>; Thu, 13 Jul 2023 15:39:46 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; d=simplelogin.co; s=arc-20230626; t=1689262252;
+	cv=none; b=jxIGOtojhC3cUfoYHBdzmgnhFmLgrGTeDX8dDOzgH1KN9lKtBOTIVEoVfl+oRQGFT0JHW8FXGgDrRjUjBUtguOmj4qW6eRjEOuwuxrDG+TJxCUFBdqYyJDl773+EmwO5Y8q0+MrJSjc7VGufizS4NzQrKYQXaaWFBfgPRZH5VtsGE4QYJnCFgFotcD4QlM5SUZffSx22UawqkXY9Sb/ViV/NpGS+Cz7oLKuBNfFtnrrLCYOM8VSin0JLVSBxjPbdMHvmShhPHCkibrPfjPNXHdQH8PtacSWXwzk6jzvE4geT1TnipZX3YqfEcw0AbbyBc14KSDILVr/UNYxW6+ejPQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; d=simplelogin.co; s=arc-20230626;
+	t=1689262252; c=relaxed/simple;
+	bh=r7khIozvLwNtK+vyTNJYFVfXkgKNxxQiSpWJI5XmBOE=;
+	h=DKIM-Signature:Date:Subject:In-Reply-To:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:From:To:Message-ID:References:
+	 X-SimpleLogin-Type:X-SimpleLogin-EmailLog-ID:
+	 X-SimpleLogin-Want-Signing; b=iYLxFfNW6g/qfnxV/Bh5bbqbbgwCny2NGStPME34Ae2lPUzjG4DK+Ois4LID39eKh9stMW8aBX0V0RgMTP74BIrWBdlltIG9zehQVWz4nLaNdo/hcKJResd5JmgdOGQT/z8oGvYdPeY591xufOyRd7YlcTwE2Cv8IduQQ3RVvxqlbMMXBOvjM6QV5KtEuGvH/xXkyoVe16rqvfA5vkxqJbEW//viNUzyWNzkjy+Amu8y/yNtZiz8e5EPnqNIMtTHdYsAYl5Omo0Jo4vpoURVlqCTmvW9ypMaUjZraLV/fVM3IkqAVLasBR6Xa757MqtE7A0VGE3JrOfDYnpBEiZxBQ==
+ARC-Authentication-Results: i=1; mail.protonmail.ch
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aleeas.com; s=dkim;
+	t=1689262252;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=r7khIozvLwNtK+vyTNJYFVfXkgKNxxQiSpWJI5XmBOE=;
+	b=IdRdKd8YGZrlXJGonTMJpwqSWomW2oK5p5JJP8tgIdJySCtraUwyxFc1L3bt3tBmU83jeO
+	Mex9RftdDzHPmmT4GwqSemW6Kvo2yPAsJKrcLkcn29/jmXXpeU8kQj7uFUfJCbVaIobwCo
+	t1n/ANCfbUBmFEfypfMpjPjL/vN6eD0=
+Date: Thu, 13 Jul 2023 15:30:45 +0000
 Subject: Re: A new container with an old header
-Message-ID: <7cb9e19c-eddc-4c2c-a2ac-2673a1e208e8@home.arpa>
-References: <168917759492.6.4364561119493214109.152005529@aleeas.com>
+In-Reply-To: <7cb9e19c-eddc-4c2c-a2ac-2673a1e208e8@home.arpa>
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
@@ -39,46 +33,29 @@ List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <168917759492.6.4364561119493214109.152005529@aleeas.com>
+Content-Transfer-Encoding: quoted-printable
+From: Darek Hisc <darek.hisc@aleeas.com>
+To: cryptsetup@lists.linux.dev
+Message-ID: <168926225260.6.8499250006616259794.152440275@aleeas.com>
+References: <168917759492.6.4364561119493214109.152005529@aleeas.com>
+ <7cb9e19c-eddc-4c2c-a2ac-2673a1e208e8@home.arpa>
+X-SimpleLogin-Type: Reply
+X-SimpleLogin-EmailLog-ID: 152440275
+X-SimpleLogin-Want-Signing: yes
 
-On 12 Jul 2023 15:59 +0000, from darek.hisc@aleeas.com (Darek Hisc):
-> Alternatively, a way to increase the size of "file1" to 200MB. All
-> the information I've found is about resizing a partition or LVM. But
-> I don't know how to increase LUKS2 file-container.
 
-There should be nothing special about the LUKS container being within
-a file.
+Thank you Michael for your suggestions!
+Particularly valuable for me is the ability to check the checksum of a frag=
+ment of a file (I did not know this before):
+$ dd if=3Dluks-container bs=3D1048576 count=3D100 | md5sum -b
 
-Of course DO make a backup of your container (and header, if separate)
-before you do this, and I'd triple-check to ensure the container isn't
-open at the time just to avoid the risk of something getting confused
-by the change in size, but something adapted from the following should
-work.
+Instead of `truncate -s 200M` I found a better solution for my use case:
+`head -c 200M /dev/urandom >> my-container`
+It creates "real data" instead of "sparse file" (whatever that means) and i=
+s supposedly more secure.
+Then I used `cryptsetup resize` and later `resize2fs /dev/mapper/xxx` and e=
+verything looks fine now :)
 
-$ dd if=/dev/urandom of=luks-container bs=1048576 count=100
-$ stat luks-container
-  File: luks-container
-  Size: 104857600 ...
-$ md5sum -b luks-container
-<something>
-$ truncate -s 200M luks-container
-$ dd if=luks-container bs=1048576 count=100 | md5sum -b
-<same something, proves that the first half is unaltered>
-$ stat luks-container
-  File: luks-container
-  Size: 209715200 ...
-$
+Cheers!
 
-Then enlarge the file system within the container normally. Exactly
-how you do that will of course depend on exactly what the contents of
-the container is.
-
-The key here is using "truncate -s" to set the new size of the file
-without otherwise altering its contents.
-
--- 
-Michael Kjörling                     🔗 https://michael.kjorling.se
-“Remember when, on the Internet, nobody cared that you were a dog?”
 
