@@ -1,91 +1,74 @@
-Received: from out-37.mta1.migadu.com (out-37.mta1.migadu.com [95.215.58.37])
+Received: from pio-pvt-msa1.bahnhof.se (pio-pvt-msa1.bahnhof.se [79.136.2.40])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16791263BD
-	for <cryptsetup@lists.linux.dev>; Tue, 25 Jul 2023 19:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4671C26B25
+	for <cryptsetup@lists.linux.dev>; Tue, 25 Jul 2023 21:11:30 +0000 (UTC)
+Received: from localhost (localhost [127.0.0.1])
+	by pio-pvt-msa1.bahnhof.se (Postfix) with ESMTP id 549B83FF51
+	for <cryptsetup@lists.linux.dev>; Tue, 25 Jul 2023 23:04:30 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at bahnhof.se
+X-Spam-Flag: NO
+X-Spam-Score: -1.165
+X-Spam-Level:
+X-Spam-Status: No, score=-1.165 tagged_above=-999 required=6.31
+	tests=[BAYES_00=-1.9, FROM_LOCAL_HEX=0.006,
+	FROM_STARTS_WITH_NUMS=0.738, T_SCC_BODY_TEXT_LINE=-0.01,
+	URIBL_BLOCKED=0.001] autolearn=no autolearn_force=no
+Received: from pio-pvt-msa1.bahnhof.se ([127.0.0.1])
+	by localhost (pio-pvt-msa1.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id nw2kPFu5qa4H for <cryptsetup@lists.linux.dev>;
+	Tue, 25 Jul 2023 23:04:24 +0200 (CEST)
+Received: 
+	by pio-pvt-msa1.bahnhof.se (Postfix) with ESMTPA id A65A83FD56
+	for <cryptsetup@lists.linux.dev>; Tue, 25 Jul 2023 23:04:24 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by localhost (Postfix) with ESMTPS id 930441D00168
+	for <cryptsetup@lists.linux.dev>; Tue, 25 Jul 2023 23:04:23 +0200 (CEST)
+Date: Tue, 25 Jul 2023 21:04:22 +0000
+From: Michael =?utf-8?B?S2rDtnJsaW5n?= <152cc69a347e@ewoof.net>
+To: cryptsetup@lists.linux.dev
+Subject: Re: What is the aes-xts key-size?
+Message-ID: <d331c097-8c7a-484b-b0cc-f122cbd0c34d@home.arpa>
+References: <85b99cefc9505c90db6010c60d66992e88ae1db0@rjp.ie>
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rjp.ie; s=key1;
-	t=1690314539;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=dljrriTRZvESwfFvREFnulvBjBz77/9R5lxxJ8hATKA=;
-	b=a2xT8+8PenTQPYUTLt3mV+zRrChGTSMV/Xqk2aYSu21Yjr7DZ3Pf7VQL9lQ2QQlLGkujgc
-	qvnAZ6pfGXQIsmgVY1fT82oBG9xkdGXmJM6QsEqq+Ky4usMv1e/QvhoA4QBmtaGXAvQjtJ
-	R05OSKOYIRpT0oPT1eV42BVnt1YdWFs=
-Date: Tue, 25 Jul 2023 19:48:58 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "Ronan Pigott" <ronan@rjp.ie>
-Message-ID: <85b99cefc9505c90db6010c60d66992e88ae1db0@rjp.ie>
-TLS-Required: No
-Subject: What is the aes-xts key-size?
-To: cryptsetup@lists.linux.dev
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <85b99cefc9505c90db6010c60d66992e88ae1db0@rjp.ie>
 
-Hi cryptsetup,
+On 25 Jul 2023 19:48 +0000, from ronan@rjp.ie (Ronan Pigott):
+> What should the argument of --key-size be, 256 or 512, to achieve this superior
+> performance?
 
-I'm confused about the doubling/halving behavior of aes-xts mode.
+256.
 
-When I run cryptsetup benchmark, it indicates that aes-xts 256b is narrow=
-ly the
-fastest on my machine:
+You can conclude this based on the output from the fact that there are
+no -xts lines with a 128 bit key size, nor any non-XTS lines with a
+512 bit key size. Therefore the key size specified in the benchmark
+output must be the doubled key size, since the underlying AES cipher
+is only defined for key sizes of 128, 192 and 256 bits.
 
-#     Algorithm |       Key |      Encryption |      Decryption
-        aes-cbc        128b      1987.5 MiB/s      7633.5 MiB/s
-    serpent-cbc        128b       136.7 MiB/s       991.3 MiB/s
-    twofish-cbc        128b       300.7 MiB/s       651.5 MiB/s
-        aes-cbc        256b      1501.7 MiB/s      6416.8 MiB/s
-    serpent-cbc        256b       136.6 MiB/s       981.6 MiB/s
-    twofish-cbc        256b       293.1 MiB/s       645.3 MiB/s
-        aes-xts        256b      6089.6 MiB/s      5870.8 MiB/s
-    serpent-xts        256b       868.9 MiB/s       885.9 MiB/s
-    twofish-xts        256b       594.4 MiB/s       597.1 MiB/s
-        aes-xts        512b      5441.2 MiB/s      5601.0 MiB/s
-    serpent-xts        512b       867.0 MiB/s       881.4 MiB/s
-    twofish-xts        512b       591.5 MiB/s       608.8 MiB/s
+Also, (the underlying) AES with a 128 bit key uses 10
+encryption/decryption rounds; with a 256 bit key, it uses 14 rounds.
+Therefore AES-256 will always be slower than AES-128; although by less
+than 40%, since the key expansion prior to the encryption or
+decryption rounds takes non-zero time.
 
-However, I still don't understand what should I use as the argument to
---key-size.
+Still, _I_ would probably use --key-size 512 for the extra security
+margin and the negligible (~10% in your case) loss in throughput.
+Whether you're getting 5.5 GiB/s or 6 GiB/s through LUKS is unlikely
+to be the limiting factor in I/O performance. SATA, for example, tops
+out at 6 Gbit/s; about a tenth of the throughput you're seeing. Even
+M.2 NVMe is (per Wikipedia) equal to up to four lanes of PCI Express
+3.0, which would get you just under 4 GB/s theoretical maximum
+throughput, still well below saturating a 5-6 GB/s encryption pipeline.
 
-The man page says:
+-- 
+Michael Kjörling                     🔗 https://michael.kjorling.se
+“Remember when, on the Internet, nobody cared that you were a dog?”
 
-> For XTS mode you can optionally set a key size of 512 bits with the -s =
-option.
-> Key size for XTS mode is twice that for other modes for the same securi=
-ty
-> level.
-
-The arch wiki [1] says:
-
-> By default a 512 bit key-size is used for XTS ciphers. Note however tha=
-t XTS
-> splits the supplied key in half, so this results in AES-256 being used.
-
-This post on stack overflow [2] says:
-
-> Likewise, if you specify --key-size 512, then a 512-bit key will be loa=
-ded via
-> cryptsetup, but XTS-AES will split it into two 256-bit keys.
-
-all of which have failed to clarify this confusion for me, because I don'=
-t know
-what is being tested in the benchmark.
-
-What should the argument of --key-size be, 256 or 512, to achieve this su=
-perior
-performance?
-
-[1] https://wiki.archlinux.org/title/Dm-crypt/Device_encryption#Cryptsetu=
-p_usage
-[2] https://superuser.com/questions/1428775/what-is-the-default-encryptio=
-n-key-size-for-dm-crypt-cryptsetup-in-luks-mode
-
-Thanks,
-Ronan
