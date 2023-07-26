@@ -1,74 +1,87 @@
-Received: from pio-pvt-msa1.bahnhof.se (pio-pvt-msa1.bahnhof.se [79.136.2.40])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4671C26B25
-	for <cryptsetup@lists.linux.dev>; Tue, 25 Jul 2023 21:11:30 +0000 (UTC)
-Received: from localhost (localhost [127.0.0.1])
-	by pio-pvt-msa1.bahnhof.se (Postfix) with ESMTP id 549B83FF51
-	for <cryptsetup@lists.linux.dev>; Tue, 25 Jul 2023 23:04:30 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at bahnhof.se
-X-Spam-Flag: NO
-X-Spam-Score: -1.165
-X-Spam-Level:
-X-Spam-Status: No, score=-1.165 tagged_above=-999 required=6.31
-	tests=[BAYES_00=-1.9, FROM_LOCAL_HEX=0.006,
-	FROM_STARTS_WITH_NUMS=0.738, T_SCC_BODY_TEXT_LINE=-0.01,
-	URIBL_BLOCKED=0.001] autolearn=no autolearn_force=no
-Received: from pio-pvt-msa1.bahnhof.se ([127.0.0.1])
-	by localhost (pio-pvt-msa1.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id nw2kPFu5qa4H for <cryptsetup@lists.linux.dev>;
-	Tue, 25 Jul 2023 23:04:24 +0200 (CEST)
-Received: 
-	by pio-pvt-msa1.bahnhof.se (Postfix) with ESMTPA id A65A83FD56
-	for <cryptsetup@lists.linux.dev>; Tue, 25 Jul 2023 23:04:24 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by localhost (Postfix) with ESMTPS id 930441D00168
-	for <cryptsetup@lists.linux.dev>; Tue, 25 Jul 2023 23:04:23 +0200 (CEST)
-Date: Tue, 25 Jul 2023 21:04:22 +0000
-From: Michael =?utf-8?B?S2rDtnJsaW5n?= <152cc69a347e@ewoof.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E7FF1DA5F
+	for <cryptsetup@lists.linux.dev>; Wed, 26 Jul 2023 15:38:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.com;
+ s=s31663417; t=1690385884; x=1690990684; i=blobfish@gmx.com;
+ bh=u86igvp+WM5Dn2TC/21eH0ESjovURPMA8BvDjS7I4js=;
+ h=X-UI-Sender-Class:From:To:Subject:Date:In-Reply-To:References;
+ b=AHxzq8YFh1MPMfCLR56lkRkfHb5Uj8kut+NDL4K2Liz8ZAyyiGL/lAfNx0GWD2k3Kc5lziG
+ HdWgXV5zUYpZ9Ybcl2vPp8NqpDJunh4WQxdfL8oDGuhdAv1jFUFEUgEoNJcarmjxXGnzKBJjs
+ y0Gru44PxpF8jUE5zFkzGIZDcv8ltEOA/nKsLYxyFQPDDM6ZafujT8VCRyDe6GC4UxnwgDHuL
+ Kyhd6TzxuHy8wnrKzuMQFhYlCVIE4WCiFV2p5vHwNJdXOmyROiuXRJyILuzEtSfqWDOGI4Srl
+ vxS0GdMViOE1rpr6k9krL8NjFRmloz6NIel707OnHGPm9pvhUSPg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from laptop.localnet ([146.70.57.18]) by mail.gmx.net (mrgmx104
+ [212.227.17.174]) with ESMTPSA (Nemesis) id 1MXp5Q-1qNadz1qiC-00YApO for
+ <cryptsetup@lists.linux.dev>; Wed, 26 Jul 2023 17:38:03 +0200
+From: blobfish <blobfish@gmx.com>
 To: cryptsetup@lists.linux.dev
-Subject: Re: What is the aes-xts key-size?
-Message-ID: <d331c097-8c7a-484b-b0cc-f122cbd0c34d@home.arpa>
-References: <85b99cefc9505c90db6010c60d66992e88ae1db0@rjp.ie>
+Subject: Re: Looking for confirmation as I enter the acceptance stage.
+Date: Wed, 26 Jul 2023 11:38:00 -0400
+Message-ID: <4863669.GXAFRqVoOG@laptop>
+In-Reply-To: <a543a204-c0c7-4936-8eb0-38fd3ac825b9@home.arpa>
+References:
+ <2159917.irdbgypaU6@laptop> <5860622.MhkbZ0Pkbq@laptop>
+ <a543a204-c0c7-4936-8eb0-38fd3ac825b9@home.arpa>
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <85b99cefc9505c90db6010c60d66992e88ae1db0@rjp.ie>
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
+X-Provags-ID: V03:K1:IjTq2pIHFAnueKKD3KuT0gZmOv7Kk8IqLce78OFuqgSrhV2wDB0
+ WmEDVlZh5VU92DA6dhH68GTu+G7ddJZrzZcVdBnnZBqi8vOpxgRdDXSCjtrUuV2WXVV/9Up
+ B4FujzesiByXbPpu3FRI8arRjkmslB6B9QFenLGm0RyEdCYM9mua1jIOtQlq7p8Mz2/0LVg
+ sR3U/c4sGS5J7w8N1oj+w==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:KwxdOpjZZfg=;qlTAcc7PWkDERqW37pa8/AzQt+s
+ XMElwBk8YxA7l+W+Jgn5a9dGwf5eS1MRfNFCzE8ujRA5N2AJ/w6AMYgyhfrxxMOnNqaMHonx9
+ WWIKm5yf3Hb/v75desLTv0XX0JY7w7Cg3XKQrLvwKlNxDmC1D6y4ADr0dEOePAeXn0OzvfvWn
+ unOYSjUBRjskIwTeLDX4BPzMf//KNXVX3PJlg9vfk0gsByPktKmB5Xo4x8JtOCh6SdOp8b1UG
+ oBIonHytdk4wuIJeFy0UtkI56CUVyFlA3E/Rs3DaYgLvb7SqhMECkP9k3Wrs9gdxGp4je3U5h
+ WtC8wFxDw/lrpObTdaO4S++xfxl+F8E0IMdanOwc2CEjqiFyKHXhcHA69j7WEZ9R/GFr/ac/R
+ 8bCWoMVDBu0Hg63dqTqlyIFCySglgPaUfy7HrEveOQjSpCE+iqQN9qbWcuUsIwUCkynR5sb1R
+ tNg2U4ssVFrO9HBtAtrDaIYA383KxirdRV9eEBFlE04wON308BuOZp6ChAdpByks/mTi2x4gy
+ VvCEpOtNdPYkvtVuChClfHzEK3Z9ifa4Mifo84cp4CZFyFa0ksccMFGuJxsPhB5WjRRya5HV+
+ Dz5fJBwQ2ItpcjKvakDExEDA1z071rgMcvL38mM+IlOaZbhuR+03jwLf+z3Z1y61XORcIonYY
+ AiN4ey5i8/MXflAqAyV/kyWb3yHmp8DJUmKs3KICgjtp0fkTFrW4AP7KA+vWVII7ySRT5FB9N
+ Af8G/GopAHhdOAcQCclxSw04MmIpbcRhWHKcYpLmSYisV9Am/v099Rng7yXq10vuW/W1/mVWu
+ Jv4Uw4H9T5ak5GVQ/sdksPiCLNR7gXKooAIyAbHRyxuY31mgTuMenh0xs6SyXWAv0gh/OlVKz
+ d0pro5ZctE7LMb0hF+HzXbHas+EbxdjrK8rmeM2FW//wZUcXaK/e82YEWCkfqqJKwmjtVB2gB
+ Eu0+GA==
 
-On 25 Jul 2023 19:48 +0000, from ronan@rjp.ie (Ronan Pigott):
-> What should the argument of --key-size be, 256 or 512, to achieve this superior
-> performance?
+On Monday, July 24, 2023 12:03:13 PM EDT Michael Kj=F6rling wrote:
+=20
+> $ sudo dd if=3D/dev/sdb1 skip=3D126974 bs=3D256 count=3D1M of=3Dsdb1.head=
+=2Eshift
+>=20
+> $ sudo cryptsetup luksDump ./sdb1.head.shift
+>=20
+> $ sudo file ./sdb1.head.shift
+>=20
+> Let's see what that gets you before we write this off as unfixable.
+>=20
+> For comparison, here's what I get when I do something very similar
+> (using the same offsets) on what you have sent:
+>=20
 
-256.
+=46inally finished the backup. Thanks for the ddrescue tip. Nice tool! I fo=
+llowed=20
+your procedure from above and got the exact same output as you did from the=
+=20
+test data. Further I did:
 
-You can conclude this based on the output from the fact that there are
-no -xts lines with a 128 bit key size, nor any non-XTS lines with a
-512 bit key size. Therefore the key size specified in the benchmark
-output must be the doubled key size, since the underlying AES cipher
-is only defined for key sizes of 128, 192 and 256 bits.
+sudo cryptsetup luksOpen sdb1.head.shift mapped1
+  I was prompted for passphrase and entered it.
+  command finished without error.
+  new path at /dev/mapper/mapped1
 
-Also, (the underlying) AES with a 128 bit key uses 10
-encryption/decryption rounds; with a 256 bit key, it uses 14 rounds.
-Therefore AES-256 will always be slower than AES-128; although by less
-than 40%, since the key expansion prior to the encryption or
-decryption rounds takes non-zero time.
+I am guessing that is a pretty good sign?
 
-Still, _I_ would probably use --key-size 512 for the extra security
-margin and the negligible (~10% in your case) loss in throughput.
-Whether you're getting 5.5 GiB/s or 6 GiB/s through LUKS is unlikely
-to be the limiting factor in I/O performance. SATA, for example, tops
-out at 6 Gbit/s; about a tenth of the throughput you're seeing. Even
-M.2 NVMe is (per Wikipedia) equal to up to four lanes of PCI Express
-3.0, which would get you just under 4 GB/s theoretical maximum
-throughput, still well below saturating a 5-6 GB/s encryption pipeline.
 
--- 
-Michael Kjörling                     🔗 https://michael.kjorling.se
-“Remember when, on the Internet, nobody cared that you were a dog?”
+
 
