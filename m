@@ -1,97 +1,69 @@
-Received: from ste-pvt-msa2.bahnhof.se (ste-pvt-msa2.bahnhof.se [213.80.101.71])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227111426E
-	for <cryptsetup@lists.linux.dev>; Fri, 28 Jul 2023 18:55:46 +0000 (UTC)
-Received: from localhost (localhost [127.0.0.1])
-	by ste-pvt-msa2.bahnhof.se (Postfix) with ESMTP id 9EAC43FAEA
-	for <cryptsetup@lists.linux.dev>; Fri, 28 Jul 2023 20:50:06 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at bahnhof.se
-X-Spam-Flag: NO
-X-Spam-Score: -1.165
-X-Spam-Level:
-X-Spam-Status: No, score=-1.165 tagged_above=-999 required=6.31
-	tests=[BAYES_00=-1.9, FROM_LOCAL_HEX=0.006,
-	FROM_STARTS_WITH_NUMS=0.738, T_SCC_BODY_TEXT_LINE=-0.01,
-	URIBL_BLOCKED=0.001] autolearn=no autolearn_force=no
-Received: from ste-pvt-msa2.bahnhof.se ([127.0.0.1])
-	by localhost (ste-pvt-msa2.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id PNIOmAcmCDsV for <cryptsetup@lists.linux.dev>;
-	Fri, 28 Jul 2023 20:50:05 +0200 (CEST)
-Received: 
-	by ste-pvt-msa2.bahnhof.se (Postfix) with ESMTPA id 9F4C73F8F9
-	for <cryptsetup@lists.linux.dev>; Fri, 28 Jul 2023 20:50:05 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by localhost (Postfix) with ESMTPS id B53C71D00194
-	for <cryptsetup@lists.linux.dev>; Fri, 28 Jul 2023 20:50:04 +0200 (CEST)
-Date: Fri, 28 Jul 2023 18:50:03 +0000
-From: Michael =?utf-8?B?S2rDtnJsaW5n?= <152cc69a347e@ewoof.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C1C2F55
+	for <cryptsetup@lists.linux.dev>; Sat, 29 Jul 2023 12:58:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.com;
+ s=s31663417; t=1690635495; x=1691240295; i=blobfish@gmx.com;
+ bh=OlF7or+wqBGAarlhp+HohqoUoynTPgwyGI4KKinQjtQ=;
+ h=X-UI-Sender-Class:From:To:Subject:Date:In-Reply-To:References;
+ b=QSkP1QeIDjkBmIPZ39ebRIPvI0Zz0GZzlrzwelQGdDkffbHW028Af/bcewA6vPOX1G60kBy
+ zKylD6GB2v9R3eKRoRZmtMRMA3bfczJ3LxeOe3kAq8YA1wJuc5b1A9/aHbqovHyx8vPYsgyK5
+ l+PEi6OIVkhwlbrk4j6AgYuoSpsFmxjK3QvpcDKoRyzyPhlr0eDR2KkRAuwars3H6D3OWvOdF
+ WH9ngi+JhYAibXGkCPGAUBlLzsv2KijR0+DLvfwwXXdQARCDYg9e0n3lc3keYtUGsUB3LFUsf
+ 2Iy/TNnuAn+j5x7odoLFvT98rHwB3ooL+J7YpZBhUaXm6ztxnGQg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from laptop.localnet ([146.70.57.18]) by mail.gmx.net (mrgmx104
+ [212.227.17.174]) with ESMTPSA (Nemesis) id 1MbzyJ-1ps2On3pvD-00dWKz for
+ <cryptsetup@lists.linux.dev>; Sat, 29 Jul 2023 14:58:15 +0200
+From: blobfish <blobfish@gmx.com>
 To: cryptsetup@lists.linux.dev
-Subject: Re: Looking for confirmation as I enter the acceptance stage. --
- SOLVED
-Message-ID: <1f32e042-c3fc-40b0-96c1-5d81a0c82391@home.arpa>
-References: <2159917.irdbgypaU6@laptop>
- <3554948.iIbC2pHGDl@laptop>
- <c5d4730e-a1d3-401b-9be5-aa5311ca3166@home.arpa>
- <13313734.uLZWGnKmhe@laptop>
+Subject:
+ Re: Looking for confirmation as I enter the acceptance stage. -- SOLVED
+Date: Sat, 29 Jul 2023 08:58:12 -0400
+Message-ID: <8249258.T7Z3S40VBb@laptop>
+In-Reply-To: <1f32e042-c3fc-40b0-96c1-5d81a0c82391@home.arpa>
+References:
+ <2159917.irdbgypaU6@laptop> <13313734.uLZWGnKmhe@laptop>
+ <1f32e042-c3fc-40b0-96c1-5d81a0c82391@home.arpa>
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <13313734.uLZWGnKmhe@laptop>
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
+X-Provags-ID: V03:K1:CTjpR78ZrBDmUwJAuqo6rwvFbslsQWlwfB9bjalf9Z4a3GPjDMg
+ B6hTC4Gv8xpFuvmfSNiRnQy/ipiikBTRjO7hktvP7eJj1Z1Y4E+8vOdpGLZNk/HUhEXMC3K
+ OpL8DZDZUkucp+RNFigxjZjDDkGDbxBR4cP8ynwshB+LBba495Kau2M2yXHS0gwe7aJt+UM
+ DNaH4M46NMaJgClkhKxSw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:42Y9tZunIRs=;OPHZ50+01VkZtqQjao+9Ml/aSxz
+ vQs29cVnQe+iozsX7Z1jfccwK56koUSYN2oPsYhAJMvJVtJPxN0ZIftZontnzZNfmqGJui5Sh
+ eUe3yTJC++znmIrvC6UaGC6ILjWfz+quVCzoaxCplf/0aclyl+tPKPiRoIKjdolPY6ryMAGNA
+ zk93H44m3OczuXZ4BGWDSu/a0pbQWPC44kqahTuiltbqLPSHnWTfGzCfnSxPYCNVC+MYZ3Sqe
+ ZSn2BCtJaSkGT7GO1/9yHxdu30WF/zbAtSHfj+H06zXdpzYGbHe71daeDDAyVHd41brTkUIw8
+ 0CJGxmm0vkFN2pqNQGql9d955mjrxC0bfpq3A/nmqWdamwVm+kOyl5SJKxmgCNu1MZmO79ozm
+ Hc3NlnsYvQj3dIuTRqR8Yi3KsEw2OWIopNEgAYv4dBE90ZwAD4xG2RKG0YFjpRUP8Uq6gyZn0
+ 0FaretD+L0s4+fzi8x6eOstViwtbHibmqiR5ZdqhXH8XH5r9FhWuNUOCnvNfbbBZWPfI7OLOA
+ /BXAHxJBD7rMxDXUJO33Qx9iSt2zcp3GQ/MutUevQoR3UHUVAEwwNwFS6iKEdBgS64Ep5Ve/6
+ fuVK4hXhr1OLWB01iGDL0pHnjz+3chP1f25SgBBprvOWkzfUpTZL+EHbG2pJ+zh+/x8cComoT
+ 6uokpLWEV3+urrVBFVJOIqU/pECeuCO7inhnRozlukmkkj1KvgUHBxyTHcRghQ36u+MIU/YNL
+ EvWqM1k2agMoyuKS/sor3zpQGcq03ZkLMDs2cWjElQmEhI1hVpXN9DGgBDJ61VQwz+h5tqBPP
+ +3SJrW5pSJw54orM6+wYuKHv3TpvvG27HNrVSPjse4ksiRNgtkg+Cbqg8aV0N9/zO8ol1e0AY
+ M88RVqICp4sAjR2F36C3MfiuTAmxZGAwPc2/mFDfC+Z43gedBIm9AKPXtYKGEI4/2LLpo3q89
+ o3cIshFMvN2/lW3pcCAjsTN9WiY=
 
-On 28 Jul 2023 11:23 -0400, from blobfish@gmx.com (blobfish):
-> Anyway, I have made it through and have successfully mounted my filesystem! 
-> First look through an looks good.
+On Friday, July 28, 2023 2:50:03 PM EDT Michael Kj=F6rling wrote:
+> I'm taking the liberty of adding SOLVED to the subject line since
+> you're now in a position that you can access the file system within
+> the container. Any further questions will probably be more along the
+> lines of how to deal with the Btrfs file system within, which is off
+> topic on the cryptsetup mailing list.
 
-Congratulations!
+Sounds good.
+Thank you!!!!
 
 
-> just a little more hand holding, I promise:
-> should I get btrfs involved before the copy? like:
->   btrfs check
->   btrfs check --repair
-> as far as the copy I was just going to 'cp -avr'. Is there a better command 
-> for what I am doing?
-
-I'm only superficially familiar with Btrfs, so do take this with a
-pitcher of salt, but if it's similar to ZFS (on which I believe much
-of its behavior was initially modeled) in this regard, simply reading
-each file in full should be sufficient to know that they are
-uncorrupted, and should get you repaired data if something is
-corrupted but repairable. Therefore a prior file system check
-shouldn't be necessary.
-
-I would suggest using something like `rsync -aAHX` (see the rsync man
-page; you may or may not want -S as well) to get as accurate a copy as
-possible along with restartability, but really, whichever file copying
-tool feels good to you is probably good enough. Redirect its stderr to
-a file so that once the copying finishes you'll hopefully have a list
-of any files which couldn't be copied and you can decide on a
-case-by-case basis what to do with those.
-
-Once the copying finishes you _can_ run a check (on the copy that
-you're copying from) if you want to and then re-run the copy to the
-temporary storage (this is where restartability comes in) to catch
-anything that the repair caused to become visible. I don't know
-whether or not that will actually be meaningful or useful.
-
-Then once you're through all that and have confirmed that everything
-is working as it should, don't forget to set up for backups going
-forward. :-)
-
-I'm taking the liberty of adding SOLVED to the subject line since
-you're now in a position that you can access the file system within
-the container. Any further questions will probably be more along the
-lines of how to deal with the Btrfs file system within, which is off
-topic on the cryptsetup mailing list.
-
--- 
-Michael Kjörling                     🔗 https://michael.kjorling.se
-“Remember when, on the Internet, nobody cared that you were a dog?”
 
