@@ -1,46 +1,46 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBAB68F55
-	for <cryptsetup@lists.linux.dev>; Tue, 22 Aug 2023 10:00:49 +0000 (UTC)
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-52580a24128so5260758a12.2
-        for <cryptsetup@lists.linux.dev>; Tue, 22 Aug 2023 03:00:49 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D8088F55
+	for <cryptsetup@lists.linux.dev>; Tue, 22 Aug 2023 10:01:40 +0000 (UTC)
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-523b066d7ceso5169492a12.2
+        for <cryptsetup@lists.linux.dev>; Tue, 22 Aug 2023 03:01:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692698448; x=1693303248;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:to:subject:from:user-agent:mime-version:date:message-id
+        d=gmail.com; s=20221208; t=1692698498; x=1693303298;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=NOBPHxFp+fvdhFVYzwLVkPFyDyQD7XJNiUfkUkln7co=;
-        b=BHM+NsYdxMpY1xR9b6/nU4xxYTiJLUIzbxwE5yrDgyYTFw+FbOsslAGFDVNg9dx0Xe
-         /x5okX5K4KJGWXGrrnZDMmJa/kRiuNWtKxO7XgYcew13tzR9xshMc6XTPduanJOfW20m
-         iHxGVibEsTTgpF3/CdXhiImcp22Xcx5toF/d28LF7bkgrZN2TZyBPb5PPXLyAOGu5Q5o
-         C5T5qcE5DzJ0TaAHhcl3kFvKLelN4FBUWCN83Otvkcltht7J85284Vt1DnT82ki/XHSi
-         ii+ifnbXsf/vf+EOdSI+z4YdIeAfSb4OBESGK7yiiiUmgbFmmv0to0H1cLy99zzFbGsO
-         Z6Hw==
+        bh=RypnTerWNTh0OUB/p5CmJ6lZY8p0y5BfIzT/zl6Uicw=;
+        b=EPZ2q7NAwzppUo/f8XgYsyyYPvb3UCvBsO7tPnX4/YteaxDieP/kYTF/gAv0uo/Nso
+         PwI4fjeaRHuc3Hj6H+/a2SOKHCtH8A5Z7UqPxtS05Jj/VddJtXexCNUSrX2Lr84qzypq
+         nj8/0+2Y/nCi+FNQJaABieyLcSd0O8y9jsFqT9cEFaTOGmisqzbhB2tf1q5d+V+SHo8+
+         5+EwCA4GXV6QD/wRFxZ3yvzLtKfeqPOwQTt8gASE6klNQK9goHioBw0mG3Z1+IdEvLE+
+         nnczxDkU/yzhTSSbirLE+xt/VeAKwZwKgVMahsOf6srTZVQiC0MfLxwwRBjEzBFTsELU
+         TvwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692698448; x=1693303248;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:to:subject:from:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1692698498; x=1693303298;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NOBPHxFp+fvdhFVYzwLVkPFyDyQD7XJNiUfkUkln7co=;
-        b=UlG4grcQx09Rq0s0v0pi1U48swExmWLeJbT5fTMgVxs8UhvYeDDeLbMh03nCQmRUcf
-         vslxDG53yfdzcMMgwcy2ZAGiCIoQzO8jBTDHccaxBI0ljggbX1QCC9YH+grKGt3K43qT
-         r4asW108bQTZscGIWeJ5C88WIGvhZueWPUGE44RZ4rdv9xQZnkSJ4lploGdSpa4wVhgF
-         j/dZQteY27n9NNgzCdY2sCjhqOot5uUDJVsYPadmmBw6bAZYuLjGk+evMaADp7+Ch0uZ
-         gK7sTYeoDgixamXrGwcvok0DJs4Tn/A/siAqPo74EUmm+R+gqNDXCtPr0eq5m79Ogvn2
-         vvuw==
-X-Gm-Message-State: AOJu0YxSpc+c7JI5jkS3QyZexPAaHfchvOHJAmH1LS3/l2SZIVsRau9Q
-	8MK/3Ttz9ElbCoXGGdKM+Ilw1IoUjEA=
-X-Google-Smtp-Source: AGHT+IFjkIPZFPVCdxfvqatTwh8MFdK7DP5Xy/0Gi0FxxYWIWlx8+qlht6rsHYvpEqQCFIpTxFJ5hQ==
-X-Received: by 2002:aa7:db47:0:b0:525:69c8:6f51 with SMTP id n7-20020aa7db47000000b0052569c86f51mr6187478edt.35.1692698447844;
-        Tue, 22 Aug 2023 03:00:47 -0700 (PDT)
+        bh=RypnTerWNTh0OUB/p5CmJ6lZY8p0y5BfIzT/zl6Uicw=;
+        b=kgn70jVKUpVojbaTVWL7xBZtkWcifnK+HEimWnEUV9gQBIBRXgEXD9pIjkbbiI6/84
+         1S+zpYSDQ7Wi2IE9f1b9KU2QJTyMtjzbPHzs3P7HYGQCMkKFu5iAWNZIWJccvYfPP7te
+         DPyNJydZ6nFg7aZAcPe1Q1IsIkjpFF//FwBKihs2H3xzuk0Fv0Ll8uRHvUFZ8M0k6vou
+         hDZMYjxCNv/wfvZLu1nkkOw/ZYAF3Tny7l6boBUIV7vwaQjaAorOWVnFQ/a9nujMS+uz
+         ea4NDdTzFkug9zvLu86Xf+t4A1NmXa95MtrG5ygGGwSFKuO8d4JE846+6l1I/aMdxPV9
+         RjQQ==
+X-Gm-Message-State: AOJu0YxpeVNfFZkAv+HWoicE5jMZfLBmG8qfkLciTuSYZpqwBaSwpkHz
+	fhFK95VsIjaodomhpuuwvHgrnE4o2QE=
+X-Google-Smtp-Source: AGHT+IEXdqZVUPHnkA4LFSM4/GmExcWLpLRD81C3baYOyl+0hNUPfn4qS1iVWDx7q+hhn3BgE4g5LA==
+X-Received: by 2002:a05:6402:339:b0:522:1e2f:99db with SMTP id q25-20020a056402033900b005221e2f99dbmr7534010edw.5.1692698498280;
+        Tue, 22 Aug 2023 03:01:38 -0700 (PDT)
 Received: from [147.251.42.107] (laomedon.fi.muni.cz. [147.251.42.107])
-        by smtp.gmail.com with ESMTPSA id b4-20020aa7d484000000b0052a1c0c859asm611202edr.59.2023.08.22.03.00.47
+        by smtp.gmail.com with ESMTPSA id b4-20020aa7d484000000b0052a1c0c859asm611202edr.59.2023.08.22.03.01.37
         for <cryptsetup@lists.linux.dev>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Aug 2023 03:00:47 -0700 (PDT)
-Message-ID: <4c815cd4-ad8c-4053-ae40-5e75010d6256@gmail.com>
-Date: Tue, 22 Aug 2023 12:00:46 +0200
+        Tue, 22 Aug 2023 03:01:37 -0700 (PDT)
+Message-ID: <42e1583e-2407-448b-8143-678480344a1a@gmail.com>
+Date: Tue, 22 Aug 2023 12:01:37 +0200
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
@@ -48,12 +48,13 @@ List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Milan Broz <gmazyland@gmail.com>
 Subject: Re: Unlock a Veracrypt/Truecrypt partition which uses a keyfile with
  a passphrase from /etc/crypttab
+Content-Language: en-US
 To: cryptsetup development <cryptsetup@lists.linux.dev>
 References: <CALmZR2OZ0sKRui1Eu1FxQzBCBhvHHXbsHipGq+jfPUcteROS9A@mail.gmail.com>
-Content-Language: en-US
+ <20230822093701.GA7436@tansi.org>
+From: Milan Broz <gmazyland@gmail.com>
 Autocrypt: addr=gmazyland@gmail.com; keydata=
  xsFNBE94p38BEADZRET8y1gVxlfDk44/XwBbFjC7eM6EanyCuivUPMmPwYDo9qRey0JdOGhW
  hAZeutGGxsKliozmeTL25Z6wWICu2oeY+ZfbgJQYHFeQ01NVwoYy57hhytZw/6IMLFRcIaWS
@@ -97,47 +98,16 @@ Autocrypt: addr=gmazyland@gmail.com; keydata=
  vlB+GpT+iFRLvhCBe5kAERREfRfmWJq1bHod/ulrp/VLGAaZlOBTgsCzufWF5SOLbZkmV2b5
  xy2F/AU3oQUZncCvFMTWpBC+gO/o3kZCyyGCaQdQe4jS/FUJqR1suVwNMzcOJOP/LMQwujE/
  Ch7XLM35VICo9qqhih4OvLHUAWzC5dNSipL+rSGHvWBdfXDhbezJIl6sp7/1rJfS8qPs
-In-Reply-To: <CALmZR2OZ0sKRui1Eu1FxQzBCBhvHHXbsHipGq+jfPUcteROS9A@mail.gmail.com>
+In-Reply-To: <20230822093701.GA7436@tansi.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 8/22/23 11:31, Kent Larsson wrote:
-> Hi! I have a Veracrypt (/Truecrypt) volume, which I can successfully
-> unlock manually by providing a key file and passphrase:
-> 
->      # cryptsetup --type tcrypt --key-file /.keyfile open /dev/nvme0n1p5 shared
->      Enter passphrase for /dev/nvme0n1p5:
-> 
-> Only root has `rw` on the key file, a binary file of 64 bytes.
-> 
->      # ls -l /.keyfile
->      -rw------- 1 root root 64 aug 21 08:09 /.keyfile
->      # file /.keyfile
->      /.keyfile: data
->      # du -b /.keyfile
->      64 /.keyfile
-> 
-> Is there a way to unlock a Veracrypt (/Truecrypt, `/dev/nvme0n1p5` in
-> my case) partition that uses a key file with a password in
-> `/etc/crypttab`?
+On 8/22/23 11:37, Arno Wagner wrote:
+> That sounds like a question for the Veracrypt maintainers.
+> /etc/crypttab is not even used by cryptestup, the topic
+> of this mailing list.
 
-Crypttab should support keyfile as standard option (3rd option), see
-https://www.freedesktop.org/software/systemd/man/crypttab.html
-
-There was even dependency mechanism in systemd that mounts the device
-with keyfile if not yet mounted.
-
-(Crypttab is processed by systemd not cryptsetup itself. Ignoring
-the old crypttab processing - but even there keyfile option was present.)
+Actually, this has nothing to do with Veracrypt code, systemd crypttab
+supports mounting of Veracrypt volumes through libcryptsetup.
 
 Milan
-
-> 
-> I have tried constructing a file with the structure
-> `{passphrase}{newline}{key file contents}` and manually using it to
-> unlock as above, but I still got the passphrase question. To create
-> that file, I did the following:
-> 
->      # echo 'mypassword' > /.keyfile_psw
->      # cat /.keyfile >> /.keyfile_psw
-> 
