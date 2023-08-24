@@ -1,26 +1,22 @@
-Received: from mail3.g24.pair.com (mail3.g24.pair.com [66.39.134.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8923CA76
-	for <cryptsetup@lists.linux.dev>; Thu, 24 Aug 2023 18:35:31 +0000 (UTC)
-Received: from mail3.g24.pair.com (localhost [127.0.0.1])
-	by mail3.g24.pair.com (Postfix) with ESMTP id 91DC9144B78
-	for <cryptsetup@lists.linux.dev>; Thu, 24 Aug 2023 14:35:30 -0400 (EDT)
-Received: from ra21 (ip-50-5-131-223.dynamic.fuse.net [50.5.131.223])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mail3.g24.pair.com (Postfix) with ESMTPSA id 80FE5144C82
-	for <cryptsetup@lists.linux.dev>; Thu, 24 Aug 2023 14:35:30 -0400 (EDT)
-Received: (nullmailer pid 1166598 invoked by uid 11111);
-	Thu, 24 Aug 2023 18:35:30 -0000
-Date: Thu, 24 Aug 2023 14:35:30 -0400
-From: Chris X Edwards <chris@xed.ch>
+Received: from arnowagner.info (mail.tansi.org [84.19.178.47])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 362B31549C
+	for <cryptsetup@lists.linux.dev>; Thu, 24 Aug 2023 19:16:18 +0000 (UTC)
+Received: from gatewagner.dyndns.org (81-6-44-245.init7.net [81.6.44.245])
+	by v1.tansi.org (Postfix) with ESMTPA id 01DF9140083
+	for <cryptsetup@lists.linux.dev>; Thu, 24 Aug 2023 21:15:36 +0200 (CEST)
+Received: by gatewagner.dyndns.org (Postfix, from userid 1000)
+	id 26DC417A1DA; Thu, 24 Aug 2023 21:16:16 +0200 (CEST)
+Date: Thu, 24 Aug 2023 21:16:16 +0200
+From: Arno Wagner <wagner@arnowagner.info>
 To: cryptsetup@lists.linux.dev
 Subject: Re: Can AddKey not use stdin for the new key?
-Message-ID: <ZOei8rjDNiJwnHbr@xed.ch>
+Message-ID: <20230824191615.GA904@tansi.org>
+Reply-To: Arno Wagner <arno@wagner.name>
 References: <ZOcoDVa4p+vJfAm9@xed.ch>
- <f28150bc-89d0-4998-95b4-a4509d3a0624@home.arpa>
+ <20230824105155.GA24581@tansi.org>
+ <ZOdx+Z5dq9wjD54E@xed.ch>
+ <20230824152350.GA29323@tansi.org>
+ <ZOd9KJ6uLqlZFoLi@xed.ch>
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
@@ -29,62 +25,108 @@ List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f28150bc-89d0-4998-95b4-a4509d3a0624@home.arpa>
-X-Scanned-By: mailmunge 3.11 on 66.39.134.11
+In-Reply-To: <ZOd9KJ6uLqlZFoLi@xed.ch>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-Hi,
-These are two very interesting suggestions! I think you're right that
-decrypting a volume that contains the secrets is a pretty rational
-approach. The Bash process redirect looks fun but I couldn't get it to
-work and it would be pretty extraordinary if the options parsing
-handled that well.
+Ah, luksAddKey has two key arguments and you can only read
+one from stdin. Somwetimes the most obvious mistakes are
+hard to spot ;-)
 
-Another approach I thought might work is to set up the second slot
-with luksAddKey and just put in a nonce passphrase normally; then
-immediately try a luksChangeKey to swap it for a file. 
+You need: 
+1. The existing passprase from --key-file or interactively
+2. The new passprase from positional argument or interactively
 
-The cryptsetup-luksChangeKey 8 man page (under -d option) says:
+That is why you can delete. Deletion has only the passphrase 
+as input.
 
-  If you want to set a new passphrase via key file, you have to use a
-  positional argument or parameter --new-keyfile.
+Hence you need one passprase from file, no matter
+what, you can only have one from stdin. Workarounds, I 
+can think of
 
-And that would be exactly what would be required. Unfortunately, I
-think this might be a man page error since that option produces:
+1. Use a ramdisk to temporarily store the key and then wipe it
+2. Use an encrypted volume to hold the existing pasprase(s) as
+   described by Michael. Can be luks in a file via losetup.
+3. Use libcryptsetup and write your own code.
 
-    cryptsetup: Option --new-keyfile is not allowed with luksChangeKey action
+Regards,
+Arno
 
-It definitely seems like all the options are kind of in place to do
-this (especially `--new-keyfile=-` in luksAddKey) but they're just not
-quite doing what I'd hope. Not a big deal. Just thought I'd run it by
-this list and see if anyone could spot an obvious error in my
-thinking. 
 
-Thanks for all the suggestions!
-Cheers,
-Chris
-
-On 2023-08-24 17:27 +0000, Michael Kj??rling wrote:
-> On 24 Aug 2023 05:51 -0400, from chris@xed.ch (Chris X Edwards):
-> > I create an encrypted secret that I only have to unlock once:
+On Thu, Aug 24, 2023 at 17:54:16 CEST, Chris X Edwards wrote:
+> That is a sensible addition. I would have assumed that rather than
+> have some possibly randomly occurring newline (or whatever the problem
+> is) the straight echo would at least put the newline in a safe
+> (ignorable) place in my previous example. However, even using `-n` I
+> get the same situation.
+> 
+>     $ echo -n "simple" > simplekey
+>     $ cat simplekey |  cryptsetup luksAddKey /dev/sdb --new-keyfile - --new-key-slot 1
+>     No key available with this passphrase.
+> 
+> That's definitely a smart thing to try to rule out newline mischief
+> but the error message makes me think that it's just looking for the
+> authorizing passphrase using the new key I'm trying to add (which is
+> different behavior than when I actually specify a file). That may be
+> the case, but I'm not sure.
+> 
+> Thanks,
+> Chris
+> 
+> 
+> On 2023-08-24 17:23 +0200, Arno Wagner wrote:
+> > Make that "echo -n" and try again ;-)
 > > 
-> If you are willing to unlock once, you can also use a small LUKS
-> container to hold a file system holding passphrase or key files for
-> other LUKS containers. Or you can derive further keys from contents or
-> metadata of another LUKS container; I've seen suggestions for how to
-> do this scattered about the Web.
-> 
-> 
-> > Now I'd like to add that to a LUKS keyslot so that the following
-> > works.
+> > Arno
 > > 
-> >     gpg --decrypt drivekey.gpg | cryptsetup luksOpen --key-file=- /dev/sdb backup
+> > 
+> > On Thu, Aug 24, 2023 at 17:06:33 CEST, Chris X Edwards wrote:
+> > > Hi,
+> > > Thanks for the reply. I did see this in the man page. Am I right to
+> > > assume this suggestion doesn't relate to the "how much time" aspect of
+> > > this passage? This leaves the much more treacherous formatting details
+> > > between the input modes. Certainly a cause for concern. The reason I
+> > > concluded this was an unlikely cause is that the Remove works as I
+> > > would imagine (with a piped key) and the Add does not. 
+> > > 
+> > > Another check is to go with a very simple passphrase key that can not
+> > > possibly have newline entanglements. (That's the goal, correct me if I'm
+> > > wrong.) We can start with a very simple key file.
+> > > 
+> > >     echo "simple" > simplekey
+> > > 
+> > > Let's try just the file.
+> > > 
+> > >     cryptsetup luksAddKey /dev/sdb --new-keyfile simplekey --new-key-slot 1
+> > >     Enter any existing passphrase: 
+> > > 
+> > > Works fine. (Passphrase to add is for existing slot 0 as desired.) Now
+> > > removing it.
+> > > 
+> > >     cat simplekey | cryptsetup luksRemoveKey /dev/sdb -
+> > > 
+> > > Works fine. Now try adding again but with piping instead of the file.
+> > > 
+> > >     cat simplekey | cryptsetup luksAddKey /dev/sdb --new-keyfile - --new-key-slot 1
+> > >     No key available with this passphrase.
+> > > 
+> > > And fail.
+> > > 
+> > > This may be a basic limitation of what is possible, but I'm just
+> > > trying to establish that fact clearly so I can give up on my dream of
+> > > using cryptsetup in the elegant way I imagine it can be used. :-)
+> > > 
+> > > Thanks,
+> > > Chris
 > 
-> Assuming bash, you might want to try:
-> 
->     cryptsetup luksOpen --key-file=<(gpg --decrypt drivekey.gpg) /dev/sdb backup
-> 
-> and corresponding variations of your other commands as well.
+> -- 
+> ++++++++++[>++++++++++++<-]>-...<++++++[>>+++++++<<-]>>++++.<+.<++++[>
+> Chris X Edwards-----<-]>+.- Have a nice day. >.<-.+++++><chris@xed.ch>
 
 -- 
-++++++++++[>++++++++++++<-]>-...<++++++[>>+++++++<<-]>>++++.<+.<++++[>
-Chris X Edwards-----<-]>+.- Have a nice day. >.<-.+++++><chris@xed.ch>
+Arno Wagner,     Dr. sc. techn., Dipl. Inform.,    Email: arno@wagner.name
+GnuPG: ID: CB5D9718  FP: 12D6 C03B 1B30 33BB 13CF  B774 E35C 5FA1 CB5D 9718
+----
+A good decision is based on knowledge and not on numbers. -- Plato
+
+If it's in the news, don't worry about it.  The very definition of 
+"news" is "something that hardly ever happens." -- Bruce Schneier
