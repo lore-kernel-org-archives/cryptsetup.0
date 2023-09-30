@@ -1,45 +1,46 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C02BE55
-	for <cryptsetup@lists.linux.dev>; Mon, 11 Sep 2023 10:12:59 +0000 (UTC)
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-99bdcade7fbso531829666b.1
-        for <cryptsetup@lists.linux.dev>; Mon, 11 Sep 2023 03:12:59 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5CDC156D8
+	for <cryptsetup@lists.linux.dev>; Sat, 30 Sep 2023 16:45:52 +0000 (UTC)
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4053c6f0db8so146564715e9.3
+        for <cryptsetup@lists.linux.dev>; Sat, 30 Sep 2023 09:45:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694427177; x=1695031977; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DyMYYjPqJALRi2xuDpSEsrBzGZV9zIpcDPLAUpoAw2E=;
-        b=GT1TbKwkXGkL/lSaYFUwciwX3uLZwIflSxHMUXy96z+uz+4sl/ZJoqOSziaRlTQRI2
-         nnzh16L9vE5zEIf09aNQC5xhgQVCwqQ4xDu7NE6I4z+J244lgFF6NF3hyLVQQr1rzkNK
-         IXybK8XhFNXkjKEyq9Mb6nzYOCLTfkQ4b6V2/u868V2Ty0pB+d+SDJ6MJiFte/4qJUqF
-         LxdNLGVJd4+bn5N+u5fp8Aojni2OPCuukXwddfyOb3mGwhQN5OnHKMCug28IvfAVfu7s
-         5ATu9oGtHAxdwlom/jTOCl6DZa8e8eCxKj6WwwdYo9W6pRfSpD/crcwvm8Bowpn6kkA7
-         6oCw==
+        d=gmail.com; s=20230601; t=1696092351; x=1696697151; darn=lists.linux.dev;
+        h=content-transfer-encoding:autocrypt:subject:from:to
+         :content-language:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2NUu5tjodlGRRsr/2BaNoC9WVTeXtW9ye4vKNiN4U1g=;
+        b=H1SaTFPJukl3Q2m0Fvz4+y6tF+YqojgQVaEiWafoU0Z3vDGKl9t1Oqx7SzRZ8EYWk3
+         2MR8nqQjB3mkioElbdk67BcucLSobEE1UN6trYfwX58jAKThdNXZSst9NCPzc+iFbD8U
+         CGVnH0URQScj5iYENn1EM2hQpITQgX32qLqkRBtXkrUU6s2WYjUUdlGSL6Sj9IDzlbgs
+         h0tBYkmMe6Utlj4ZnlYH7rGQdtzyI9T1Z6287M7xeUl3Udxko5Lodi+lQGumhxaOVB1j
+         nF8ygjLvBfMhAAJhM8DLYJAGn6yBJyraLysM9SfHbFcOiX5/xJow7TfN9uYLoatGHjpG
+         kvQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694427177; x=1695031977;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1696092351; x=1696697151;
+        h=content-transfer-encoding:autocrypt:subject:from:to
+         :content-language:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DyMYYjPqJALRi2xuDpSEsrBzGZV9zIpcDPLAUpoAw2E=;
-        b=LRE5e9QVaWWYibKTEVV5iogSuqNBIOL+KXJJE7mjwZrMA/7zFnfBjaaH0T5wOL4rUf
-         HsW1LQ9Q5VTZKmX/MhYCEJgK/N1QGWyNVOsD2f/lfWf1UZeiCwJwOJaxi2beeUWM9xUf
-         IfaCQe1F5S6nIr95TEpijdLfWjxGcfd4vTg6a/TBjHv+aB+02LPUd4X9u7RUCwZ1rnpr
-         NwF+TpMFbw96KwDmiufVy05oBDeNRlhI1VylewnwrCIe/ZBbrxQuK4fNZ1UYiD9xZrXG
-         3i0HHLAbp9hFoygdeOPDo9Dd5+X0XnkmHLF1+WCDMbcYIywS2Op2DdEPUmL7njnaeg1G
-         kgwA==
-X-Gm-Message-State: AOJu0YxvAEl4c/UPy2K17RWHeepeBoMwiqHkGG0dfQQTReL+H6nhDkWy
-	wxq6uCpW6Hq6baETvFTO+79XIp072bg=
-X-Google-Smtp-Source: AGHT+IG+LWYKiPd6MWxQaDgI1LXgaHPL7SXlG0adoQ3FnDmoJqf4Izyh8U/HA4ii4ICgczMKFmzTFw==
-X-Received: by 2002:a17:906:315a:b0:9a2:1b05:24c6 with SMTP id e26-20020a170906315a00b009a21b0524c6mr7300528eje.22.1694427177340;
-        Mon, 11 Sep 2023 03:12:57 -0700 (PDT)
-Received: from [147.251.42.107] (laomedon.fi.muni.cz. [147.251.42.107])
-        by smtp.gmail.com with ESMTPSA id kt8-20020a170906aac800b0099df2ddfc37sm5070120ejb.165.2023.09.11.03.12.56
+        bh=2NUu5tjodlGRRsr/2BaNoC9WVTeXtW9ye4vKNiN4U1g=;
+        b=dszssGS2cH95Myb3M36f/zgnLnix9Yt2uGx0MjAS92AX3v7Q27VbQVZyD3iOutVscc
+         AcH6HIm8V2kxog6pGS2/h1zdORJGkqodOXtjnnFjZEM1+TOn3NVDRhO+ykugE+9DFFrm
+         DSe2FPh8hAiG2L7Iyq1y9z5CxHUi2YB58KGtEZsvGjJRVEbQQthBbqI0dm8W30rg1fxn
+         mcfVx3jnwdWxJN4D0KOWAbTspjID410z2I8wtanH5hiiYNY7oiOGNUhKkU8tkG7Nr/HY
+         VApqEXesNDPM8h2XPbwqXeSe+Ypae1kQiewADxV5nM2NTUGJPFLXSePUzMN9uekrumKT
+         wz/A==
+X-Gm-Message-State: AOJu0Ywv/OB9iT2oi3i5jhHKXuS6cFQO0ZUOYdHsRdum9lO3oicJUtd+
+	1GzRhY0kAN7DPNZsr3pwm2NnROZ7XXw=
+X-Google-Smtp-Source: AGHT+IFa1DNCFvy5FSPgOCazs2DhK5AcMCJSSmtCwzuxlOGRrCV/hDBxYSpdQFpkEij2jWlNyVttLw==
+X-Received: by 2002:a05:600c:ac1:b0:402:f501:447c with SMTP id c1-20020a05600c0ac100b00402f501447cmr6586420wmr.0.1696092350564;
+        Sat, 30 Sep 2023 09:45:50 -0700 (PDT)
+Received: from [192.168.8.101] (89-24-32-180.nat.epc.tmcz.cz. [89.24.32.180])
+        by smtp.gmail.com with ESMTPSA id 11-20020a05600c020b00b003fe2b081661sm3701238wmi.30.2023.09.30.09.45.49
+        for <cryptsetup@lists.linux.dev>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Sep 2023 03:12:56 -0700 (PDT)
-Message-ID: <cab2b838-8482-4cbf-b441-f63999b24221@gmail.com>
-Date: Mon, 11 Sep 2023 12:12:55 +0200
+        Sat, 30 Sep 2023 09:45:50 -0700 (PDT)
+Message-ID: <6ebb0f69-892f-41bf-bf72-e868734d8c85@gmail.com>
+Date: Sat, 30 Sep 2023 18:45:49 +0200
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
@@ -47,14 +48,10 @@ List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Is it possible to set the amount of CRC32C hashes per a data
- sector in integritysetup?
 Content-Language: en-US
-To: Arno Wagner <arno@wagner.name>, cryptsetup@lists.linux.dev
-References: <4685725c-4b76-47c2-86b8-377b4e1fc7fd@gmail.com>
- <207ef66a-7797-480e-8ffd-75fd8c5c1d97@home.arpa>
- <20230910220513.GA30714@tansi.org>
+To: cryptsetup development <cryptsetup@lists.linux.dev>
 From: Milan Broz <gmazyland@gmail.com>
+Subject: Cryptsetup 2.7.x plain type default cipher and hash will change
 Autocrypt: addr=gmazyland@gmail.com; keydata=
  xsFNBE94p38BEADZRET8y1gVxlfDk44/XwBbFjC7eM6EanyCuivUPMmPwYDo9qRey0JdOGhW
  hAZeutGGxsKliozmeTL25Z6wWICu2oeY+ZfbgJQYHFeQ01NVwoYy57hhytZw/6IMLFRcIaWS
@@ -98,55 +95,53 @@ Autocrypt: addr=gmazyland@gmail.com; keydata=
  vlB+GpT+iFRLvhCBe5kAERREfRfmWJq1bHod/ulrp/VLGAaZlOBTgsCzufWF5SOLbZkmV2b5
  xy2F/AU3oQUZncCvFMTWpBC+gO/o3kZCyyGCaQdQe4jS/FUJqR1suVwNMzcOJOP/LMQwujE/
  Ch7XLM35VICo9qqhih4OvLHUAWzC5dNSipL+rSGHvWBdfXDhbezJIl6sp7/1rJfS8qPs
-In-Reply-To: <20230910220513.GA30714@tansi.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 9/11/23 00:05, Arno Wagner wrote:
-> On Sun, Sep 10, 2023 at 18:53:04 CEST, Michael Kjörling wrote:
->> On 10 Sep 2023 18:12 +0300, from bodqhrohro@gmail.com (Горбешко Богдан):
->>> AFAIU, the primary goal of dm-integrity is checking if the data are not
->>> corrupted and throwing read errors otherwise. Though it still supports
->>> checksums besides of hashes. Can they be used for recovering the data
->>> on-the-fly?
->>
->> _My understanding_ (which may be wrong) is that this is not what
->> dm-integrity is intended for; nor does it look like it supports it.
->   
-> It is not. What this needs is things like RAID 1/5/6 (which can
-> be done in files) and some specialized tools.
-> 
-> Incidentally, "checksums" do never support recovery from
-> errors. What you need for that is error correcting codes.
+Hi,
 
-Yes, this fully applies to dm-integrity (read-write integrity protected device).
+As RIPEMD160 hash will be phased out soon, we must change
+default hashing algorithm for plain type in cryptsetup.
 
+(There is nothing related to LUKS; plain type is the old simple
+wrapper around dm-crypt mapping.)
 
-That said, dm-verity (that is read-only target and uses Merkle tree
-protection for the whole device) can be combined with forward
-error correction codes (FEC, here Reed-Salomon) and can fix
-a lot of corrupted data (and veritysetup fully supports FEC options).
+While at it, we also change the default cipher from AES-CBC with ESSIV
+to AES-XTS with plain64 initial vector (the same default as in LUKS,
+just with 256-bit key size, thus AES128, as XTS uses two keys).
 
-(If used with smartphones, it apparently extends lifetime by
-continuously repairing failing flash storage that internal correction
-no longer handles - but I have never seen real data that it actually works
-for real phones in the wild...
-But I think that was motivation for Google to implement FEC for dm-verity.).
+As this is a backward incompatible change, we will also add a warning
+if an open command is used without explicit --cipher, --key-size,
+and --hash options. (These should be already mandatory for /etc/crypttab
+plain type use).
 
+You can still use whatever mode and hash you want, but it must be explicitly
+specified on the command line (and must be supported by used cryptographic
+library or kernel).
 
-I had an idea how to combine FEC with dm-integrity, but it never
-happened and probably never happen, as nobody will pay the time
-for development. (And obviously it will be very slow.)
+Plain mode with passphrase is actually not a good practice as it directly
+derives key from passphrase and no standard password-based key derivation
+algorithm is used. You should prefer LUKS anyway :-)
 
-> Transparently, RAID is probably the easiest option in Linux
-> and the one the works on sector-level. Given that modern drives
-> (HDD and SSDs) already do extensive error-correction, you probably
-> need to deal with whole-sector loss (or worse) to get any
-> additional effect.
+Also note that if keyfile is specified for plain mode, there is no password
+hashing at all (keyfile is used directly as the encryption key).
 
-Reed-Solomon (and some new algorithms) are very good in repairing such
-situations. (It is all about erasure coding.)
+For more info, please read issue 758
+https://gitlab.com/cryptsetup/cryptsetup/-/issues/758
 
-But I think many people just use RAID with dm-integrity now (despite it is slow).
+The draft merge request for planned change is here
+https://gitlab.com/cryptsetup/cryptsetup/-/merge_requests/543
+
+For downstream maintainers:
+
+To update stable distros, you can still configure old defaults with configure options
+  --with-plain-hash=ripemd160 --with-plain-cipher=aes --with-plain-mode=cbc-essiv:sha256
+
+If you see problems with this change, reply to this mail or comment on the issue
+mentioned above. We postponed this change already for several years, though.
 
 Milan
+
+p.s.
+Cryptsetup 2.7.0 release candidate/testing is planned in the next few weeks.
+
