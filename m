@@ -1,49 +1,50 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0372DF87
-	for <cryptsetup@lists.linux.dev>; Thu, 26 Oct 2023 13:30:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2293273FA
+	for <cryptsetup@lists.linux.dev>; Wed, 15 Nov 2023 14:47:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lukav.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lukav.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lqaRA757"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-9936b3d0286so146471966b.0
-        for <cryptsetup@lists.linux.dev>; Thu, 26 Oct 2023 06:30:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=lukav.com header.i=@lukav.com header.b="Juh9h7rA"
+Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-778a92c06d6so417696285a.2
+        for <cryptsetup@lists.linux.dev>; Wed, 15 Nov 2023 06:47:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698327013; x=1698931813; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rX/Ffa9tu9NKm1f+yXdOR44UGZsGLgTAhR3hXeJaUO4=;
-        b=lqaRA757V29mfaMY0i2a7M3GBicr89rfC/WyHI6R5Fc7x+r5xx+2KajANeCEA+Az9H
-         S2mKeASADmyA6pSp6dA3kfpqUWdalUi7cUJgVCuv3TJMsbTcFMOC5UfYSJWz5+LD1d5J
-         hv1jWGrRVnHKbuznO09a4KDjoHD5mFS2y4gXzY51HCZ8dzddHZraZfWNqs4+lQ2JF9EN
-         ZLYN+/gkY4AFFkx3QaLtwSQ/AHF1oJTn3/1XZSS0t4wonA1LRegKPVszt3XUKANVOL6f
-         +vE0BRQY+6GUR9gecklRuraDY/vscOzoqwec/C0WSeYjux6ds86rSQnzuXN9OqIZ1TFt
-         O5yQ==
+        d=lukav.com; s=google2; t=1700059658; x=1700664458; darn=lists.linux.dev;
+        h=content-transfer-encoding:disposition-notification-to:subject:from
+         :content-language:to:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=zh/CAthE/0R/jLQBBgz4NyLEEnB7Lz56hR9htcO+dec=;
+        b=Juh9h7rAOK1ED8oIpiSo/71X81wgWw9I3fsj5tZa3F99sMMCNCdIvZD2ydxen6lHNC
+         iMclRgLGTwV7cYrx+oUW0iIQy4uL+q5qFsPYzvfCQnNYEp7GqTO6jocQYC6qu0yUwtca
+         HJzPlKKoRQdoot5ji/gIW1GHfsoD2m3jNr084L3f0dyI1M0Zhqtj6nVoWWbyBDLewrmN
+         jTitaddAJkQcd+kLZDP1ztAIMlMuHvum/k+pX0PZoZmUUaiCE2Nsj4LWiZkMURCmBPIq
+         cqJ5tFTOosU/dbSn6MgxQrRKkEemZXNxsNewsuUvxoP4q7Snmqx+kAeRJRr5zwQJAwjk
+         mVKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698327013; x=1698931813;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1700059658; x=1700664458;
+        h=content-transfer-encoding:disposition-notification-to:subject:from
+         :content-language:to:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rX/Ffa9tu9NKm1f+yXdOR44UGZsGLgTAhR3hXeJaUO4=;
-        b=W31AmPfhqOpt5kLdd3LmtJ7mgnbDu7zU+uNvD9zHNere3BzS3wUtOO056fnh4DOBYw
-         JaX6sFoOnkDKJkYEN8ALLTwS8HXbTnvCuG9EGz1S59gnvCW9W9kVa+b3+s6efjNhWhW2
-         +QWwh0sAwHlakZAyK3vjlm8VgJUSJdNWN7wlqCKmw/mnYpyz3rZlT7jcTHmKmhHzPwzu
-         9sdKG1X4HXzybfj0ieCyPn5LUF6CsIzPav9PVvmmRi6H0zz1Ys63uSsPL2d9gbLb/RFz
-         ySr/oyn1Id1a2oiKBF9y9VlHuFx1Z1wDBB3NdkXGy887aIDwzBKhv0Ms5kFYR4O+t1/S
-         dTFg==
-X-Gm-Message-State: AOJu0YzbTA/gEhnf7P5M/4QJ9cU2DK++ekLKpTIKnVY6iqE+e9sHaGac
-	gnbrWLyEfwu0BgNMGW08wCI=
-X-Google-Smtp-Source: AGHT+IHMZ2OMfs+xV+5LSBXVHOXdNLyaScKQNRUN8EYWFE3rZVl6WdaHUV9IhZTT0RsEdl95vfC+lA==
-X-Received: by 2002:a17:907:31c1:b0:9be:21dc:8a9a with SMTP id xf1-20020a17090731c100b009be21dc8a9amr14364289ejb.39.1698327012588;
-        Thu, 26 Oct 2023 06:30:12 -0700 (PDT)
-Received: from [147.251.42.107] (laomedon.fi.muni.cz. [147.251.42.107])
-        by smtp.gmail.com with ESMTPSA id jg36-20020a170907972400b0099d798a6bb5sm11723134ejc.67.2023.10.26.06.30.11
+        bh=zh/CAthE/0R/jLQBBgz4NyLEEnB7Lz56hR9htcO+dec=;
+        b=X2avcy48rodCHR1AJGsskHAQzYWsIYKAIopq2CgIawpqYH8diOCZ+2bNRk0zS7TgRb
+         X/+vfmqUhQZTnErwdbQLLp4oYOCWHNBFJwLjq6lx+tvvRWLR9nLN4oRGFopJZqc506NV
+         ZZ5YVRt1YT//hXPMoo9cSzptMEQ2KmBoj1H0ilV93QaAa4p64CLLIAZeL9Jc+D8lVp1x
+         /af+ir3Ba7uxG569/51B/FykWzHzHJItRUqDNezzGsdq+wxYh0fEJWyvkvCKwrqbunYq
+         HoqcVsuLyCCBLvEsMl5tfazia+7avrWR08IyBXc4Q7mlveeB4VFT8NhYspJbR2hwxUs7
+         YYCQ==
+X-Gm-Message-State: AOJu0YwOfak3sA6pYNtw6xf6OlQMiW5J25/niiHtTP0T+tgWAOsebmLw
+	mV07MNulNA5gpMtXOu1EzF02Knn9Myhll8q1cc4QGA==
+X-Google-Smtp-Source: AGHT+IHLJTZAOlDWBnu/Ujue2umaxB5DatxcZfPFifRsiWvYkIQkhvxTufBztJ8dd960IaQVe3POTQ==
+X-Received: by 2002:a05:620a:1350:b0:774:19cf:f3e3 with SMTP id c16-20020a05620a135000b0077419cff3e3mr5008828qkl.76.1700059658023;
+        Wed, 15 Nov 2023 06:47:38 -0800 (PST)
+Received: from ?IPV6:2607:fea8:1bc3:fe00::a7d6? ([2607:fea8:1bc3:fe00::a7d6])
+        by smtp.googlemail.com with ESMTPSA id y6-20020a37e306000000b00770f3e5618esm3532228qki.101.2023.11.15.06.47.37
+        for <cryptsetup@lists.linux.dev>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Oct 2023 06:30:12 -0700 (PDT)
-Message-ID: <75d4eee5-1770-4518-9a3e-b8e07826ccf6@gmail.com>
-Date: Thu, 26 Oct 2023 15:30:12 +0200
+        Wed, 15 Nov 2023 06:47:37 -0800 (PST)
+Message-ID: <72f6c041-14d4-473e-bcba-7bf3b9fd47aa@lukav.com>
+Date: Wed, 15 Nov 2023 09:47:36 -0500
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
@@ -51,67 +52,30 @@ List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: About luks encryption "Device wipe error Offset 32768"
-Content-Language: en-US
-To: Pugazharasan S <sripugazharasan19@gmail.com>, cryptsetup@lists.linux.dev
-References: <CANRGmHkVhpKaYjQTZUsqcUHXn3Fb_HsHUsV4hu=0LMRGnTwbhg@mail.gmail.com>
-From: Milan Broz <gmazyland@gmail.com>
-Autocrypt: addr=gmazyland@gmail.com; keydata=
- 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
-In-Reply-To: <CANRGmHkVhpKaYjQTZUsqcUHXn3Fb_HsHUsV4hu=0LMRGnTwbhg@mail.gmail.com>
+To: cryptsetup@lists.linux.dev
+Content-Language: en-CA
+From: Anton Avramov <lukav@lukav.com>
+Subject: Problem after converting to LUKS2
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
+Hi,
 
-On 10/26/23 14:41, Pugazharasan S wrote:
-> Respect Dev,
-> 
-> Recently I tried to install qubes Os on 64gb SanDisk pendrive while installing unfortunately device stopped working after that when I open my pendrive it doesn't show up in PC while check that in Linux it encrypted and shows read-only i tried every solutions from internet pls guide me through this issue, I will attach the errors and process images
+I have 3 partitions encrypted years ago with LUKS1.
+I've decided to migrate them to LUKS2 and the first 2 there was no 
+problem, but the last I can open it anymore after the conversion.
 
-Any error messages in kernel log (dmesg)? This can happen if the device has hw errors.
+I've been using key-files for all of them, so there is no wrong password 
+input issue.
 
-Milan
-p.s.
-please better do not send images to list, if you do not have text log, then put images somewhere and reference them by links.
+The bad think is I don't have a header backup before the conversion (Yes 
+I know! Lessen learned!)
+
+I've tried different things like converting back to luks1 and header 
+repair but to no avail.
+
+As a last resort I'm writing here for help. Is there anything I can try 
+to at least read the partition?
+
+Thanks in advance.
 
