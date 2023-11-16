@@ -1,50 +1,49 @@
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 778103EA65
-	for <cryptsetup@lists.linux.dev>; Wed, 15 Nov 2023 15:34:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lukav.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lukav.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B209FBF5
+	for <cryptsetup@lists.linux.dev>; Thu, 16 Nov 2023 07:56:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lukav.com header.i=@lukav.com header.b="TNBC4hLR"
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-41cc75c55f0so8457481cf.1
-        for <cryptsetup@lists.linux.dev>; Wed, 15 Nov 2023 07:34:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NDIdqN2V"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-9d0b4dfd60dso64117066b.1
+        for <cryptsetup@lists.linux.dev>; Wed, 15 Nov 2023 23:56:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=lukav.com; s=google2; t=1700062455; x=1700667255; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:disposition-notification-to
-         :from:references:to:content-language:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=na38roiAh546d5xmiOLVtL4nzbgVCPKP6WEsN2aRRnY=;
-        b=TNBC4hLRRyi2gyLKlsLZ5cHbHoD2O6zPKldf3Iepnq30Z87nizHOstossBX7WQcKzH
-         Zo1q+NvPw+eGC81CCtlNORVisQ/xFow/VNGTQfMPHPFLvt1Zw7VEEkMCk7ViBpWF961p
-         UUCeopQv8Q5T8C0TVRZP7GvhWicdP9vYQHHH57/gmZr0oWaFQYDkMYz3t+4n8c5a8xCj
-         94LZbKs1wsxs4fZrcmWRJr+bVtk78+AriU8ZydxxGCAObjFwdTKn6guRTU/7S9z1OUqb
-         cNixJ4EcMQGwkXSgJRDY38mNICEDeRvzb7xp2WyM9YCJAOEA1g172cEbU6kPLOb6gG+W
-         BM+A==
+        d=gmail.com; s=20230601; t=1700121367; x=1700726167; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wRyALaa9hSMEvebZbRpF9DzoHbJgWpIKNCgPvnfCZ0s=;
+        b=NDIdqN2ViTY6lrhJ6fjiIf8d7SsqScMAu5QFI6moni88VI7WZaNT8XPW4USf8zM7F5
+         cTqYt0C2E0/kAQa9jWVKK3otI1Cke3hVu4cm0w9yyt57c/B6csDpuEcc3x+HSOQSrgMK
+         3K3w+z2GrRXBcAw6FMdGtTWlnQp/tCuCMbQ+7tEx8oSD9k9CFtE5+w2lLzSZeZmkAd8V
+         LD8dBmvaoeBUJ5D5jVS7MbakyX97qrR2u+G4U3BqAA5zDiDPXbgcRqUXF2xxEvg+yE2+
+         d7p7jPMTfRDKPunQ6hGxcjseXAPoPJQoUlV4LV9JmDizINyc9jy5jhyO8HOZomTYqkUZ
+         QVUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700062455; x=1700667255;
-        h=content-transfer-encoding:in-reply-to:disposition-notification-to
-         :from:references:to:content-language:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=na38roiAh546d5xmiOLVtL4nzbgVCPKP6WEsN2aRRnY=;
-        b=kDKTU2PorjHkBY9bNefPsbrf4DyvxISo1r/a73BrzwMFFmKBijIchapFpEeNaEylsj
-         6tQVgwFEaPHYmzi3TU/kDBFoAqYj7T/aI98wc6xLx2ZrhY89GDgzjU9UPPotxGLu7Qmj
-         i5p3nSealcTB8YfUjNjS+afOom/GfreY2qTPRcAPDiXliexLqEMRDaabbvdzNCXvks5d
-         Dph2vVhwQ0p6p4W3kYZNWg7iAGRdXW8+n0deZAycLq2e4Bvsvc5yj4Vl0RjIcnhnIcWE
-         CJB8nIZSNK+BekvYkODW6AI3BwAdwduMWuA3FhW8iMk+4hqe4muVV5AqKRnkRJyeZ3ei
-         +RuA==
-X-Gm-Message-State: AOJu0YzOgd7XBX8DOqR90ScT3X4kc39sJ32F6atnFUg2KGk1C7TtqpEh
-	wBt4tB/jSnlKyLTG42aN07mtlSYBAEzjWATtSmHafg==
-X-Google-Smtp-Source: AGHT+IFaQN+LU8OzUXtgtLvM3EU3ZANQjk49fmGLkdyQayL9iI88PrVMj5/xhxAbdijS/tpe/59Ugg==
-X-Received: by 2002:a05:622a:190b:b0:408:392e:2aa5 with SMTP id w11-20020a05622a190b00b00408392e2aa5mr10061983qtc.20.1700062455097;
-        Wed, 15 Nov 2023 07:34:15 -0800 (PST)
-Received: from ?IPV6:2607:fea8:1bc3:fe00::a7d6? ([2607:fea8:1bc3:fe00::a7d6])
-        by smtp.googlemail.com with ESMTPSA id h17-20020ac85491000000b00419ab6ffedasm3633186qtq.29.2023.11.15.07.34.14
+        d=1e100.net; s=20230601; t=1700121367; x=1700726167;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wRyALaa9hSMEvebZbRpF9DzoHbJgWpIKNCgPvnfCZ0s=;
+        b=bwhw8JWog0SkjO8TrjI9t3qb03sf1mRSB8uZUVqR+fkFbAKL3DFSqegfFTR+DBVgm2
+         CmGIWFiSPx5hCc1/+bXx8CBxj4BEQ+7C459KMYIjuuQfGp1PQu2aCq6nsMstePfoglTW
+         inhwItigzlyTV+7qFHs3YhJvqlS09BQXfUt/jaBR/89mrN0YodODS+sUVnFqCE0QOugv
+         tkMFTlAmrbbW7DsdeMUnCEXRZbMC8cE0SSxzvvDJcjvh8SdDgMoauqIAC+SGPC42+fc5
+         dbT+JjWblLWoeNjgQh3UlXhllU5LUNTMZRUWDE2xlVn0qgtr/skzzUklA5qfAQwo3+bu
+         547w==
+X-Gm-Message-State: AOJu0YyUfr0U6C4uh+MmKojK4gTPEa+YE39Vdk8fIczdP+d3cQXPf7n2
+	3+CuM1xySbUgBExwS82wAK4sLQesZhg=
+X-Google-Smtp-Source: AGHT+IErwHw9GvYEaGtYaWHUkHWgUhbXq5NQ3GTToS4Iod6dOvNPnNRIXp72UOJo7uo7hovmlQqBOg==
+X-Received: by 2002:a17:906:6a1f:b0:9b2:df16:851d with SMTP id qw31-20020a1709066a1f00b009b2df16851dmr14997552ejc.57.1700121367405;
+        Wed, 15 Nov 2023 23:56:07 -0800 (PST)
+Received: from [192.168.2.30] (85-70-151-113.rcd.o2.cz. [85.70.151.113])
+        by smtp.gmail.com with ESMTPSA id lt7-20020a170906fa8700b009a1a5a7ebacsm7931392ejb.201.2023.11.15.23.56.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Nov 2023 07:34:14 -0800 (PST)
-Message-ID: <445d7af3-40b6-453d-b1c1-718f222407e6@lukav.com>
-Date: Wed, 15 Nov 2023 10:34:13 -0500
+        Wed, 15 Nov 2023 23:56:07 -0800 (PST)
+Message-ID: <a8d9b808-9dd3-4078-8636-a443f623e9e6@gmail.com>
+Date: Thu, 16 Nov 2023 08:56:06 +0100
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
@@ -53,149 +52,81 @@ List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: Problem after converting to LUKS2
-Content-Language: en-CA
-To: Milan Broz <gmazyland@gmail.com>, cryptsetup@lists.linux.dev
+Content-Language: en-US
+To: Anton Avramov <lukav@lukav.com>, cryptsetup@lists.linux.dev
 References: <72f6c041-14d4-473e-bcba-7bf3b9fd47aa@lukav.com>
  <979f56ca-14f3-46fd-9935-6365223ab3b8@gmail.com>
-From: Anton Avramov <lukav@lukav.com>
-In-Reply-To: <979f56ca-14f3-46fd-9935-6365223ab3b8@gmail.com>
+ <445d7af3-40b6-453d-b1c1-718f222407e6@lukav.com>
+From: Milan Broz <gmazyland@gmail.com>
+Autocrypt: addr=gmazyland@gmail.com; keydata=
+ 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
+In-Reply-To: <445d7af3-40b6-453d-b1c1-718f222407e6@lukav.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
+On 11/15/23 16:34, Anton Avramov wrote:
+...
+>> Please post log from failing command (luksOpen?) with --debug option,
+>> so we can see what
+>> is failing and what exact version (toolss, kernel) you are using.
+> Ubuntu 22.04.3 LTS
+> 
+> Linux  5.15.0-88-generic #98-Ubuntu SMP Mon Oct 2 15:18:56 UTC 2023
+> x86_64 x86_64 x86_64 GNU/Linux
+> 
+> # cryptsetup 2.4.3 processing "cryptsetup luksOpen --key-file
+> /root/.luks/.p2pool.keyfile /dev/sda1 CryptP2Pool --debug"
 
-On 2023-11-15 10:04, Milan Broz wrote:
-> On 11/15/23 15:47, Anton Avramov wrote:
->> Hi,
->>
->> I have 3 partitions encrypted years ago with LUKS1.
->> I've decided to migrate them to LUKS2 and the first 2 there was no
->> problem, but the last I can open it anymore after the conversion.
->>
->> I've been using key-files for all of them, so there is no wrong password
->> input issue.
->>
->> The bad think is I don't have a header backup before the conversion (Yes
->> I know! Lessen learned!)
->
-> Users either do not read warnings or just ignore them... :-)
->
->> I've tried different things like converting back to luks1 and header
->> repair but to no avail.
->
-> And you tried this without backup too, I guess...
->
-> Which cryptsetup version was used for conversion?
-cryptsetup 2.4.3
->
->> As a last resort I'm writing here for help. Is there anything I can try
->> to at least read the partition?
->
-> Please post log from failing command (luksOpen?) with --debug option, 
-> so we can see what
-> is failing and what exact version (toolss, kernel) you are using.
-Ubuntu 22.04.3 LTS
+...
 
-Linux  5.15.0-88-generic #98-Ubuntu SMP Mon Oct 2 15:18:56 UTC 2023 
-x86_64 x86_64 x86_64 GNU/Linux
+That log looks like a correct processing in open (with an incorrect keyfile).
+(Or the convert process really corrupted something in keyslot...)
 
-# cryptsetup 2.4.3 processing "cryptsetup luksOpen --key-file 
-/root/.luks/.p2pool.keyfile /dev/sda1 CryptP2Pool --debug"
-# Running command open.
-# Locking memory.
-# Installing SIGINT/SIGTERM handler.
-# Unblocking interruption on signal.
-# Allocating context for crypt device /dev/sda1.
-# Trying to open and read device /dev/sda1 with direct-io.
-# Initialising device-mapper backend library.
-# Trying to load any crypt type from device /dev/sda1.
-# Crypto backend (OpenSSL 3.0.2 15 Mar 2022 [default][legacy]) 
-initialized in cryptsetup library version 2.4.3.
-# Detected kernel Linux 5.15.0-88-generic x86_64.
-# Loading LUKS2 header (repair disabled).
-# Acquiring read lock for device /dev/sda1.
-# Opening lock resource file /run/cryptsetup/L_8:1
-# Verifying lock handle for /dev/sda1.
-# Device /dev/sda1 READ lock taken.
-# Trying to read primary LUKS2 header at offset 0x0.
-# Opening locked device /dev/sda1
-# Verifying locked device handle (bdev)
-# LUKS2 header version 2 of size 16384 bytes, checksum sha256.
-# 
-Checksum:7f72b2a6318880d0a698c23f7e04202139ea7c1c165633778507a58ff600af13 
-(on-disk)
-# 
-Checksum:7f72b2a6318880d0a698c23f7e04202139ea7c1c165633778507a58ff600af13 
-(in-memory)
-# Trying to read secondary LUKS2 header at offset 0x4000.
-# Reusing open ro fd on device /dev/sda1
-# LUKS2 header version 2 of size 16384 bytes, checksum sha256.
-# 
-Checksum:b51c668d3b315ec1b1413023f8e0434171712520f3d8e7cf61c6a70bd6a8e5e4 
-(on-disk)
-# 
-Checksum:b51c668d3b315ec1b1413023f8e0434171712520f3d8e7cf61c6a70bd6a8e5e4 
-(in-memory)
-# Device size 256059113472, offset 2097152.
-# Device /dev/sda1 READ lock released.
-# PBKDF argon2id, time_ms 2000 (iterations 0), max_memory_kb 1048576, 
-parallel_threads 4.
-# Activating volume CryptP2Pool using token (any type) -1.
-# dm version   [ opencount flush ]   [16384] (*1)
-# dm versions   [ opencount flush ]   [16384] (*1)
-# Detected dm-ioctl version 4.45.0.
-# Detected dm-crypt version 1.23.0.
-# Device-mapper backend running with UDEV support enabled.
-# dm status CryptP2Pool  [ opencount noflush ]   [16384] (*1)
-No usable token is available.
-# File descriptor passphrase entry requested.
-# Activating volume CryptP2Pool [keyslot -1] using passphrase.
-# dm versions   [ opencount flush ]   [16384] (*1)
-# dm status CryptP2Pool  [ opencount noflush ]   [16384] (*1)
-# Keyslot 0 priority 1 != 2 (required), skipped.
-# Keyslot 1 priority 1 != 2 (required), skipped.
-# Trying to open LUKS2 keyslot 0.
-# Running keyslot key derivation.
-# Reading keyslot area [0x8000].
-# Acquiring read lock for device /dev/sda1.
-# Opening lock resource file /run/cryptsetup/L_8:1
-# Verifying lock handle for /dev/sda1.
-# Device /dev/sda1 READ lock taken.
-# Reusing open ro fd on device /dev/sda1
-# Device /dev/sda1 READ lock released.
-# Verifying key from keyslot 0, digest 0.
-# Digest 0 (pbkdf2) verify failed with -1.
-# Trying to open LUKS2 keyslot 1.
-# Running keyslot key derivation.
-# Reading keyslot area [0x28000].
-# Acquiring read lock for device /dev/sda1.
-# Opening lock resource file /run/cryptsetup/L_8:1
-# Verifying lock handle for /dev/sda1.
-# Device /dev/sda1 READ lock taken.
-# Reusing open ro fd on device /dev/sda1
-# Device /dev/sda1 READ lock released.
-# Verifying key from keyslot 1, digest 0.
-# Digest 0 (pbkdf2) verify failed with -1.
-No key available with this passphrase.
-# Releasing crypt device /dev/sda1 context.
-# Releasing device-mapper backend.
-# Closing read only fd for /dev/sda1.
-# Unlocking memory.
-Command failed with code -2 (no permission or bad passphrase).
+Could you please send luksDump (ans ideally also luksDump --dump-json-metadata)
+output to check how it is exactly configured?
 
->
-> It can be trivial issue, but also something that cannot be recovered - 
-> without
-> logs nobody can say what's the problem.
->
-> If some devices were converted correctly - what is the difference from 
-> the failing one?
-I did the first with a live ubuntu usb drive since 1 was the root.
+(You can send it in private mail if you do not want to share it in list.)
 
-The failed one I did after booting and dismounting and closing it.
-
-Another difference is the others are mdadm raids where this one doesn't 
-have raid.
-
->
-> Milan
-Thank you for your time and effort
+Thanks.
+Milan
