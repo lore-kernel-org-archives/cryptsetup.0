@@ -1,49 +1,50 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B209FBF5
-	for <cryptsetup@lists.linux.dev>; Thu, 16 Nov 2023 07:56:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 977C730659
+	for <cryptsetup@lists.linux.dev>; Thu, 16 Nov 2023 13:22:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lukav.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lukav.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NDIdqN2V"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-9d0b4dfd60dso64117066b.1
-        for <cryptsetup@lists.linux.dev>; Wed, 15 Nov 2023 23:56:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=lukav.com header.i=@lukav.com header.b="OVC8i7KQ"
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-77ba6d5123fso164988985a.0
+        for <cryptsetup@lists.linux.dev>; Thu, 16 Nov 2023 05:22:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700121367; x=1700726167; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wRyALaa9hSMEvebZbRpF9DzoHbJgWpIKNCgPvnfCZ0s=;
-        b=NDIdqN2ViTY6lrhJ6fjiIf8d7SsqScMAu5QFI6moni88VI7WZaNT8XPW4USf8zM7F5
-         cTqYt0C2E0/kAQa9jWVKK3otI1Cke3hVu4cm0w9yyt57c/B6csDpuEcc3x+HSOQSrgMK
-         3K3w+z2GrRXBcAw6FMdGtTWlnQp/tCuCMbQ+7tEx8oSD9k9CFtE5+w2lLzSZeZmkAd8V
-         LD8dBmvaoeBUJ5D5jVS7MbakyX97qrR2u+G4U3BqAA5zDiDPXbgcRqUXF2xxEvg+yE2+
-         d7p7jPMTfRDKPunQ6hGxcjseXAPoPJQoUlV4LV9JmDizINyc9jy5jhyO8HOZomTYqkUZ
-         QVUA==
+        d=lukav.com; s=google2; t=1700140973; x=1700745773; darn=lists.linux.dev;
+        h=in-reply-to:disposition-notification-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=/2oS5+ohLY/gPJcFMkeVlaNebF4HJqdhh3tJR9GY4LI=;
+        b=OVC8i7KQobUhhD5DQ0yrkNwLmLfqhadon/8Sbk1sBSr6xo177XwGmh2hoRx6/8tsHx
+         DwBen46n3wE4JKmhor9XY+LS0C5xedGDDXpc0uKRoWgAk64rPKM0K1JWU8FAiDThBimI
+         /VnNuTPLSlhJAuHBlda/N3/J8B9nbJ4tlZKqvie5cSuMRc+SCYS8bgypEy7ierpyDREp
+         sKnorpD2UFsRGbLLwPKUXHC/nqbX/zJu+CxKIRuBnAoA4ZNGwLAKlCHKaIHwlHnzMwDC
+         cIaUOctM9eAajRYcpw8ksk8l37aVPHY9Z0WyDYngI8y9NK9F0DDzKuR56me4oKGgl2uU
+         X/hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700121367; x=1700726167;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1700140973; x=1700745773;
+        h=in-reply-to:disposition-notification-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wRyALaa9hSMEvebZbRpF9DzoHbJgWpIKNCgPvnfCZ0s=;
-        b=bwhw8JWog0SkjO8TrjI9t3qb03sf1mRSB8uZUVqR+fkFbAKL3DFSqegfFTR+DBVgm2
-         CmGIWFiSPx5hCc1/+bXx8CBxj4BEQ+7C459KMYIjuuQfGp1PQu2aCq6nsMstePfoglTW
-         inhwItigzlyTV+7qFHs3YhJvqlS09BQXfUt/jaBR/89mrN0YodODS+sUVnFqCE0QOugv
-         tkMFTlAmrbbW7DsdeMUnCEXRZbMC8cE0SSxzvvDJcjvh8SdDgMoauqIAC+SGPC42+fc5
-         dbT+JjWblLWoeNjgQh3UlXhllU5LUNTMZRUWDE2xlVn0qgtr/skzzUklA5qfAQwo3+bu
-         547w==
-X-Gm-Message-State: AOJu0YyUfr0U6C4uh+MmKojK4gTPEa+YE39Vdk8fIczdP+d3cQXPf7n2
-	3+CuM1xySbUgBExwS82wAK4sLQesZhg=
-X-Google-Smtp-Source: AGHT+IErwHw9GvYEaGtYaWHUkHWgUhbXq5NQ3GTToS4Iod6dOvNPnNRIXp72UOJo7uo7hovmlQqBOg==
-X-Received: by 2002:a17:906:6a1f:b0:9b2:df16:851d with SMTP id qw31-20020a1709066a1f00b009b2df16851dmr14997552ejc.57.1700121367405;
-        Wed, 15 Nov 2023 23:56:07 -0800 (PST)
-Received: from [192.168.2.30] (85-70-151-113.rcd.o2.cz. [85.70.151.113])
-        by smtp.gmail.com with ESMTPSA id lt7-20020a170906fa8700b009a1a5a7ebacsm7931392ejb.201.2023.11.15.23.56.06
+        bh=/2oS5+ohLY/gPJcFMkeVlaNebF4HJqdhh3tJR9GY4LI=;
+        b=iAIbwXtM82FGj+wHtgeBLu9YnmH7dXcDsraMNWD1MmpoWq4kXNnqzT3J2LJcNSt8V9
+         9Y91H8F87c/rQ3RlIKGxgL/FODWFdQJE/f0yduIihPuEPjiVoGogP2dODaRdkCTH4Gq4
+         W5WzX5mxclURBPCOZg4Fx3sfBIO+ZLs2S+KMUMQoBCVs8bWnm6ociiy7cpGFQJE/kAIu
+         haA7EgKT/j4zEEj/sUaPXV8UV/+4LrTrWB9G6J8kYKJU5eq5yaLBnYP7gwzofyWNMFQG
+         INZAR5jqOXTkhAbuFiE7OPiFxe9cqQ1zKCqsrqgFQpwAnDWFRzMAWSDXaY+j7JwlbWQ6
+         87xw==
+X-Gm-Message-State: AOJu0YzUloftzJIoaY/RWN5xmAz2ZKobi0umNuYLIS7S45/NQ73iC+xn
+	3612ILDs7HsgHLDU8pf3xyxxgJs52Yw0cIGi2klhWw==
+X-Google-Smtp-Source: AGHT+IGxV5f1h47lYyG3kcJRYKiari+VQzOubHt35b7N6klH4AUSdGFmddFk5tKsZyNMkdH2kxcntg==
+X-Received: by 2002:a05:620a:3187:b0:77b:d8e9:3bc2 with SMTP id bi7-20020a05620a318700b0077bd8e93bc2mr2324807qkb.28.1700140973202;
+        Thu, 16 Nov 2023 05:22:53 -0800 (PST)
+Received: from ?IPV6:2607:fea8:1bc3:fe00::a7d6? ([2607:fea8:1bc3:fe00::a7d6])
+        by smtp.googlemail.com with ESMTPSA id dw1-20020a05620a600100b0076ce061f44dsm4314158qkb.25.2023.11.16.05.22.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Nov 2023 23:56:07 -0800 (PST)
-Message-ID: <a8d9b808-9dd3-4078-8636-a443f623e9e6@gmail.com>
-Date: Thu, 16 Nov 2023 08:56:06 +0100
+        Thu, 16 Nov 2023 05:22:52 -0800 (PST)
+Content-Type: multipart/mixed; boundary="------------QcgC5iOQdHKCO2WWK3fZzLsI"
+Message-ID: <bfc13ff5-da92-49ec-bcc5-5dc06a9423d1@lukav.com>
+Date: Thu, 16 Nov 2023 08:22:51 -0500
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
@@ -52,81 +53,126 @@ List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: Problem after converting to LUKS2
-Content-Language: en-US
-To: Anton Avramov <lukav@lukav.com>, cryptsetup@lists.linux.dev
+To: Milan Broz <gmazyland@gmail.com>, cryptsetup@lists.linux.dev
 References: <72f6c041-14d4-473e-bcba-7bf3b9fd47aa@lukav.com>
  <979f56ca-14f3-46fd-9935-6365223ab3b8@gmail.com>
  <445d7af3-40b6-453d-b1c1-718f222407e6@lukav.com>
-From: Milan Broz <gmazyland@gmail.com>
-Autocrypt: addr=gmazyland@gmail.com; keydata=
- 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
-In-Reply-To: <445d7af3-40b6-453d-b1c1-718f222407e6@lukav.com>
+ <a8d9b808-9dd3-4078-8636-a443f623e9e6@gmail.com>
+Content-Language: en-CA
+From: Anton Avramov <lukav@lukav.com>
+In-Reply-To: <a8d9b808-9dd3-4078-8636-a443f623e9e6@gmail.com>
+
+This is a multi-part message in MIME format.
+--------------QcgC5iOQdHKCO2WWK3fZzLsI
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 11/15/23 16:34, Anton Avramov wrote:
-...
->> Please post log from failing command (luksOpen?) with --debug option,
->> so we can see what
->> is failing and what exact version (toolss, kernel) you are using.
-> Ubuntu 22.04.3 LTS
-> 
-> Linux  5.15.0-88-generic #98-Ubuntu SMP Mon Oct 2 15:18:56 UTC 2023
-> x86_64 x86_64 x86_64 GNU/Linux
-> 
-> # cryptsetup 2.4.3 processing "cryptsetup luksOpen --key-file
-> /root/.luks/.p2pool.keyfile /dev/sda1 CryptP2Pool --debug"
 
-...
+On 2023-11-16 02:56, Milan Broz wrote:
+> On 11/15/23 16:34, Anton Avramov wrote:
+> ...
+>>> Please post log from failing command (luksOpen?) with --debug option,
+>>> so we can see what
+>>> is failing and what exact version (toolss, kernel) you are using.
+>> Ubuntu 22.04.3 LTS
+>>
+>> Linux  5.15.0-88-generic #98-Ubuntu SMP Mon Oct 2 15:18:56 UTC 2023
+>> x86_64 x86_64 x86_64 GNU/Linux
+>>
+>> # cryptsetup 2.4.3 processing "cryptsetup luksOpen --key-file
+>> /root/.luks/.p2pool.keyfile /dev/sda1 CryptP2Pool --debug"
+>
+> ...
+>
+> That log looks like a correct processing in open (with an incorrect 
+> keyfile).
+> (Or the convert process really corrupted something in keyslot...)
+That key was used for years and I've checked several times in 
+/etc/crypttab that this is the correct one.
+>
+> Could you please send luksDump (ans ideally also luksDump 
+> --dump-json-metadata)
+> output to check how it is exactly configured?
+I'm attaching both.
+>
+> (You can send it in private mail if you do not want to share it in list.)
+It's OK. I'll be retiring this disk even If I manage to salvage the 
+data. It we find and actual problem it would be better to have the 
+information publicly available .
+>
+> Thanks.
+> Milan
 
-That log looks like a correct processing in open (with an incorrect keyfile).
-(Or the convert process really corrupted something in keyslot...)
+Thank you again for all your time and effort.
+Anton
 
-Could you please send luksDump (ans ideally also luksDump --dump-json-metadata)
-output to check how it is exactly configured?
+--------------QcgC5iOQdHKCO2WWK3fZzLsI
+Content-Type: application/json; name="sda1.luksDump.json"
+Content-Disposition: attachment; filename="sda1.luksDump.json"
+Content-Transfer-Encoding: base64
 
-(You can send it in private mail if you do not want to share it in list.)
+ewogICJrZXlzbG90cyI6ewogICAgIjAiOnsKICAgICAgInR5cGUiOiJsdWtzMiIsCiAgICAg
+ICJrZXlfc2l6ZSI6MzIsCiAgICAgICJrZGYiOnsKICAgICAgICAidHlwZSI6InBia2RmMiIs
+CiAgICAgICAgImhhc2giOiJzaGEyNTYiLAogICAgICAgICJpdGVyYXRpb25zIjozMTQ4ODc2
+LAogICAgICAgICJzYWx0IjoiWklTbVRwSmxMQU1Db21XMnNpZDF6SWJLcjhSV3hLbWZmRUJm
+dUZJdWlHOD0iCiAgICAgIH0sCiAgICAgICJhZiI6ewogICAgICAgICJ0eXBlIjoibHVrczEi
+LAogICAgICAgICJoYXNoIjoic2hhMjU2IiwKICAgICAgICAic3RyaXBlcyI6NDAwMAogICAg
+ICB9LAogICAgICAiYXJlYSI6ewogICAgICAgICJ0eXBlIjoicmF3IiwKICAgICAgICAiZW5j
+cnlwdGlvbiI6ImFlcy14dHMtcGxhaW42NCIsCiAgICAgICAgImtleV9zaXplIjozMiwKICAg
+ICAgICAib2Zmc2V0IjoiMzI3NjgiLAogICAgICAgICJzaXplIjoiMTMxMDcyIgogICAgICB9
+CiAgICB9LAogICAgIjEiOnsKICAgICAgInR5cGUiOiJsdWtzMiIsCiAgICAgICJrZXlfc2l6
+ZSI6MzIsCiAgICAgICJrZGYiOnsKICAgICAgICAidHlwZSI6InBia2RmMiIsCiAgICAgICAg
+Imhhc2giOiJzaGEyNTYiLAogICAgICAgICJpdGVyYXRpb25zIjozMDg4NTg4LAogICAgICAg
+ICJzYWx0IjoiQUt1QW8wcTlPZDlOLzZRN3BxemtDMzZYZ1NzcHhjTWxOVHBTSnVuZTZHMD0i
+CiAgICAgIH0sCiAgICAgICJhZiI6ewogICAgICAgICJ0eXBlIjoibHVrczEiLAogICAgICAg
+ICJoYXNoIjoic2hhMjU2IiwKICAgICAgICAic3RyaXBlcyI6NDAwMAogICAgICB9LAogICAg
+ICAiYXJlYSI6ewogICAgICAgICJ0eXBlIjoicmF3IiwKICAgICAgICAiZW5jcnlwdGlvbiI6
+ImFlcy14dHMtcGxhaW42NCIsCiAgICAgICAgImtleV9zaXplIjozMiwKICAgICAgICAib2Zm
+c2V0IjoiMTYzODQwIiwKICAgICAgICAic2l6ZSI6IjEzMTA3MiIKICAgICAgfQogICAgfQog
+IH0sCiAgInRva2VucyI6ewogIH0sCiAgInNlZ21lbnRzIjp7CiAgICAiMCI6ewogICAgICAi
+dHlwZSI6ImNyeXB0IiwKICAgICAgIm9mZnNldCI6IjIwOTcxNTIiLAogICAgICAiaXZfdHdl
+YWsiOiIwIiwKICAgICAgInNpemUiOiJkeW5hbWljIiwKICAgICAgImVuY3J5cHRpb24iOiJh
+ZXMteHRzLXBsYWluNjQiLAogICAgICAic2VjdG9yX3NpemUiOjUxMgogICAgfQogIH0sCiAg
+ImRpZ2VzdHMiOnsKICAgICIwIjp7CiAgICAgICJ0eXBlIjoicGJrZGYyIiwKICAgICAgImtl
+eXNsb3RzIjpbCiAgICAgICAgIjAiLAogICAgICAgICIxIgogICAgICBdLAogICAgICAic2Vn
+bWVudHMiOlsKICAgICAgICAiMCIKICAgICAgXSwKICAgICAgImhhc2giOiJzaGEyNTYiLAog
+ICAgICAic2FsdCI6ImFmeUN4ajVsN1BiaXpxcUxkQU53QjlxNFhhT0ZicmhicjdNSTJTb3ho
+c3M9IiwKICAgICAgImRpZ2VzdCI6IlpMOFBoeXJSMUU0Rk1rMW96eEEyc3FpeXNGdz0iLAog
+ICAgICAiaXRlcmF0aW9ucyI6MTk2ODA0CiAgICB9CiAgfSwKICAiY29uZmlnIjp7CiAgICAi
+anNvbl9zaXplIjoiMTIyODgiLAogICAgImtleXNsb3RzX3NpemUiOiIyMDY0Mzg0IgogIH0K
+fQ==
+--------------QcgC5iOQdHKCO2WWK3fZzLsI
+Content-Type: text/plain; charset=UTF-8; name="sda1.luksDump.txt"
+Content-Disposition: attachment; filename="sda1.luksDump.txt"
+Content-Transfer-Encoding: base64
 
-Thanks.
-Milan
+TFVLUyBoZWFkZXIgaW5mb3JtYXRpb24KVmVyc2lvbjogICAgICAgCTIKRXBvY2g6ICAgICAg
+ICAgCTIKTWV0YWRhdGEgYXJlYTogCTE2Mzg0IFtieXRlc10KS2V5c2xvdHMgYXJlYTogCTIw
+NjQzODQgW2J5dGVzXQpVVUlEOiAgICAgICAgICAJZTY5NTlkOGMtZjgwNi00MmQwLTkxOTUt
+MmExMmNmZDY1NjgyCkxhYmVsOiAgICAgICAgIAkobm8gbGFiZWwpClN1YnN5c3RlbTogICAg
+IAkobm8gc3Vic3lzdGVtKQpGbGFnczogICAgICAgCShubyBmbGFncykKCkRhdGEgc2VnbWVu
+dHM6CiAgMDogY3J5cHQKCW9mZnNldDogMjA5NzE1MiBbYnl0ZXNdCglsZW5ndGg6ICh3aG9s
+ZSBkZXZpY2UpCgljaXBoZXI6IGFlcy14dHMtcGxhaW42NAoJc2VjdG9yOiA1MTIgW2J5dGVz
+XQoKS2V5c2xvdHM6CiAgMDogbHVrczIKCUtleTogICAgICAgIDI1NiBiaXRzCglQcmlvcml0
+eTogICBub3JtYWwKCUNpcGhlcjogICAgIGFlcy14dHMtcGxhaW42NAoJQ2lwaGVyIGtleTog
+MjU2IGJpdHMKCVBCS0RGOiAgICAgIHBia2RmMgoJSGFzaDogICAgICAgc2hhMjU2CglJdGVy
+YXRpb25zOiAzMTQ4ODc2CglTYWx0OiAgICAgICA2NCA4NCBhNiA0ZSA5MiA2NSAyYyAwMyAw
+MiBhMiA2NSBiNiBiMiAyNyA3NSBjYyAKCSAgICAgICAgICAgIDg2IGNhIGFmIGM0IDU2IGM0
+IGE5IDlmIDdjIDQwIDVmIGI4IDUyIDJlIDg4IDZmIAoJQUYgc3RyaXBlczogNDAwMAoJQUYg
+aGFzaDogICAgc2hhMjU2CglBcmVhIG9mZnNldDozMjc2OCBbYnl0ZXNdCglBcmVhIGxlbmd0
+aDoxMzEwNzIgW2J5dGVzXQoJRGlnZXN0IElEOiAgMAogIDE6IGx1a3MyCglLZXk6ICAgICAg
+ICAyNTYgYml0cwoJUHJpb3JpdHk6ICAgbm9ybWFsCglDaXBoZXI6ICAgICBhZXMteHRzLXBs
+YWluNjQKCUNpcGhlciBrZXk6IDI1NiBiaXRzCglQQktERjogICAgICBwYmtkZjIKCUhhc2g6
+ICAgICAgIHNoYTI1NgoJSXRlcmF0aW9uczogMzA4ODU4OAoJU2FsdDogICAgICAgMDAgYWIg
+ODAgYTMgNGEgYmQgMzkgZGYgNGQgZmYgYTQgM2IgYTYgYWMgZTQgMGIgCgkgICAgICAgICAg
+ICA3ZSA5NyA4MSAyYiAyOSBjNSBjMyAyNSAzNSAzYSA1MiAyNiBlOSBkZSBlOCA2ZCAKCUFG
+IHN0cmlwZXM6IDQwMDAKCUFGIGhhc2g6ICAgIHNoYTI1NgoJQXJlYSBvZmZzZXQ6MTYzODQw
+IFtieXRlc10KCUFyZWEgbGVuZ3RoOjEzMTA3MiBbYnl0ZXNdCglEaWdlc3QgSUQ6ICAwClRv
+a2VuczoKRGlnZXN0czoKICAwOiBwYmtkZjIKCUhhc2g6ICAgICAgIHNoYTI1NgoJSXRlcmF0
+aW9uczogMTk2ODA0CglTYWx0OiAgICAgICA2OSBmYyA4MiBjNiAzZSA2NSBlYyBmNiBlMiBj
+ZSBhYSA4YiA3NCAwMyA3MCAwNyAKCSAgICAgICAgICAgIGRhIGI4IDVkIGEzIDg1IDZlIGI4
+IDViIGFmIGIzIDA4IGQ5IDJhIDMxIDg2IGNiIAoJRGlnZXN0OiAgICAgNjQgYmYgMGYgODcg
+MmEgZDEgZDQgNGUgMDUgMzIgNGQgNjggY2YgMTAgMzYgYjIgCgkgICAgICAgICAgICBhOCBi
+MiBiMCA1YyAK
+
+--------------QcgC5iOQdHKCO2WWK3fZzLsI--
