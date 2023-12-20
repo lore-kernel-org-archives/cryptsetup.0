@@ -1,56 +1,90 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from ricl.de (ricl.de [202.61.193.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33BD56458
-	for <cryptsetup@lists.linux.dev>; Thu, 14 Dec 2023 15:53:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WsyrMg1g"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a1db6c63028so957772366b.2
-        for <cryptsetup@lists.linux.dev>; Thu, 14 Dec 2023 07:53:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702569215; x=1703174015; darn=lists.linux.dev;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=zWEBHBb/PBWOBdGjxW2jzTKU+DWLGgWLBf4wd9cuc5E=;
-        b=WsyrMg1gx3P3dO+1XJBHY064KC1aokTm8ZZtqeci0KKcr5FBMJJeMUrmk4L705/Ehq
-         MYfx0QuJYG68K3PC4zuLpAtdyOaucRGDoktEKrL+8jsqUUBQtbZp/ojQjFyeigYOVqgS
-         QFAx7flKcacouMEtuhbL3xG+9gEp2RVQM+BUHC3FcTeRgpr48J+M2tKa1SJ0dIjGrNNV
-         7Muew4nbSKuLsx4LqCXO5O25+sZjsfv+o02K3zZQnCTG+5JsC5nh1xB7ZfgA9Oisixja
-         v5EyD73rx69AzJzh1VP/0U+/69IFPZBbR7cXiS+LlfR0BUxgZC8pZBTBrg41nwO0DYQV
-         VTiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702569215; x=1703174015;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zWEBHBb/PBWOBdGjxW2jzTKU+DWLGgWLBf4wd9cuc5E=;
-        b=q8fSk936K6jYV9vxlpmpjxFdHaZ3Or+jiNMe1ObZzCbF3rgZHMstAZM7CI9UwrzH9J
-         5sXrxCBPl1HwAm1BocfY4lx5Vd32MCI9sRVBfy8DsWOSYB/d+UWWmwIhE/CmioSiBe5B
-         CCFiPdfj0ws/SC6T2k2LU3sHCLASwRsCDOyubmq9Cqt0Ap92Qtsj0s+LSCtnS8ujANlk
-         sMauFPQKpSzck5mpBNiK7o+LpUI4SRYjAhWAG9pMvStgawbzfwUq/B5PzxDIcxjl2fFz
-         2jbAyU8ZBwFdvTuHeVyKQMTk15a80O+V2dZXbG2zKgsT0Dw7VW0C5V0ztCY0xZOr9iD/
-         AsRw==
-X-Gm-Message-State: AOJu0YzO+nSxfz8cDYWA8td+dBjgJyC0W7CPm02xKoER4ScRGZx/JTMM
-	EhUxUWFJ8bZSbL0ugK84028CtdaWJImk62FREPnVXHmBsaVibcPzeol1Vw==
-X-Google-Smtp-Source: AGHT+IGlJOpSYWPjTsT3zzvV8OwOcUE0tF66E5Y+pA1/XqjxZTMBtpIvXTGqPFQQXrIUFNkmDMeEAz52nRSsUFp0SLQ=
-X-Received: by 2002:a17:907:9623:b0:a18:8d66:b3a5 with SMTP id
- gb35-20020a170907962300b00a188d66b3a5mr5804330ejc.36.1702569214958; Thu, 14
- Dec 2023 07:53:34 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9711C6A8
+	for <cryptsetup@lists.linux.dev>; Wed, 20 Dec 2023 08:34:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ricl.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ricl.de
+Received: from [IPV6:2a02:908:691:c740:a2ce:c8ff:fe6e:7a72] (unknown [IPv6:2a02:908:691:c740:a2ce:c8ff:fe6e:7a72])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: richardclauss@ricl.de)
+	by ricl.de (Postfix) with ESMTPSA id 3CEB1A6A732
+	for <cryptsetup@lists.linux.dev>; Wed, 20 Dec 2023 09:26:11 +0100 (CET)
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=richardclauss@ricl.de smtp.mailfrom=richardclauss@ricl.de
+Message-ID: <dd0162b6-c15b-474b-9395-2ae594ec8c9a@ricl.de>
+Date: Wed, 20 Dec 2023 09:26:10 +0100
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: LRS <vianellov@gmail.com>
-Date: Thu, 14 Dec 2023 16:53:09 +0100
-Message-ID: <CAFKOM5kA=u04d9WxH8r-1dhpFQh3bVvAHy1SJ176Ub-igJq7CA@mail.gmail.com>
-Subject: cryptsetup boot with integrity
+User-Agent: Mozilla Thunderbird
 To: cryptsetup@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Language: en-US
+From: =?UTF-8?Q?Richard_Clau=C3=9F?= <richardclauss@ricl.de>
+Subject: dmcrypt - possible corruption of data with kernel
+ 6.7.0-rc5-1-mainline
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-0.09 / 150.00];
+	MIME_GOOD(-0.10)[text/plain];
+	XM_UA_NO_VERSION(0.01)[];
+	RCVD_COUNT_ZERO(0.00)[0];
+	ARC_NA(0.00)[];
+	ASN(0.00)[asn:3209, ipnet:2a02:908::/33, country:DE];
+	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FROM_EQ_ENVFROM(0.00)[];
+	TO_DN_NONE(0.00)[];
+	RCPT_COUNT_ONE(0.00)[1]
+X-Rspamd-Action: no action
+X-Rspamd-Server: ricl
+X-Spamd-Bar: /
+X-Rspamd-Queue-Id: 3CEB1A6A732
 
-Hi all,
+Hello,
 
-is there a general guide which describes how to set up correctly a os
-boot with dm-integrity + dm-crypt (authenticated encryption)?
+I don't require assistance, but hope someone involved with dmcrypt can 
+make use of the following hint:
+
+I believe dmcrypt corrupts my data on arch linux with mainline kernel 
+6.7.0-rc5-1-mainline, while it doesn't on stable kernel 6.6.7-arch1-1.
+
+My system has a btrfs mounted at /, which contains a file test.img, 
+which is used as block device for dmcrypt. The decrypted block device is 
+then mounted at /mnt/test
+
+When I rsync ~150GB of data to /mnt/test the btrfs inside shows many 
+write_io_errs on kernel 6.7.0-rc5-1-mainline. The outside btrfs / shows 
+no errors. An extended smart selftest of the underlying nvme also 
+revealed no errors.
+
+When I do the same with the stable kernel, no errors show up. It is 
+probably only my system, but maybe someone wants to try that out. I 
+created the image file completely new each time.
+
+
+# I used the following commands to set everything up:
+dd of=/test.img bs=300G count=0 seek=1
+cryptsetup -y luksFormat /test.img
+sudo cryptsetup open /test.img image
+sudo mkfs.btrfs /dev/mapper/image
+sudo mkdir /mnt/test
+sudo mount /dev/mapper/image /mnt/test
+
+sudo chown -R user:user /mnt/test
+
+cryptsetup is at: 2.6.1-3
+
+Regards
+
+Richard
+
+
+
