@@ -1,87 +1,149 @@
-Received: from webmail.countermail.com (db1.countermail.com [5.226.34.35])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA5B22307
-	for <cryptsetup@lists.linux.dev>; Sun,  4 Feb 2024 12:55:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.226.34.35
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC9A13959C
+	for <cryptsetup@lists.linux.dev>; Thu, 15 Feb 2024 20:21:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707051323; cv=none; b=fXnyPmvBMn29POsE6S0J3Lyvz0U0Kgn70rH7+p25pK5FrceyJsDIX+gLkWHS31kEJmJ4xdXKvH1jOobAYnj9cVq3lAveRK1CO/wHTg/kdg7br4AYFdBidp+3ExymvoXXUDg5UDX/a48AmhVfzK/QKJ1Bjfo3BYjZ50/sow1e1JI=
+	t=1708028465; cv=none; b=MCWVLR/OyhUm7VC21o2OshMhxXDiCVXFrGc9ZxX36jVQauUp4EL7jDu6SDd+xqjfCkaYA3kPFwYtB0jx3r8cnlvPe5LFkqHDTCYU0O4Tait5xDXEeYb3y1Qb4+o2Phs3HLJ7lgNlmDGvIFZrrAz6ky+fl/NxKLBPl0G+Na/28EI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707051323; c=relaxed/simple;
-	bh=ISj+AMNH14QhL/K/IHolwBCtrugk1bOuiMEdb2cbHsY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=sZZb83HPnNZziLm3EB8FqP+etCz4R+CxnMcdPEDwvopz29wFUO6RfO64TZAyPKAV7f9NreW042l4IJNgp5nuBGaw5B/JrJOHH5U8Oxa/iwu9C/2+lOxEFGwvkqnb5Y82++jiNwbplKJ7zQHGY/98u8BQgZliRrmiFtG10XQL7nw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=countermail.com; spf=pass smtp.mailfrom=countermail.com; dkim=pass (1024-bit key) header.d=countermail.com header.i=@countermail.com header.b=XadOOcOP; arc=none smtp.client-ip=5.226.34.35
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=countermail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=countermail.com
+	s=arc-20240116; t=1708028465; c=relaxed/simple;
+	bh=oTInDyv3WRPOf8eFFCkN3kyOov39odAgF4G3wrC5Lk0=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=nb7yAVXejzlPribT0gAyQScYS4FtDqyPZR2f3bY1RSi+A/RhAbb+4eI4HmEODaAbuBWfuKmVJDLBb+Twn/5yNk721cCWSASCJ9uDwnumZiw3rOpwqWSrZDHe2RO4ONt9hcAXFOhUsnzruD0ABcuTqSkIikirqBLwWxGBI9bSpLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VS3nYo+7; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=countermail.com header.i=@countermail.com header.b="XadOOcOP"
-Received: from smtp.countermail.com ([5.226.34.35])  by webmail.countermail.com (Postfix) with  ESMTPA id DD9B06ECA0
-	for <cryptsetup@lists.linux.dev>; Sun,  4 Feb 2024 13:55:12 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.11.0 webmail.countermail.com DD9B06ECA0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=countermail.com;
-	s=default; t=1707051313;
-	bh=x8EsFd4uw5jbgCF9o/v/1DB2bwdoTMrX9kCSpmHr3To=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=XadOOcOPh7WELqJWx6bb46VemRjzO01XVXXrJ/0pApX4Of7hANsLYI1GU8NIbD2LA
-	 1LuHOQdwNxcR88h9ya4W4QoOEARCgHuACKRrgtJIbi/ZX/mP2lnxwySROVdBxiTPYc
-	 uZaEW7lwQVsGwb+42yVE6Q9zxQ12JFMxhrnwLGy4=
-Message-ID: <d285676a-e5cf-4fa7-8521-9ae900ca9727@countermail.com>
-Date: Sun, 4 Feb 2024 13:55:11 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VS3nYo+7"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1d91397bd22so10750105ad.0
+        for <cryptsetup@lists.linux.dev>; Thu, 15 Feb 2024 12:21:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708028463; x=1708633263; darn=lists.linux.dev;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Yj5VJfh+9IVSUHcQb69xk0eui6pnHDefXWxEAEU7PCs=;
+        b=VS3nYo+7RUDjuKSd3ZrZDimEgcFT+23mvbe+d6OAsQ8EPjuhLlo9rpJCfS/vDNYfy6
+         s2UOGwd/ivcvVsl+pkVcA/W4eO1LaV/5Zi/76gnD4Vywl+72bxMoxVw8l8x34J0QemLO
+         xJEjvPPhWqIDslxQnmhIaTtycGktFKKOyA1Ih9d8xTnC+fCSdVU+vTcaZjvAEAwkgDbq
+         o+Qu8qbZ5gzLgf+Z8CDiLegy8gwVNCcmDbVPHqHGy0gOqjP3VRgfZlbbU7dhrcd+2vvF
+         hCn2AeQ9NxexI3ct+jb+bAyzRGAqmVRHitMNyt3kbrZXg40gQUF4vxI0+Sm1L7UOphC/
+         45Fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708028463; x=1708633263;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Yj5VJfh+9IVSUHcQb69xk0eui6pnHDefXWxEAEU7PCs=;
+        b=i8YunOklGAt72iFkZt3XB/UEz3K+Cj8JL7iAhcWw/DJG9OVnCP8aBPzlbu7lHH6P6m
+         C8hLabuEdZ3Sr0W8mHI5z8yC6ZIgsNKfF0LNDaD4hHcJ77oP0EH1+3wmEbT2rjN0zW7Q
+         ZWQCkHYkfLlN5i3C+7SSN3JiLAyMaFZ6jOgeuIUq8wVP3c5G6i51fbhiehc701Z6/6aK
+         9EaSpm/6x9XvUjZaQOdaf/Vt1bGe41kX8unisi5zoG7PlRKao/hsBka6Est709uWf/ko
+         vd0Ghlj0UxgS6j4SeulGtJ3HevslK4A+nshjKo+WbTBPfIgg8CfWI9RIXfRB19VGTehO
+         7mOA==
+X-Gm-Message-State: AOJu0Yy4kBAGAMv0Zw+b4Ebppnhb9Ug2hmDtf1PyoA1b1B07h75ErXGq
+	zNI11htg1QLpmOT0f80hsL6lhGM2LQu1MtosecWwKb7nvhWA86PxJivRZE3Rf7S9tmnAWg/USC8
+	TUfNOKeIMxiRUWw7hfs7VwGFn0r2nATLX7e19/g==
+X-Google-Smtp-Source: AGHT+IGYqTMxXfbiIm8ClVyWvozxANaBvdEqF5Wiy5MOrr+0Nb7MF1Lh80EIwKDzBUuvzUBxWUj5dq0LEJzC1rSGNLU=
+X-Received: by 2002:a17:902:d507:b0:1da:31b6:e31 with SMTP id
+ b7-20020a170902d50700b001da31b60e31mr3227423plg.67.1708028462755; Thu, 15 Feb
+ 2024 12:21:02 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Beheaded LUKS volume pathology
+From: "T.Gavrylko" <tea65535@gmail.com>
+Date: Thu, 15 Feb 2024 21:20:51 +0100
+Message-ID: <CAActgDYkiaypy4Q7tsR5VaARMUT6L96jwCAet+KdYD=P5f_0OQ@mail.gmail.com>
+Subject: wrong luks header backup file size after conversion to LUKS2
 To: cryptsetup@lists.linux.dev
-References: <2f1b3b93-2bec-4867-9d78-bd9474a4d31a@countermail.com>
- <07188020-fa6e-41a4-a8b6-ed8a493d5574@gmail.com>
- <ed5843de-eb16-437f-9fc2-7719aafe968d@countermail.com>
- <d208bb24-84ea-45f2-8e38-b66f0c56bbe2@gmail.com>
-Content-Language: en-US
-From: Mistave <mistave@countermail.com>
-Autocrypt: addr=mistave@countermail.com; keydata=
- xsBNBFC6N5ABCACT/6LYkViesTff33gFzqzii2sdOi07er31P3MfMgetejDACIbuU3uRzapZ
- gGPRQtiyKcsyzNf7JkmFW+IvcOZEnZBGCaYClkrCHpHw10VR8E6GSIuNdGit9WOMd3gJChj8
- KDxeZyzOo70svWtwcvfPvZfEANmgI4A2fiuuc/e9fTc4uOvI0fRH61wszSadQ2b1Dz8EJa1c
- DeWEmB4NYsXWJ5qLkyT4TwuVFc530X1EUdu3+eC34tT0iMozFNakoKAKTlHyONRVHEntFwoD
- r3VMSEb5DwWIjTuoCEepkdRJ0aKKeCx38Nkll+yc4i3qo9LkUa79Le/3sFeSwpq7P73xABEB
- AAHNF21pc3RhdmVAY291bnRlcm1haWwuY29twsB2BBMBAgAqBQJQujeQAxYCAQQVCAMCBAsJ
- CgMFAlC6N5ACGQECGyMJEMQjYJVxl1LlAAAbCgf9FNOhyQokWJ96h55rnhpApeG5Cu2fQh4L
- /N+yfpcjniGiewrxi/QLw8h4ZzH7u549pKXnosccFS27miiopZtC0oHqfc9E3FWF3iUl7M7f
- uKVHIBuF+zE1ivly/NtUEoUFC/2EUemO3p8X77pYMFK4nLhZuLn2ld+XG2pFMjF/AGrAJDvv
- oIolvpzcCEssvk5q8n5A7kYehS+zE3oPb3+ynUoS89KZs3ggPVp/G2KEv2+DTz5tJygdocfi
- I8e90Je5wBJBlzBQL37a15skuNyPdokxMMve7OqcuoT4g5S30aQrV/QluDjXoFhEdZGXWtBt
- jnC9KIVL+MUe2e+mWm6cyc7ATQRQujeQAQgAhyfJ6FxwkKZO7YazFVwH9QHgmPARnu2G7zIV
- 8e4nSRTcBSkt89gRr+qDtUE8cD/Sqk+Dva92o2gSwSvfVlbAGeBtMK/OrLE/jm/4Zundyp9N
- y5x7vRvC8oatgvWbGdqicKphJiYB3dtJyVmJXTB/glzCQf9EBDBhu3A/tDSjhAHoD0iQPqDl
- OG9TBn3aj4Syr3csXAAPoxSLF0n/w8p0/H9DN0/yVDvmYIa9vfcjMBLTcgLHwJr/Uywvs5or
- tabyDQi/Vlu6XvmPFCosR5x7QwEy1nXE9yKsa5vYKNFofKiXzXZNqzr2jbgaT8wzAozRhqG7
- P+TUKXdBcgRmrEvPnQARAQABwsBfBBgBAgAJAhsMBQJQujeQAAoJEMQjYJVxl1LldEYH/0Bs
- c1GKlSYlgHZ4j0SLpqloZo+pwJtrE3tL4j20PAtVg2hqn4VitmaWnJpmUf0bXHEGQ0bh2vWn
- oMS370Rdbk8SuvdFo5YEYfQOX9d2NDH5lRj06bbbMPrPQ6tpc/e/2pEH8B9D1o/FlJMYbwMO
- 8kfMB5QwGaDL8yyTu2P96V0NbJcnoZWhU0mtR3+t36mJ9C7OZrTx9TKTQy3QmcmuHjOnm+SZ
- aIZB7+CO0gt6pteS2SYZ+TBIWpI0OTX4RU9YzE7eEVjBk46v7W09VgqY6XM4sCg4TkjeBEgF
- kTb/IIfd2+XDq7l09VSTjoi2WwG+51k06Qy3SwO7aeXhP/A9Zig=
-In-Reply-To: <d208bb24-84ea-45f2-8e38-b66f0c56bbe2@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
 
-On 2/3/24 15:23, Milan Broz wrote:> For LUKS2, we can store a fixed 
-size, but the default format
-> set it to "dynamic", the size is determined according to data device size.
-> 
-> See luksDump, for dynamic size you should see
-> 
-> Data segments:
->    0: crypt
-> ...
->          length: (whole device)
+Hi,
+Recently I successfully converted LUKS1 partition to LUKS2 and created
+a header backup after the conversion.
+LUKS1 root partition was created by opensuze tumbleweed installer
+The length of this header backup file is wrong: 2097152 bytes what is
+corresponding to the LUKS1 header size.
 
-Ah, thank you! That answers my question.
+ls -l
+-r-------- 1 root root  2097152 Feb 15 20:01 nvme0n1p9.img
 
-Best regards!
-M.
+Command used to create header backup
+sudo cryptsetup luksHeaderBackup /dev/nvme0n1p9 --header-backup-file
+/tmp/HBAK/nvme0n1p9.img
+
+Used cryptsetup versions for header backup - 2.7.0 tumbleweed and
+cryptsetup 2.4.3 Linux Mint:
+
+sudo cryptsetup --version
+cryptsetup 2.7.0 flags: UDEV BLKID KEYRING FIPS KERNEL_CAPI PWQUALITY HW_OPAL
+
+Commands used for conversion from LUKS1 to LUKS2:
+
+cryptsetup 2.4.3
+sudo cryptsetup convert /dev/nvme0n1p9 --type luks2
+sudo cryptsetup luksConvertKey /dev/nvme0n1p9 --pbkdf argon2id
+
+luksDump:
+
+sudo cryptsetup luksDump /dev/nvme0n1p9
+LUKS header information
+Version:        2
+Epoch:          8
+Metadata area: 16384 [bytes]
+Keyslots area: 2064384 [bytes]
+UUID:          3d6055ea-4ab5-4dd0-8f3b-93f51dcc6ddd
+Label:          1n1p9-OS-R
+Subsystem:      (no subsystem)
+Flags:        (no flags)
+
+Data segments:
+  0: crypt
+offset: 2097152 [bytes]
+length: (whole device)
+cipher: aes-xts-plain64
+sector: 512 [bytes]
+
+Keyslots:
+  0: luks2
+Key:        512 bits
+Priority:   normal
+Cipher:     aes-xts-plain64
+Cipher key: 512 bits
+PBKDF:      argon2id
+Time cost:  9
+Memory:     1048576
+Threads:    4
+Salt:       04 80 c1 a7 63 01 d6 c5 79 87 56 c6 1a a8 63 66
+            35 20 5a 1e 8b 00 8e ec 21 db 13 4d f8 0f 34 6f
+AF stripes: 4000
+AF hash:    sha256
+Area offset:290816 [bytes]
+Area length:258048 [bytes]
+Digest ID:  0
+  3: luks2
+Key:        512 bits
+Priority:   normal
+Cipher:     aes-xts-plain64
+Cipher key: 512 bits
+PBKDF:      argon2id
+Time cost:  9
+Memory:     1048576
+Threads:    4
+Salt:       32 45 1d b6 b9 64 f6 60 0c cd 5d b7 5c 3b fd f7
+            79 64 51 12 5a 9d 33 4c 1c cd 4b 03 6a ad ef b0
+AF stripes: 4000
+AF hash:    sha256
+Area offset:32768 [bytes]
+Area length:258048 [bytes]
+Digest ID:  0
+Tokens:
+Digests:
+  0: pbkdf2
+Hash:       sha256
+Iterations: 328913
+Salt:       3d 3b d9 a5 ba 75 86 7f 7d 12 66 c1 01 58 2e b2
+            58 e0 b4 c0 4f 26 4f 65 4f 69 1a 7f f7 94 d4 3f
+Digest:     00 2e 58 47 d4 9c e7 df e4 17 c1 06 c8 e4 10 53
+            e9 16 4d 89
