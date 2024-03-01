@@ -1,169 +1,188 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362006E60B
-	for <cryptsetup@lists.linux.dev>; Fri,  1 Mar 2024 12:27:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2897D67E74
+	for <cryptsetup@lists.linux.dev>; Fri,  1 Mar 2024 13:12:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709296031; cv=none; b=gUVoggEwROEdvs7I34EkFQdCQKXEZw+oIjqe8+jzxwKCxqHlV1gNCnQ/lXiPSEPOHgbt4G2wTP4SgInx94yQ5PKPmzDtFiUpPUFDMEZKUBBhA5sPmSO2+zOxSygMfZY0q/9wRpNGVs/CRKP9ZKLIqjlOb4j1KmMAx6LpwusZ9Hc=
+	t=1709298755; cv=none; b=b0Li5sknqhzm5eCYY2YZ8M+D5cs4pBchtkI8fpA5PFgwHKvATdNAb36b+IGrp6zlPBF4LbFDzKBShsJAnDObFWenD9fKtwheAm75pI07+tB4GmISWlcyybkejDcstIuUVpZzgOfw5jsvUGRFO29nAUsdAxEIO3w2gfJb37HCA3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709296031; c=relaxed/simple;
-	bh=qk9kV6jJZHNTN2O3hR5FvP6dJvuUnBJua9z5/ztZS00=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=YOml8mXPbONeQE935ztY7G3MJamc5FE9V4BY15kKtLLc7SMNNo2JREM6j8WWSWKydnd+Viuwus/1NVquPEzlNqoMUpkVBEwDZoU7rwcUeyGL8CLYBBoqrWEWJJpUEYVZmYA0vFmc4vdzMDv6AcSOonRokfpCazVcZuB7zoqCnNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ei9hjjqm; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1709298755; c=relaxed/simple;
+	bh=8bx8JysSOkhPO7GY/P6wbmXAG87TBG0H+RU2wVxbEp8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=phtCDh4PZtoav33cUusCdcKHVV2Pxa63pxYQ5NYNMsGq08lkbSqI0NkZsryL3pSYxNdnQUR4Q2mPPSH1oWm05pZaEGEGyVvtp9Ngca9mJrEWLVXEVMED6vV2ZSRMjthsKW2DWOdPV+yguGculoLrtDotsuOD/zkcNU2Fn0Cw9OQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.co.uk; spf=pass smtp.mailfrom=gmx.co.uk; dkim=pass (2048-bit key) header.d=gmx.co.uk header.i=xanda@gmx.co.uk header.b=parKrAvi; arc=none smtp.client-ip=212.227.15.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.co.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.co.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ei9hjjqm"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-566e1e94b47so502404a12.0
-        for <cryptsetup@lists.linux.dev>; Fri, 01 Mar 2024 04:27:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709296028; x=1709900828; darn=lists.linux.dev;
-        h=content-transfer-encoding:to:subject:from:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iHwqnz6ekzsLS1pCSkX5ku+TrDztlBgV/ZwUNNBlaR8=;
-        b=ei9hjjqmhCTHkwYNEuCYax/zGF7TMmrhKlP6zlsvLxTypBFLaYAzxQdKCSX79idrH+
-         XTbNFZMeo9vypffGOJET+sBaEifMA079g5BN85RE5EJs2cxs02JhejH0SJ74zoGw8JGj
-         3Pg6OkQ65KJKTzki5VPrRoLVl5Omhinpcllq5w6m6et+7b4OAF/23omzGENEi6ahPH5E
-         NXllFM//JILwOIs81KhIKvKzQdwkIg5a4Of1RXIeHBr8caeJByytd3eQirmEHXYy7kVu
-         G8ajULEQN0OFaK34yxhtj7T/C7hMXOsSu7VJOL6zm7/BKh/6lPrpKdcl6mHfm4pxxggK
-         3dcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709296028; x=1709900828;
-        h=content-transfer-encoding:to:subject:from:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=iHwqnz6ekzsLS1pCSkX5ku+TrDztlBgV/ZwUNNBlaR8=;
-        b=c2o5Q4q6EC/9n93w8moO+N38MW/mJP1xiuPom1efms6SsJ6vjp00tfsvGxR+Y/svGV
-         /YNOR8OFZipBmlqkc3rnG+GuEE/S3XE0NfhOcZfUB9R1hBUGEYlko1CLVBbK+In7OnHh
-         ePLnHWw0CWRjPd7G8spXjWcOiK3KA6NbbAxCTh1PkFXLFN65XpI8kcQoImWXWZ+OOTNw
-         4PAVxIQRE7pDyIem1EjE61OpPZ1lV6FxixshM8wPUdSEArVyjIC1DX8WORsb1m8RbAG9
-         T+YfvWYvkRLzXmIWKItjdQkUYaAPRsCYkCV4eVV+YVRsgWpQ6up13o99hR2XaJFQJ7YV
-         RJBQ==
-X-Gm-Message-State: AOJu0YwMerT4GzqpGety6GaOrWnX+K5Ix4q5w4Ur5uIMIFx5FEsAfC5D
-	j3fp9eXZ4MAtRBOCZwfMOLZEHqqy8qbG8R3RG7HIUB5SYYlOgIFxl5C7bvoK
-X-Google-Smtp-Source: AGHT+IGrCNlFPwrRYM4XtyR5XPIu4GilVBJdKovysfi8XIEqwK48qjk7KidXCyaPwCrJ6bzyfndetA==
-X-Received: by 2002:a17:906:b75a:b0:a44:8abd:7b41 with SMTP id fx26-20020a170906b75a00b00a448abd7b41mr1135298ejb.37.1709296027460;
-        Fri, 01 Mar 2024 04:27:07 -0800 (PST)
-Received: from ?IPV6:2a01:110f:491e:5c00:ebe4:686b:29ff:5cc6? ([2a01:110f:491e:5c00:ebe4:686b:29ff:5cc6])
-        by smtp.gmail.com with ESMTPSA id jw20-20020a170906e95400b00a44936527b5sm461263ejb.99.2024.03.01.04.27.06
-        for <cryptsetup@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Mar 2024 04:27:07 -0800 (PST)
-Message-ID: <a27e8008-9a85-4218-8d20-d1d56fa73671@gmail.com>
-Date: Fri, 1 Mar 2024 13:27:06 +0100
+	dkim=pass (2048-bit key) header.d=gmx.co.uk header.i=xanda@gmx.co.uk header.b="parKrAvi"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.co.uk;
+	s=s31663417; t=1709298751; x=1709903551; i=xanda@gmx.co.uk;
+	bh=8bx8JysSOkhPO7GY/P6wbmXAG87TBG0H+RU2wVxbEp8=;
+	h=X-UI-Sender-Class:Date:Subject:To:References:From:In-Reply-To;
+	b=parKrAviVLMO6UgvM9dE1I6seC81TODg/Oe2V7/yV9kuriMIEt5TjLRTYfEKxn4Y
+	 ppMfoCvSnU95QLhCxXFK9LV8zkkU/ptwxo6l8wli3G3yQFi7EuDNmgFFQaPDpxd4B
+	 Dt9fzIyB/zlQxlXONRjHp4rx2yfRcfYsaKiW4zcWIMnqu5TWB7o2HH5boNKicmr0H
+	 hZeD8uE1FlBxQcwQgBbppielemKnzo6mwBmygS769TLNDDHWdm7OSnPwAPSXGCVIu
+	 hg4GSJES5RusM1PeygPbp3e2XvxvNfyRRmNjzxqyBLQCrfheDpTadgyPujr1G57ED
+	 TulfCkva3qtWuXGXFA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.1.126] ([86.158.200.39]) by mail.gmx.net (mrgmx005
+ [212.227.17.184]) with ESMTPSA (Nemesis) id 1MiJZE-1rCjo906Z4-00fNx5 for
+ <cryptsetup@lists.linux.dev>; Fri, 01 Mar 2024 14:12:31 +0100
+Message-ID: <3e4d1b13-7935-40b6-883a-68b2ef16545d@gmx.co.uk>
+Date: Fri, 1 Mar 2024 13:12:28 +0000
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-From: =?UTF-8?Q?Aleksander_=C5=81ukasz?= <allllllx@gmail.com>
-Subject: Unexpected behavior of reencrypt performed after partition resize
+User-Agent: Betterbird (Linux)
+Subject: Re: How to resume decryption on LUKS1 in-place
 To: cryptsetup@lists.linux.dev
+References: <cd29a952-c9ce-4aa0-8903-a79c325824f0@gmx.co.uk>
+ <764b4743-a61f-4e95-af07-d53c1e842e64@redhat.com>
+Content-Language: en-GB
+From: xndr <xanda@gmx.co.uk>
+In-Reply-To: <764b4743-a61f-4e95-af07-d53c1e842e64@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:EVsVrX/PwA4cs+JCa84fZcDK8DRwmJu2lMvJ7Ku34teU1z6b/UH
+ CYhf5gCKHtY3sBpDH4s5yWmRg5jRRrs46gqiPonFZf6RnmI0H8ApUjKeTW7b50t9zIkCd/c
+ gvqXV/qDigRI6feZlNbk4kkv53QRFQNKP8JoUomigeIGn43HBArhwzxNFlXKCB4+grDeZZU
+ HId9weuchY3Y/oBroLLfg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:bHz27MStflo=;MpZr6RrV1dNjz37qzqLW/yxRW2c
+ ztbL/7smQYQ38CjpgJafycSCopKTOjBvRRAz3dml4RUY4eNMjtJ/Q6/0wyh2yLcwZTSsJrqkK
+ +zZn51153MME5010sgFUZAgvrb1WA/EKozdGtNSmwkVDYimY1l3T7pWl21zCJ+BEBk5N4VOQo
+ TRS4W+WqmiX2GSHWcOgRNicC4flwVbfOuhduxiQIGDd453VO5a7wmacJsG+X3ArzqAjS7BF28
+ Z7NeI31RLRQXxD1poNxblkFIjFTuQyNGrjd4U2gaR+Rcbum+1XS5v1v/bVp4ZJAOT6lPmgdpV
+ TirPJj0DnjdNL8OwlhV15N2/LJPMPCp9vfnsBbY0KBUGi3DZYEOVHZIvMIujVeOjJqX5U/44N
+ XIU819063tgNhliJPyeCvvKY3cnCko3DqkyYSaZOjQRP/pXepYMrhn10dn1ryM7hErCFt6B+E
+ J1kL2dYjGeBjXMW4TZa5Puy9Gr+AVATNv3DNDtPvr7+vZMwNF5jx6739cFkYcZqrOMFhyDkv5
+ bSgZc+bblLdEOCNAeuEyuOS/WkGfJ3T8cu1By6dbyfQ0I8iVFuo9WWJZdtHR8/Pb63mN3iImG
+ i+U3D/lGC8ZR8/ThISG1ufTHvYNaIKmi16PMGtBRKv5zILmdGKQoK0oNcUt1MqxDcZWlKjrV0
+ 9IQigdTojnkNi7w4u7vekxnmrGK0xx0wHXXOYuGxVw7gzMHJuZ3iV+iswfFZtyOUCyiYiEQeM
+ Ckrm4eoqQ3ee4BQJqdySSDt2WUVVAQ8Iqpd+gPuYCpPQrvcTOQeD86wvPocpyNmS6PqqQya77
+ 9wMXiuTHTiGCrZum9u4tzQSfb9corZI2HN0H+JR7w9oro=
 
-Hi,
+Thank you for the assist.
 
-I'm trying to debug a mysterious data corruption apparently happening 
-during cryptsetup reencryption step that follows partition resize.
+We've taken the advice to migrate the data to a backup and after
+reattempted using the command:-
 
-I can deterministically reproduce the following behavior from the 
-initramfs boot stage when reencrypting root partition:
+cryptsetup reencrypt --decrypt
+=2D-uuid=3DLUKS-aaecbfc4-459a-4cf9-9a34-fd4af43b8be0=C2=A0 /dev/sdd
 
-```
-BusyBox v1.35.0 (Debian 1:1.35.0-4+b3) built-in shell (ash)
-Enter 'help' for a list of built-in commands.
+This returns:-
 
-~ # while true; do \
- >     (echo -n "hello" | cryptsetup open /dev/vda4 test ) \
- >     && dd if=/dev/mapper/test | md5sum \
- >     && cryptsetup close /dev/mapper/test \
- >     && (echo -n "hello" | cryptsetup reencrypt /dev/vda4) done
-d53129dd093a5ac0be99995bd5e46edc  -
-4958175+0 records in
-4958175+0 records out
-Finished, time 01m28s, 2420 MiB written, speed  27.5 MiB/s
-c4d10b8b556fe4ea1c2430f866b6aa76  -
-4958175+0 records in
-4958175+0 records out
-Finished, time 01m25s, 2420 MiB written, speed  28.4 MiB/s
-c4d10b8b556fe4ea1c2430f866b6aa76  -
-4958175+0 records in
-4958175+0 records out
-Finished, time 01m30s, 2420 MiB written, speed  26.7 MiB/s
-c4d10b8b556fe4ea1c2430f866b6aa76  -
-4958175+0 records in
-4958175+0 records out
-Finished, time 01m34s, 2420 MiB written, speed  25.7 MiB/s
-c4d10b8b556fe4ea1c2430f866b6aa76  -
-4958175+0 records in
-4958175+0 records out
-```
+Device /dev/sdd is not a valid LUKS device.
 
-As you can see, first reencryption changes contents of the LUKS 
-container (as read via the dm-crypt mapper) and all the subsequent ones 
-do not (which I would expect to always be the case).
+The same is true when omitting "LUKS" from the UUID.
 
-This first call changing the contents is what I'm trying to understand, 
-as to the best of my knowledge, this shouldn't happen in any 
-circumstances, no data shifts take place here and observed behavior of 
-checksum changing is unexpected. Am I right or do I miss something?
+Both the source and clone disks are readable 'as they are' and there's=C2=
+=A0a
+recovery=C2=A0of 263GB of 500GB - ostensibly it seems the original decrypt=
+ion
+recovered the active data available.
 
-I can trigger this behavior by resizing /dev/vda4 partition just before 
-booting into initramfs, using any of the tools like systemd-repart or 
-growpart
-(which extends /dev/vda4 to the end of also just extended /dev/vda). If 
-I don't do such resize, then the effect of first iteration of 
-reencryptions changing the checksum is not present.
+But we cannot be sure and are somewhat confused now because the original
+decrypt operation definitely tanked at ~85%.
 
-This is Debian stable and Debian Sid, so on Linux 6.1.0-18-amd64 #1 SMP 
-PREEMPT_DYNAMIC Debian 6.1.76-1 (2024-02-01) x86_64 GNU/Linux) + 
-cryptsetup 2.6.1 flags: UDEV BLKID KEYRING KERNEL_CAPI) and on Linux 
-6.6.15-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.6.15-2 (2024-02-04) x86_64 
-GNU/Linux + cryptsetup 2.7.0 flags: UDEV BLKID KEYRING KERNEL_CAPI 
-HW_OPAL. All running in QEMU.
+Is there anything left we can do before to be sure?
 
-So far I've tried:
+Thanks
 
-- reviewing output of running with --debug ,
-
-- reencrypting with and without active mapping open,
-
-- resizing partition after full boot or from initramfs phase, using 
-various tools for that,
-
-- manipulating partition size change step,
-
-- reviewing LUKS header changes between first and subsequent reencryptions,
-
-- measuring checksums of partition segments related to previous and new 
-size separately (both do change),
-
-- running reencrypt with various --resilience modes,
-
-- ensuring cryptsetup-initramfs tooling did not interfere with reencryption,
-
-- ... .
-
-Could always reproduce the behavior mentioned and did not found any 
-obvious (to my untrained eyes) indications of what could be happening wrong.
-
-I've also reviewed https://github.com/mbroz/cryptsetup/blob/main/FAQ.md 
-and saw short mention of corruption risk in context of partition 
-resizing under the section 2.8, but I think it does not apply here? 
-Also, I'm aware of resizing related mention in cryptsetup 2.7 release 
-notes, but I also believe this is not such a case (and I did not observe 
-the warning mentioned there).
-
-Also, I've tried to reproduce the issue using disk image file and a loop 
-device, but did not succeed - that is I could not force the first 
-iteration after resize to change checksum - all were always the same.
-
-Any tips on what I could be doing wrong or what to look for would be 
-very appreciated as I'm running out of ideas!
-
+On 22/02/2024 11:04, Ondrej Kozina wrote:
+> Hi,
+>
+> On 21/02/2024 18:22, xndr wrote:
+>>
+>> We followed the steps here on the Arch Linux wiki by converting from
+>> LUKS2 to LUKS1:-
+>>
+>> https://wiki.archlinux.org/title/Removing_system_encryption#Decrypting_=
+LUKS2_devices_in-place
+>>
+>
+> While I greatly appreciate what Archlinux community does for
+> documentation effort this particular hint is quite unfortunate. The
+> hint has mistaken the cause and the effect of a dangerous
+> experimentation and on top of all, it is outdated (as advertised under
+> section 1.3 heading).
+>
+> 1) Up to (including) 2.4.3 LUKS2 clearly did not support decryption
+> with LUKS2 header put in the beginning of data device (regular LUKS2
+> device). Someone tried to force
+> cryptsetup utility to bypass the limitation by making header device
+> and data device the same via cmd line parameters. There was a bug that
+> could not detect such dangerous case and initiated decryption anyway.
+> We have patched the bug out ASAP. It definitely did not destroyed data
+> but decrypted data in-palce at the original data offset (which is not
+> user friendly and that's why it was not support from cli).
+>
+> 2) Since 2.5.0 you can decrypt LUKS2 device by specifying a file where
+> LUKS2 header is migrated for the decryption to be possible. See man
+> page cryptsetup-reencrypt, LUKS2 decryption examples section.
+>
+> I'll suggest edit to the wiki mentioned above.
+>
+>>
+>> Unfortunately the=C2=A0device suffered an IO error at about 85% after i=
+ssuing
+>> the final command:-
+>
+> If you have suffered IO error due to HW issue the best thing you can
+> do now is copy all data to a new device first (by dd utility for
+> example) and try to finish the operation on the healthy device.
+>
+>>
+>> cryptsetup-reencrypt --decrypt /dev/sda3
+>
+> If you have downconverted the device to LUKS1 before the decryption
+> you'd need to pass the original device UUID via --uuid parameter.
+> LUKS1 decryption uses files LUKS-<UUID>.[|log|org|new] to track the
+> progress and to safe tempory LUKS1 headers. Look for those file in
+> work directory from what you have initiated the operation. See
+> cryptsetup-reencrypt man page, --uuid option.
+>
+> But again, migrate your data to a healthy device first, provided the
+> IO error had originated in a HW issue.
+>
+> Also I'd recommend to update the cryptsetup package. The
+> cryptsetup-reencrypt binary was replaced fully by "cryptsetup
+> reencrypt" command (also for LUKS1) in 2.5.0 release in Jul '22.
+>
+>>
+>> =C2=A0 From the man pages it might seem that the process can be resumed=
+ by
+>> using the command:-
+>>
+>> cryptsetup reencrypt --resume-only --header
+>> luks2-hdr-file=C2=A0/dev/encrypted_device
+>
+> That's for LUKS2 only.
+>
+>>
+>> However it seems qualified by being a=C2=A0LUKS2 only facility. Should =
+this
+>> command still work on LUKS1 or is the process (if there's one at all)
+>> different.
+>>
+>> Available are copies of the headers (LUKS 1 & 2) in text and binary for=
+m
+>> and what appears to be a log generated during decryption.
+>
+> If you have converted LUKS2 to LUKS1 before the decryption as the wiki
+> suggests there should be only LUKS1 related logs and header backups.
+>
+>>
+>> Any counsel greatly appreciated - thank you.
+>>
+>>
+>
+> Kind regards
+> O.
+>
+>
