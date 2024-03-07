@@ -1,65 +1,65 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E958527D
-	for <cryptsetup@lists.linux.dev>; Thu,  7 Mar 2024 12:11:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F56F129A7A
+	for <cryptsetup@lists.linux.dev>; Thu,  7 Mar 2024 12:14:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709813474; cv=none; b=px40sPGE84McWTxruNRVQ0tcGdzSrAm4Q0BbZgNmxf7dE/fZTx+n2J9AdRT4Kv4Pb26UbbIx6+i3fH2t3TOsbI+VIlJ61GrlPIYXwekk4wrk36JlElMMZSs5PCxD1X5RdUCbWQ7dQtx12weWlHGk+FClK6Hs+Z69gSjzOTlBr8o=
+	t=1709813678; cv=none; b=uJsMVhJ67GjPEUXlbgbE/ED2Ijyz0oECT9+kP1eLfEm+jSAtrIpzw/2XKg77JEiDt1LSWLEfEuDorqr9OBkpHeexQkec8y4CLKx5/NxCu6lYVgeblfcYvyRQw2duqEPlncHfgT1RR7SxjO/0ryNRtg8ft/xg7Is5cJKPqKtayTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709813474; c=relaxed/simple;
-	bh=dQM3S5xwH0cscOeU/WGPEFAjY1b+p6gPT+ZApOAWJ04=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=fravBA+T3Xr5VEpzR0sMKIkrB0YQmlB9oYj/MyJuULWkaNqPzYdW4H/883/cDfdQdmAZ1VYqDFoeEdeJBcH2iAUdXTGjxe7AELFmkvrp1pACdohrLlad5y9JP7KO5tgiK3xEsSygcfYOfD2JOnG7ta/irwp+J8sAuzqoxAHbkuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=VWqFTNus; arc=none smtp.client-ip=170.10.133.124
+	s=arc-20240116; t=1709813678; c=relaxed/simple;
+	bh=DLb5GW0VXfXcKtaJJtHpJ+NFcadFelpg4MmX6tG6PM8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:Cc:From:
+	 In-Reply-To:Content-Type; b=RRAx9PtIgQewUDf0+nV0lUJWMFlD19f4EgPeqINy1Q0neAMC4MON8vLFu2K9nrhCjJcJIxMdkK2+N6svSRG/KVrK2YpqedLsq4bjFYpdvdd7j1fdFRyBmM4ZqR1eW1H5I0pkTIXQKLhp6LmheLsKq1yt5Q2X+J13T3qhVp+kyXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=QvmGR+VC; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="VWqFTNus"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="QvmGR+VC"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1709813472;
+	s=mimecast20190719; t=1709813676;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=K4ajdZ5te8DgjvyTuxlbJ97LeVQWjq5vgRxWAU3rP8s=;
-	b=VWqFTNus4ZYxbdNqUiU0H5DqBjaMFyDh6saSLhZI+F8pUIrJkPzeKOgHsxyhr/Wb9zGVbi
-	jwNB7r5CQu3iQCYgg+E73hMflBo/BwaoklGq7tISUFksbSaff2MPIe1/Y++AQLbvjt222T
-	7mZ40/+ay7LNueWWEU/tp16hgOFMEns=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=cMI3SwAr3xt5Dd3NN4ohSQhB0xLQ5rKkbTus6gWwRkw=;
+	b=QvmGR+VCskrYYBDoLzmNiI89DO4kJ9LYso2HntQrAn8eOcDlm0dKGvQ6AD7CNZuA+Op4EF
+	8n7rCMKA6YJFvl39GOZof3PXisNLv1Zk9XojC4VlbVzLzqP6qtz1mz9Oc3ru1yjlgF3WMr
+	wfkCIXZI1gTcGMdbPX665FbBs3BKA+s=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-572-ZkKAFMSDOS2Hgwxw4cqjnA-1; Thu, 07 Mar 2024 07:11:11 -0500
-X-MC-Unique: ZkKAFMSDOS2Hgwxw4cqjnA-1
-Received: by mail-lf1-f72.google.com with SMTP id 2adb3069b0e04-5134e56c6c8so602629e87.3
-        for <cryptsetup@lists.linux.dev>; Thu, 07 Mar 2024 04:11:10 -0800 (PST)
+ us-mta-479-9Gt_rFZdP4WwhCunbQ36Cg-1; Thu, 07 Mar 2024 07:14:35 -0500
+X-MC-Unique: 9Gt_rFZdP4WwhCunbQ36Cg-1
+Received: by mail-wr1-f71.google.com with SMTP id ffacd0b85a97d-33e6d36db5dso150251f8f.2
+        for <cryptsetup@lists.linux.dev>; Thu, 07 Mar 2024 04:14:35 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709813468; x=1710418268;
-        h=content-transfer-encoding:in-reply-to:cc:autocrypt:from:references
+        d=1e100.net; s=20230601; t=1709813673; x=1710418473;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:cc:references
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=K4ajdZ5te8DgjvyTuxlbJ97LeVQWjq5vgRxWAU3rP8s=;
-        b=iSB6UMT2RyBjv7LvT00GZsWOSmBKj1DZ44diVD+6F/6KxbuJAcPAMTGTZb257ZujBy
-         yPn9Q5HB3Bb/wc0X//xVLy3OxCzeHzMLunUrtB/YMHp6Cw1l591lfMi/kNtRxf0SsZQ+
-         qx13IX2X2V/ip10ZIcWCrr8CA7UEoV4PLexj+mA/RyLI+7qzD/vWUc6XJzK3FCrmi2xZ
-         U2ZJQ/5VyV5jmbOj9+1DzN57e6HXnWAZ5FCOi21vQKbt1ubGZa1yMkKZni2XoA5hdHt1
-         OXDfDa6+zrn/Xu6wXdhZyT9+tfBsPt9xxn70q72leIAg6OIjopBUYSOUlMmuM7unZuGN
-         IuUg==
-X-Gm-Message-State: AOJu0YxNptUjnA2iSN0QRFHJhlK00boSCOIjwJa+mjMzkdCqIjZDCF/Q
-	1KZMR25f4SuHHUkw+qeTClr7GANY11Qi+JAo7x6KG/i6/lFn51xGTSq8l0vCqYRIKJwO/CiR2Oa
-	26wDlupXNeWpw6ta8gHds69kodLP8aZO88X1C8Zmw1A/yS0rilAKiy7Lr7b7U+CFdNcMOv+5d/Y
-	diztFwaFn1Uw97K4Q7BWAHn+Jven5JMdPZysd73GLf
-X-Received: by 2002:a19:914c:0:b0:513:1f3f:3fef with SMTP id y12-20020a19914c000000b005131f3f3fefmr1342542lfj.1.1709813468647;
-        Thu, 07 Mar 2024 04:11:08 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF3K4700430aP3RvZq2LyYIUvQSOA0ucxPRNK8Yw42Ncx/PgxwAcrW7yes5Z0a2J3FGjlj78Q==
-X-Received: by 2002:a19:914c:0:b0:513:1f3f:3fef with SMTP id y12-20020a19914c000000b005131f3f3fefmr1342531lfj.1.1709813468178;
-        Thu, 07 Mar 2024 04:11:08 -0800 (PST)
+        bh=cMI3SwAr3xt5Dd3NN4ohSQhB0xLQ5rKkbTus6gWwRkw=;
+        b=s87bxOXdf21Dg2ie5N/jcC90IjvTDTC9XsHiCBon0s+PzfXBcaJE4NZXwurU+mXMA9
+         +NADo3bsSB3oVzPSAvwKAQ2A1TagM3K6GYJQrgH617yu+6HJEUmQeTTQc2tF7RCVqt7v
+         vLuL/ugpD8XI0kDRm63oj44ZijNejAN8Cn5+GCl+1a2MlBdSvpaRAh/kXjT2ezvJoLo1
+         CGoVbZZ2oxq/4sDGySrapL8caRS01Q88P7aXJNyb6NH1QZHRLjhnwsflROfGZk2JzoEF
+         iU2oAzd+Cx7P4YzPvjsH7HNkxpgP3z4Al8q8TE3dnNxp5VlTYZHprMbYatRf4pwwyWg4
+         0diw==
+X-Gm-Message-State: AOJu0YzsSu5Gjgv1zX1MboKAKmjTiL7O3oVQGMTjz0u2dFiAm1aUEjYQ
+	xRxmagF0fgXtVyqYP+FvSGlc5OmlVK5wbX3CgI9cJ38mPWn32x2q26fTZDqxjhIdaeAidysLU7N
+	ZYOaCGQV+eEWOCsOgCEP24rWytZhydwkh13oKv3J5JK/Zl5/aVTYDr47tgPfAj5xyTfulBYGSuj
+	HKpQNJ5Ok8E270gWdng0DsiP6rghLLnJ1/+NuBb6+O
+X-Received: by 2002:a05:6000:3c5:b0:33e:4590:8bd8 with SMTP id b5-20020a05600003c500b0033e45908bd8mr10592677wrg.60.1709813672925;
+        Thu, 07 Mar 2024 04:14:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGVHmNdAwLJ+L4j50ZnM5i1zER9CYOdCqQNuXKr5JCZbn8KUIJ28D77aa4fWJkF2g0vHypw+w==
+X-Received: by 2002:a05:6000:3c5:b0:33e:4590:8bd8 with SMTP id b5-20020a05600003c500b0033e45908bd8mr10592653wrg.60.1709813672507;
+        Thu, 07 Mar 2024 04:14:32 -0800 (PST)
 Received: from [10.43.17.51] (nat-pool-brq-t.redhat.com. [213.175.37.10])
-        by smtp.gmail.com with ESMTPSA id s16-20020a05600c45d000b00412f016a151sm2528525wmo.9.2024.03.07.04.11.07
+        by smtp.gmail.com with ESMTPSA id e18-20020adfef12000000b0033cf5094fcesm20094991wro.36.2024.03.07.04.14.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Mar 2024 04:11:07 -0800 (PST)
-Message-ID: <1155f74e-5328-4a1f-9b73-d22093ed8261@redhat.com>
-Date: Thu, 7 Mar 2024 13:11:06 +0100
+        Thu, 07 Mar 2024 04:14:31 -0800 (PST)
+Message-ID: <dce9e0d8-dbfa-4b1a-ab61-33b6c7bc770a@redhat.com>
+Date: Thu, 7 Mar 2024 13:14:31 +0100
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
@@ -67,9 +67,16 @@ List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Unexpected behavior of reencrypt performed after partition resize
-To: cryptsetup@lists.linux.dev
-References: <a27e8008-9a85-4218-8d20-d1d56fa73671@gmail.com>
+Subject: Re: How to resume decryption on LUKS1 in-place
+To: cryptsetup <cryptsetup@lists.linux.dev>
+References: <cd29a952-c9ce-4aa0-8903-a79c325824f0@gmx.co.uk>
+ <764b4743-a61f-4e95-af07-d53c1e842e64@redhat.com>
+ <3e4d1b13-7935-40b6-883a-68b2ef16545d@gmx.co.uk>
+ <80c0a6a8-b710-4483-8e57-56e1951fa213@redhat.com>
+ <76ca5ef4-5298-4c03-bdc1-8b1ce012c7b4@gmx.co.uk>
+ <6caca783-5a30-434c-b9f1-234a1bff9310@redhat.com>
+ <08281b96-b6c3-433e-83ae-3b6b382714ce@gmx.co.uk>
+Cc: xndr <xanda@gmx.co.uk>
 From: Ondrej Kozina <okozina@redhat.com>
 Autocrypt: addr=okozina@redhat.com; keydata=
  xsFNBGGg1gYBEADpTn8FgSaeBI8YJYs2dMqUD8nI/DkA1+UImIuISZx+agczCJzcFuE7u8BK
@@ -114,125 +121,25 @@ Autocrypt: addr=okozina@redhat.com; keydata=
  p6l3x7b9kO8dMwhnUAhjiIhkCA1+cY/HjHUTcSROG8/q4nhenxIgQc3cAsQ6iLO24RlXU15P
  qxDEePjhSYAPLdpO2V6kWV/5GL0dBvi9MGp5MN6ox8ShFkE1xMh+pJgmHcjJq2MHeH7uqyYQ
  eJndz3q+QBWrUkUOIrwY6NbsZJECBHQd/wxYE/y9gO5qNdfVAS7UUwcc4S5WUM2bNb8klQ==
-Cc: =?UTF-8?Q?Aleksander_=C5=81ukasz?= <allllllx@gmail.com>
-In-Reply-To: <a27e8008-9a85-4218-8d20-d1d56fa73671@gmail.com>
+In-Reply-To: <08281b96-b6c3-433e-83ae-3b6b382714ce@gmx.co.uk>
 X-Mimecast-Spam-Score: 0
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Hi,
-
-I've tried to reproduce it but so far with no luck. More question below:
-
-On 01/03/2024 13:27, Aleksander Łukasz wrote:
-> Hi,
+On 04/03/2024 17:34, xndr wrote:
 > 
-> I'm trying to debug a mysterious data corruption apparently happening
-> during cryptsetup reencryption step that follows partition resize.
-> 
-> I can deterministically reproduce the following behavior from the
-> initramfs boot stage when reencrypting root partition:
-> 
-> ```
-> BusyBox v1.35.0 (Debian 1:1.35.0-4+b3) built-in shell (ash)
-> Enter 'help' for a list of built-in commands.
-> 
-> ~ # while true; do \
->   >     (echo -n "hello" | cryptsetup open /dev/vda4 test ) \
->   >     && dd if=/dev/mapper/test | md5sum \
->   >     && cryptsetup close /dev/mapper/test \
->   >     && (echo -n "hello" | cryptsetup reencrypt /dev/vda4) done
-> d53129dd093a5ac0be99995bd5e46edc  -
-> 4958175+0 records in
-> 4958175+0 records out
-> Finished, time 01m28s, 2420 MiB written, speed  27.5 MiB/s
-> c4d10b8b556fe4ea1c2430f866b6aa76  -
-> 4958175+0 records in
-> 4958175+0 records out
-> Finished, time 01m25s, 2420 MiB written, speed  28.4 MiB/s
-> c4d10b8b556fe4ea1c2430f866b6aa76  -
-> 4958175+0 records in
-> 4958175+0 records out
-> Finished, time 01m30s, 2420 MiB written, speed  26.7 MiB/s
-> c4d10b8b556fe4ea1c2430f866b6aa76  -
-> 4958175+0 records in
-> 4958175+0 records out
-> Finished, time 01m34s, 2420 MiB written, speed  25.7 MiB/s
-> c4d10b8b556fe4ea1c2430f866b6aa76  -
-> 4958175+0 records in
-> 4958175+0 records out
-> ```
+>> In general? No I don't recommend to downgrade to 2.4.3 for normal
+>> operation. It's just currently the best option to workaround the bug
+>> introduced in 2.5.0 regarding resuming LUKS1 decryption operation.
+>
+> Apologies - my bad; this is really what we meant.
+No problem, the issue is already fixed upstream[1]. Will be released 
+within cryptsetup 2.7.1.
 
-Would you mind sharing whole vda device partition table _before_ and 
-_after_ the aforementioned vda4 resize? The dm-crypt device is unaligned 
-to 1MiB (not an issue at the moment), but that's what I plan to focus on 
-with my tests.
-
-Also, please share a LUKS2 header dump (luksDump command) output for 
-luks device before and after the first reencryption run takes place.
-
-> 
-> As you can see, first reencryption changes contents of the LUKS
-> container (as read via the dm-crypt mapper) and all the subsequent ones
-> do not (which I would expect to always be the case).
-
-Would you mind completely skip the reencryption step and just overwrite 
-the device with data read from the same device? But write directly to 
-vda4 (that's what reencryption actually does).
-
-First lets try without direct flag (I skip 16MiB, default LUKS2 header size)
-
-dd if=/dev/vda4 of=/dev/vda4 seek=32768 skip=32768
-
-or alternatively with direct flag like (again this assumes default LUKS2 
-header size 16 MiB).
-
-dd if=/dev/vda4 of=/dev/vda4 bs=1M seek=16 skip=16 iflag=direct 
-oflag=direct,dsync
-
-> 
-> I can trigger this behavior by resizing /dev/vda4 partition just before
-> booting into initramfs, using any of the tools like systemd-repart or
-> growpart
-> (which extends /dev/vda4 to the end of also just extended /dev/vda). If
-
-How did you extend vda itself? And how did you pass the change in the 
-guest VM?
-
-> 
-> 
-> Also, I've tried to reproduce the issue using disk image file and a loop
-> device, but did not succeed - that is I could not force the first
-> iteration after resize to change checksum - all were always the same.
-
-This suggests we might deal with something else than a bug in 
-reencryption code.
-
-> Any tips on what I could be doing wrong or what to look for would be
-> very appreciated as I'm running out of idea
-"lsblk -t /dev/vda" output might also help (again before and after the 
-resize)
-
-Could you show me also last 2 cycles of reencryption debug output?
-Everything in between
-
-# Progress ????????????, device_size 2538585600
-# Next reencryption offset will be X sectors.
-# Next reencryption chunk size will be Y sectors).
-(...)
-# Progress ????????????, device_size 2538585600
-# Next reencryption offset will be XX sectors.
-# Next reencryption chunk size will be YY sectors).
-(...)
-# Next reencryption offset will be 2538585600 sectors.
-# Next reencryption chunk size will be 0 sectors).
-# Destroying keyslot ??.
-# Acquiring write lock for device /dev/vda4.
-
-But it's all blind guesses on my side.
+[1]: https://gitlab.com/cryptsetup/cryptsetup/-/merge_requests/616
 
 Kind regards
-Ondrej
+O.
 
