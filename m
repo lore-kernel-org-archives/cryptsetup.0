@@ -1,57 +1,59 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A1F1E89D
-	for <cryptsetup@lists.linux.dev>; Thu,  7 Mar 2024 14:59:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7162853E2E
+	for <cryptsetup@lists.linux.dev>; Wed, 13 Mar 2024 21:42:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709823564; cv=none; b=iy4sGfyHbllcWkQk6pG9cVNieH2CkUN2Vklse2+fBbpf8wW6gg7mGfwxVM2Jbn8e6FwmKRKkyvZvDoMsgBADOySc2d9VLJYMjdZKZ5EphugEkl7Rfjj72PinKfNra2FkMuEZdNAO8O8Xx03qA1cOENYUl7f84hjU732fFSXovhQ=
+	t=1710366135; cv=none; b=c0FpKaGYCnNDPWTzFNxpvVLxyrnzgTksKHn63xfHqZ4KdoA5IV+O9v4Z3AmUU8G96radeC7mg652+hjipDteUn2Zya9zdJglvjLZdKg6OUNbJdg2JSfurs8bd9ZjJ+sLJ1McMzxKmjE2iBiVRQwAlLbQZtHfM8wusv6bCc7jO0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709823564; c=relaxed/simple;
-	bh=jR/bY9tZsBTSoa2JrkUQM7Dnhha/nrJCweBOG1/WNJo=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=GJZqysgCUyKNf0fvWV+IsaqjfBiTLXIwwCoG68Cr+Ai5Rnva7MaXw0o9DhIyfAiKdp83ge05VlS3T0bwbbzf/XTVcdRErtPMpZZoLwBEuZaHbLZvujcdcZpKg/9GvS79at3rIq1DqgJ2wsOVGL93C0Z+fWa4NbMfQCt5K6QbGzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i+O/K/gj; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1710366135; c=relaxed/simple;
+	bh=2afZU1R5tofwwN7ACQOB7q/IY6Uplse7BN7zhrDAdSE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=KWU8XB6uzYtyRtyr9nmejRlnOSi6SvsXijLezL4NGFAexFiYwtyrIgZYUz94XZnVmih25w6mevzwUmeBlxJeThhVrPwZc3nRneukLIf6ZVTPQjnYmRE8j+qtlzpSACErjio9zjkbXR2fRhaPYhNVymq4GKf0LFP3ogyw+5lPdS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C7zOt4T7; arc=none smtp.client-ip=209.85.218.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i+O/K/gj"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-412f62edf25so7381595e9.3
-        for <cryptsetup@lists.linux.dev>; Thu, 07 Mar 2024 06:59:22 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C7zOt4T7"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a466f796fc1so6697766b.3
+        for <cryptsetup@lists.linux.dev>; Wed, 13 Mar 2024 14:42:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709823560; x=1710428360; darn=lists.linux.dev;
-        h=autocrypt:content-language:to:subject:from:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=jR/bY9tZsBTSoa2JrkUQM7Dnhha/nrJCweBOG1/WNJo=;
-        b=i+O/K/gjtrwHtGfZ6HOConkUYjWmIVZpXFfDrbUNcHT9vD7FZOUb03CEGkM5q7m+qE
-         7G1kV6zLL9HI1o+3pZCSZyp4Su2cbcWtd+OFK3WMrMcmmD6cwrbFuzqOcVie1eCfw1/E
-         C4RIc/DzURwXMHtua4KsmGgp8XABe+tzP+6c4k1zgBQ0PRbJyl47AQGdlhlgc7JuW3oW
-         ubCGVUdLn9KpMNewiiooPrnd9jeWdEgCNWhPb4WW54mJWhFHgehqpui5RLXUcJRGl1gW
-         H1S2T2T0xeQe2jjaFKPhPStdA1eK3gdIonCSFqX+TUYUWCOZ01uLQ6/NIAq6crNK7Dqi
-         Rhzw==
+        d=gmail.com; s=20230601; t=1710366131; x=1710970931; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=69DbHhbLmEwBsSWX2JIgZC/XTH64n88xGsyvRHa061Q=;
+        b=C7zOt4T7wFvWfBvUBPHe11ZFhaaFFg7FsZac1u8cW6GiYI9s2zGBeITu3h5ktobdWA
+         sX6UFTb2Z86TlhX1Q6NNlCqiZcjpCIrmgXHueC6jIt4R2va+CIa66aS+Pe4lUifsU6JR
+         n5x/dgqqs0G/NnFfxXf88c6l9r/bHFMRR0IbjPc2AypmbqWHGfCf0MMhisN9SmrqxSVm
+         J12WXg4cqvqdjlsI+AbNZj/OinLtmBmyKu32yc0TQID/ZiQT/3EnYYb3UhRlaxscfs0g
+         l3URdA8zXyeMXo+GmQYvpq88xbkyEvnnQUkf9yWjOX+o4ZiC6Xxk0rFKTbUTUG20kzUj
+         yFvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709823560; x=1710428360;
-        h=autocrypt:content-language:to:subject:from:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jR/bY9tZsBTSoa2JrkUQM7Dnhha/nrJCweBOG1/WNJo=;
-        b=tyA/1X1uHtrHl3WCUQhod3VGxGkF/X9yAHpr0TOsQ9bEBWCVr+xzoEeOlsdlJApTqf
-         Gl54H62PW0SEh5r9CHUCUdAoMdj9PVj2EmuMILFxHEeP1fPLpw1/lbE9UJuoPFKD1GnP
-         f6Re8h47I77KY63fgI1hDUHJmUq0k05JoojtmL8GxQYC39d6nCfOnD2typr/hq0S6Eva
-         Ej34RCphHRbgst9+D3+VT7cQtiLYndD/ZiUKePtOLbZyt2MpCIsVsK9LxNvqUgg9eWI8
-         Rr5Fpr/Tmj+YQyqxOxg4qETW14vJU8fWTHNXGyn7bzLaeZwDitO1xcrXxLiYBc8X/1LI
-         mCug==
-X-Gm-Message-State: AOJu0Yy3vPFmuIj2KfrEJio/pmaYhfzGV63pYlGnNuTWxPpvH5wFStGE
-	FGKZU/nWeb31ScP689PRbzix1qMMbhc8Aa+RUL07FXKt3HeIv9owMAMWhqYQ
-X-Google-Smtp-Source: AGHT+IHpgQlewSzJcAeFRMANNG6w3x6Oop3fJTHJnTmCU317wmxnb8zbZbiDGTkT0NDLrAX4wbm12g==
-X-Received: by 2002:a5d:591c:0:b0:33d:3f27:6626 with SMTP id v28-20020a5d591c000000b0033d3f276626mr12193500wrd.22.1709823560386;
-        Thu, 07 Mar 2024 06:59:20 -0800 (PST)
-Received: from [192.168.2.30] (85-70-151-113.rcd.o2.cz. [85.70.151.113])
-        by smtp.gmail.com with ESMTPSA id bg13-20020a05600c3c8d00b00412fe0eb806sm2984393wmb.14.2024.03.07.06.59.19
-        for <cryptsetup@lists.linux.dev>
+        d=1e100.net; s=20230601; t=1710366131; x=1710970931;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=69DbHhbLmEwBsSWX2JIgZC/XTH64n88xGsyvRHa061Q=;
+        b=X2p3sCGiAiK0GFakRCM9Nq/+Q6GXqMVEktTLfD4hADSNkGRQT/nl0GPoH2x1/KWNg4
+         sf+D0tB6IL6BJjxsLy/rwGL09HJ+uNU594cmq+m4dzsfGswuEfVHRDTouTmJwoCGby4Q
+         wSmEJ/+cDW1y3s/wLibUVZFZiz8AsmpBl5E3J6UiEjqHg7LVnGWHx1EN/EJhyivsluxW
+         BZr13ZxXCkdMFhrWJzJjPYLBIIHnbJV4XCoHYMipV0OCoFnyuwL+08b043fH9zsFNR0V
+         oYKBP44HUgr5WWtD30dC5OxeDGu1581yBdf1+DYWkDgJNbQ8ugsaX/3b85XfsfutFT1T
+         YdtQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW6Okr2feQY+0kSGQZLQ7uvhuyO1SPVJoO1IA99MI+PJv5RhyE1gqSLG7zqn8h9FnsHewpVOy1oR28wF3FheNPcsYCSu6qIIdan1A==
+X-Gm-Message-State: AOJu0YzlOKSEnyZtXqQr42xT2F17wYIee0VQka4KzRpMlRw12V53/aLl
+	HyImgKkzOFuya9j4mkVSXcJsb5Cz+g3ZBPKY+FVVGMyPPoLNanTJqUw3QJOG
+X-Google-Smtp-Source: AGHT+IFCqfH4eOcfVGx0Z5H7sQvujp+KgcIy8FNGwIHakv8uvAcih93fUvrhXJLCtOrjWd6inujywg==
+X-Received: by 2002:a17:906:3c49:b0:a46:3dde:d7ef with SMTP id i9-20020a1709063c4900b00a463dded7efmr2648816ejg.42.1710366130264;
+        Wed, 13 Mar 2024 14:42:10 -0700 (PDT)
+Received: from ?IPV6:2a01:110f:491e:5c00:37ae:90d0:36b1:d067? (2a01-110f-491e-5c00-37ae-90d0-36b1-d067.aa.ipv6.supernova.orange.pl. [2a01:110f:491e:5c00:37ae:90d0:36b1:d067])
+        by smtp.gmail.com with ESMTPSA id ci11-20020a170906c34b00b00a466ec7eb11sm39115ejb.43.2024.03.13.14.42.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Mar 2024 06:59:19 -0800 (PST)
-Message-ID: <4e0515aa-a964-43a8-a351-36b85d8b9c80@gmail.com>
-Date: Thu, 7 Mar 2024 15:59:12 +0100
+        Wed, 13 Mar 2024 14:42:09 -0700 (PDT)
+Message-ID: <0fa222a8-027a-4ad0-ad9f-6bd876758083@gmail.com>
+Date: Wed, 13 Mar 2024 22:42:09 +0100
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
@@ -59,221 +61,734 @@ List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Milan Broz <gmazyland@gmail.com>
-Subject: [ANNOUNCE] cryptsetup 2.7.1
-To: cryptsetup development <cryptsetup@lists.linux.dev>
+Subject: Re: Unexpected behavior of reencrypt performed after partition resize
+To: Ondrej Kozina <okozina@redhat.com>, cryptsetup@lists.linux.dev
+References: <a27e8008-9a85-4218-8d20-d1d56fa73671@gmail.com>
+ <1155f74e-5328-4a1f-9b73-d22093ed8261@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=gmazyland@gmail.com; keydata=
- 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
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------Cvcpw42Z3RKZs80ZYl6jNzWF"
-
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------Cvcpw42Z3RKZs80ZYl6jNzWF
-Content-Type: multipart/mixed; boundary="------------8ISp2Oz0JCmULK4OT309nZcd";
- protected-headers="v1"
-From: Milan Broz <gmazyland@gmail.com>
-To: cryptsetup development <cryptsetup@lists.linux.dev>
-Message-ID: <4e0515aa-a964-43a8-a351-36b85d8b9c80@gmail.com>
-Subject: [ANNOUNCE] cryptsetup 2.7.1
-
---------------8ISp2Oz0JCmULK4OT309nZcd
-Content-Type: multipart/mixed; boundary="------------C1cIFiG5ea1clKbsKvwjFTNa"
-
---------------C1cIFiG5ea1clKbsKvwjFTNa
+From: =?UTF-8?Q?Aleksander_=C5=81ukasz?= <allllllx@gmail.com>
+In-Reply-To: <1155f74e-5328-4a1f-9b73-d22093ed8261@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 8bit
 
-VGhlIGNyeXB0c2V0dXAgMi43LjEgc3RhYmxlIHJlbGVhc2UgaXMgYXZhaWxhYmxlIGF0DQoN
-CiAgICAgICAgICAgICBodHRwczovL2dpdGxhYi5jb20vY3J5cHRzZXR1cC9jcnlwdHNldHVw
-DQoNClBsZWFzZSBub3RlIHRoYXQgcmVsZWFzZSBwYWNrYWdlcyBhcmUgbG9jYXRlZCBvbiBr
-ZXJuZWwub3JnDQoNCiAgICAgICAgICAgICBodHRwczovL3d3dy5rZXJuZWwub3JnL3B1Yi9s
-aW51eC91dGlscy9jcnlwdHNldHVwL3YyLjcvDQoNCkZlZWRiYWNrIGFuZCBidWcgcmVwb3J0
-cyBhcmUgd2VsY29tZWQuDQoNCkNyeXB0c2V0dXAgMi43LjEgUmVsZWFzZSBOb3Rlcw0KPT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09DQpTdGFibGUgYnVnLWZpeCByZWxlYXNlIHdp
-dGggbWlub3IgZXh0ZW5zaW9ucy4NCg0KQWxsIHVzZXJzIG9mIGNyeXB0c2V0dXAgMi43LjAg
-c2hvdWxkIHVwZ3JhZGUgdG8gdGhpcyB2ZXJzaW9uLg0KDQpDaGFuZ2VzIHNpbmNlIHZlcnNp
-b24gMi43LjANCn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fg0KDQoqIEZpeCBpbnRlcnJ1
-cHRlZCBMVUtTMSBkZWNyeXB0aW9uIHJlc3VtZS4NCiAgIFdpdGggdGhlIHJlcGxhY2VtZW50
-IG9mIHRoZSBjcnlwdHNldHVwLXJlZW5jcnlwdCB0b29sIGJ5IHRoZSBjcnlwdHNldHVwDQog
-ICByZWVuY3J5cHQgY29tbWFuZCwgcmVzdW1pbmcgdGhlIGludGVycnVwdGVkIExVS1MxIGRl
-Y3J5cHRpb24gb3BlcmF0aW9uDQogICBjb3VsZCBmYWlsLiBMVUtTMiB3YXMgbm90IGFmZmVj
-dGVkLg0KDQoqIEFsbG93IC0tbGluay12ay10by1rZXlyaW5nIHdpdGggLS10ZXN0LXBhc3Nw
-aHJhc2Ugb3B0aW9uLg0KICAgVGhpcyBvcHRpb24gYWxsb3dzIHVwbG9hZGluZyB0aGUgdm9s
-dW1lIGtleSBpbiBhIHVzZXItc3BlY2lmaWVkIGtlcm5lbA0KICAga2V5cmluZyB3aXRob3V0
-IGFjdGl2YXRpbmcgdGhlIGRldmljZS4NCg0KKiBGaXggY3Jhc2ggd2hlbiAtLWFjdGl2ZS1u
-YW1lIHdhcyB1c2VkIGluIGRlY3J5cHRpb24gaW5pdGlhbGl6YXRpb24uDQoNCiogVXBkYXRl
-cyBhbmQgY2hhbmdlcyB0byBtYW4gcGFnZXMsIGluY2x1ZGluZyBpbmRlbnRhdGlvbiwgc29y
-dGluZyBvcHRpb25zDQogICBhbHBoYWJldGljYWxseSwgZml4aW5nIG1pc3Rha2VzIGluIGNy
-eXB0X3NldF9rZXlyaW5nX3RvX2xpbmssIGFuZCBmaXhpbmcNCiAgIHNvbWUgdHlwb3MuDQoN
-CiogRml4IGNvbXBpbGF0aW9uIHdpdGggbGliYXJnb24yIHdoZW4gLS1kaXNhYmxlLWludGVy
-bmFsLWFyZ29uMiB3YXMgdXNlZC4NCg0KKiBEbyBub3QgcmVxdWlyZSBpbnN0YWxsZWQgYXJn
-b24yLmggaGVhZGVyIGFuZCBuZXZlciBjb21waWxlIGludGVybmFsDQogICBsaWJhcmdvbjIg
-Y29kZSBpZiB0aGUgY3J5cHRvIGxpYnJhcnkgZGlyZWN0bHkgc3VwcG9ydHMgQXJnb24yLg0K
-DQoqIEZpeGVzIHRvIHJlZ3Jlc3Npb24gdGVzdHMgdG8gc3VwcG9ydCBvbGRlciBMaW51eCBk
-aXN0cmlidXRpb25zLg0K
---------------C1cIFiG5ea1clKbsKvwjFTNa
-Content-Type: application/pgp-keys; name="OpenPGP_0xD9B0577BD93E98FC.asc"
-Content-Disposition: attachment; filename="OpenPGP_0xD9B0577BD93E98FC.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: base64
+Hi, thanks for your feedback!
 
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tDQoNCnhzRk5CRTk0cDM4QkVB
-RFpSRVQ4eTFnVnhsZkRrNDQvWHdCYkZqQzdlTTZFYW55Q3VpdlVQTW1Qd1lEbzlxUmUNCnkw
-SmRPR2hXaEFaZXV0R0d4c0tsaW96bWVUTDI1WjZ3V0lDdTJvZVkrWmZiZ0pRWUhGZVEwMU5W
-d29ZeTU3aGgNCnl0WncvNklNTEZSY0lhV1NIZDdvTmRuZVFnNm1WSmNHZEEvQk9YNjh1bzNS
-S1NIajZROEdvUTU0Ri9OcENvdHoNClZjUDFPUnBWSjVwdHlHMHg2T1ptNUVzbjYxcEtFOTc5
-d2NIc3o3RXpjRFlsKzNNUzYzZ1ptK08zRDF1ODBiVU0NCm1CVWx4eUVpQzVqbzVrc1RGaGVB
-OG0vNUNBUFF0eHpZdmdlellsTExTM25reGFxMkVSSzVEaHZNdjBOa3RYU3UNCnRmV1FzT0k1
-V0xqRzdVV1N0d0FuTzJXK0NWWkxjblpWMEs2T0tEYUZiQ2o0b3ZnNUhWMEZ5UVprbk4yTzVR
-YngNCmVzTmxOV2tNT0pBbm5YNmMvem93TzdqcThHQ3BhM29KbDN4eG13RmJDWnRINHozZkVW
-dzB3QUZjMkpsbnVmUjQNCmRoYWF4OWZoTm9VSjRPU1ZUaTl6cXN0eGhFeXl3a2F6YWtFdkFZ
-d09sQzUrMUZLb2M5VUl2QXBBR3ZnY1RKR1QNCk9wN011SHB0SEd3V3ZHWkVhSnFjc3FveTdy
-c1lQeHREUTdiSnVKSmJsekdJVXhXQWw4cXNVc0Y4TTRJU3hCa2YNCmZjVVlpUjB3aDFsdVVo
-WEZvMnJSVEtUK0ljL25KREU2NkVlNEVjbjkrQlBsTk9EaGxFRzF2azYycmhpWVNueXoNCnk1
-TUFVaFVsc3REeHVFallLK05HZDJhWUgwVkFOWmFscWxVWkZURWRPZEE2TllST3hrWVpWc1Z0
-WFFBUkFRQUINCnpTQk5hV3hoYmlCQ2NtOTZJRHhuYldGNmVXeGhibVJBWjIxaGFXd3VZMjl0
-UHNMQmZnUVRBUUlBS0FVQ1QzaW4NCmZ3SWJBd1VKRXN3REFBWUxDUWdIQXdJR0ZRZ0NDUW9M
-QkJZQ0F3RUNIZ0VDRjRBQUNna1EyYkJYZTlrK21QeHANCmJnLy9aV0RjUVZOQUtPV0N2aU5u
-TnZUMzE1V2JEcmpzSjZGQXBGODNoQjUycVFPOXR2amI1Wlk1NDc5NHV3b2YNCmlkT3FpMFhG
-b0xrb0x5aUpra3ZjM1E5U25NODloeWh6cnhuaDJ5bTRyVXI0Y0w2RjllOTl1QzY1NmVyNHRl
-bE0NCmJnOU9TUFIyaU51cXNBenlNaE9HTUVubm05N1lRMlFXT252YkM4UWdvUUI1VnZGM25a
-TWdxVFBUeGN0bFVmYzcNCnQ0QmxHY0lCTEcwb0lOVU5EZjQ0MUtBWGdNUDA1a1ZLMENEUWQw
-MkNUUG9rMlFzaGJnNmF3NTZlU1NVVEI0YXENClpNOFN0MXlTSjJjY01EUkM5bUNxY05GdHV1
-UHlBQUpBSkZtRXZseGFoZDBCQTBtd1YzY2UzOEpCYlRxczVrMFgNCjJKVmxqSE9iZ25mcDNX
-RHR1WThMajB1OEt2TjBDQVlKaFJ1aFk0MGZBUmg4RVBma052SXgvNzQwdWVleHNVQlcNCjNO
-MS9sQ2VBQmFPS3R1MTFrVlV4dkR4YUZSUWMySTV2bC9zWk11blNqSlFRaXdyV05icndaZ2lk
-d2tIenZpem0NCkxqZGdIZ0NKZUVDK3R1MXFpZlRDT2xsdWZ2WGFnalltckg0aG0vUXo2Kzkx
-bExrc3JIb294cDNuQWNONzhkNS8NCkU0cmVhbXgwK0RsZU9KMnlEMVVlUDJ3VURkQjIzT1FV
-M2lwVkRZd0l1SXZEV2laU0lWd1h5RExodWM2NHRpNHQNClNjVUdmdWNFS01FUjFlTFRKK3pJ
-TEhaOVI0SzdDMkJoRUdTQXl4a2VlWC9aOHBMTk9KMVJkVStCK1pGTlh1SUgNCkxKYmdyQWlP
-T3FyMDdXUGJ2UlQxTHZPL3cvNG0zMUQ5S2FsYzRKeXFuOStwanRuQ3daVUVFd0VJQUQ4Q0d3
-TUcNCkN3a0lCd01DQmhVSUFna0tDd1FXQWdNQkFoNEJBaGVBRmlFRUtpa1lKRC9lUm1TTkJv
-YjUyYkJYZTlrK21Qd0YNCkFtR2xGR1lGQ1NUNGIrY0FDZ2tRMmJCWGU5ayttUHcrVFEvK04v
-S1pHSGVUY3NuRU5ocnZHQUl4ZWV6bmRobjMNCm9uN1Fnd1RqRjg0ZFY4U01lNEM2TEN4Nzh3
-bWRFbWtXRDFSZnphLzEvYkszaVZhekpNSGRTQ3pYUWtBZGF5d1kNCllTczhHQmM3WmptTDNR
-aHZTMGF3VlNUNExXbUtqdjlPUGR3czE4RU94WDVCSE9EbFFib1FiT0dNQmJ2cEpvWWQNCkRa
-NEhEK0kybW1pTTRoOFA2MFBieTRnSXR2S2RWbmxVOHpvN1FiZkVJckU0blV0bFpHZnY0Z0lL
-Z2ZjODlsRDUNCkJOVkZ3UUQxT0loTEJnbFZ4bGtjL2ZTRkM3RXpZeitDdDZmR2FYV2VxTDh1
-MStoRGQ1V0lXNlpsMkM4MmQwVjcNCkxUeEtJMHI2cVpFa0xJMUpMRWVWUVJOQnAybU9BZkda
-VE56WU5xTzczTVcwNkVEckRwRzFScC91ZmE2UVNvSWsNClduVVJiay90ZzhmTkZhOEZnWEhH
-cVlmbFRuNVpmZitCVmIva2dVTmNFanpsQjVkZFUxbGFYVEJTclVJQU9meHgNCjVYVmFxM0JM
-TEZpVy9mN1hzUGFhc1V3NStrUjFmNlg4eWdyS1lvaTFaQ091Z1JmTk5uS2NtNkN3UVVyM0E3
-aXgNCjJ6Z1I2NlF2aUZ3bWU1b0pBcTRESldUS3BjQlZnWXdMdkdaWE9iVUNUNEJQWG5rQUVL
-MzJVWEM0THNmUEQ3Y1kNClZZb1FOVHJERGFLbUdxWURNekU3bXkxREdBZ3JJNngyWHA4OE9i
-azNJNG9ORVI4L1lwVENaYjFXNGNGVlM1cHANCm4rS2YwZCswR0dxcHRVY25DNmI1RkdWTTBz
-OWpRc2szR2FmWnpPcUtFUm9hUTBGcGxIUjlTYy9VK2hQZi95aUkNClNPc2JlUC96OWVXWDRp
-TE93VTBFVDNpbmZ3RVFBTjZFZFh5Znc5eHI1NkNKMWFzblExUFN4cHpFR2xVc0VIdm4NCjR3
-Y3VmeUM4S042VkdVbFIzV2lubGFHdk9JQ3p2WU9pUzA2RTZQcUtERWdiYkFwQmgyLy82SWhr
-MU95blMweTQNCmhZZXBKaStwc3RkWG9pdWQ2TlFTTlFsY0ZqQ2ZJOFd6QVQzcmVuc1ZMbXdj
-M0hnUlc1cXF0NVZjK0VXZGc5Y3kNCmxaNDhRZFB5bzNXeU9kMnB5TCt5cU5aUGpNR2lqRTh6
-dnp1cndaaU85YUJrSkNqdWxxWE1zMVl5eUlxZlR4S1ENCjFHQ1VRcTRTb0lRWGpEOEh2Z0o3
-VC9UcHVEZjl3Rmhlb25HcXhpSnB4YjAyTE1FZGtQZ3VnS0lnRzZpT0ZwbHoNCnJzeVN5b2lK
-c0dhMG1KMG4wTzZyWFF4bDFtSy96ZGZndm00Q1BEdWpiZ0lObkl4UnhQZXNjQ1ZZY21qTThr
-VGwNCkdZSnVLcDRHZ2J3YndrQ0lTczRyZXRhQVhpUDNhMmYzZVNhSmM1U25XV2EzSnFINW9n
-a0VXdnVlempOeFc1Zk0NCnBCV3N6ZFFFc2duc2RsSzM3VithQjVvV25ua1pSbFdrMVloR3dM
-MU9EeitFWnpTc0dsa0lyN0JZYWtLM3hSWWINCnhWZlFrVXI3RWVxcnVYb2hTT25QQW93ZVBZ
-QVhDaWdDZld2SUpNbHJQTElPRDJHT3k5ZVYzVVovSkRuLzdZUGYNCkZBak5iMGdWZHBxQkNR
-TkgvZlAyZVBDMEZ6VyszWUwxVWJSK3FNQUViS2JGZXB5Y2c3NUxiQzA4akZ1UVZ2YXUNCkRR
-dGE0RUF2QmtGNDYwUG9za0N6Y011UkVudGpNeGlwQjZJTVNvT0Q3NHRjR1lmVXA2L2tjZ2RF
-YXF5SzgyMTQNCmNvdU8vdThIQUJFQkFBSEN3V1VFR0FFQ0FBOEZBazk0cDM4Q0d3d0ZDUkxN
-QXdBQUNna1EyYkJYZTlrK21QekkNClJBLy9iQWYwTmc4ZEorSWd5ZFJ0ZFQ5WDJ4WUt5dWtr
-QTNIbHJPSW1Pb0E0VGhydi9IVmU3VTI4QWtpUXQyRHgNCk9tTlpZSVYwQnF2TCtkV0FEMUhZ
-Q2RRZ3NnVldWTHByc0ZmcU9ZSG5BV0tzZHF5TlpIdFBDOUo2ZHJud3YwdmMNCkVSMGR0REpq
-TURQNE1KTVRhNEpOak5KWWIyOVdmYkltdmlEUnRJY1Z1allGb1pLMlpCYTFFYzd5UGZrNENz
-eUUNCitZM1FoOUd5OFowOE5ycnhJbitNVkFUQmJvY0tzN2oxSkF2a0ZrK28xZ3JHbnczTlRY
-bkI4Z0V5Z0FLSEh5VWcNCnpyNU55bjVxSjI4RVpyN1ZjMUZQMmxVaUt2MEpCY0hULzl2VlhK
-MUdyZCtWRjJjd1lmdE1XUktSNjZsVGFVUzINCkJYMHRhNklRUVNqOG5TUnNvS2FwUm5pQ2ZU
-bTFENEkxNmo5Yk9vRWZGZFZzTWtjcllGdGZocTk3cWdSOGdadFYNCkNKa3JYMkNBUlorYTFK
-K05QL2VyQVNkNk0xQTNuM2FNRjN4QkZmRnNvdHpQcGxtaHpFeENZd3VPQ1dJQmZQZXINClVR
-aDFNdWdodkcvb1Q4WmFwUjZ4L0VWRStLOTBKMTBYcFBpOFZNaS8zUVJDNURwQ2luM0tjMTRX
-QUU0dUVieVUNCldMS2IzUG1mbVphUzZxRmFKTnRmMlR5Wm9kVDBBQ2d1djlYczRlbDBqOEZS
-YUNxTHZFWlM0cktMTnhiOEVZM1oNCjRMQzYxUWZ5QWJnNVAxMTRtdVZaNHJvOGR6aFowendr
-WkxHZUVzWVBzUXBMbzZYUFQvMzJQUDhhSG4vS0tYK0sNCk03b3VDRWhWZVdzelIyMEJNSzZz
-eFRCUis0YU5xU0tDZGdyNDJqcnR2elJtSnA3Q3dYd0VHQUVJQUNZQ0d3d1cNCklRUXFLUmdr
-UDk1R1pJMEdodm5ac0ZkNzJUNlkvQVVDWWFVVWx3VUpKUGh3R0FBS0NSRFpzRmQ3MlQ2WS9B
-VHoNCkQvNG1WZmwwVGpvYlB6TENuZTU0RUhoWUJFNUpyZkdGWVc5a1lOMVlLUUVIdlhKK21z
-UFk1Tndwd2RIbkRRWGENCk1zcmQ5N2Q3eGpXcnVvZ3NKVVgyazNWNFBhclNNbkxiZ2tFbnNH
-Tm1ESk9RRXZESm0xNkJyNHg5V2Y0cTYxYksNCkVzL2pleHhUeWlKUU12QS8ya2NFdFFoNXZi
-R2owSWhxSGtmODA0WElsV0ozRVJ2MVBTZXJGZkZ4L1RoRDUwRUUNCmVNUDFkVzJDUFVwUHJM
-aG5FaFRlNlRFVExFckpUcG11TnZRTjJ4RzJleUpMZlZreVoxR1BWM3krV2FrSjR5M2sNClpm
-TnVOemszN2gwcllkdXJxWTJTRU5uckhIR1RHS1VJTlB6RHBSNzdoYmhidWpCUy80R1F6Y3gv
-SXdIQWF6WGYNCitnQVNySG5HRTV3U0p5aDlrempYTkpBdXVhQUlhMGtnVFM3blU3angzSHYy
-QVFyRkFnQkRNSUNVOG0zYVRFSWYNClRaRXV2RnNVTFY4Vk9wM3FFRk81QkNSaGhiSE8vOGw0
-a0Y3bGJ5VkpDdjE3Tk9GK285SmRYLytpaTZEVVBYcWYNCjlpSitmZWdkQVhMNzJpcis0SFE3
-ZFU2NElMNVFmaHFVL29oVVM3NFFnWHVaQUJFVVJIMFg1bGlhdFd4NkhmN3ANCmE2ZjFTeGdH
-bVpUZ1U0TEFzN24xaGVVamkyMlpKbGRtK2NjdGhmd0ZONkVGR1ozQXJ4VEUxcVFRdm9EdjZO
-NUcNClFzc2hnbWtIVUh1STB2eFZDYWtkYkxsY0RUTTNEaVRqL3l6RU1Mb3hQd29lMXl6TitW
-U0FxUGFxb1lvZURyeXgNCjFBRnN3dVhUVW9xUy9xMGhoNzFnWFgxdzRXM3N5U0plcktlLzlh
-eVgwdktqN0E9PQ0KPVZYS3ENCi0tLS0tRU5EIFBHUCBQVUJMSUMgS0VZIEJMT0NLLS0tLS0N
-Cg==
+On 7.03.2024 13:11, Ondrej Kozina wrote:
+>
+> Would you mind sharing whole vda device partition table _before_ and 
+> _after_ the aforementioned vda4 resize? The dm-crypt device is 
+> unaligned to 1MiB (not an issue at the moment), but that's what I plan 
+> to focus on with my tests.
+>
+> Also, please share a LUKS2 header dump (luksDump command) output for 
+> luks device before and after the first reencryption run takes place.
+>
+Sure. First - resize of the partition. Running under pid1, the very 
+first boot after VM creation, so, as expected, fdisk notes size mismatch 
+(underlying disk device is already resized):
 
---------------C1cIFiG5ea1clKbsKvwjFTNa--
+```
+~# fdisk -l /dev/vda
+GPT PMBR size mismatch (5265407 != 6291455) will be corrected by write.
+The backup GPT table is not on the end of the device.
+Disk /dev/vda: 3 GiB, 3221225472 bytes, 6291456 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: 8A893502-D7FC-F84F-ADAD-D8B2BE8DFD53
 
---------------8ISp2Oz0JCmULK4OT309nZcd--
+Device       Start     End Sectors  Size Type
+/dev/vda1     2048    8191    6144    3M BIOS boot
+/dev/vda2     8192  262143  253952  124M EFI System
+/dev/vda3   262144 1300479 1038336  507M Linux extended boot
+/dev/vda4  1300480 5265374 3964895  1.9G Linux root (x86-64)
 
---------------Cvcpw42Z3RKZs80ZYl6jNzWF
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+~# growpart /dev/vda 4
+CHANGED: partition=4 start=1300480 old: size=3964895 end=5265374 new: 
+size=4990943 end=6291422
 
------BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEEKikYJD/eRmSNBob52bBXe9k+mPwFAmXp1kAACgkQ2bBXe9k+
-mPxIwA/6A91bXhQzHLc2Bf1cvUfFHpgCZMByJOLgpM4iiBpxR09tDq7BvbbSSsTU
-C2BOX5RY7po/tnZsX5YEV8BaLmL0BoTotgktJhp4JKHSqMHCb13+X6gYJfGOmgQ1
-pHuOF4koxWt85niWgst3cb29WJgM4kgH/uP5Wx7mSrFa5uWrm9rgFHSTslAQXgY8
-DmX3kuurvgEa3CtBEgaHHA01t6yKn6j0hzATJ3a3dU1WsbTe6ExxPXReO3H0KJAW
-sGIk5zmER6bacdN1+FTXPuloRqXGKdvAVsDK3mP3hBxc3m7N+KW1LVWOEQVR3IOZ
-wMAGbskZDUXmF6Bw1WXIJPsVUT8q+NAySVzD1puPrOYbLDp6TaN9hLBjqODVfFTE
-sxnQqbloMV48BODz/2RrQFDinU41d//McP3fauDqjhlWNCLj90SPdm8Wntk01myJ
-MsNklzVMMnCMADL/gsijM13t31PKmetV28scGOG9HPtvfqUxtCumZ6kK6gRixAfg
-fXQhZDIyEXMiiQoqr0J3ohzjwcdQ+4DnE051elVdzF9OYeCtcA9JlqUKnlLEdsr3
-QoQTl/WU0fOWX6QqK7Yo8x/Of5x/9V4V1ML0FhMwt1pZG+acPKV6kz6xSfA1eruh
-RZdagCsVNzpn2P0szke3EdjcdaOnz7deFIhyQeFwTnuYf3uC1wQ=
-=npB3
------END PGP SIGNATURE-----
+~# fdisk -l /dev/vda
+Disk /dev/vda: 3 GiB, 3221225472 bytes, 6291456 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: 8A893502-D7FC-F84F-ADAD-D8B2BE8DFD53
 
---------------Cvcpw42Z3RKZs80ZYl6jNzWF--
+Device       Start     End Sectors  Size Type
+/dev/vda1     2048    8191    6144    3M BIOS boot
+/dev/vda2     8192  262143  253952  124M EFI System
+/dev/vda3   262144 1300479 1038336  507M Linux extended boot
+/dev/vda4  1300480 6291422 4990943  2.4G Linux root (x86-64)
+
+```
+
+Now, after rebooting to initramfs (with visible effect of vda4 hash 
+change after first reencryption):
+
+```
+
+~ # while true; do \
+ >   echo "hello" | cryptsetup luksDump /dev/vda4 \
+ >   && (echo -n "hello" | cryptsetup open /dev/vda4 test ) \
+ >   && dd if=/dev/mapper/test | md5sum \
+ >   && cryptsetup close /dev/mapper/test \
+ >   && (echo -n "hello" | cryptsetup reencrypt /dev/vda4) done
+LUKS header information
+Version:        2
+Epoch:          3
+Metadata area:  16384 [bytes]
+Keyslots area:  16744448 [bytes]
+UUID:           e03c6c01-ac56-454d-9a6f-c8a83356a2d0
+Label:          (no label)
+Subsystem:      (no subsystem)
+Flags:          (no flags)
+
+Data segments:
+   0: crypt
+         offset: 16777216 [bytes]
+         length: (whole device)
+         cipher: aes-xts-plain64
+         sector: 512 [bytes]
+
+Keyslots:
+   0: luks2
+         Key:        512 bits
+         Priority:   normal
+         Cipher:     aes-xts-plain64
+         Cipher key: 512 bits
+         PBKDF:      argon2i
+         Time cost:  55
+         Memory:     102400
+         Threads:    4
+         Salt:       75 38 ee ea bd 96 7f f5 79 0d f2 c2 67 c1 a4 e8
+                     43 7c 3e 02 d6 88 d2 f5 1d 65 62 2a 56 59 cb ac
+         AF stripes: 4000
+         AF hash:    sha256
+         Area offset:32768 [bytes]
+         Area length:258048 [bytes]
+         Digest ID:  0
+Tokens:
+Digests:
+   0: pbkdf2
+         Hash:       sha256
+         Iterations: 112219
+         Salt:       8d bf 43 5f 1b f6 06 ff 51 5e be 08 bb cb 98 5a
+                     fb 16 ca 97 91 f6 ec 94 74 23 60 b7 37 bf 50 5c
+         Digest:     cf 95 25 63 1d fa f0 97 33 4d 10 2d 2e 5a 15 95
+                     34 cf 3d 6e 86 8b f6 53 bd c1 7f b6 52 8f d8 ae
+930b15301ed163117ad6efef821522e8  -
+4958175+0 records in
+4958175+0 records out
+Finished, time 01m30s, 2420 MiB written, speed  26.7 MiB/s
+LUKS header information
+Version:        2
+Epoch:          29
+Metadata area:  16384 [bytes]
+Keyslots area:  16744448 [bytes]
+UUID:           e03c6c01-ac56-454d-9a6f-c8a83356a2d0
+Label:          (no label)
+Subsystem:      (no subsystem)
+Flags:          (no flags)
+
+Data segments:
+   0: crypt
+         offset: 16777216 [bytes]
+         length: (whole device)
+         cipher: aes-xts-plain64
+         sector: 512 [bytes]
+
+Keyslots:
+   1: luks2
+         Key:        512 bits
+         Priority:   normal
+         Cipher:     aes-xts-plain64
+         Cipher key: 512 bits
+         PBKDF:      argon2i
+         Time cost:  55
+         Memory:     102400
+         Threads:    2
+         Salt:       9a 22 40 7e 02 b5 3c e2 b4 96 e3 89 0f ac 9c 73
+                     82 fa 86 4d c6 b2 35 21 a2 29 d5 5b b1 b6 41 93
+         AF stripes: 4000
+         AF hash:    sha256
+         Area offset:290816 [bytes]
+         Area length:258048 [bytes]
+         Digest ID:  1
+Tokens:
+Digests:
+   1: pbkdf2
+         Hash:       sha256
+         Iterations: 1000
+         Salt:       bc e0 7f 12 66 7c dc 64 59 f1 82 99 1a eb 7c 51
+                     96 90 e9 e3 53 49 b5 69 e3 1b 56 3f 99 4c da db
+         Digest:     06 7b 7d 04 7d 29 9c 1c aa 8c 24 72 8e 09 b8 b4
+                     b2 57 46 6f d5 1b 9b 18 a9 96 23 eb 34 53 28 1b
+a1cb0baaeb94f4e3337bc192d5227206  -
+4958175+0 records in
+4958175+0 records out
+Finished, time 01m29s, 2420 MiB written, speed  27.1 MiB/s
+LUKS header information
+Version:        2
+Epoch:          55
+Metadata area:  16384 [bytes]
+Keyslots area:  16744448 [bytes]
+UUID:           e03c6c01-ac56-454d-9a6f-c8a83356a2d0
+Label:          (no label)
+Subsystem:      (no subsystem)
+Flags:          (no flags)
+
+Data segments:
+   0: crypt
+         offset: 16777216 [bytes]
+         length: (whole device)
+         cipher: aes-xts-plain64
+         sector: 512 [bytes]
+
+Keyslots:
+   0: luks2
+         Key:        512 bits
+         Priority:   normal
+         Cipher:     aes-xts-plain64
+         Cipher key: 512 bits
+         PBKDF:      argon2i
+         Time cost:  55
+         Memory:     102400
+         Threads:    2
+         Salt:       6a 31 c9 2f a9 68 01 cb 1f ec 53 63 11 17 90 0a
+                     4c 60 9a c3 ed a4 a8 82 d1 4f d7 7a 47 33 57 c0
+         AF stripes: 4000
+         AF hash:    sha256
+         Area offset:32768 [bytes]
+         Area length:258048 [bytes]
+         Digest ID:  0
+Tokens:
+Digests:
+   0: pbkdf2
+         Hash:       sha256
+         Iterations: 1000
+         Salt:       ff 08 66 12 a0 c4 ed bf 69 47 5b e4 ce f4 49 a4
+                     2b 58 a6 f3 a3 5b 29 20 38 61 45 80 68 d2 01 8c
+         Digest:     d3 5a 80 53 22 a4 f6 0d 19 a9 cd 33 d9 9f 20 d6
+                     42 15 59 00 c5 a4 32 10 83 15 b9 0b fc 8e c9 19
+a1cb0baaeb94f4e3337bc192d5227206  -
+4958175+0 records in
+4958175+0 records out
+
+```
+
+>>
+>> As you can see, first reencryption changes contents of the LUKS
+>> container (as read via the dm-crypt mapper) and all the subsequent ones
+>> do not (which I would expect to always be the case).
+>
+> Would you mind completely skip the reencryption step and just 
+> overwrite the device with data read from the same device? But write 
+> directly to vda4 (that's what reencryption actually does).
+>
+> First lets try without direct flag (I skip 16MiB, default LUKS2 header 
+> size)
+>
+> dd if=/dev/vda4 of=/dev/vda4 seek=32768 skip=32768
+
+
+I'm not 100% sure I understood you correctly. I assume you meant to 
+replace reencryption step with just pure rewriting.
+
+Fresh VM,  resize step as previously, now from initramfs. Checksums do 
+not change:
+
+```
+
+~ # while true; do \
+ >   (echo -n "hello" | cryptsetup open /dev/vda4 test ) \
+ >   && dd if=/dev/mapper/test | md5sum \
+ >   && cryptsetup close /dev/mapper/test \
+ >   && (dd if=/dev/vda4 of=/dev/vda4 seek=32768 skip=32768) done
+4d56a69ae41eccd3f41cf36bbb3d9962  -
+4958175+0 records in
+4958175+0 records out
+4958175+0 records in
+4958175+0 records out
+4958175+0 records in
+4958175+0 records out
+4d56a69ae41eccd3f41cf36bbb3d9962  -
+4958175+0 records in
+4958175+0 records out
+4d56a69ae41eccd3f41cf36bbb3d9962  -
+4958175+0 records in
+4958175+0 records out
+4958175+0 records in
+4958175+0 records out
+4d56a69ae41eccd3f41cf36bbb3d9962  -
+4958175+0 records in
+4958175+0 records out
+
+```
+
+>
+> or alternatively with direct flag like (again this assumes default 
+> LUKS2 header size 16 MiB).
+>
+> dd if=/dev/vda4 of=/dev/vda4 bs=1M seek=16 skip=16 iflag=direct 
+> oflag=direct,dsync
+>
+
+Again, fresh VM, initramfs stage. I could not set dsync as it's not 
+supported in this dd version. Checksums again do not change:
+
+```
+
+~ # while true; do \
+ >   (echo -n "hello" | cryptsetup open /dev/vda4 test ) \
+ >   && dd if=/dev/mapper/test | md5sum \
+ >   && cryptsetup close /dev/mapper/test \
+ >   && (dd if=/dev/vda4 of=/dev/vda4 bs=1M seek=16 skip=16 iflag=direct 
+oflag=direct) done
+4958175+0 records in
+4958175+0 records out
+827cea8270d4bff2553a06477f41efae  -
+2420+1 records in
+2420+1 records out
+4958175+0 records in
+4958175+0 records out
+827cea8270d4bff2553a06477f41efae  -
+2420+1 records in
+2420+1 records out
+4958175+0 records in
+4958175+0 records out
+827cea8270d4bff2553a06477f41efae  -
+2420+1 records in
+2420+1 records out
+
+```
+
+
+>>
+>> I can trigger this behavior by resizing /dev/vda4 partition just before
+>> booting into initramfs, using any of the tools like systemd-repart or
+>> growpart
+>> (which extends /dev/vda4 to the end of also just extended /dev/vda). If
+>
+> How did you extend vda itself? And how did you pass the change in the 
+> guest VM?
+>
+Currently I'm building a raw system image from scratch, converting it to 
+qcow2 format and then using it with Terraform libvirt provider, 
+specifying disk size bigger than the original disk (in 
+https://registry.terraform.io/providers/multani/libvirt/latest/docs/resources/volume#size). 
+Earlier I've also tested with running same way but directly from raw 
+image (skipped raw to qcow2 conversion) and observed same problem as 
+discussed.
+
+So the first start of the new VM is already with bigger disk - bigger 
+than the original image. To be extra sure I will eliminate libvirt and 
+will try with pure qemu + resizing disk with truncate (at the moment not 
+sure what libvirt does exactly for resizing under the hood, some qemu-* 
+tool?), will let you now.
+
+
+>> Any tips on what I could be doing wrong or what to look for would be
+>> very appreciated as I'm running out of idea
+> "lsblk -t /dev/vda" output might also help (again before and after the 
+> resize)
+>
+```
+
+Fresh VM, under pid1:
+
+~# fdisk -l
+GPT PMBR size mismatch (5265407 != 6291455) will be corrected by write.
+The backup GPT table is not on the end of the device.
+Disk /dev/vda: 3 GiB, 3221225472 bytes, 6291456 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: 8A893502-D7FC-F84F-ADAD-D8B2BE8DFD53
+
+Device       Start     End Sectors  Size Type
+/dev/vda1     2048    8191    6144    3M BIOS boot
+/dev/vda2     8192  262143  253952  124M EFI System
+/dev/vda3   262144 1300479 1038336  507M Linux extended boot
+/dev/vda4  1300480 5265374 3964895  1.9G Linux root (x86-64)
+
+
+Disk /dev/mapper/root-crypt: 1.87 GiB, 2013249024 bytes, 3932127 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+~# lsblk -t /dev/vda
+NAME           ALIGNMENT MIN-IO OPT-IO PHY-SEC LOG-SEC ROTA SCHED       
+RQ-SIZE  RA WSAME
+vda                    0    512      0     512     512    1 
+mq-deadline     256 128    0B
+├─vda1                 0    512      0     512     512    1 
+mq-deadline     256 128    0B
+├─vda2                 0    512      0     512     512    1 
+mq-deadline     256 128    0B
+├─vda3                 0    512      0     512     512    1 
+mq-deadline     256 128    0B
+└─vda4                 0    512      0     512     512    1 
+mq-deadline     256 128    0B
+   └─root-crypt         0    512      0     512     512 
+1                 128 128    0B
+
+~# growpart /dev/vda 4
+CHANGED: partition=4 start=1300480 old: size=3964895 end=5265374 new: 
+size=4990943 end=6291422
+
+~# fdisk -l
+Disk /dev/vda: 3 GiB, 3221225472 bytes, 6291456 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: 8A893502-D7FC-F84F-ADAD-D8B2BE8DFD53
+
+Device       Start     End Sectors  Size Type
+/dev/vda1     2048    8191    6144    3M BIOS boot
+/dev/vda2     8192  262143  253952  124M EFI System
+/dev/vda3   262144 1300479 1038336  507M Linux extended boot
+/dev/vda4  1300480 6291422 4990943  2.4G Linux root (x86-64)
+
+
+Disk /dev/mapper/root-crypt: 1.87 GiB, 2013249024 bytes, 3932127 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+~# lsblk -t /dev/vda
+NAME           ALIGNMENT MIN-IO OPT-IO PHY-SEC LOG-SEC ROTA SCHED       
+RQ-SIZE  RA WSAME
+vda                    0    512      0     512     512    1 
+mq-deadline     256 128    0B
+├─vda1                 0    512      0     512     512    1 
+mq-deadline     256 128    0B
+├─vda2                 0    512      0     512     512    1 
+mq-deadline     256 128    0B
+├─vda3                 0    512      0     512     512    1 
+mq-deadline     256 128    0B
+└─vda4                 0    512      0     512     512    1 
+mq-deadline     256 128    0B
+   └─root-crypt         0    512      0     512     512 
+1                 128 128    0B
+
+[ + confirmed that this VM later shows issues with hash changing ]
+
+```
+
+> Could you show me also last 2 cycles of reencryption debug output?
+> Everything in between
+>
+> # Progress ????????????, device_size 2538585600
+> # Next reencryption offset will be X sectors.
+> # Next reencryption chunk size will be Y sectors).
+> (...)
+> # Progress ????????????, device_size 2538585600
+> # Next reencryption offset will be XX sectors.
+> # Next reencryption chunk size will be YY sectors).
+> (...)
+> # Next reencryption offset will be 2538585600 sectors.
+> # Next reencryption chunk size will be 0 sectors).
+> # Destroying keyslot ??.
+> # Acquiring write lock for device /dev/vda4.
+>
+First reencryption in sequence:
+
+```
+Progress:  79.3%, ETA 00m21s, 1920 MiB written, speed  23.5 MiB/s# Next 
+reencryption offset will be 2266048512 sectors.
+# Next reencryption chunk size will be 251783168 sectors).
+# Calculating segments.
+# Calculating hot segments (forward direction).
+# Calculating post segments (forward direction).
+# Setting 'hot' segments.
+# Segment 1 assigned to digest 1.
+# Segment 1 assigned to digest 0.
+# Segment 0 assigned to digest 1.
+# Segment 2 assigned to digest 0.
+# Segment 3 assigned to digest 0.
+# Segment 4 assigned to digest 1.
+# Reencrypting chunk starting at offset: 2266048512, size :251783168.
+# LUKS2 requirements detected:
+# online-reencrypt-v2 - known
+# data_offset: 16777216
+# Checksums hotzone resilience.
+# Going to store 15736448 bytes in reencrypt keyslot.
+# Reencrypt keyslot 2 store.
+# Acquiring write lock for device /dev/vda4.
+# Opening lock resource file /run/cryptsetup/L_254:4
+# Verifying lock handle for /dev/vda4.
+# Device /dev/vda4 WRITE lock taken.
+# Reusing open rw fd on device /dev/vda4
+# LUKS2 requirements detected:
+# online-reencrypt-v2 - known
+# LUKS2 requirements detected:
+# online-reencrypt-v2 - known
+# Device size 2555362816, offset 16777216.
+# Device /dev/vda4 WRITE lock already held.
+# Trying to write LUKS2 header (16384 bytes) at offset 0.
+# Reusing open rw fd on device /dev/vda4
+# 
+Checksum:cea322757b21f00ca01e174ba0b9d72a111e6bfb3f10b2da64f73286f559ee3c 
+(in-memory)
+# Trying to write LUKS2 header (16384 bytes) at offset 16384.
+# Reusing open rw fd on device /dev/vda4
+# 
+Checksum:5b5a9a2c25599f627a4bcaf2bc7b725641da35bc7b96c1fd38adabff4847295e 
+(in-memory)
+# Device /dev/vda4 WRITE lock released.
+# Setting 'post' segments.
+# Segment 0 assigned to digest 1.
+# Segment 1 assigned to digest 0.
+# Segment 2 assigned to digest 0.
+# Segment 3 assigned to digest 1.
+# LUKS2 requirements detected:
+# online-reencrypt-v2 - known
+# LUKS2 requirements detected:
+# online-reencrypt-v2 - known
+# Device size 2555362816, offset 16777216.
+# Acquiring write lock for device /dev/vda4.
+# Opening lock resource file /run/cryptsetup/L_254:4
+# Verifying lock handle for /dev/vda4.
+# Device /dev/vda4 WRITE lock taken.
+# Trying to write LUKS2 header (16384 bytes) at offset 0.
+# Reusing open rw fd on device /dev/vda4
+# 
+Checksum:ffe71cb33aaaabd2b08670e354f0bf1c77161cfeb89d7fb793ab02b2689f9482 
+(in-memory)
+# Trying to write LUKS2 header (16384 bytes) at offset 16384.
+# Reusing open rw fd on device /dev/vda4
+# 
+Checksum:512c81644fe606c716b1580572547cc8f42505ca774114633d544773d514689d 
+(in-memory)
+# Device /dev/vda4 WRITE lock released.
+# Progress 2266048512, device_size 2538585600
+Progress:  89.3%, ETA 00m10s, 2161 MiB written, speed  24.1 MiB/s# Next 
+reencryption offset will be 2517831680 sectors.
+# Next reencryption chunk size will be 20753920 sectors).
+# Calculating segments.
+# Calculating hot segments (forward direction).
+# Calculating post segments (forward direction).
+# Setting 'hot' segments.
+# Segment 1 assigned to digest 1.
+# Segment 1 assigned to digest 0.
+# Segment 0 assigned to digest 1.
+# Segment 2 assigned to digest 0.
+# Segment 3 assigned to digest 1.
+# Reencrypting chunk starting at offset: 2517831680, size :20753920.
+# LUKS2 requirements detected:
+# online-reencrypt-v2 - known
+# data_offset: 16777216
+# Checksums hotzone resilience.
+# Going to store 1297120 bytes in reencrypt keyslot.
+# Reencrypt keyslot 2 store.
+# Acquiring write lock for device /dev/vda4.
+# Opening lock resource file /run/cryptsetup/L_254:4
+# Verifying lock handle for /dev/vda4.
+# Device /dev/vda4 WRITE lock taken.
+# Reusing open rw fd on device /dev/vda4
+# LUKS2 requirements detected:
+# online-reencrypt-v2 - known
+# LUKS2 requirements detected:
+# online-reencrypt-v2 - known
+# Device size 2555362816, offset 16777216.
+# Device /dev/vda4 WRITE lock already held.
+# Trying to write LUKS2 header (16384 bytes) at offset 0.
+# Reusing open rw fd on device /dev/vda4
+# 
+Checksum:261d7c966ed417ccf873b5f80e9ba1fdd5e5d7a8c528c1b2f92cb37315e66983 
+(in-memory)
+# Trying to write LUKS2 header (16384 bytes) at offset 16384.
+# Reusing open rw fd on device /dev/vda4
+# 
+Checksum:90a8ee330e71b45416382a9dc1877613366cbe8bd09aedc0a1edfd6331ed253c 
+(in-memory)
+# Device /dev/vda4 WRITE lock released.
+# Setting 'post' segments.
+# Segment 0 assigned to digest 1.
+# Segment 1 assigned to digest 0.
+# Segment 2 assigned to digest 1.
+# LUKS2 requirements detected:
+# online-reencrypt-v2 - known
+# LUKS2 requirements detected:
+# online-reencrypt-v2 - known
+# Device size 2555362816, offset 16777216.
+# Acquiring write lock for device /dev/vda4.
+# Opening lock resource file /run/cryptsetup/L_254:4
+# Verifying lock handle for /dev/vda4.
+# Device /dev/vda4 WRITE lock taken.
+# Trying to write LUKS2 header (16384 bytes) at offset 0.
+# Reusing open rw fd on device /dev/vda4
+# 
+Checksum:5ee46386f1abeb7429f341a1d5cc4d90d13773e536ebc2750ab1b51c5ec13119 
+(in-memory)
+# Trying to write LUKS2 header (16384 bytes) at offset 16384.
+# Reusing open rw fd on device /dev/vda4
+# 
+Checksum:bf6ce322a8eba364613a16d5c48d143ab40c045b80775ec8b2d50e326449f70d 
+(in-memory)
+# Device /dev/vda4 WRITE lock released.
+# Progress 2517831680, device_size 2538585600
+Progress:  99.2%, ETA 00m00s, 2401 MiB written, speed  26.6 MiB/s# Next 
+reencryption offset will be 2538585600 sectors.
+# Next reencryption chunk size will be 0 sectors).
+Finished, time 01m30s, 2420 MiB written, speed  26.8 MiB/s
+# Destroying keyslot 0.
+# Acquiring write lock for device /dev/vda4.
+```
+
+--
+
+Second reencryption in sequence:
+
+```
+Progress:  79.3%, ETA 00m21s, 1920 MiB written, speed  23.4 MiB/s# Next 
+reencryption offset will be 2266048512 sectors.
+# Next reencryption chunk size will be 251783168 sectors).
+# Calculating segments.
+# Calculating hot segments (forward direction).
+# Calculating post segments (forward direction).
+# Setting 'hot' segments.
+# Segment 1 assigned to digest 0.
+# Segment 1 assigned to digest 1.
+# Segment 0 assigned to digest 0.
+# Segment 2 assigned to digest 1.
+# Segment 3 assigned to digest 1.
+# Segment 4 assigned to digest 0.
+# Reencrypting chunk starting at offset: 2266048512, size :251783168.
+# LUKS2 requirements detected:
+# online-reencrypt-v2 - known
+# data_offset: 16777216
+# Checksums hotzone resilience.
+# Going to store 15736448 bytes in reencrypt keyslot.
+# Reencrypt keyslot 2 store.
+# Acquiring write lock for device /dev/vda4.
+# Opening lock resource file /run/cryptsetup/L_254:4
+# Verifying lock handle for /dev/vda4.
+# Device /dev/vda4 WRITE lock taken.
+# Reusing open rw fd on device /dev/vda4
+# LUKS2 requirements detected:
+# online-reencrypt-v2 - known
+# LUKS2 requirements detected:
+# online-reencrypt-v2 - known
+# Device size 2555362816, offset 16777216.
+# Device /dev/vda4 WRITE lock already held.
+# Trying to write LUKS2 header (16384 bytes) at offset 0.
+# Reusing open rw fd on device /dev/vda4
+# 
+Checksum:a2258bf5bc19066797adf597e43406b2114cf0f72b923ab2f60a3102050fbfc4 
+(in-memory)
+# Trying to write LUKS2 header (16384 bytes) at offset 16384.
+# Reusing open rw fd on device /dev/vda4
+# 
+Checksum:00addb68a000bf05a8caee7e61abff447e7f642dd32a97913f9631bb82cc9528 
+(in-memory)
+# Device /dev/vda4 WRITE lock released.
+# Setting 'post' segments.
+# Segment 0 assigned to digest 0.
+# Segment 1 assigned to digest 1.
+# Segment 2 assigned to digest 1.
+# Segment 3 assigned to digest 0.
+# LUKS2 requirements detected:
+# online-reencrypt-v2 - known
+# LUKS2 requirements detected:
+# online-reencrypt-v2 - known
+# Device size 2555362816, offset 16777216.
+# Acquiring write lock for device /dev/vda4.
+# Opening lock resource file /run/cryptsetup/L_254:4
+# Verifying lock handle for /dev/vda4.
+# Device /dev/vda4 WRITE lock taken.
+# Trying to write LUKS2 header (16384 bytes) at offset 0.
+# Reusing open rw fd on device /dev/vda4
+# 
+Checksum:5755d7ba05dd8e58363def22fb3541a5c0110ab558a0e220882f40efe8adac65 
+(in-memory)
+# Trying to write LUKS2 header (16384 bytes) at offset 16384.
+# Reusing open rw fd on device /dev/vda4
+# 
+Checksum:c4017146996609aa1b9397aeaa7d5c9bed2aed58161317613cf330c70f895c24 
+(in-memory)
+# Device /dev/vda4 WRITE lock released.
+# Progress 2266048512, device_size 2538585600
+Progress:  89.3%, ETA 00m10s, 2161 MiB written, speed  24.0 MiB/s# Next 
+reencryption offset will be 2517831680 sectors.
+# Next reencryption chunk size will be 20753920 sectors).
+# Calculating segments.
+# Calculating hot segments (forward direction).
+# Calculating post segments (forward direction).
+# Setting 'hot' segments.
+# Segment 1 assigned to digest 0.
+# Segment 1 assigned to digest 1.
+# Segment 0 assigned to digest 0.
+# Segment 2 assigned to digest 1.
+# Segment 3 assigned to digest 0.
+# Reencrypting chunk starting at offset: 2517831680, size :20753920.
+# LUKS2 requirements detected:
+# online-reencrypt-v2 - known
+# data_offset: 16777216
+# Checksums hotzone resilience.
+# Going to store 1297120 bytes in reencrypt keyslot.
+# Reencrypt keyslot 2 store.
+# Acquiring write lock for device /dev/vda4.
+# Opening lock resource file /run/cryptsetup/L_254:4
+# Verifying lock handle for /dev/vda4.
+# Device /dev/vda4 WRITE lock taken.
+# Reusing open rw fd on device /dev/vda4
+# LUKS2 requirements detected:
+# online-reencrypt-v2 - known
+# LUKS2 requirements detected:
+# online-reencrypt-v2 - known
+# Device size 2555362816, offset 16777216.
+# Device /dev/vda4 WRITE lock already held.
+# Trying to write LUKS2 header (16384 bytes) at offset 0.
+# Reusing open rw fd on device /dev/vda4
+# 
+Checksum:1458810674e3bb32f4cc4be9da3f03749e0ab5b12d225874adf0c36d49e93066 
+(in-memory)
+# Trying to write LUKS2 header (16384 bytes) at offset 16384.
+# Reusing open rw fd on device /dev/vda4
+# 
+Checksum:b5d67229e0571fa5071e5352b5f2770a3c9debee66c06ae9f27b664eb65a6156 
+(in-memory)
+# Device /dev/vda4 WRITE lock released.
+# Setting 'post' segments.
+# Segment 0 assigned to digest 0.
+# Segment 1 assigned to digest 1.
+# Segment 2 assigned to digest 0.
+# LUKS2 requirements detected:
+# online-reencrypt-v2 - known
+# LUKS2 requirements detected:
+# online-reencrypt-v2 - known
+# Device size 2555362816, offset 16777216.
+# Acquiring write lock for device /dev/vda4.
+# Opening lock resource file /run/cryptsetup/L_254:4
+# Verifying lock handle for /dev/vda4.
+# Device /dev/vda4 WRITE lock taken.
+# Trying to write LUKS2 header (16384 bytes) at offset 0.
+# Reusing open rw fd on device /dev/vda4
+# 
+Checksum:f2ef048cba6cdcf98ffeeb00c3f3dca685d94bf716d82602ff4a65dbae9736f3 
+(in-memory)
+# Trying to write LUKS2 header (16384 bytes) at offset 16384.
+# Reusing open rw fd on device /dev/vda4
+# 
+Checksum:434998528804666561b9b50a592a7d3dbda70d0a01ff0d95e510c4f24d8769a4 
+(in-memory)
+# Device /dev/vda4 WRITE lock released.
+# Progress 2517831680, device_size 2538585600
+Progress:  99.2%, ETA 00m00s, 2401 MiB written, speed  26.4 MiB/s# Next 
+reencryption offset will be 2538585600 sectors.
+# Next reencryption chunk size will be 0 sectors).
+Finished, time 01m30s, 2420 MiB written, speed  26.7 MiB/s
+# Destroying keyslot 1.
+# Acquiring write lock for device /dev/vda4.
+
+```
+
+Regards
+
