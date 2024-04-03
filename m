@@ -1,156 +1,100 @@
-Received: from a2i461.smtp2go.com (a2i461.smtp2go.com [103.47.205.205])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C974205F
-	for <cryptsetup@lists.linux.dev>; Tue,  2 Apr 2024 23:20:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.47.205.205
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17CEC15382B
+	for <cryptsetup@lists.linux.dev>; Wed,  3 Apr 2024 18:24:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712100027; cv=none; b=p8J6j5p9DpdLUhMSBR6mD6WuDrDVh5u7v1oVBhq62VI5ij/R7VCTOH7aZ9lGFxjvT5xYLF+LM9n81iu1WKl8Y6YiOnAUsWgpcXRzd4jpxREosrIhx1b8wEs5PFbVhHZWQls+GVbxY0w/MMkF2uoALd5S1UPlcdSVHHFGVU5XK+k=
+	t=1712168675; cv=none; b=i5piDhV+lNhLndOdy6cp8mf9M99J9E1sjlg7iUnmjHdPlvhfOGSYixVVMLhcUxFRiFaQCz0cyHEkYHme/6A2kwFVoF/vXjcPn7QCuMzfQRG/TbIODkxC89uMrVEJI4wdeYhuNRcKBdt5dePd2FhcXmbkNyC2TH4DXNc6bWLVuv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712100027; c=relaxed/simple;
-	bh=04msEAA7OY+gonemcohOjAVol2e+nYWDINs5wAXHZ7g=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=X8ehyaaE43HJoMujKwbWEnYfJKq24HB7UkP6MVNiAg3OKCdDMnk/Ic1TBJFvkskyRUUMWPn6cCGwz9bv0NLp4r6Mz0Wof8nhulFC5FOBfxa4N7AcW567k867cq8bBQF6ZO99s1tlVoRpxoPo12gwkvc28GsZyqB7vj7UIfr+eKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atlief.com; spf=pass smtp.mailfrom=smtp2go.atlief.com; dkim=pass (2048-bit key) header.d=smtpservice.net header.i=@smtpservice.net header.b=z19sMkoy; dkim=pass (2048-bit key) header.d=atlief.com header.i=@atlief.com header.b=ev5rU0SW; arc=none smtp.client-ip=103.47.205.205
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atlief.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smtp2go.atlief.com
+	s=arc-20240116; t=1712168675; c=relaxed/simple;
+	bh=9wB/RAWmH2rBZWVt7rXCnQqTDbcevhWWYfr1x/OAyNU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=GNKuxIPRbAUmVoU+AxQHHhw5dna5Ledrc2xa6PZ8s/3CMSp/Zjk/JRkjDoW9DNYR1YhIOqqYiOuMv5E2zP2vh54fKwg4DHyaKCQyRita9iKmszTkdQk8RcjuKvqs2/DWqyTnGXzgBBDIJaW5UGobEe1qWQDpBLDCd/jPFTtky+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.co.uk; spf=pass smtp.mailfrom=gmx.co.uk; dkim=pass (2048-bit key) header.d=gmx.co.uk header.i=xanda@gmx.co.uk header.b=eHYmtvie; arc=none smtp.client-ip=212.227.17.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.co.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.co.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=smtpservice.net header.i=@smtpservice.net header.b="z19sMkoy";
-	dkim=pass (2048-bit key) header.d=atlief.com header.i=@atlief.com header.b="ev5rU0SW"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=smtpservice.net; s=mij4i0.a1-4.dyn; x=1712100923; h=Feedback-ID:
-	X-Smtpcorp-Track:To:Message-Id:Date:From:Subject:Reply-To:Sender:
-	List-Unsubscribe; bh=04msEAA7OY+gonemcohOjAVol2e+nYWDINs5wAXHZ7g=; b=z19sMkoy
-	M2/bCmWG6ddzkoKvmXex23IGRQhTRu6zqu198YpEpLxHir8530srGoh+8W4Y+utzOUPkgUsnjDSFo
-	oVBxGluYCJMKZypft1HprNTxCAXdIJY2v/KOdz35cUyXx2kBpprynY3oI6IKooC71Hvn/d/daQPoc
-	AKfEQHi9+2J7SOJLoJYs/Ozy0lkmF+w0yWF5fzNASJDynd9b43S+eKbQFjaMUP5JFeFREnnbQEKpz
-	CCAqcPTiscowWzyrzqL/6fsY4lqeyAzS3lf5QTF8GAY9kDPd7z2jRsEQVbDpqGa8CJbdGEZTFe4Y3
-	gIaIksGm9c6paaRwMs+knLehkg==;
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=atlief.com;
- i=@atlief.com; q=dns/txt; s=s864594; t=1712100023; h=from : subject :
- to : message-id : date;
- bh=04msEAA7OY+gonemcohOjAVol2e+nYWDINs5wAXHZ7g=;
- b=ev5rU0SWRLys09CyhQN9b43GBE+N9sEk+fqbjZx4mYQZTu+OyeC67nweuLfiTLw3EV6Ph
- 4NW6H1o5WFzWkJkvpLR167zr2T3yz4MZ9y7tahCSVXAdbHUk9acTqVJuG/rqkfOHuCaSETY
- td+ttdRAxXIWoV2PDqf2G7p1MDV0P1xJR0z9E9SiYzfiqeEvQ9KjiaJmMLsBbR0gPUwviLd
- dovh4VtaW6geJHmNDFd6+SafbWCbA9wBefhoyosxf8g/avM7GlNLJAGhrp1lPUYBHSaGzX6
- +P5CFijQMSFrnNtlZKV+bWQwxMM/SBFEqXBIEFoNkmspAw5VEZb9Y1hfPOsg==
-Received: from [10.45.79.71] (helo=SmtpCorp) by smtpcorp.com with esmtpsa
- (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
- (Exim 4.94.2-S2G) (envelope-from <public@atlief.com>)
- id 1rrnQQ-pH9SI2-VA; Tue, 02 Apr 2024 23:20:18 +0000
-Received: from [10.136.244.98] (helo=p.atl.red) by smtpcorp.com with esmtpsa
- (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
- (Exim 4.96.1-S2G) (envelope-from <public@atlief.com>)
- id 1rrnQQ-Dv7F6u-0w; Tue, 02 Apr 2024 23:20:18 +0000
-Received: from smtpclient.apple (unknown [192.168.6.235])
- by p.atl.red (Postfix) with ESMTPSA id D620E2DF792;
- Tue,  2 Apr 2024 19:20:15 -0400 (EDT)
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (2048-bit key) header.d=gmx.co.uk header.i=xanda@gmx.co.uk header.b="eHYmtvie"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.co.uk;
+	s=s31663417; t=1712168669; x=1712773469; i=xanda@gmx.co.uk;
+	bh=9wB/RAWmH2rBZWVt7rXCnQqTDbcevhWWYfr1x/OAyNU=;
+	h=X-UI-Sender-Class:Date:Subject:To:References:From:In-Reply-To;
+	b=eHYmtviea0BqXDgtawvHsN/sHsWJQc3ECkZK9NdWw1AT9nfJdY6kgBGOrtG+K/P3
+	 W4NjczoQaBENID4021tYKgUkZScJ+JeIXJ856yxytZ0JGcj0/i9x10Sq/nys6zajw
+	 UvOEHWLvcqRCLs77ESZ6NndUz8EoeZV/hcJU95YzjoRLrmzDPN3Wz5NGGwyOWaoo0
+	 3KQQj0A9iTtw+l2XptOVEdRqLrgxO0mhu0cBGRQvXoeLuDhpgeBGNvfnThUBEGYZt
+	 GApwYdunZK20hjctBB8XuO4U7QFG/qrWz67CEXwkWyBuv7whqD+W3JK+aAqcreffY
+	 omqY3Qz8UAIMwTOxhA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.1.126] ([86.154.10.229]) by mail.gmx.net (mrgmx104
+ [212.227.17.174]) with ESMTPSA (Nemesis) id 1MsHnm-1sh9Ow45Fq-00tjFY; Wed, 03
+ Apr 2024 20:24:29 +0200
+Message-ID: <5cd8c2af-150e-44a1-8ca7-e4ef7f84c78a@gmx.co.uk>
+Date: Wed, 3 Apr 2024 19:24:28 +0100
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.8\))
-Subject: Re: Authenticated Encryption with external Data Integrity Fields
-From: Alex Lieflander <public@atlief.com>
-In-Reply-To: <cc8e19fe-339d-418c-ac9a-846d22a369bb@gmail.com>
-Date: Tue, 2 Apr 2024 19:20:14 -0400
-Cc: cryptsetup@lists.linux.dev
+MIME-Version: 1.0
+User-Agent: Betterbird (Linux)
+Subject: Re: How to resume decryption on LUKS1 in-place
+To: Ondrej Kozina <okozina@redhat.com>,
+ cryptsetup <cryptsetup@lists.linux.dev>
+References: <cd29a952-c9ce-4aa0-8903-a79c325824f0@gmx.co.uk>
+ <764b4743-a61f-4e95-af07-d53c1e842e64@redhat.com>
+ <3e4d1b13-7935-40b6-883a-68b2ef16545d@gmx.co.uk>
+ <80c0a6a8-b710-4483-8e57-56e1951fa213@redhat.com>
+ <76ca5ef4-5298-4c03-bdc1-8b1ce012c7b4@gmx.co.uk>
+ <6caca783-5a30-434c-b9f1-234a1bff9310@redhat.com>
+ <08281b96-b6c3-433e-83ae-3b6b382714ce@gmx.co.uk>
+ <dce9e0d8-dbfa-4b1a-ab61-33b6c7bc770a@redhat.com>
+Content-Language: en-GB
+From: xndr <xanda@gmx.co.uk>
+In-Reply-To: <dce9e0d8-dbfa-4b1a-ab61-33b6c7bc770a@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <8A5880CF-7D20-4686-9638-FA584FBC9EC1@atlief.com>
-References: <22FA1250-CE63-4289-90F3-D2256762E5D0@atlief.com>
- <cc8e19fe-339d-418c-ac9a-846d22a369bb@gmail.com>
-To: Milan Broz <gmazyland@gmail.com>
-X-Mailer: Apple Mail (2.3696.120.41.1.8)
-X-Smtpcorp-Track: 1rrnQQDv7F6I0w.DHKwjaeg6sM8P
-Feedback-ID: 864594m:864594aXAbgdT:864594sX-h4i-ywn
-X-Report-Abuse: Please forward a copy of this message, including all headers,
- to <abuse-report@smtp2go.com>
+X-Provags-ID: V03:K1:m2+sQaJo5tSnH9em6Y2eC15qPGaGvf298NjC1xEjriv5X1jSEX9
+ 1+M+jpfDEZNOFIbsXLlS3ZDGP3yQvwYPGD1RhM4ls0iWML13X1k4kce3U1tHE8LK7vdCWC4
+ cYendkP2fTVhWUYmk3m2rt1anYIZV1LKi5izT7UQgrxJ1+Q0BD4IlMR5onQO4Y+t8e7ecXd
+ 5pLLTaoGpVR8/TGIBNzdQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:sBye8eGhGWs=;YAFoa0VcKHJTtxID4zSbw4fiWnG
+ VYlGPI+/ImULEmsKbX+6BbfTdVQ4WH7kmEF8oZ3UtbbwXaaYtvJgfVevNCandS5SzAnMZ1sJt
+ g3XJ3gXeYGoA5denWtY37tYxbXdei9QjbuBcXEzig+ABsIQ0wYDGYdfyVjqxWRPZ5qcyR8+Zg
+ grxm7jULe3tDu4yAkYXJlf2b8TfQBEgMjA96z2tDsA8Yz+0aMx8eSgaXAWHxc+M1odGrVcsrA
+ tHWrb9Prf1lw80EQKpeBBiKlYiPvHWCfPMGmMLmKQ7rYCKAN+E4DrkqgICLg9F2bcIOUtw1O8
+ 5ZUARXTVImyKoV0nF+oTMZn9b5oj1QRaKn94kRBId7D4MLbCXNH27krr/fprX+YyJJr+zo2Wb
+ v5f+N6GADxTJDYopOB5svDa1hbgAj7uMLiPGUULhkG7/88jexTmAXIlKwV0RuyXSM8Cf+HVvO
+ d8fJU0snUfkt3fxNxihVt+U4bqfAfuzrkHWO/SwH4kL8aoU1LTk9E32bc9z/6s0McyJQ9Qecg
+ OyPt0uUW4x6ZFe92Xkit1Fl3DhZni4SpM7+1lw3Q7BVJwBfv57XtJMpqfDORfKxpXO68I30T/
+ 0fkYuSTsiTWKB6g3pOZg+Oic6EtbIX+QdkacleMUZoVrT2mtVleKYXWhW+yAAtczkCTEDBuyH
+ U5DWpadWSSRmcXuVZbPpxb6B52a54UUzAGzX9G24+5JBo6/lcdo3B66G3arhe8ne/kGHtUzBO
+ h9A1CeF9YXDu+gpi+QZ0biObBmyiT20+fsz3H1OWofi2MaVPUINZUTajIS3N1aJNZIbHt/JMC
+ 5RLqU87wtW4bXsVNAIwEx3AzeeUmZ7ZIM97qPrGEyMTK8=
 
-Hello,
+Hello again,
 
-Thanks for the response.
+We managed to follow the instructions and resume the decryption from
+where it left-off (and thus the data we needed).
 
-> On Apr 2, 2024, at 6:52 AM, Milan Broz wrote:
-> Hi,
->> On 4/2/24 4:15 AM, Alex Lieflander wrote:
->> Hello,
->> I=E2=80=99m trying to add authenticated encryption to my setup, but =
-I=E2=80=99m
->> having trouble to configure some of the parameters. I know that
->> `cryptsetup` with --integrity only supports some of the options that
->> `integritysetup` does, so I=E2=80=99m wondering if I could instead =
-create the
->> integrity layer myself and tell `cryptsetup` to pass down its
->> integrity tags (like it does with the --integrity option).
->=20
-> No, you cannot do that. Authenticated encryption through dm-crypt
-> (with dm-integrity proividend only additional per-sector space) can
-> be configured only with LUKS2 and cryptsetup.
->=20
-> But the AEAD algorithm configuration for LUKS2 will need some update.
-> What is missing for your config?
+Thanks again for helping us on this - much appreciated.
 
-Just for context, I have a 24TB RAID5 backed by 6x4TB CMR HDDs, and 2 =
-individual SSDs. It=E2=80=99s all consumer-grade hardware, so the =
-performance is just adequate. In my testing, `integritysetup` yields =
-very poor performance unless I specify a separate --data-device and use =
---integrity-bitmap-mode. I=E2=80=99ve tried tweaking all other =
-parameters, but so far I haven=E2=80=99t found any other combination =
-with sufficient performance.
-
-So currently my biggest concern is just improving performance, and the =
-best/only way to do that seems to be with a separate --data-device (or =
-to a lesser extent a very large --interleave-sectors). I also think =
-being able to add/use integrity protection while =E2=80=9Cpreserving =
-length=E2=80=9D (on the protected device) would be really useful.
-
->> If that isn=E2=80=99t currently possible, are there any plans to add =
-that
->> feature in the future?
->=20
-> No, this is not planned. But see below.
->=20
->> It could also be used to take advantage of physical hardware with =
-T10/DIF support.
->=20
-> Existing hw formats usually only supports 512 + 8 bytes sector, this =
-is not enough for AEAD.
->=20
-> But NVMe drives can be configured to actually support other per-sector =
-additional space.
-> IMO this feature is currently available only to "enterprise" storage I =
-do not have access to.
->=20
-> But once such configuration is reliable and available on some generic =
-NVMe drives, I definitely
-> want to add support for it (IOW replace dm-integrity by this hw-only =
-solution - this was actually
-> long-term plan; dm-integrity was originally only proof-of-concept.)
->=20
->> Alternatively, are there any
->> future plans to support using a separate device for the integrity
->> tags like `integritysetup` can with --data-device?
->=20
-> No. We already support detached LUKS2 header, with separate device for =
-integrity
-> tags this means maintaining 3 separate devices, this would create too =
-complex scenario.
-
-Fair enough. I=E2=80=99m happy to wing it when it comes to integrity =
-because the stakes are pretty low, but I know better than to try =
-implementing any encryption myself. I figure that if I leave the =
-dm-crypt portion alone, then the dm-integrity portion can be hacky and =
-precarious.
-
-> The long-term plan should head to hw backed support mentioned above, =
-that would also
-> increase performance as it removes the need for dm-integrity journal.
->=20
-> Milan
-
-
-Alex=
+On 07/03/2024 12:14, Ondrej Kozina wrote:
+> On 04/03/2024 17:34, xndr wrote:
+>>
+>>> In general? No I don't recommend to downgrade to 2.4.3 for normal
+>>> operation. It's just currently the best option to workaround the bug
+>>> introduced in 2.5.0 regarding resuming LUKS1 decryption operation.
+>>
+>> Apologies - my bad; this is really what we meant.
+> No problem, the issue is already fixed upstream[1]. Will be released
+> within cryptsetup 2.7.1.
+>
+> [1]: https://gitlab.com/cryptsetup/cryptsetup/-/merge_requests/616
+>
+> Kind regards
+> O.
+>
+>
