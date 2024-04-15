@@ -1,279 +1,77 @@
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3343811E9
-	for <cryptsetup@lists.linux.dev>; Tue,  9 Apr 2024 10:17:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833B43D3B9
+	for <cryptsetup@lists.linux.dev>; Mon, 15 Apr 2024 08:49:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712657878; cv=none; b=sO5ryyRal6oryCnJPzdqynMCkVNjscQMq6UrgVHALWTStEfweihgvd8oFILdiZ1TWPdNGnzs2PMOJEgKF2x/KgGBQ1a0hqw+HDYpO7w1HNzJXsMuunI9jhnqkpSZDNywQtBveVApGamzgJLCHcHPVlG50kLGqdOcKsTFMLZhh2k=
+	t=1713171000; cv=none; b=nMqSixHmBY3kBM5E0OeHxLVUq+J8QZ56Y26wwvBb+or/BQeme2aKkcN65/AQJHZZ+a+/1WGKa7wnwUnoJEdwq8Ufy5DVhTEQMbM4CDHcTZRTtT2znyzbMFW1vYmr+v3Jq1vz71D+dLLQ36Tm63H3YVV1keycF4rItdscSPTDonk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712657878; c=relaxed/simple;
-	bh=v9LHXWYSAERQ+D+nc/KPbl2LuSatlsoTaMo+BQXfnWo=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=tEtV2xL0ysAYv3y6XI8cfh0UypYVqIgv5CVwgyS5KJIZWbBcduPjJqtkAoQEq0YwiYMesrtNbXiMma7pxmgyCCKumnrCBxrcrKQfs7coF0cJOB8xLnuUWlNQhFw9Pi2lyrJI5C5TtUMYnNIzIAbSwxh36jX5d74+94yhm0sP2Yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W6LGZTYU; arc=none smtp.client-ip=209.85.167.46
+	s=arc-20240116; t=1713171000; c=relaxed/simple;
+	bh=q/oyaADR6y1Yq6DCRTNBX42MV7N6DcDfF1sT7CgSabA=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=XRqRzrhWjgunBnQDtwGmP6oxTdRmS+5q7XnEJocTrlxeE+NUMphzR9AkMnGDSCAnyikYY6hnFfHPBleDja8xsRhhPVB3H95nqW4E6x54+9gZFGkdb8y95uyuBrjyuEm/EZbP3gVBUDsoNFyzZH9IK2Yz1/KKf8gzjZqkcRn5bNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SDormi9e; arc=none smtp.client-ip=209.85.161.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W6LGZTYU"
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-516d756eb74so4418400e87.3
-        for <cryptsetup@lists.linux.dev>; Tue, 09 Apr 2024 03:17:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SDormi9e"
+Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-5aa28cde736so1706577eaf.1
+        for <cryptsetup@lists.linux.dev>; Mon, 15 Apr 2024 01:49:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712657875; x=1713262675; darn=lists.linux.dev;
-        h=autocrypt:content-language:to:subject:from:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=v9LHXWYSAERQ+D+nc/KPbl2LuSatlsoTaMo+BQXfnWo=;
-        b=W6LGZTYUZXNkgB4L7VMkIvblesr1oVTVuNi5lNf7GoO/N5tin72275sVQWNI6x1pHf
-         lBquCtoIychUIgoSAbtqIxL5Us6fAzZaXboerQoCUd4tan3lad/kBo/JXkJ6/k+1vLuz
-         v1E+TuwS/SaCgMdvWmuKo0R8X43MoRhS9U62NfubvsvmP7tnr8ouYbEJsGiREiab94J8
-         3fv9vdHI0dNri51PN1nUfanfG6LIDO4cIQuTUq3rwgRgatd4GvGkRu/RTWtVniCvQ/fD
-         JvuqVLHGE0DXTkjRA/rW+iqh8mOywgKgdM0gywjAn+jesactFZv6MpXeTGijcwgQvTha
-         bY8w==
+        d=gmail.com; s=20230601; t=1713170998; x=1713775798; darn=lists.linux.dev;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=VAWJsbeIDSPygX7YaLR6isLPd2p07JOTl8DsjelWL0A=;
+        b=SDormi9eqGEy/v3lt7X2jH+nmCpFjXcGOpkZagBXBomJX39fyYpDDX7Rwio9GtWmJ8
+         c2k46svsI1rngfMuHA2yPEjvsy3o8JFOFvZzQQul3nomvsHDkzpfM93OcsXU/lli5mue
+         3EuGxTm0cuKyErTA1pyLG5QbycqUWRjf5/SQzkuCBAgTuFmOmW0jUYMhmr/lDUIAhWnW
+         auYDhMjJF38PGWPi7fwVYdouC38SI78casInCvxHxzG89oWdNvyvOx2rraDOsxi2aa2J
+         K2QJY/tcBQRIDomaWKUE48OwT7EhlRrL4LiQfBjXKaGPsYSFUZlLgvpvCgdKfraryI8G
+         UOdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712657875; x=1713262675;
-        h=autocrypt:content-language:to:subject:from:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=v9LHXWYSAERQ+D+nc/KPbl2LuSatlsoTaMo+BQXfnWo=;
-        b=L3CsBlXPIYfjTud/TOLv5MP7JTTLU+XJR8tIBawoSGV5Dl4LAAhGMt1b4urUCZLypU
-         JhQ/HT5qXvd1XeRxt+DgzFV51fi7DOfttStK/fQuzo96111RJ95xN2oQ02/F0T4lNWHO
-         f8GBad1Phd/58VSAYI5XFY5qxgPiEM8IFXR89O0u5l4wiLB4szzpw1fsKXBc0cA9GzZ9
-         1BwUWVnbhfhPcocCYvHhe8Bl6+0xDRVOkrZCYZDbKUB2Ie1qhKWevV711ufMwoYlNeZB
-         c1hJHjMyWxLfZJLFY7mRAFu4vr3ouqXdSajL6J/xmSrQkuY/w/FIDPRwLRzjq/KqbFq0
-         cf8g==
-X-Gm-Message-State: AOJu0Yz3RJIsafBCEOjVD6D60baxp9HOFqV6ViQfb1PozKIlqg5N7qgB
-	+x1E6Conw4QJctkSLDBHGkR4TlyZ163nF37DWX51u2Scli/dExLjfGEMFI1i
-X-Google-Smtp-Source: AGHT+IFNap6/2Ud2+NhyTWtDQm4V/f2pNFV4trXJX2T5gY8TKA9aJf6S0BJ29Vn+5rbSawyvlhRcxA==
-X-Received: by 2002:ac2:5b4f:0:b0:513:d01e:b68 with SMTP id i15-20020ac25b4f000000b00513d01e0b68mr6573789lfp.3.1712657874620;
-        Tue, 09 Apr 2024 03:17:54 -0700 (PDT)
-Received: from [147.251.42.107] (laomedon.fi.muni.cz. [147.251.42.107])
-        by smtp.gmail.com with ESMTPSA id e9-20020a05600c4e4900b00416a7313deasm1866858wmq.4.2024.04.09.03.17.53
-        for <cryptsetup@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Apr 2024 03:17:53 -0700 (PDT)
-Message-ID: <1de09e1a-1c9c-40dd-b6a1-4cd1e294c01b@gmail.com>
-Date: Tue, 9 Apr 2024 12:17:46 +0200
+        d=1e100.net; s=20230601; t=1713170998; x=1713775798;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VAWJsbeIDSPygX7YaLR6isLPd2p07JOTl8DsjelWL0A=;
+        b=pvlEw2y0l1m2DC9muQjVdQYNvIuw5bu3BdoluAmkzigQ+BWfKyc2H8/nOcMizJC0V8
+         DaUP5u499BwfCCgHUJNUJTgQBQInPihIG6ltQ+i1jYBcNgXPnRx2+lX18AfhvjYqqVyd
+         sCoTrgfAIrW/hQLYO6ThK82AW6VUSLSOWgA7DOgxfTvtopEBMcAo8pBUwxBE6NcXQqCp
+         ZvNkptXk7svRvc6GNxdOu+rnwnoCjry1onZBI+h8mp8EluTCPDm+yjeBR2pR+49+subU
+         BTSyMwsDKR1tgp5izidhP5GuUXiqc8rXCpLBmGkF8pNbIAkmhAvs8IWSzMAyR1/MycHk
+         Z+0Q==
+X-Gm-Message-State: AOJu0YyWJgyWsIf00m95zGhWqVvQ5c82op7uM/cLBkjIMUFK4PyzshSt
+	tZFwTk8GLuZA4BOgZVvp4+PX9rUJ+NupsYGWrV0KvHBkEhEe3YM26YGEo/KUN16FdfYgKC3vAjG
+	sP/+qMJebnSC9DvooSvfI3qEI6shI1vL+
+X-Google-Smtp-Source: AGHT+IGloK/L1fd3kJth4sNL//X6A/wvOmR8ORn8weun9i5V2Bq/NisgBVeeWBapt7pyloCjQih9xnnvGzh0Wk7DxBo=
+X-Received: by 2002:a05:6870:1019:b0:22e:a61f:d59b with SMTP id
+ 25-20020a056870101900b0022ea61fd59bmr8884409oai.33.1713170998466; Mon, 15 Apr
+ 2024 01:49:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Milan Broz <gmazyland@gmail.com>
-Subject: [ANNOUNCE] cryptsetup 2.7.2
-To: cryptsetup development <cryptsetup@lists.linux.dev>
-Content-Language: en-US
-Autocrypt: addr=gmazyland@gmail.com; keydata=
- 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
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------tsAt12CnD7D5HulWPOl80NTV"
+From: dE <de.techno@gmail.com>
+Date: Mon, 15 Apr 2024 14:19:47 +0530
+Message-ID: <CADofXPDMsOh_wWDM52bVxC4-eU6VgBSoHNF=jSF1h05njUT5Mg@mail.gmail.com>
+Subject: Decrypting only uses 2 threads.
+To: cryptsetup@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------tsAt12CnD7D5HulWPOl80NTV
-Content-Type: multipart/mixed; boundary="------------MNIouPPdu70xyzOhTPZSW87p";
- protected-headers="v1"
-From: Milan Broz <gmazyland@gmail.com>
-To: cryptsetup development <cryptsetup@lists.linux.dev>
-Message-ID: <1de09e1a-1c9c-40dd-b6a1-4cd1e294c01b@gmail.com>
-Subject: [ANNOUNCE] cryptsetup 2.7.2
+Hi.
+    I'm trying to encrypt some block devices and trying to use a
+cipher and mode which is multithreaded. I'm trying out
+aes-ctr-essiv:sha256 to test multithreading, but have also tried
+aes-xts-essiv:sha256 with the same result.
 
---------------MNIouPPdu70xyzOhTPZSW87p
-Content-Type: multipart/mixed; boundary="------------F0w5EvFFVrQVtZwemZgrDIlX"
+The encryption is definitely multithread (massively), but while
+reading from the encrypted block device, I see that only 2 threads are
+being used. As a result when the CPU is throttled (deliberately), I
+see a drop in throughput while increased CPU utilization only in 2
+cores.
+The following commands were used to setup the encryption --
 
---------------F0w5EvFFVrQVtZwemZgrDIlX
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+cryptsetup -y -d - -c aes-ctr-essiv:sha256 --key-size 256 create disk1 /dev/sda
 
-VGhlIGNyeXB0c2V0dXAgMi43LjIgc3RhYmxlIHJlbGVhc2UgaXMgYXZhaWxhYmxlIGF0DQoN
-CiAgICAgICAgICAgICAgaHR0cHM6Ly9naXRsYWIuY29tL2NyeXB0c2V0dXAvY3J5cHRzZXR1
-cA0KDQpQbGVhc2Ugbm90ZSB0aGF0IHJlbGVhc2UgcGFja2FnZXMgYXJlIGxvY2F0ZWQgb24g
-a2VybmVsLm9yZw0KDQogICAgICAgICAgICAgIGh0dHBzOi8vd3d3Lmtlcm5lbC5vcmcvcHVi
-L2xpbnV4L3V0aWxzL2NyeXB0c2V0dXAvdjIuNy8NCg0KRmVlZGJhY2sgYW5kIGJ1ZyByZXBv
-cnRzIGFyZSB3ZWxjb21lZC4NCg0KQ3J5cHRzZXR1cCAyLjcuMiBSZWxlYXNlIE5vdGVzDQo9
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0NClN0YWJsZSBidWctZml4IHJlbGVhc2Uu
-DQoNCkFsbCB1c2VycyBvZiBjcnlwdHNldHVwIDIuNyBzaG91bGQgdXBncmFkZSB0byB0aGlz
-IHZlcnNpb24uDQoNCkNoYW5nZXMgc2luY2UgdmVyc2lvbiAyLjcuMQ0Kfn5+fn5+fn5+fn5+
-fn5+fn5+fn5+fn5+fn5+DQoqIEZpeCBhY3RpdmF0aW9uIG9mIE9QQUwtb25seSBlbmNyeXB0
-ZWQgTFVLUyBkZXZpY2Ugd2l0aCB0b2tlbnMuDQogICBUaGUgaXNzdWUgd2FzIGNhdXNlZCBi
-eSBhbiBpbnZhbGlkIHZvbHVtZSBrZXkgY2hlY2sgKGFzc2VydCkNCiAgIHRoYXQgaXMgaW1w
-b3NzaWJsZSB3aXRob3V0IHNvZnR3YXJlIGVuY3J5cHRpb24uDQoNCiogRml4IGZvcm1hdHRp
-bmcgb2YgT1BBTCBkZXZpY2VzIHdpdGggNDA5Ni1ieXRlIHNlY3RvciBzaXplLg0KDQoqIEZp
-eCBpbmNvcnJlY3QgT1BBTCBsb2NraW5nIHJhbmdlIGFsaWdubWVudCBjYWxjdWxhdGlvbiBp
-ZiB1c2VkDQogICBvdmVyIGFuIHVuYWxpZ25lZCBkZXZpY2UgcGFydGl0aW9uLg0KDQoqIEFk
-ZCAtLWh3LW9wYWwtZmFjdG9yeS1yZXNldCBvcHRpb24gZGVzY3JpcHRpb24gdG8gdGhlIG1h
-bnVhbCBwYWdlLg0KDQoqIERvIG5vdCBjaGVjayB0aGUgcGFzc3BocmFzZSBxdWFsaXR5IGZv
-ciBPUEFMIEFkbWluIFBJTiwNCiAgIGFzIHRoaXMgcGFzc3BocmFzZSBhbHJlYWR5IGV4aXN0
-cy4NCg0KKiBVcGRhdGUgbGljZW5zZSBmb3IgRkFRIGRvY3VtZW50IHRvIENDIEJZLVNBIDQu
-MC4NCg0KTk9URTogUGxlYXNlIG5vdGUgdGhhdCB3aXRoIE9QQUwtb25seSAoLS1ody1vcGFs
-LW9ubHkpIGVuY3J5cHRpb24sDQp0aGUgY29uZmlndXJlZCBPUEFMIGFkbWluaXN0cmF0b3Ig
-UElOIChwYXNzcGhyYXNlKSBhbGxvd3MgdW5sb2NraW5nDQphbGwgY29uZmlndXJlZCBsb2Nr
-aW5nIHJhbmdlcyB3aXRob3V0IExVS1Mga2V5c2xvdCBkZWNyeXB0aW9uDQood2l0aG91dCBr
-bm93bGVkZ2Ugb2YgTFVLUyBwYXNzcGhyYXNlKS4NCkJlY2F1c2Ugb2YgbWFueSBvYnNlcnZl
-ZCBwcm9ibGVtcyB3aXRoIGNvbXBhdGliaWxpdHksIGNyeXB0c2V0dXANCmN1cnJlbnRseSBE
-T0VTIE5PVCB1c2UgT1BBTCBzaW5nbGUtdXNlciBtb2RlLCB3aGljaCB3b3VsZCBhbGxvdyBz
-dWNoDQpkZWNvdXBsaW5nIG9mIE9QQUwgYWRtaW4gUElOIGFjY2Vzcy4NCg==
---------------F0w5EvFFVrQVtZwemZgrDIlX
-Content-Type: application/pgp-keys; name="OpenPGP_0xD9B0577BD93E98FC.asc"
-Content-Disposition: attachment; filename="OpenPGP_0xD9B0577BD93E98FC.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: base64
-
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tDQoNCnhzRk5CRTk0cDM4QkVB
-RFpSRVQ4eTFnVnhsZkRrNDQvWHdCYkZqQzdlTTZFYW55Q3VpdlVQTW1Qd1lEbzlxUmUNCnkw
-SmRPR2hXaEFaZXV0R0d4c0tsaW96bWVUTDI1WjZ3V0lDdTJvZVkrWmZiZ0pRWUhGZVEwMU5W
-d29ZeTU3aGgNCnl0WncvNklNTEZSY0lhV1NIZDdvTmRuZVFnNm1WSmNHZEEvQk9YNjh1bzNS
-S1NIajZROEdvUTU0Ri9OcENvdHoNClZjUDFPUnBWSjVwdHlHMHg2T1ptNUVzbjYxcEtFOTc5
-d2NIc3o3RXpjRFlsKzNNUzYzZ1ptK08zRDF1ODBiVU0NCm1CVWx4eUVpQzVqbzVrc1RGaGVB
-OG0vNUNBUFF0eHpZdmdlellsTExTM25reGFxMkVSSzVEaHZNdjBOa3RYU3UNCnRmV1FzT0k1
-V0xqRzdVV1N0d0FuTzJXK0NWWkxjblpWMEs2T0tEYUZiQ2o0b3ZnNUhWMEZ5UVprbk4yTzVR
-YngNCmVzTmxOV2tNT0pBbm5YNmMvem93TzdqcThHQ3BhM29KbDN4eG13RmJDWnRINHozZkVW
-dzB3QUZjMkpsbnVmUjQNCmRoYWF4OWZoTm9VSjRPU1ZUaTl6cXN0eGhFeXl3a2F6YWtFdkFZ
-d09sQzUrMUZLb2M5VUl2QXBBR3ZnY1RKR1QNCk9wN011SHB0SEd3V3ZHWkVhSnFjc3FveTdy
-c1lQeHREUTdiSnVKSmJsekdJVXhXQWw4cXNVc0Y4TTRJU3hCa2YNCmZjVVlpUjB3aDFsdVVo
-WEZvMnJSVEtUK0ljL25KREU2NkVlNEVjbjkrQlBsTk9EaGxFRzF2azYycmhpWVNueXoNCnk1
-TUFVaFVsc3REeHVFallLK05HZDJhWUgwVkFOWmFscWxVWkZURWRPZEE2TllST3hrWVpWc1Z0
-WFFBUkFRQUINCnpTQk5hV3hoYmlCQ2NtOTZJRHhuYldGNmVXeGhibVJBWjIxaGFXd3VZMjl0
-UHNMQmZnUVRBUUlBS0FVQ1QzaW4NCmZ3SWJBd1VKRXN3REFBWUxDUWdIQXdJR0ZRZ0NDUW9M
-QkJZQ0F3RUNIZ0VDRjRBQUNna1EyYkJYZTlrK21QeHANCmJnLy9aV0RjUVZOQUtPV0N2aU5u
-TnZUMzE1V2JEcmpzSjZGQXBGODNoQjUycVFPOXR2amI1Wlk1NDc5NHV3b2YNCmlkT3FpMFhG
-b0xrb0x5aUpra3ZjM1E5U25NODloeWh6cnhuaDJ5bTRyVXI0Y0w2RjllOTl1QzY1NmVyNHRl
-bE0NCmJnOU9TUFIyaU51cXNBenlNaE9HTUVubm05N1lRMlFXT252YkM4UWdvUUI1VnZGM25a
-TWdxVFBUeGN0bFVmYzcNCnQ0QmxHY0lCTEcwb0lOVU5EZjQ0MUtBWGdNUDA1a1ZLMENEUWQw
-MkNUUG9rMlFzaGJnNmF3NTZlU1NVVEI0YXENClpNOFN0MXlTSjJjY01EUkM5bUNxY05GdHV1
-UHlBQUpBSkZtRXZseGFoZDBCQTBtd1YzY2UzOEpCYlRxczVrMFgNCjJKVmxqSE9iZ25mcDNX
-RHR1WThMajB1OEt2TjBDQVlKaFJ1aFk0MGZBUmg4RVBma052SXgvNzQwdWVleHNVQlcNCjNO
-MS9sQ2VBQmFPS3R1MTFrVlV4dkR4YUZSUWMySTV2bC9zWk11blNqSlFRaXdyV05icndaZ2lk
-d2tIenZpem0NCkxqZGdIZ0NKZUVDK3R1MXFpZlRDT2xsdWZ2WGFnalltckg0aG0vUXo2Kzkx
-bExrc3JIb294cDNuQWNONzhkNS8NCkU0cmVhbXgwK0RsZU9KMnlEMVVlUDJ3VURkQjIzT1FV
-M2lwVkRZd0l1SXZEV2laU0lWd1h5RExodWM2NHRpNHQNClNjVUdmdWNFS01FUjFlTFRKK3pJ
-TEhaOVI0SzdDMkJoRUdTQXl4a2VlWC9aOHBMTk9KMVJkVStCK1pGTlh1SUgNCkxKYmdyQWlP
-T3FyMDdXUGJ2UlQxTHZPL3cvNG0zMUQ5S2FsYzRKeXFuOStwanRuQ3daVUVFd0VJQUQ4Q0d3
-TUcNCkN3a0lCd01DQmhVSUFna0tDd1FXQWdNQkFoNEJBaGVBRmlFRUtpa1lKRC9lUm1TTkJv
-YjUyYkJYZTlrK21Qd0YNCkFtR2xGR1lGQ1NUNGIrY0FDZ2tRMmJCWGU5ayttUHcrVFEvK04v
-S1pHSGVUY3NuRU5ocnZHQUl4ZWV6bmRobjMNCm9uN1Fnd1RqRjg0ZFY4U01lNEM2TEN4Nzh3
-bWRFbWtXRDFSZnphLzEvYkszaVZhekpNSGRTQ3pYUWtBZGF5d1kNCllTczhHQmM3WmptTDNR
-aHZTMGF3VlNUNExXbUtqdjlPUGR3czE4RU94WDVCSE9EbFFib1FiT0dNQmJ2cEpvWWQNCkRa
-NEhEK0kybW1pTTRoOFA2MFBieTRnSXR2S2RWbmxVOHpvN1FiZkVJckU0blV0bFpHZnY0Z0lL
-Z2ZjODlsRDUNCkJOVkZ3UUQxT0loTEJnbFZ4bGtjL2ZTRkM3RXpZeitDdDZmR2FYV2VxTDh1
-MStoRGQ1V0lXNlpsMkM4MmQwVjcNCkxUeEtJMHI2cVpFa0xJMUpMRWVWUVJOQnAybU9BZkda
-VE56WU5xTzczTVcwNkVEckRwRzFScC91ZmE2UVNvSWsNClduVVJiay90ZzhmTkZhOEZnWEhH
-cVlmbFRuNVpmZitCVmIva2dVTmNFanpsQjVkZFUxbGFYVEJTclVJQU9meHgNCjVYVmFxM0JM
-TEZpVy9mN1hzUGFhc1V3NStrUjFmNlg4eWdyS1lvaTFaQ091Z1JmTk5uS2NtNkN3UVVyM0E3
-aXgNCjJ6Z1I2NlF2aUZ3bWU1b0pBcTRESldUS3BjQlZnWXdMdkdaWE9iVUNUNEJQWG5rQUVL
-MzJVWEM0THNmUEQ3Y1kNClZZb1FOVHJERGFLbUdxWURNekU3bXkxREdBZ3JJNngyWHA4OE9i
-azNJNG9ORVI4L1lwVENaYjFXNGNGVlM1cHANCm4rS2YwZCswR0dxcHRVY25DNmI1RkdWTTBz
-OWpRc2szR2FmWnpPcUtFUm9hUTBGcGxIUjlTYy9VK2hQZi95aUkNClNPc2JlUC96OWVXWDRp
-TE93VTBFVDNpbmZ3RVFBTjZFZFh5Znc5eHI1NkNKMWFzblExUFN4cHpFR2xVc0VIdm4NCjR3
-Y3VmeUM4S042VkdVbFIzV2lubGFHdk9JQ3p2WU9pUzA2RTZQcUtERWdiYkFwQmgyLy82SWhr
-MU95blMweTQNCmhZZXBKaStwc3RkWG9pdWQ2TlFTTlFsY0ZqQ2ZJOFd6QVQzcmVuc1ZMbXdj
-M0hnUlc1cXF0NVZjK0VXZGc5Y3kNCmxaNDhRZFB5bzNXeU9kMnB5TCt5cU5aUGpNR2lqRTh6
-dnp1cndaaU85YUJrSkNqdWxxWE1zMVl5eUlxZlR4S1ENCjFHQ1VRcTRTb0lRWGpEOEh2Z0o3
-VC9UcHVEZjl3Rmhlb25HcXhpSnB4YjAyTE1FZGtQZ3VnS0lnRzZpT0ZwbHoNCnJzeVN5b2lK
-c0dhMG1KMG4wTzZyWFF4bDFtSy96ZGZndm00Q1BEdWpiZ0lObkl4UnhQZXNjQ1ZZY21qTThr
-VGwNCkdZSnVLcDRHZ2J3YndrQ0lTczRyZXRhQVhpUDNhMmYzZVNhSmM1U25XV2EzSnFINW9n
-a0VXdnVlempOeFc1Zk0NCnBCV3N6ZFFFc2duc2RsSzM3VithQjVvV25ua1pSbFdrMVloR3dM
-MU9EeitFWnpTc0dsa0lyN0JZYWtLM3hSWWINCnhWZlFrVXI3RWVxcnVYb2hTT25QQW93ZVBZ
-QVhDaWdDZld2SUpNbHJQTElPRDJHT3k5ZVYzVVovSkRuLzdZUGYNCkZBak5iMGdWZHBxQkNR
-TkgvZlAyZVBDMEZ6VyszWUwxVWJSK3FNQUViS2JGZXB5Y2c3NUxiQzA4akZ1UVZ2YXUNCkRR
-dGE0RUF2QmtGNDYwUG9za0N6Y011UkVudGpNeGlwQjZJTVNvT0Q3NHRjR1lmVXA2L2tjZ2RF
-YXF5SzgyMTQNCmNvdU8vdThIQUJFQkFBSEN3V1VFR0FFQ0FBOEZBazk0cDM4Q0d3d0ZDUkxN
-QXdBQUNna1EyYkJYZTlrK21QekkNClJBLy9iQWYwTmc4ZEorSWd5ZFJ0ZFQ5WDJ4WUt5dWtr
-QTNIbHJPSW1Pb0E0VGhydi9IVmU3VTI4QWtpUXQyRHgNCk9tTlpZSVYwQnF2TCtkV0FEMUhZ
-Q2RRZ3NnVldWTHByc0ZmcU9ZSG5BV0tzZHF5TlpIdFBDOUo2ZHJud3YwdmMNCkVSMGR0REpq
-TURQNE1KTVRhNEpOak5KWWIyOVdmYkltdmlEUnRJY1Z1allGb1pLMlpCYTFFYzd5UGZrNENz
-eUUNCitZM1FoOUd5OFowOE5ycnhJbitNVkFUQmJvY0tzN2oxSkF2a0ZrK28xZ3JHbnczTlRY
-bkI4Z0V5Z0FLSEh5VWcNCnpyNU55bjVxSjI4RVpyN1ZjMUZQMmxVaUt2MEpCY0hULzl2VlhK
-MUdyZCtWRjJjd1lmdE1XUktSNjZsVGFVUzINCkJYMHRhNklRUVNqOG5TUnNvS2FwUm5pQ2ZU
-bTFENEkxNmo5Yk9vRWZGZFZzTWtjcllGdGZocTk3cWdSOGdadFYNCkNKa3JYMkNBUlorYTFK
-K05QL2VyQVNkNk0xQTNuM2FNRjN4QkZmRnNvdHpQcGxtaHpFeENZd3VPQ1dJQmZQZXINClVR
-aDFNdWdodkcvb1Q4WmFwUjZ4L0VWRStLOTBKMTBYcFBpOFZNaS8zUVJDNURwQ2luM0tjMTRX
-QUU0dUVieVUNCldMS2IzUG1mbVphUzZxRmFKTnRmMlR5Wm9kVDBBQ2d1djlYczRlbDBqOEZS
-YUNxTHZFWlM0cktMTnhiOEVZM1oNCjRMQzYxUWZ5QWJnNVAxMTRtdVZaNHJvOGR6aFowendr
-WkxHZUVzWVBzUXBMbzZYUFQvMzJQUDhhSG4vS0tYK0sNCk03b3VDRWhWZVdzelIyMEJNSzZz
-eFRCUis0YU5xU0tDZGdyNDJqcnR2elJtSnA3Q3dYd0VHQUVJQUNZQ0d3d1cNCklRUXFLUmdr
-UDk1R1pJMEdodm5ac0ZkNzJUNlkvQVVDWWFVVWx3VUpKUGh3R0FBS0NSRFpzRmQ3MlQ2WS9B
-VHoNCkQvNG1WZmwwVGpvYlB6TENuZTU0RUhoWUJFNUpyZkdGWVc5a1lOMVlLUUVIdlhKK21z
-UFk1Tndwd2RIbkRRWGENCk1zcmQ5N2Q3eGpXcnVvZ3NKVVgyazNWNFBhclNNbkxiZ2tFbnNH
-Tm1ESk9RRXZESm0xNkJyNHg5V2Y0cTYxYksNCkVzL2pleHhUeWlKUU12QS8ya2NFdFFoNXZi
-R2owSWhxSGtmODA0WElsV0ozRVJ2MVBTZXJGZkZ4L1RoRDUwRUUNCmVNUDFkVzJDUFVwUHJM
-aG5FaFRlNlRFVExFckpUcG11TnZRTjJ4RzJleUpMZlZreVoxR1BWM3krV2FrSjR5M2sNClpm
-TnVOemszN2gwcllkdXJxWTJTRU5uckhIR1RHS1VJTlB6RHBSNzdoYmhidWpCUy80R1F6Y3gv
-SXdIQWF6WGYNCitnQVNySG5HRTV3U0p5aDlrempYTkpBdXVhQUlhMGtnVFM3blU3angzSHYy
-QVFyRkFnQkRNSUNVOG0zYVRFSWYNClRaRXV2RnNVTFY4Vk9wM3FFRk81QkNSaGhiSE8vOGw0
-a0Y3bGJ5VkpDdjE3Tk9GK285SmRYLytpaTZEVVBYcWYNCjlpSitmZWdkQVhMNzJpcis0SFE3
-ZFU2NElMNVFmaHFVL29oVVM3NFFnWHVaQUJFVVJIMFg1bGlhdFd4NkhmN3ANCmE2ZjFTeGdH
-bVpUZ1U0TEFzN24xaGVVamkyMlpKbGRtK2NjdGhmd0ZONkVGR1ozQXJ4VEUxcVFRdm9EdjZO
-NUcNClFzc2hnbWtIVUh1STB2eFZDYWtkYkxsY0RUTTNEaVRqL3l6RU1Mb3hQd29lMXl6TitW
-U0FxUGFxb1lvZURyeXgNCjFBRnN3dVhUVW9xUy9xMGhoNzFnWFgxdzRXM3N5U0plcktlLzlh
-eVgwdktqN0E9PQ0KPVZYS3ENCi0tLS0tRU5EIFBHUCBQVUJMSUMgS0VZIEJMT0NLLS0tLS0N
-Cg==
-
---------------F0w5EvFFVrQVtZwemZgrDIlX--
-
---------------MNIouPPdu70xyzOhTPZSW87p--
-
---------------tsAt12CnD7D5HulWPOl80NTV
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEKikYJD/eRmSNBob52bBXe9k+mPwFAmYVFcsACgkQ2bBXe9k+
-mPxcDQ/8CliRT4/dRKl+9Ah126SoghCwA90UUmTgTZ6yJXpQZKtcyrfOT2xYfG9t
-nXtNOj2B2vXhMXvL79vvfmN9vd1WpqdZdfwHNv37jbXjHz/uydEPO4Hw6CznlhcI
-UR3BV5FwfcAc9DRdjHEi3Uqz9P4epsMAwIiXD8TWGDKpyY9Polz/GgYL42Rq5T/9
-vsRaQ5pepCZHq9x6pe3URhh9bW0Lj2KDhB/wtkUG8qtyNFp8zuTlfJwae1T5gOJd
-d1nzO4HvWOo9JZZ5Er5UBAE3OkqwJ80QZQgrA8QYnC9NKneuL0yzEzs0DHs09bn7
-UAnvOwhITn/PHAlHV8wcZr4lRy+d1wa0TXLGtdgmwm6aUWSJrIX08WfbjPf7HVlB
-jpLazZVrYxYM2HS3/8UYx2N3IFjHuO5F7nxnhJQKnjmXTolwHS9RTxmOYx8w29DJ
-NkAs+XdfoRc0tChTk7E6eb6WSEfMfTV3ZQKvzpfwULKhGljtYCYe2VZst+fPqDlV
-nx4GP9XNRwQXhFZLzbbJXVM35uM4A2eKqjP4JhX5Zw51FSDcUPGB6m+bFPrik6di
-GBkKM0yxGZoG0pitGSO9RLr+mPptLEnuQe3kKIaaXjhU+TU934esa107Lu3uj0U9
-lS/A/EM0Xd/ryNZWXnkZFOjCsQPn3TgfLkzdi75Krec8dWzf+zM=
-=nBtz
------END PGP SIGNATURE-----
-
---------------tsAt12CnD7D5HulWPOl80NTV--
+Is there anything I can do to increase concurrency while decrypting?
