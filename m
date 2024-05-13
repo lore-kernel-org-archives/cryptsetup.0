@@ -1,77 +1,179 @@
-Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
+Received: from mailout09.t-online.de (mailout09.t-online.de [194.25.134.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950343BB50
-	for <cryptsetup@lists.linux.dev>; Sat, 27 Apr 2024 05:05:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=51.77.79.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094F83EA76
+	for <cryptsetup@lists.linux.dev>; Mon, 13 May 2024 08:32:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.25.134.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714194359; cv=none; b=F6iDoHdnpr+V6oJtdL8fi03PoY7mtUmLbEHUyRM0DUBmOF+lZBXu9ukve8PzZQXE3gm94MAffsGsM2dx2O9DSmhIGvtfDrGrgFdtnSe78xAkKfLQr5Y8x4kbosX7P/6F7ywHqKovRM8oOnK0M6Gy76MQypkxz6HMPzR5H/TxG+Y=
+	t=1715589132; cv=none; b=nJSr0DmYUN+56hVf3avvR/6BUz1BhNmiGpsX9pDkRyhLrJ7HijwcTJk+X/3/wXe3oSvddgsYkSr5GJtaxQz4vmRnlH5MSsBnFzlymaMLiXotmfDUewNZPvVMdo+i+okBvsaVRBALPVxmLihwd+9wUMTzW8B64QpSK4EMR3PY228=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714194359; c=relaxed/simple;
-	bh=A2znbZcjOjxJ8MN9w7J/t3Qk+oGaLK8apMh/v4Te2Ok=;
-	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RRxIVJlFtV7VdKnvmhhUHEld9xDtjptTiufu+a+eowAbLrDgMgcXeWjwPNlPsUME4OxoqzhGSCcdloYnVu9k4YtGmhC8AYe5yDEiE6u7XAngVXSQCdZKyV0wCIqQDvoLcOKWxtGqc/Lop3JmppxxBn+7JJ71tRMvRLmHQgLHpoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fomin.one; spf=pass smtp.mailfrom=fomin.one; dkim=pass (2048-bit key) header.d=fomin.one header.i=@fomin.one header.b=saNNv5iU; arc=none smtp.client-ip=51.77.79.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fomin.one
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fomin.one
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fomin.one header.i=@fomin.one header.b="saNNv5iU"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fomin.one;
-	s=protonmail2; t=1714194331; x=1714453531;
-	bh=A2znbZcjOjxJ8MN9w7J/t3Qk+oGaLK8apMh/v4Te2Ok=;
-	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=saNNv5iUMZvW+gnSHDdHo3QZsWeHNTfvwXh9oTkKfLcM0opTwW6ZInUJ7ceC8YxT9
-	 PyHz0DoS5qRvX6s5xqmBXuF79mD+M1GBNp8aOoTqfSxMx04VONF4ybD6xQNbm9Y1Pc
-	 XYSNnf4utXsm1VxUTvxCAXBKfquxVGGRZwHcySbjvEW74bzZQF71eW5/dAmiMpT/ix
-	 j7AWcjroho8rxPnEdjhi9wdBapknCWLQnN5De/jMPBfO9+Q/hQLFADUq8dpQW0agWh
-	 zNq7cVGHHT9cH9yI2/BFGnURvfUlciac5eYFrd/WybHXsC3QxqrD4lqLSzPt/9Z2GE
-	 RpUEIMAH8O/WA==
-Date: Sat, 27 Apr 2024 05:05:26 +0000
+	s=arc-20240116; t=1715589132; c=relaxed/simple;
+	bh=zn8vQKkn6UU/DidImJ0tpHkP+mnWW4WFgD/PCu91MYw=;
+	h=Message-ID:Subject:From:To:Date:Content-Type:MIME-Version; b=k22XdbLqbaXR88UZsI8W+bT8u+/oDKgeH/01NrEpvgK5ODCfikZIIbHw5uzSUhSKXSOdW4pOusSAw9kKZDs7NVa2ZIS57v2jJqIWXHd+DYMIhEoStHUOXNjTileO4B2/NXwTiL1snMM0tEvjf8Km4zOj2Wg+Y/z2zVYwF37Lr/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=t-online.de; spf=pass smtp.mailfrom=t-online.de; arc=none smtp.client-ip=194.25.134.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=t-online.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=t-online.de
+Received: from fwd88.aul.t-online.de (fwd88.aul.t-online.de [10.223.144.114])
+	by mailout09.t-online.de (Postfix) with SMTP id 33E0C5788B
+	for <cryptsetup@lists.linux.dev>; Mon, 13 May 2024 10:25:57 +0200 (CEST)
+Received: from [192.168.2.100] ([217.226.58.177]) by fwd88.t-online.de
+	with (TLSv1.3:TLS_AES_256_GCM_SHA384 encrypted)
+	esmtp id 1s6R0O-1G8uhN0; Mon, 13 May 2024 10:25:56 +0200
+Message-ID: <44641f736efa92219f10a342444efd65d93555cf.camel@t-online.de>
+Subject: LUKS disk encryption
+From: vfritz <v_fritz@t-online.de>
 To: cryptsetup@lists.linux.dev
-From: Maxim Fomin <maxim@fomin.one>
-Subject: Re: mkfs on luks USB flash drive blocks forever with "reset SuperSpeed USB device" (kernel 6.7.9)
-Message-ID: <RAfpmZ2xkxaP9hDzji38HPCaLGowefnvLadVpdY53QL2Vv8TOeWyknA4nsP4hsUDYrRJ_nZfO_tpFJvdLaANd9lGjRsrKZ-tFKo3mUwSqDQ=@fomin.one>
-In-Reply-To: <10e060de0431f88edeaf7fa395965c1763a6b749.camel@mega.nu>
-References: <10e060de0431f88edeaf7fa395965c1763a6b749.camel@mega.nu>
-Feedback-ID: 10594471:user:proton
-X-Pm-Message-ID: f7777751ff0bc8caa4529fad036d3d42b7369225
+Date: Mon, 13 May 2024 10:25:43 +0200
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-CYVSfBpzUCrF0wKDu+KK"
+User-Agent: Evolution 3.46.4-2 
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+X-TOI-EXPURGATEID: 150726::1715588756-E63EB3AB-30EFAB65/0/0 CLEAN NORMAL
+X-TOI-MSGID: 382e5b06-75f9-48af-81fd-778c74696797
+
+
+--=-CYVSfBpzUCrF0wKDu+KK
+Content-Type: multipart/mixed; boundary="=-q4VGurKV5S7DX6rGHTGY"
+
+--=-q4VGurKV5S7DX6rGHTGY
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Friday, April 26th, 2024 at 8:35 PM, Daniel Pouzzner <douzzer@mega.nu> w=
-rote:
->=20
-> [Mon Apr 22 18:08:59 2024] usb 2-2.3: reset SuperSpeed USB device number =
-12
-> using xhci_hcd
-> [Mon Apr 22 18:09:04 2024] usb 4-3: reset SuperSpeed USB device number 10=
- using
-> xhci_hcd
->=20
+Hi!
 
-Hi! I have similar problem with some of my disks. In my case these messages=
- were shown often and randomly without specific disk usage pattern. The pro=
-blem was solved by disabling UAS dirver for these disks by appending follow=
-ing parameter to kernel in GRUB:
+I found out a very very simple way to crack a LUKS / dm-crypt encrypted
+external SSD drive.
 
-usb_storage.quirks=3DXXXX:YYYY:u
+In case you are interested in background information=E2=80=99s, I will send=
+ you
+more details by E2E encrypted email. Therefore pls. send me your public
+key incl. fingerprint info.
 
-where XXXX and YYYY are disk vendor and product id attributes. In your case=
- this probably will not solve the problem because the error is triggered by=
- specific disk usage pattern, but it will probably eliminate one possible s=
-uspect. In may case the error was caused by disk controller which flush beh=
-avior does not match fs assumptions (information got from btrfs mailing lis=
-t and irc, but such errors also often happened with ext4).
+You will find my public key for key ID CA500ED60A574360 attached this
+email. My fingerprint for attached *.asc file:
+D106 BF57 4434 3650 DC38 B742 CA50 0ED6 0A57 4360=20
 
-Best regards,
-Maxim =20
+Regards
+
+Volker Fritz=20
+
+--=-q4VGurKV5S7DX6rGHTGY
+Content-Type: application/pgp-keys; name="0x0A574360.asc"
+Content-Disposition: attachment; filename="0x0A574360.asc"
+Content-Transfer-Encoding: base64
+
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgptUUlOQkZWRG9Lc0JFQURSdnV5
+TXJjVnB5Q01ETUNhUUpLTW5kK295eDcyOVZ3UUFtMWZmVERvb21ZVWR3RWdKCkpJSlRBNDUyZGFU
+R2RIbXhxSWpwSlB5b2N0RjBGWGhZa2R2WFBQTWl3U0E1NlM5cVdsSFJGZ1dVSWxEOGJUbFAKMW9m
+b2JScUlub0JGU3N2VXVuR082ZlN3cjRJcWRKelpNSlUrTXBDLzRFc2tNMDEzVGRXL09sUHFPays3
+RXJsbApzVGhuSXpRQTF0UC94ejEyVEJaRlVvM01IbU5YUmhyd1lIT0Q0OUYyOEgzKzlzL3dIODcz
+U2thNUJDeVltcTlkCkFiUTdYMnBUdjdxbjFkUnhFK2NQS29WakFyWDdFSFFlVnNEUURNUHNVakpX
+d0hZQzhwc1Z6WnVhY3VSUWt4WXYKa0c0TmMwTmVKbzdnbE8xcDl6WUxHMndLZm5QVlpRZGlVMWFV
+N3BpcWdoSGo3OWxESytsUTdOcFE2c082WVZRUApMNkcxVGg4dWprenV5RE1GNFlNemNUa09YV1cz
+YXRmTGh5SE9mT0JnRFdWRktoNjRvQ1B4STJJRGo5RGtBcE9XCmhHTnNuTlZZNUY3NlZ3N2t2TEJr
+NWRJUjlqeGdVYWdtOGNTVlZmenM2V1FuWU84dkhOMk1qOVdOWHRRR1dzajYKUTNtY1gyRzJCdmFp
+Q2xmUXVZQWlET2ZiVlk2emVDT1V1ck9yaUY2Smo4K1IrYVNOcWNZU3oxQjEwM2Y5L09WSwppbmpi
+elNsSFdiaERxSDB6Ly9oeURPeUg5a01FbVk3cjdVN3VXYjVaSHU2S3FvTThiakF0a0lld3RCNloy
+ZVR5ClBXWWR2dGY3bVJRMXNlVzc5US8xdC9SaUdnZk51RkYzQStDbmE4NEh1UnpXT25YWGY0ZGtH
+OGcyM3dBUkFRQUIKdENkV2IyeHJaWElnUm5KcGRIb2dQSFptTG1KbGQyVnlZblZ1WjBCMExXOXVi
+R2x1WlM1a1pUNkpBamtFRXdFSQpBQ01GQWxhZThxWUNHd01IQ3drSUJ3TUNBUVlWQ0FJSkNnc0VG
+Z0lEQVFJZUFRSVhnQUFLQ1JES1VBN1dDbGRECllLTjVFQUN3QkE4QmRwcEtLa2RzTzJDUS9ZSzBG
+bGFuQzJrMkpsRXhxQ0podXAxSktyN0p2MnpRVk0ycTJkdEkKKzFYbUFteWJYbFEyZlRHNGFzTEg5
+ZzFEOTFETlg1THZNRDdlbHNVVzJ0dCtVNSt1dkdpeHZTSDhrTXFzeEI5Ngo2YzQ1NEZRcFpwT1dm
+OFptY2xvOE1mbHdqVzBsSWo0d2ZwRkprOGtTTUh2WElMaGNreTcxYjJvMitXRU0zR3RLCmJGRXdt
+SmNpelNjbmlkeDJKbzBSUlFueFh6cWprQklkT0Z4V05XdW4ybGs1Z0ZWTXQ3emhNUk00TElEODgr
+dHoKbVNZQ2hZUGtERGJrS3RCY2p3QU1PR0JYcDRZL1lxWEdWdkdIUWZka3plMUlneVBVMGxhRUd0
+WW9xZ0NIc1FFZwp4dStycEtyYmpmSTdBQ2FTdEt5Z1ZLVEwzZURvRjlYTjBMQTZyV2hzaEZPZ1NR
+RW91eUtRQlJVMS9qVWxGb29mCkZrWjJlZGFsenhMcGxCU2NCU1EzbHpTM1dNMGJYSmxQV20wNTJo
+TE9aZXhhVFNyTVN0K1FvZVBXVDFqOUsvR0wKM0NGSlowQnJjMWRma3BhWWRibk5aT25rV3d3dURC
+T2gyMUVBWEMvYVp0MHhyeVMxTmgvR0tZTFRHaHFFY3ppVwpIQ20vSmkwZUhMeUF2R0dJZjhrcUp3
+R3F0ODJuMjFBWWY3WEJkTitsSHBCa2hKeUswemNaLzFXVTZ2Mk9Hb0REClM0WGU1VVM4V1orM241
+N1VnV1FhVko3enVscHB1dzc3bXFpRzUwQyt2NzA0SElrcGZyZ29PZXJORG1QRS9DV0QKWTVWYlhy
+ZCtISWwwMjIvWHV4ZXhrUGtETVI1UGJmNWRpbFJzcUtUT250NDJaUGFTSGJRaVZtOXNhMlZ5SUVa
+eQphWFI2SUR4MlgyWnlhWFI2UUhRdGIyNXNhVzVsTG1SbFBva0NPQVFUQVFJQUlnVUNWVU9ncXdJ
+YkF3WUxDUWdICkF3SUdGUWdDQ1FvTEJCWUNBd0VDSGdFQ0Y0QUFDZ2tReWxBTzFncFhRMkRpN3hB
+QXFqbitsV3ZzSk83ZkRpT2gKc1pzOUdDczZVZk5rTmYzaTJJS0NWanI2OTJLYlJiUEN2ZTRXM1lu
+MXpKbGIrR2kvMXEzNDVhVVBOMWpYR1pVYwpvRWh4M1B5YWoySXMvdExIOXd0ZFlpb3IrdXo3ZnFL
+N3FhU3NjWENERnA4UnZWUTE4eUtsYjJTd3V3Y2xXampCCmJDUWI0MEhmc09PWlVpclIyYXpEQ2w2
+Qy92ZzJNRjVtN3hYbndid0E5ZkhRcTJ3dmZsL2Nwc1dqeml6dHJBWnoKTld1UnJpYllOamdFalkw
+SHBpd3oyTHI2MFhtM3ZkdnpZZ1BqbytxNnY0YllMcVBUUm8rclFrR0kxcjBDN3h5UQo5OUxEcnYx
+RTUvaE5VK2gvT0FRalBMMncyMjE5Z0hFMWlTeEU5YjBzSWtsMUF1QTN1eEpqUGNhTXluSE1rUDlX
+CmJRMUtuQ1M3RE4xKzVXUVBKYjAyRWp6R0JCbjFDWS9vRHJNMk8yK2Z6c01HekxtWlhJSEUzV2pG
+ZmZ1UUs5dGkKdm9YZWN3Mkx5OXQwdnV4M2dGQTRhbFVTZlRCRTdRWGpYS2s2bzA3MTlxVDI0eklT
+RXRlY1hIM2JscWFJRVo0UwpXVUtGem5OcVNFSTUzNXMwTFhmdkNaekFvdEo0RmpjTFlBRURadHBq
+UUJUY0FmM3JnTzMxTmtwYlB6OUdpV2VyCkFOUHMvSHNLYitBUUJPYVlIeGFId1doWjFtMFNHTVNP
+Y0w5b0RIdjRUK2RpT3lZM2ZQOHAvWjFuNVJxcUNjNEYKaUlhVDBEY2NXZVh0c211c20yNmtmRFIw
+WGdWcktDWkoweWZKMjI1b21GeVd5SG9YNjFTdVZVL1dhR3cvdVRkZApEdFdYdENTMndmeEtiU2h3
+THVzY0l2QzA2QkMwSjFadmJHdGxjaUJHY21sMGVpQThWbTlzYTJWeUxrWnlhWFI2ClFIUXRiMjVz
+YVc1bExtUmxQb2tDT1FRVEFRZ0FJd1VDVnA3N2ZBSWJBd2NMQ1FnSEF3SUJCaFVJQWdrS0N3UVcK
+QWdNQkFoNEJBaGVBQUFvSkVNcFFEdFlLVjBOZ2ZDZ1FBSk5qMkR1MzR0R0JVeTVlVnVxNkxpdXZX
+b096ZTlmMQpkYlQ0MnRhV2RscTdGdlF4ZFl1d3djSW0yZEh2ZUo3MUUxZUNmTHloRnBxTG5jb09i
+aGJnclBXKzMvOHVTWk1QCmE4OHlONG5BSlIwQ2ZGUFJobm92dzhSbmRkblNtaUl3OW9LY1NuTUtD
+M211YXprU2FiQ0YrZWRKQ2ZEUlhKMXQKN09RczNyZG8xaWZWVEZ0dzNJMlJXOUt5SHZxMi9RV29W
+bCsydXcrYlVDd3FHc1lHTW9ieks2YVRqTmxTM3ZGVApTMFV6VksxQlE0ak15QjFlYmtHK0w1Ynlp
+QVovdmxWM1RFY21GTlN1NGx5K3NOQ1NIM3hRbjdYa2lSTzJMaHJVCnJwR28yNTh0T0VvbnN4eWYy
+M3lNOFRPK2VoWTJaaUpQaDZ4MHl2R2ZxdGdkZHJyTjJIQ0dGalIxakpsalZJWUUKTHBKV1RnRlZ3
+N0k0aUl5Mk1VT2xTc20wcVB2bnhDalowRlNCamJ4UlYrMlpnN1lnbTRjSVRLUUV3ZFN0TE9EYQp3
+MkROeVZCZTl2STZPVFJQN1ZzVEI3alVPV2tYclNISFF3STEyNXMvY3pURzBQNCtNZFBkQ1pYNHUz
+bmpVWUtECmMrOWtPdnA2aWhUamhUbGJTNkZ1dFEwMTl4K0hDZjhJb0NJYlBFeWVPdVVBYXVIdEVj
+clNhVTMzM3NCVTd4RnQKenZxN2pnUzEzMUFQaWpQY3VNakxCM1p6bEZsd0tkYlliM2QwaXNBYlZK
+MDArK2xYREdaeWZPWjJ6RVcyVEUvcwpnTENocDN3N28wYTFGdDlaTnpPUjBKdWx6UVR1Zmh5NEZ4
+aVBPT0ZwWTBnTjBkc3YvUk80ZHhwb3oyejFWWThPClJJV2ZzQ2IwZnA5NnVRSU5CRlZEb0tzQkVB
+QytNM2NvWVlVaHpKZFdnc1Y4TTJOekNRV3dRYlZtZkIyb012TjcKbUVxbFFMMjdrY0d2ZlcyUVp2
+MEJNMk5adUZacHErMkhFaU82OGNlbEJ5VjU0blBJTzdVTFlvNzJOdGZzcW1MUwp5Nzh5NjE4dGxY
+Z1pZR0ptNm9mdUlvTUI4QkFNRkF3NlgzUlRWeXhvSHY3RFQ5NEo4emhxNThoa3dZWHBKdDBGClA2
+SUw4Vjk0YVNYS1BzZmZNajJ5bitOTkplMlBSL1BXOWtwamdWbG1Mb3BUQTdJdU5WRnh0QlBsMzNC
+M21HV0QKbU1EODNUcnFvZnZmaDgxc3kxRk5jeHdTVGV2OVlTUEtDaXA4dUVkNmNzOTF1UFBaQ0JR
+QjMyYUFVb3NCcDZXVwpJYjhPRU5OTXkyai93N2xwNGQzY05UdGNZMUF6SzA2RHNBUGIvRzRESU1r
+QUVHcmcrRE9IYlQ0L2NwVXF4WG9lCjdYWHdzOGRSUlZZM1k1L2wyLzJsamt1cHNEWmhzWXBhc0pU
+VGhyODVrcGdiYzlWT1g3VXlQdzNzUWhFZWhiOGwKdmFtK3M5NmROaVU0ay8vSkE0UVh2NjlOcUNG
+eTNXY1ZJZVlWb0xNZEQ3OVUvNVAzSHpzaDlmcEg5Skx2ekN2aApxTk1pREZvMThHWXFHRVF3OFE3
+RERxUkRvckJTV2U4aXYydk5oQUpXMnV3cWhyL3hHRkQ1Mzl5aGFjU2pRSEN2Cm80VnRsTExiNkpZ
+WlpuNk9laVdDZnIyMExjZUlPYmJMWkhocGJRWFd4N1VaSm9FUGNhM2paUjhQNTVzVU0vWFIKMHY0
+QUxVcG53RHJVTFlWNHh0VG50eCtwTUpuMEs1VWMzMTVsU3lCekt4aGw5bFFXS1RWTUIrRVcvb2Np
+azI4MQpObWRCRHdBUkFRQUJpUUlmQkJnQkFnQUpCUUpWUTZDckFoc01BQW9KRU1wUUR0WUtWME5n
+STc0UUFNaHlrZHVTClFtRWI0QVlXRUwxYjJEdXppMTFXT0JCS1p3dlYyT1BKa1N5dk5VVWZ4cUNn
+eE9BN1ZCajZlMHFBcXhWajc0Sm8KYVd6NUxsSUNNRHFUdFVhQWNGSUxiWDA1NmNDeFp5aTcwK01l
+R2lYQVF3WDNORjZxcGFSY2VRTTVTNmhDVExyRQpab21GNFhKV1NBTU5NakZFZDlRMlNIM1RneU1n
+UDdLMWMrYnZhWWFUWHBwN0ZvcjdVTHVUMjNHdStRVFFnS3FKCmc2RWNQUVV3cTc5VG5JN1B6a241
+dk5PNnlob1hsTzM5TzFiOTNoQW5qeGx3azJBRWtpbFBxRWRMa2pzNTNBV2cKTWJoMzdWTkJNbzQw
+TVIwNzJYajNlOXNGZVZVYzB6V0I3eU0zME1hUUVRSVhVSUQ4ZDEyNWRTWGxES1NzWCtBSgozTDcv
+UUZZd1BrOTdUcFlFNVVvM2lhMHRwdTA1UWtDQmxhVW9Qd0xMY010bjdKTnJJYSsyQ1dNZFlkYldQ
+ZW1mCnhIRk5MR1JyUm9xOHA2ZTlraXhUWDU2YlBHN2NDMWhwVjNGbnpFaE5ubk1vMlpmK3ZIUmky
+QmJRNXpSNkdVRk4KTDNIUGFjMS9Udzh5bG4vVWJlaytWZHo3cXI1QnpWNVhsZkd0dDYrQjQ3cllp
+dUduQ2NYNzhvRXpFZCtpT3dOVgpZR2d1UGQ3YkNvYVBQZHRhV0EzZHlGSEFmUS91cWZ6MTdMbjR3
+dzEwNk5icTVOYTJnQVdVNC9pY0dCeGVaZDNPCnNudllLQ0tPcnZEQ1BGbjd1Tk5sNG0wNFdDWlF2
+ellYVXpHb3FMeExTMzI3NGdIakIzVzZlUHQ3ZDB1aU1sSlMKSzY1VEpQc2E1NURMdmZrTEdJbHFB
+VnVCTkRNM3RVZTZoVlNjCj1RSGVDCi0tLS0tRU5EIFBHUCBQVUJMSUMgS0VZIEJMT0NLLS0tLS0K
 
 
+
+--=-q4VGurKV5S7DX6rGHTGY--
+
+--=-CYVSfBpzUCrF0wKDu+KK
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE0Qa/V0Q0NlDcOLdCylAO1gpXQ2AFAmZBzocACgkQylAO1gpX
+Q2AWyA//abeDUSV1gADz4IqRfoaxK/x+EGhm0DH2AiWEDZpmDPRx3E/gfLZ4xAVz
+2NEVgSv97b7P+FwCtoW56UesddxxsvQcrOo0uPNM4URDZPDCE18PN4oduvmh16Gh
+3xjXlW/yiAxVmINcJsZHZ2Jy6zwmCSgyAOrbd/JLW8ThwDbTLOibY5Fd+hvuwmnB
+Bu3Tqv1llReLX7GIHwJCQ0X51x18N4jO75Prg6UPrJA6gK5f5c6q33nqtS2kuWOo
+iiEDmUpkhe+hyuzFNnhM0xDP350cYxuT1wJ3Dh7SsoqqWh9KCZO8JyYVM0V/Dvfq
+5DNyz/Y8Bqrg52++2mMBlH3Yj1/4Q5ahJffq18ExwNgVf6ZEMd5l7ydSBuhGy98e
+eg0c8XoWhrg6r8VaUzkJOhtdTWruDxADb6E2AcMbS5mevT1sZVzfeUN4OScQLoew
+84qud4Bqy5q8srgdP7gfJFMRelO3qe0EoqflDTwtggE3O2k12dlPCE/Ykar79QOh
+EeqWF562Nsx7F1s9lgCuQVHQwUlNIfejcLiGQuKR1+52paNHeIhTdEvf3tVVO9fq
+Sj6FC4PmQ9joOpx9T+twjqFSv/1/pR65pRhmi4pI6BclNxmMMZ1wk3SXuJGwyrdx
+bbZlPE8YPTWvhJeuit6zA9dwrVfhj1aT8f/6qUatbkMY6cUsfnY=
+=Sxyj
+-----END PGP SIGNATURE-----
+
+--=-CYVSfBpzUCrF0wKDu+KK--
