@@ -1,60 +1,57 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632DF15B575
-	for <cryptsetup@lists.linux.dev>; Wed, 29 May 2024 18:15:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 395E8197553
+	for <cryptsetup@lists.linux.dev>; Mon, 17 Jun 2024 12:53:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717006552; cv=none; b=iXevEyIxD/YkfBy8rNtnDyR9XvElH5TQDNXMpeeyPY18wMNUzIFFsVLwh6iNvs8WS3JIN7l2s8vDMqBOMmHA4rPonnS2gu6w+VYZByw9ZmEnnjSl7Y/SFldYQ7W5284698f9G1lo5oGWStzo1oymmDC9r6u/qvFgq7Mm4P1IHKc=
+	t=1718628803; cv=none; b=f8sx+gOEfef0/XSj46f0pToiTKY/GvjTUjdMyDcv8HEiaYAXaH1FcfGQ0ZpwipNxVQbglUflhmQBWYpnAATd2Iiv+6b2dJSbm4LNs1hI78mNXQ4i18AG1+bBqFvUasc6DRyIEztFeyH6ZyB82YjYURcXEMNcZWR03BKzPSgRlUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717006552; c=relaxed/simple;
-	bh=46+lv5NkFPBlz0WfTlUToBlQVVeHn5lCqobr8QBCwF0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=GB+MJQkVrfXKyUqgaOwfCf6M/a+XlPOGdz3s2TEXXmvsjKgQielv2hwUvczUWeO2cE+QLaObCKD5inJ/TQoy8yTxx75+6OYvFSIH9HkFPVVJs2NTvt1/l1lkXFNpujq8U2+FxNlOzzYZ3iSUEatc2OFxUzBYOJKlmnMQlUNUjYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U34/SrY6; arc=none smtp.client-ip=209.85.221.43
+	s=arc-20240116; t=1718628803; c=relaxed/simple;
+	bh=FdvtXr2NiYi7Efv8w26LNK3cHpubtL84iYqwUlw8Cd0=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=GmwUt5cM7eh2zLsmqXU7kuFiVOH9ScSNRzmCdEETVJ+C9PxpP4sKvO2gtTlIabMORwOhvrXJaIKsGjuUsjL6JQoCuiSH0laU6IzDh9Z+VhpFKsZpyUOAAu4CRnqiBRKdScq1j0lXPCGdpSDTJ2yAminrAdCxvgf68kbzwKjIdbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PYMSzsM0; arc=none smtp.client-ip=209.85.208.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U34/SrY6"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-354dfe54738so1539597f8f.3
-        for <cryptsetup@lists.linux.dev>; Wed, 29 May 2024 11:15:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PYMSzsM0"
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2ec0f3b9bb8so27777601fa.1
+        for <cryptsetup@lists.linux.dev>; Mon, 17 Jun 2024 05:53:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717006549; x=1717611349; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=2dIC3HOPe/Kprm/ySx8hwXwIVrNoMQtNLkTev1WJHRc=;
-        b=U34/SrY6j/fO0dzODbqohRDMP367fpi+lRzWntbY/USpSq7csIXEMB7/ATLlqb/Jy6
-         eVqXpGhQPuFmzPwE6A83gAn4WpqL5jq+3L4iaGzWs+uXD6onpZ/kyERVIU3tajcou9SE
-         j5YGCniUgbk3uPvCmcL15rxLRovaxHacGhXZdQc9iObO86eom/LuvoQZaa5a2l7XgjCv
-         MPZHA5+TZOMYTt/IffsFMLD5AhjIdyt4PxrmBh1RNacv1VSyk79nx39eIsFmmpht5uID
-         WYSH2dOFBQW8+/LsyTZm+Y7cZGwDYQlA+ok5cSB+FBQP/HmdoVdAaa7Sxt4haaYJ2Db4
-         mvRg==
+        d=gmail.com; s=20230601; t=1718628799; x=1719233599; darn=lists.linux.dev;
+        h=autocrypt:content-language:to:subject:from:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=FdvtXr2NiYi7Efv8w26LNK3cHpubtL84iYqwUlw8Cd0=;
+        b=PYMSzsM0KpWdOhRBlBFcGX5tZbR6Vg7Y01Ge21v7s7LyOh5VuPQxf42VMMz+X2z0iu
+         8APUSEuCWFtBsV3oZkWwrtc/ELr0H5uk2Hik8UyGr8YSiMHR84C7buoiOqGWaTOOI2lr
+         i+1PJhwomJ8kKGdCXb6IKo9pe3BKq+ENrpMKysfk9V6CO4StQzRyzuy9Fyq6EUBbz06N
+         kPRkF4IrlvOdwsXiy9Hyj6C/+W6tTmm7cQ736iSLNSC9JQ6u5SmPlS8TKWPnNeAE/X/O
+         Jhl1g+gBUGMb2HCwkMebYKEVkREpTAerJeFz2G2oyMUTfKdN4geB/C7/1nSlKa4eyUaz
+         IMrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717006549; x=1717611349;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2dIC3HOPe/Kprm/ySx8hwXwIVrNoMQtNLkTev1WJHRc=;
-        b=TGeJIL6xr9dtneBgG8iIxbwrSHetaEmJigyY8j9w2bbsHAtrB+Skpxtef7w+KnadIA
-         7bH9mZAA5emvYM0zPOHxArg96m2pFb7AgjWhSh2pHCus4llrxam2rlR0YCnotVcl4aHJ
-         +zFwhUtjeQvNSt3tK51LSwDsWN2ppsPbxGcimcKKPFz1VfdXVbn638gBKEeZpY6vWw+k
-         ZOlJ8U2FAnhZJsSI7jDWvkIP96wHV1iQMrSGp4GdP9Uqcxjm9+gTPbNE4EbkmjlfKYYI
-         c6SA5tP+ii7CRivKHcuHzFdl4OSsiV8FM+Axyc0xJ8GKzkPDFXy1v8wwJgszIfatsKYi
-         TvZg==
-X-Forwarded-Encrypted: i=1; AJvYcCVsyleaFbkUc7zCi2r3MVWCbYc2tRfBmZpA9Ktt2p/HWVePVIV2mdzrwONtcgGGskedP6SYkVUVpNrScRLbmBGNtBNMNj8QiGyE9g==
-X-Gm-Message-State: AOJu0Yx1goxwizOGQWdRYboUmP6Lwrp25x5iyai89OFfifYCg0Byqhyb
-	gta5UPAQNHq9Co1ggIpV0dGAjbs67s9GkIhWwdWA7ySyqryYIuycEwJ80w==
-X-Google-Smtp-Source: AGHT+IEGMUKTu9HzcFic7EK1Q5wDvhtEamjjpgo8gTY2g9lBISwgJvjg0Z5VOPFHzlWUlLxcDiE8Uw==
-X-Received: by 2002:a05:6000:364:b0:34c:9a04:466f with SMTP id ffacd0b85a97d-35dc00be96cmr988f8f.50.1717006548408;
-        Wed, 29 May 2024 11:15:48 -0700 (PDT)
-Received: from [192.168.2.30] (85-70-151-113.rcd.o2.cz. [85.70.151.113])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35da48c5fb4sm970786f8f.46.2024.05.29.11.15.47
+        d=1e100.net; s=20230601; t=1718628799; x=1719233599;
+        h=autocrypt:content-language:to:subject:from:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FdvtXr2NiYi7Efv8w26LNK3cHpubtL84iYqwUlw8Cd0=;
+        b=UT1Vqq2RT82WSLfdzGX2o74oVeAE6ihzTFZ6Cx+FQP0UqQmDSNYvHiz8bHfu3X/5c+
+         CaGKUY+n+1bWMF81G0IIqv0OuDAP1k244EI5oShlEMf00QPwbg1w8nrWG9MwBPjgWWHC
+         YWgZbt2sMPmW5zEzDqDCgVZ5fDWe4NsauVSJ1a/x8UHlTbwaVT+NEKfzrqpOqRYs62cC
+         QTsLykPI9T3HDJdanNJC4tzw9yQ2/BMChVW0FnKdpY3xNf0r8I23QrnNvMvvTU3lY5Nu
+         vPlS6AAwJm3esMs0v7cbUINJSjXHwDzcu11zSjOYSNjEchFVvtTGporCRmDhydK+yj6R
+         +YDw==
+X-Gm-Message-State: AOJu0Yzv8AJhsVBn/mz1I44OLGcl4CxAMyu9kfddVrFOjij9Yyd+x0X0
+	Hy9uex4kZGY6fMnIbCp3TAvX/1swm12w9Vy2qFiy3gvGi7AbzEx7gMqEoA==
+X-Google-Smtp-Source: AGHT+IFUruroxftkevm0mwkLsKaE2VZKvCxWIrmEHxK2fgfc70X6cTUsdj3zjrR79HOtTw3iM3IaGw==
+X-Received: by 2002:a2e:9b05:0:b0:2eb:dbc9:6464 with SMTP id 38308e7fff4ca-2ec0e5c582dmr62588351fa.13.1718628798924;
+        Mon, 17 Jun 2024 05:53:18 -0700 (PDT)
+Received: from [147.251.42.107] (laomedon.fi.muni.cz. [147.251.42.107])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57cb72da785sm6358020a12.28.2024.06.17.05.53.18
+        for <cryptsetup@lists.linux.dev>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 May 2024 11:15:47 -0700 (PDT)
-Message-ID: <e862428e-fe9d-4b9c-a8f4-e12390688c05@gmail.com>
-Date: Wed, 29 May 2024 20:15:46 +0200
+        Mon, 17 Jun 2024 05:53:18 -0700 (PDT)
+Message-ID: <4dc1850f-17d5-4f21-8844-0aea903259a0@gmail.com>
+Date: Mon, 17 Jun 2024 14:53:05 +0200
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
@@ -62,11 +59,10 @@ List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Behavior of in-place encryption with --reduce-device-size
-To: "John A. Leuenhagen" <john@zlima12.com>, cryptsetup@lists.linux.dev
-References: <zqmdlvho3du3b7uyldgj4qeqk5ix36o7rmwo44ia2hl6ngmdnl@72qguwtrdma4>
-Content-Language: en-US
 From: Milan Broz <gmazyland@gmail.com>
+Subject: [ANNOUNCE] cryptsetup 2.7.3
+To: cryptsetup development <cryptsetup@lists.linux.dev>
+Content-Language: en-US
 Autocrypt: addr=gmazyland@gmail.com; keydata=
  xsFNBE94p38BEADZRET8y1gVxlfDk44/XwBbFjC7eM6EanyCuivUPMmPwYDo9qRey0JdOGhW
  hAZeutGGxsKliozmeTL25Z6wWICu2oeY+ZfbgJQYHFeQ01NVwoYy57hhytZw/6IMLFRcIaWS
@@ -110,50 +106,247 @@ Autocrypt: addr=gmazyland@gmail.com; keydata=
  vlB+GpT+iFRLvhCBe5kAERREfRfmWJq1bHod/ulrp/VLGAaZlOBTgsCzufWF5SOLbZkmV2b5
  xy2F/AU3oQUZncCvFMTWpBC+gO/o3kZCyyGCaQdQe4jS/FUJqR1suVwNMzcOJOP/LMQwujE/
  Ch7XLM35VICo9qqhih4OvLHUAWzC5dNSipL+rSGHvWBdfXDhbezJIl6sp7/1rJfS8qPs
-In-Reply-To: <zqmdlvho3du3b7uyldgj4qeqk5ix36o7rmwo44ia2hl6ngmdnl@72qguwtrdma4>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------LI4iWQhzeYDeNeQBd4HXKJhh"
+
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------LI4iWQhzeYDeNeQBd4HXKJhh
+Content-Type: multipart/mixed; boundary="------------bpiKnAhJqTek3S8DRHcRRvfX";
+ protected-headers="v1"
+From: Milan Broz <gmazyland@gmail.com>
+To: cryptsetup development <cryptsetup@lists.linux.dev>
+Message-ID: <4dc1850f-17d5-4f21-8844-0aea903259a0@gmail.com>
+Subject: [ANNOUNCE] cryptsetup 2.7.3
+
+--------------bpiKnAhJqTek3S8DRHcRRvfX
+Content-Type: multipart/mixed; boundary="------------RZR7mnACtwGz6aVSrjsGpvHo"
+
+--------------RZR7mnACtwGz6aVSrjsGpvHo
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: base64
 
-Hi,
+VGhlIGNyeXB0c2V0dXAgMi43LjMgc3RhYmxlIHJlbGVhc2UgaXMgYXZhaWxhYmxlIGF0DQoN
+CiAgICAgICAgICAgICAgIGh0dHBzOi8vZ2l0bGFiLmNvbS9jcnlwdHNldHVwL2NyeXB0c2V0
+dXANCg0KUGxlYXNlIG5vdGUgdGhhdCByZWxlYXNlIHBhY2thZ2VzIGFyZSBsb2NhdGVkIG9u
+IGtlcm5lbC5vcmcNCg0KICAgICAgICAgICAgICAgaHR0cHM6Ly93d3cua2VybmVsLm9yZy9w
+dWIvbGludXgvdXRpbHMvY3J5cHRzZXR1cC92Mi43Lw0KDQpGZWVkYmFjayBhbmQgYnVnIHJl
+cG9ydHMgYXJlIHdlbGNvbWVkLg0KDQpDcnlwdHNldHVwIDIuNy4zIFJlbGVhc2UgTm90ZXMN
+Cj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KU3RhYmxlIGJ1Zy1maXggcmVsZWFz
+ZSB3aXRoIHNlY3VyaXR5IGZpeGVzLg0KDQpBbGwgdXNlcnMgb2YgY3J5cHRzZXR1cCAyLjcg
+bXVzdCB1cGdyYWRlIHRvIHRoaXMgdmVyc2lvbi4NCg0KQ2hhbmdlcyBzaW5jZSB2ZXJzaW9u
+IDIuNy4yDQp+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn4NCg0KKiBEbyBub3QgYWxsb3cg
+Zm9ybWF0dGluZyBMVUtTMiB3aXRoIE9wYWwgU0VEIChoYXJkd2FyZSBlbmNyeXB0aW9uKQ0K
+ICAgaWYgdGhlIHJlcG9ydGVkIGxvZ2ljYWwgc2VjdG9yIHNpemUgZm9yIHRoZSBibG9jayBk
+ZXZpY2UgYW5kIE9wYWwNCiAgIGVuY3J5cHRpb24gbG9naWNhbCBibG9jayBkaWZmZXJzLg0K
+DQogICBTdWNoIGEgY29uZmlndXJhdGlvbiBjYW4gbGVhZCB0byBhIHBhcnRpYWxseSBlbmNy
+eXB0ZWQgT3BhbCBsb2NraW5nDQogICByYW5nZSBvciBkYXRhIGRlc3RydWN0aW9uIGZvbGxv
+d2luZyB0aGUgZXhwZWN0ZWQgbG9ja2luZyByYW5nZS4NCg0KICAgU29tZSBOVk1lIGRyaXZl
+cyBzdXBwb3J0IG11bHRpcGxlIExCQUYgcHJvZmlsZXMgKHR5cGljYWxseSBzdXBwb3J0aW5n
+DQogICA1MTItYnl0ZSBhbmQgNDA5Ni1ieXRlIHNlY3RvciBzaXplKS4gU29tZSBicm9rZW4g
+T3BhbCBOVk1lIGZpcm13YXJlIGNhbg0KICAgcmVwb3J0IGJvZ3VzIGVuY3J5cHRpb24gc2l6
+ZSB0aGF0IGRpc2FncmVlcyB3aXRoIHJlYWwgdXNlZCBzZWN0b3Igc2l6ZS4NCiAgIFRoaXMg
+dXN1YWxseSBoYXBwZW5zIGFmdGVyIGxvdy1sZXZlbCBOVk1lIHJlZm9ybWF0dGluZyAoTEJB
+RiBwcm9maWxlDQogICBjaGFuZ2Ugd2l0aCBudm1lIHV0aWxpdHkpIHRvIGRpZmZlcmVudCBz
+ZWN0b3Igc2l6ZS4NCiAgIE1vcmVvdmVyLCBzb21lIGZpcm13YXJlIHZlcnNpb25zIGRvIG5v
+dCBwcm9wZXJseSByZXNldCB0aGlzIGV2ZW4gYWZ0ZXINCiAgIGV4cGxpY2l0IFBTSUQgcmV2
+ZXJ0Lg0KDQogICBDcnlwdHNldHVwIGNhbGN1bGF0ZXMgdGhlIE9wYWwgbG9ja2luZyByYW5n
+ZSB1c2luZyB0aGUgcmVwb3J0ZWQgYmxvY2sNCiAgIHNpemUgaW4gT3BhbCBnZW9tZXRyeSBp
+b2N0bC4gIFVuZm9ydHVuYXRlbHksIHRoZSBicm9rZW4gZmlybXdhcmUgZHJpdmUNCiAgIGlu
+dGVybmFsbHkgdXNlcyB0aGUgbG9naWNhbCBibG9jayBzaXplIG9mIHRoZSBibG9jayBkZXZp
+Y2UsIHdoaWNoIGNhbg0KICAgZGlmZmVyLiBUaGlzIGNhbiBsZWFkIHRvIHR3byBwb3NzaWJs
+ZSBzaXR1YXRpb25zOg0KDQogICAtIE9wYWwgcmVwb3J0cyBhIHNtYWxsZXIgYmxvY2sgc2l6
+ZSAoNTEyLWJ5dGUpIHdoaWxlIHRoZSBkcml2ZSB1c2VzDQogICBhIDQwOTYtYnl0ZSBzZWN0
+b3IuIFRoZSBjb25maWd1cmVkIGxvY2tpbmcgcmFuZ2UgaXMgdGhlbiBtdWNoIGxhcmdlciwN
+CiAgIGRlc3Ryb3lpbmcgZGF0YSBmb2xsb3dpbmcgdGhlIGV4cGVjdGVkIGxvY2tpbmcgcmFu
+Z2Ugc2V0dGluZy4NCg0KICAgLSBPcGFsIHJlcG9ydHMgYSBsYXJnZXIgYmxvY2sgc2l6ZSAo
+NDA5Ni1ieXRlKSB3aGlsZSB0aGUgZHJpdmUgdXNlcw0KICAgYSA1MTItYnl0ZSBzZWN0b3Iu
+IFRoZSBjb25maWd1cmVkIGxvY2tpbmcgcmFuZ2UgaXMgdGhlbiBtdWNoIHNtYWxsZXIsDQog
+ICBsZWF2aW5nIHRoZSByZW1haW5pbmcgc3BhY2UgaW4gdGhlIGxvY2tpbmcgcmFuZ2UgdW5l
+bmNyeXB0ZWQgKHZpb2xhdGluZw0KICAgdGhlIGNvbmZpZGVudGlhbGl0eSBvZiBkYXRhKS4N
+Cg0KICAgQ3J5cHRzZXR1cCBub3cgZGV0ZWN0cyB0aGlzIGRpc2NyZXBhbmN5IGFuZCBkaXNh
+bGxvd3MgTFVLUzIgZm9ybWF0IHdpdGgNCiAgIE9wYWwgaGFyZHdhcmUgZW5jcnlwdGlvbiBp
+biBzdWNoIGEgY2FzZS4NCg0KICAgRm9yIGFscmVhZHkgZm9ybWF0dGVkIGRldmljZXMsIHlv
+dSB3aWxsIHNlZSB0aGlzIHdhcm5pbmc6DQogICAgICJCb2d1cyBPUEFMIGxvZ2ljYWwgYmxv
+Y2sgc2l6ZSBkaWZmZXJzIGZyb20gZGV2aWNlIGJsb2NrIHNpemUuIg0KDQogICBJZiB5b3Ug
+YWxzbyB1c2VkIHNvZnR3YXJlIGVuY3J5cHRpb24gKGRtLWNyeXB0IG92ZXIgT3BhbCksIGRh
+dGEgd2lsbA0KICAgc3RpbGwgYmUgZnVsbHkgZW5jcnlwdGVkIHdpdGggc29mdHdhcmUgZG0t
+Y3J5cHQuDQogICBXaXRoIGh3LW9ubHkgZW5jcnlwdGlvbiwgIHlvdXIgY29uZmlndXJhdGlv
+biBpcyBwcm9iYWJseSBhbHJlYWR5IGJyb2tlbg0KICAgKGluc2VjdXJlIG9yIGFjY2Vzc2lu
+ZyBkYXRhIGJleW9uZCB0aGUgYXNzaWduZWQgYXJlYSkuDQoNCiAgIE5vdGUgdGhhdCB0aGlz
+IGlzIGNhdXNlZCBieSBiYWQgZmlybXdhcmUgKHNlZW4gd2l0aCBtdWx0aXBsZSB2ZW5kb3Jz
+KSwNCiAgIGFuZCB0aGUgcHJvYmxlbSB3YXMgcmVwb3J0ZWQsIGF0IGxlYXN0IGZvciBkcml2
+ZXMgd2UgaGF2ZSBhY2Nlc3MgdG8uDQoNCiogRml4ZXMgdG8gd2lwaW5nIExVS1MyIGhlYWRl
+cnMgYWZ0ZXIgT3BhbCBsb2NraW5nIGFyZWEgZXJhc2UuDQoNCiAgIEFzIHRoZSBoYXJkd2Fy
+ZSBsb2NraW5nIHJhbmdlIGlzIGRlc3Ryb3llZCAoY3J5cHRzZXR1cCBlcmFzZSBjb21tYW5k
+KSwNCiAgIHRoZSBMVUtTMiBoZWFkZXIgaXMgbm8gbG9uZ2VyIHVzYWJsZSBhbmQgd2FzIHBh
+cnRpYWxseSB3aXBlZC4NCiAgIE5vdyB0aGUgY29kZSBmdWxseSB3aXBlcyBhbHNvIHRoZSBz
+ZWNvbmRhcnkgaGVhZGVyLCBhcyB0aGUgcHJldmlvdXMNCiAgIGNvZGUgd2lwZWQgb25seSB0
+aGUgcHJpbWFyeSBMVUtTIGFyZWEuDQoNCiAgIE5vdGUgdGhhdCB0aGlzIGlzIGFuIGV4Y2Vw
+dGlvbiwgYXMgdGhlIG5vcm1hbCBlcmFzZSBjb21tYW5kIHdpcGVzIG9ubHkNCiAgIHRoZSBr
+ZXlzbG90cywga2VlcGluZyB0aGUgTFVLUzIgaGVhZGVyIGluIHBsYWNlLiAgV2l0aCBPcGFs
+IGVuY3J5cHRpb24sDQogICB0aGUgZGF0YSBzZWdtZW50IGlzIG5vIGxvbmdlciB2YWxpZCwg
+c28gdGhlIHdob2xlIExVS1MyIGhlYWRlciBpcyBubw0KICAgbG9uZ2VyIHVzYWJsZS4NCg0K
+KiBNZW50aW9uIHRoZSBuZWVkIGZvciBwb3NzaWJsZSBQU0lEIHJldmVydCBiZWZvcmUgT3Bh
+bCBmb3JtYXQgZm9yIHNvbWUNCiAgIGRyaXZlcyAobWFuIHBhZ2UpLg0KDQoqIEZpeCBCaXRs
+b2NrZXItY29tcGF0aWJsZSBjb2RlIHRvIGlnbm9yZSBuZXdseSBzZWVuIG1ldGFkYXRhIGVu
+dHJpZXMuDQoNCiAgIFJlY2VudCBXaW5kb3dzIE9TIHZlcnNpb25zIHN0YXJ0ZWQgdG8gaW5j
+bHVkZSBuZXcgKHVuZG9jdW1lbnRlZCkNCiAgIG1ldGFkYXRhIGVudHJpZXMgaW4gQml0bG9j
+a2VyLiBUaGVzZSBlbnRyaWVzIGFyZSBub3cgcXVpZXRseSBpZ25vcmVkLA0KICAgYWxsb3dp
+bmcgQml0bG9ja2VyIGltYWdlcyB0byBvcGVuIHdpdGggY3J5cHRzZXR1cCBhZ2Fpbi4NCg0K
+KiBGaXggaW50ZXJhY3RpdmUgcXVlcnkgcmV0cnkgaWYgTFVLUzIgdW5ib3VuZCBrZXlzbG90
+IGlzIHByZXNlbnQuDQoNCiAgIElmIGFuIHVuYm91bmQga2V5c2xvdCBpcyBwcmVzZW50LCB0
+aGUgcGFzc3dvcmQgcXVlcnkgcmV0cnkgY291bnQgaXMNCiAgIG5vdyBwcm9wZXJseSBhcHBs
+aWVkLg0KDQoqIERldGVjdCB1bnN1cHBvcnRlZCB6b25lZCBkZXZpY2VzIGZvciBMVUtTIGhl
+YWRlciBkZXZpY2VzLg0KDQogICBab25lZCBkZXZpY2VzIGNhbm5vdCBiZSB3cml0dGVuIHdp
+dGggZGlyZWN0LWlvIGFuZCB1c2VkIGZvciBMVUtTIGhlYWRlcg0KICAgbG9naWMgaW4gZ2Vu
+ZXJhbC4gQ29kZSBub3cgcmVqZWN0cyBwbGFjaW5nIHRoZSBMVUtTIGhlYWRlciBvbiBhIHpv
+bmVkDQogICBkZXZpY2UsIHdoaWxlIHlvdSBjYW4gc3RpbGwgY3JlYXRlIGEgZGV0YWNoZWQg
+aGVhZGVyIGFuZCB1c2UgYSB6b25lZA0KICAgZGV2aWNlIGZvciBlbmNyeXB0ZWQgZGF0YS4N
+Cg0KKiBBbGxvdyAiY2FwaSIgY2lwaGVyIGZvcm1hdCBmb3IgYmVuY2htYXJrIGNvbW1hbmQg
+YW5kIGZpeCBwYXJzaW5nDQogICBvZiBwbGFpbiBJViBpbiAiY2FwaSIgZm9ybWF0Lg0KDQog
+ICBTb21lIGNpcGhlcnMgY2FuIGJlIHNwZWNpZmllZCBvbmx5IGluIExpbnV4IGtlcm5lbCBj
+cnlwdG8gbm90YXRpb24NCiAgIChpbiBzaG9ydCwgImNhcGkiKS4gQ29kZSBub3cgYWxsb3dz
+IHRoaXMgZm9ybWF0IGFsc28gZm9yIGJlbmNobWFyaywNCiAgIGZvciBleGFtcGxlLCAiYmVu
+Y2htYXJrIC1jIGNhcGk6eHRzXChhZXNcKS1wbGFpbjY0Ig0KICAgKHRoYXQgaXMgZXF1aXZh
+bGVudCB0byAtYyBhZXMteHRzLXBsYWluNjQpLg0KDQoqIEFkZCBzdXBwb3J0IGZvciBIQ1RS
+MiBlbmNyeXB0aW9uIG1vZGUuDQoNCiAgIFRoZSBIQ1RSMiBlbmNyeXB0aW9uIG1vZGUgd2Fz
+IGFkZGVkIHRvIHRoZSBMaW51eCBrZXJuZWwgZm9yIGZzY3J5cHQsDQogICBidXQgYXMgaXQg
+aXMgYSBsZW5ndGgtcHJlc2VydmluZyBtb2RlICh3aXRoIHNlY3RvciB0d2VhayksIGl0IGNh
+biBiZQ0KICAgZWFzaWx5IHVzZWQgZm9yIGRpc2sgZW5jcnlwdGlvbiwgdG9vLg0KICAgVGhl
+IG1vZGUgaGFzIHRoZSBzYW1lIHByb3BlcnR5IGFzIHdpZGUgbW9kZXMgKGFueSBjaGFuZ2Ug
+aXMgcHJvcGFnYXRlZA0KICAgdG8gdGhlIHdob2xlIHNlY3RvciBpbnN0ZWFkIG9mIG9ubHkg
+b25lIGJsb2NrIGFzIGluIFhUUyBtb2RlKS4NCg0KICAgQXMgaXQgbmVlZHMgYSBsYXJnZXIg
+aW5pdGlhbGl6YXRpb24gdmVjdG9yICgzMiBieXRlcyksIHdlIG5lZWQgdG8gYWRkDQogICBh
+biBleGNlcHRpb24gaW4gdGhlIHVzZXJzcGFjZSBmb3JtYXQgY29kZS4NCiAgIFlvdSBjYW4g
+bm93IHVzZSAtLWNpcGhlciBhZXMtaGN0cjItcGxhaW42NCBmb3IgdGhlIGZvcm1hdCBvcGVy
+YXRpb24uDQoNCiogU291cmNlIGNvZGUgbm93IHVzZXMgU1BEWCBsaWNlbnNlIGlkZW50aWZp
+ZXJzIGluc3RlYWQgb2YgZnVsbA0KICAgbGljZW5zZSBwcmVhbWJsZXMuDQoNCiogRml4IG1p
+c3NpbmcgaW5jbHVkZXMgZm9yIGNyeXB0b2dyYXBoaWMgYmFja2VuZCB0aGF0IGNvdWxkIGNh
+dXNlDQogICBjb21waWxhdGlvbiBlcnJvcnMgZm9yIHNvbWUgc3lzdGVtcy4NCg0KKiBGaXgg
+dGVzdHMgdG8gd29yayBjb3JyZWN0bHkgaW4gRklQUyBtb2RlIHdpdGggcmVjZW50IE9wZW5T
+U0wgMy4yLg0KDQoqIEZpeCB2YXJpb3VzIChtb3N0bHkgZmFsc2UgcG9zaXRpdmUpIGlzc3Vl
+cyBkZXRlY3RlZCBieSBDb3Zlcml0eS4NCg==
+--------------RZR7mnACtwGz6aVSrjsGpvHo
+Content-Type: application/pgp-keys; name="OpenPGP_0xD9B0577BD93E98FC.asc"
+Content-Disposition: attachment; filename="OpenPGP_0xD9B0577BD93E98FC.asc"
+Content-Description: OpenPGP public key
+Content-Transfer-Encoding: base64
 
-On 5/29/24 7:45 PM, John A. Leuenhagen wrote:
-> I was looking at doing in-place encryption on a currently unencrypted
-> volume, and found that this is supported through `cryptsetup reencrypt
-> --encrypt ...`. This is great, but I was curious as to how it actually
-> did this, and the details online were scarce for what could potentially
-> be a destructive operation.
-> 
-> What is unclear to me is that the LUKS header must go at the beginning
-> of the device, overwriting any data that might be there. The
-> --reduce-device-size option suggests that space will be taken from the
-> end of the device; does this mean that data will be shifted to the right
-> as encryption takes place?
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tDQoNCnhzRk5CRTk0cDM4QkVB
+RFpSRVQ4eTFnVnhsZkRrNDQvWHdCYkZqQzdlTTZFYW55Q3VpdlVQTW1Qd1lEbzlxUmUNCnkw
+SmRPR2hXaEFaZXV0R0d4c0tsaW96bWVUTDI1WjZ3V0lDdTJvZVkrWmZiZ0pRWUhGZVEwMU5W
+d29ZeTU3aGgNCnl0WncvNklNTEZSY0lhV1NIZDdvTmRuZVFnNm1WSmNHZEEvQk9YNjh1bzNS
+S1NIajZROEdvUTU0Ri9OcENvdHoNClZjUDFPUnBWSjVwdHlHMHg2T1ptNUVzbjYxcEtFOTc5
+d2NIc3o3RXpjRFlsKzNNUzYzZ1ptK08zRDF1ODBiVU0NCm1CVWx4eUVpQzVqbzVrc1RGaGVB
+OG0vNUNBUFF0eHpZdmdlellsTExTM25reGFxMkVSSzVEaHZNdjBOa3RYU3UNCnRmV1FzT0k1
+V0xqRzdVV1N0d0FuTzJXK0NWWkxjblpWMEs2T0tEYUZiQ2o0b3ZnNUhWMEZ5UVprbk4yTzVR
+YngNCmVzTmxOV2tNT0pBbm5YNmMvem93TzdqcThHQ3BhM29KbDN4eG13RmJDWnRINHozZkVW
+dzB3QUZjMkpsbnVmUjQNCmRoYWF4OWZoTm9VSjRPU1ZUaTl6cXN0eGhFeXl3a2F6YWtFdkFZ
+d09sQzUrMUZLb2M5VUl2QXBBR3ZnY1RKR1QNCk9wN011SHB0SEd3V3ZHWkVhSnFjc3FveTdy
+c1lQeHREUTdiSnVKSmJsekdJVXhXQWw4cXNVc0Y4TTRJU3hCa2YNCmZjVVlpUjB3aDFsdVVo
+WEZvMnJSVEtUK0ljL25KREU2NkVlNEVjbjkrQlBsTk9EaGxFRzF2azYycmhpWVNueXoNCnk1
+TUFVaFVsc3REeHVFallLK05HZDJhWUgwVkFOWmFscWxVWkZURWRPZEE2TllST3hrWVpWc1Z0
+WFFBUkFRQUINCnpTQk5hV3hoYmlCQ2NtOTZJRHhuYldGNmVXeGhibVJBWjIxaGFXd3VZMjl0
+UHNMQmZnUVRBUUlBS0FVQ1QzaW4NCmZ3SWJBd1VKRXN3REFBWUxDUWdIQXdJR0ZRZ0NDUW9M
+QkJZQ0F3RUNIZ0VDRjRBQUNna1EyYkJYZTlrK21QeHANCmJnLy9aV0RjUVZOQUtPV0N2aU5u
+TnZUMzE1V2JEcmpzSjZGQXBGODNoQjUycVFPOXR2amI1Wlk1NDc5NHV3b2YNCmlkT3FpMFhG
+b0xrb0x5aUpra3ZjM1E5U25NODloeWh6cnhuaDJ5bTRyVXI0Y0w2RjllOTl1QzY1NmVyNHRl
+bE0NCmJnOU9TUFIyaU51cXNBenlNaE9HTUVubm05N1lRMlFXT252YkM4UWdvUUI1VnZGM25a
+TWdxVFBUeGN0bFVmYzcNCnQ0QmxHY0lCTEcwb0lOVU5EZjQ0MUtBWGdNUDA1a1ZLMENEUWQw
+MkNUUG9rMlFzaGJnNmF3NTZlU1NVVEI0YXENClpNOFN0MXlTSjJjY01EUkM5bUNxY05GdHV1
+UHlBQUpBSkZtRXZseGFoZDBCQTBtd1YzY2UzOEpCYlRxczVrMFgNCjJKVmxqSE9iZ25mcDNX
+RHR1WThMajB1OEt2TjBDQVlKaFJ1aFk0MGZBUmg4RVBma052SXgvNzQwdWVleHNVQlcNCjNO
+MS9sQ2VBQmFPS3R1MTFrVlV4dkR4YUZSUWMySTV2bC9zWk11blNqSlFRaXdyV05icndaZ2lk
+d2tIenZpem0NCkxqZGdIZ0NKZUVDK3R1MXFpZlRDT2xsdWZ2WGFnalltckg0aG0vUXo2Kzkx
+bExrc3JIb294cDNuQWNONzhkNS8NCkU0cmVhbXgwK0RsZU9KMnlEMVVlUDJ3VURkQjIzT1FV
+M2lwVkRZd0l1SXZEV2laU0lWd1h5RExodWM2NHRpNHQNClNjVUdmdWNFS01FUjFlTFRKK3pJ
+TEhaOVI0SzdDMkJoRUdTQXl4a2VlWC9aOHBMTk9KMVJkVStCK1pGTlh1SUgNCkxKYmdyQWlP
+T3FyMDdXUGJ2UlQxTHZPL3cvNG0zMUQ5S2FsYzRKeXFuOStwanRuQ3daVUVFd0VJQUQ4Q0d3
+TUcNCkN3a0lCd01DQmhVSUFna0tDd1FXQWdNQkFoNEJBaGVBRmlFRUtpa1lKRC9lUm1TTkJv
+YjUyYkJYZTlrK21Qd0YNCkFtR2xGR1lGQ1NUNGIrY0FDZ2tRMmJCWGU5ayttUHcrVFEvK04v
+S1pHSGVUY3NuRU5ocnZHQUl4ZWV6bmRobjMNCm9uN1Fnd1RqRjg0ZFY4U01lNEM2TEN4Nzh3
+bWRFbWtXRDFSZnphLzEvYkszaVZhekpNSGRTQ3pYUWtBZGF5d1kNCllTczhHQmM3WmptTDNR
+aHZTMGF3VlNUNExXbUtqdjlPUGR3czE4RU94WDVCSE9EbFFib1FiT0dNQmJ2cEpvWWQNCkRa
+NEhEK0kybW1pTTRoOFA2MFBieTRnSXR2S2RWbmxVOHpvN1FiZkVJckU0blV0bFpHZnY0Z0lL
+Z2ZjODlsRDUNCkJOVkZ3UUQxT0loTEJnbFZ4bGtjL2ZTRkM3RXpZeitDdDZmR2FYV2VxTDh1
+MStoRGQ1V0lXNlpsMkM4MmQwVjcNCkxUeEtJMHI2cVpFa0xJMUpMRWVWUVJOQnAybU9BZkda
+VE56WU5xTzczTVcwNkVEckRwRzFScC91ZmE2UVNvSWsNClduVVJiay90ZzhmTkZhOEZnWEhH
+cVlmbFRuNVpmZitCVmIva2dVTmNFanpsQjVkZFUxbGFYVEJTclVJQU9meHgNCjVYVmFxM0JM
+TEZpVy9mN1hzUGFhc1V3NStrUjFmNlg4eWdyS1lvaTFaQ091Z1JmTk5uS2NtNkN3UVVyM0E3
+aXgNCjJ6Z1I2NlF2aUZ3bWU1b0pBcTRESldUS3BjQlZnWXdMdkdaWE9iVUNUNEJQWG5rQUVL
+MzJVWEM0THNmUEQ3Y1kNClZZb1FOVHJERGFLbUdxWURNekU3bXkxREdBZ3JJNngyWHA4OE9i
+azNJNG9ORVI4L1lwVENaYjFXNGNGVlM1cHANCm4rS2YwZCswR0dxcHRVY25DNmI1RkdWTTBz
+OWpRc2szR2FmWnpPcUtFUm9hUTBGcGxIUjlTYy9VK2hQZi95aUkNClNPc2JlUC96OWVXWDRp
+TE93VTBFVDNpbmZ3RVFBTjZFZFh5Znc5eHI1NkNKMWFzblExUFN4cHpFR2xVc0VIdm4NCjR3
+Y3VmeUM4S042VkdVbFIzV2lubGFHdk9JQ3p2WU9pUzA2RTZQcUtERWdiYkFwQmgyLy82SWhr
+MU95blMweTQNCmhZZXBKaStwc3RkWG9pdWQ2TlFTTlFsY0ZqQ2ZJOFd6QVQzcmVuc1ZMbXdj
+M0hnUlc1cXF0NVZjK0VXZGc5Y3kNCmxaNDhRZFB5bzNXeU9kMnB5TCt5cU5aUGpNR2lqRTh6
+dnp1cndaaU85YUJrSkNqdWxxWE1zMVl5eUlxZlR4S1ENCjFHQ1VRcTRTb0lRWGpEOEh2Z0o3
+VC9UcHVEZjl3Rmhlb25HcXhpSnB4YjAyTE1FZGtQZ3VnS0lnRzZpT0ZwbHoNCnJzeVN5b2lK
+c0dhMG1KMG4wTzZyWFF4bDFtSy96ZGZndm00Q1BEdWpiZ0lObkl4UnhQZXNjQ1ZZY21qTThr
+VGwNCkdZSnVLcDRHZ2J3YndrQ0lTczRyZXRhQVhpUDNhMmYzZVNhSmM1U25XV2EzSnFINW9n
+a0VXdnVlempOeFc1Zk0NCnBCV3N6ZFFFc2duc2RsSzM3VithQjVvV25ua1pSbFdrMVloR3dM
+MU9EeitFWnpTc0dsa0lyN0JZYWtLM3hSWWINCnhWZlFrVXI3RWVxcnVYb2hTT25QQW93ZVBZ
+QVhDaWdDZld2SUpNbHJQTElPRDJHT3k5ZVYzVVovSkRuLzdZUGYNCkZBak5iMGdWZHBxQkNR
+TkgvZlAyZVBDMEZ6VyszWUwxVWJSK3FNQUViS2JGZXB5Y2c3NUxiQzA4akZ1UVZ2YXUNCkRR
+dGE0RUF2QmtGNDYwUG9za0N6Y011UkVudGpNeGlwQjZJTVNvT0Q3NHRjR1lmVXA2L2tjZ2RF
+YXF5SzgyMTQNCmNvdU8vdThIQUJFQkFBSEN3V1VFR0FFQ0FBOEZBazk0cDM4Q0d3d0ZDUkxN
+QXdBQUNna1EyYkJYZTlrK21QekkNClJBLy9iQWYwTmc4ZEorSWd5ZFJ0ZFQ5WDJ4WUt5dWtr
+QTNIbHJPSW1Pb0E0VGhydi9IVmU3VTI4QWtpUXQyRHgNCk9tTlpZSVYwQnF2TCtkV0FEMUhZ
+Q2RRZ3NnVldWTHByc0ZmcU9ZSG5BV0tzZHF5TlpIdFBDOUo2ZHJud3YwdmMNCkVSMGR0REpq
+TURQNE1KTVRhNEpOak5KWWIyOVdmYkltdmlEUnRJY1Z1allGb1pLMlpCYTFFYzd5UGZrNENz
+eUUNCitZM1FoOUd5OFowOE5ycnhJbitNVkFUQmJvY0tzN2oxSkF2a0ZrK28xZ3JHbnczTlRY
+bkI4Z0V5Z0FLSEh5VWcNCnpyNU55bjVxSjI4RVpyN1ZjMUZQMmxVaUt2MEpCY0hULzl2VlhK
+MUdyZCtWRjJjd1lmdE1XUktSNjZsVGFVUzINCkJYMHRhNklRUVNqOG5TUnNvS2FwUm5pQ2ZU
+bTFENEkxNmo5Yk9vRWZGZFZzTWtjcllGdGZocTk3cWdSOGdadFYNCkNKa3JYMkNBUlorYTFK
+K05QL2VyQVNkNk0xQTNuM2FNRjN4QkZmRnNvdHpQcGxtaHpFeENZd3VPQ1dJQmZQZXINClVR
+aDFNdWdodkcvb1Q4WmFwUjZ4L0VWRStLOTBKMTBYcFBpOFZNaS8zUVJDNURwQ2luM0tjMTRX
+QUU0dUVieVUNCldMS2IzUG1mbVphUzZxRmFKTnRmMlR5Wm9kVDBBQ2d1djlYczRlbDBqOEZS
+YUNxTHZFWlM0cktMTnhiOEVZM1oNCjRMQzYxUWZ5QWJnNVAxMTRtdVZaNHJvOGR6aFowendr
+WkxHZUVzWVBzUXBMbzZYUFQvMzJQUDhhSG4vS0tYK0sNCk03b3VDRWhWZVdzelIyMEJNSzZz
+eFRCUis0YU5xU0tDZGdyNDJqcnR2elJtSnA3Q3dYd0VHQUVJQUNZQ0d3d1cNCklRUXFLUmdr
+UDk1R1pJMEdodm5ac0ZkNzJUNlkvQVVDWWFVVWx3VUpKUGh3R0FBS0NSRFpzRmQ3MlQ2WS9B
+VHoNCkQvNG1WZmwwVGpvYlB6TENuZTU0RUhoWUJFNUpyZkdGWVc5a1lOMVlLUUVIdlhKK21z
+UFk1Tndwd2RIbkRRWGENCk1zcmQ5N2Q3eGpXcnVvZ3NKVVgyazNWNFBhclNNbkxiZ2tFbnNH
+Tm1ESk9RRXZESm0xNkJyNHg5V2Y0cTYxYksNCkVzL2pleHhUeWlKUU12QS8ya2NFdFFoNXZi
+R2owSWhxSGtmODA0WElsV0ozRVJ2MVBTZXJGZkZ4L1RoRDUwRUUNCmVNUDFkVzJDUFVwUHJM
+aG5FaFRlNlRFVExFckpUcG11TnZRTjJ4RzJleUpMZlZreVoxR1BWM3krV2FrSjR5M2sNClpm
+TnVOemszN2gwcllkdXJxWTJTRU5uckhIR1RHS1VJTlB6RHBSNzdoYmhidWpCUy80R1F6Y3gv
+SXdIQWF6WGYNCitnQVNySG5HRTV3U0p5aDlrempYTkpBdXVhQUlhMGtnVFM3blU3angzSHYy
+QVFyRkFnQkRNSUNVOG0zYVRFSWYNClRaRXV2RnNVTFY4Vk9wM3FFRk81QkNSaGhiSE8vOGw0
+a0Y3bGJ5VkpDdjE3Tk9GK285SmRYLytpaTZEVVBYcWYNCjlpSitmZWdkQVhMNzJpcis0SFE3
+ZFU2NElMNVFmaHFVL29oVVM3NFFnWHVaQUJFVVJIMFg1bGlhdFd4NkhmN3ANCmE2ZjFTeGdH
+bVpUZ1U0TEFzN24xaGVVamkyMlpKbGRtK2NjdGhmd0ZONkVGR1ozQXJ4VEUxcVFRdm9EdjZO
+NUcNClFzc2hnbWtIVUh1STB2eFZDYWtkYkxsY0RUTTNEaVRqL3l6RU1Mb3hQd29lMXl6TitW
+U0FxUGFxb1lvZURyeXgNCjFBRnN3dVhUVW9xUy9xMGhoNzFnWFgxdzRXM3N5U0plcktlLzlh
+eVgwdktqN0E9PQ0KPVZYS3ENCi0tLS0tRU5EIFBHUCBQVUJMSUMgS0VZIEJMT0NLLS0tLS0N
+Cg==
 
-yes.
+--------------RZR7mnACtwGz6aVSrjsGpvHo--
 
-> If so, how does this process fare against an
-> interruption (e.g. SIGINT)? The man page suggests this will be fine, but
-> I was curious about the details here.
+--------------bpiKnAhJqTek3S8DRHcRRvfX--
 
-This depends on format. For LUKS1, there are external files that tracks
-process (basically old and new LUKS header and log where progress is stored).
-For not yet encrypted device the old header basically just empty header.
+--------------LI4iWQhzeYDeNeQBd4HXKJhh
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
-For LUKS2, the reencryption metadata is stored in the header area itself
-and reencryption can run online (device can be used during reencryption).
+-----BEGIN PGP SIGNATURE-----
 
-In both cases, ctrl+c interruption is safe - it will store progress and
-restarts from it (you just need to run reencryption command manually again
-otherwise device will remain in the middle of reencryption).
+iQIzBAEBCAAdFiEEKikYJD/eRmSNBob52bBXe9k+mPwFAmZwMbEACgkQ2bBXe9k+
+mPxPTg//V3m6Z1Flov8qgxsIiqO2/QPWCr34CUMJ7BK8gED8fdSk1/E+/L0o8nTs
+4F+29BjjIgvG/qfhN2IPpQhASOGvTc0zvLEB/bLmbkWbVq284MUy+qNcfP2XoD1t
+G+VA8N29brJmqU/DrLBX6gaumZV9vHW1mvdH5XDSkIii16hFfXxAki0V3qkCDoOT
+Z3Oi/ut3wwqGfBqnvZVoa01AhnR2omJMJqWdpfgYvxtJlVFJ5Usx80LqZH8IgESx
+GWyW+kYUL6MkhJnsvD97NZ7zZjZgiL7lYEeks5zOP/gLS/9f120k3OC5GIBPGfVG
+zHDpUaTQyfvcqTTzGfgFqNhEho7BhPjEyXKLjMWUIZvtcP5OPqHGfmvtDA/HQorJ
++Zmihjm/YRYjA23EkCqaKlv++FsXlIP+//eU1+VT7rx1/ZLMhGW2rGLhEVXi+nsH
+4u6mKdCS1AVoGtY6w8hSd3pPRAOC87uWTya1vVdaZfh8A+ZCbmNSx6V63DC4Rhaa
+ztMPP25BtB36lumGvW9yfgyKKIZH2AS0u6rPBKUQjl8BFSZjeJStaRy4nr86Q+on
+chszeKfkN37T+AR29wCfLdCMKQZQ7PoZhZ1W46GTqDOy3tIsE/6vS7JGCr4OrEXu
+YRKuMs8QC7Qd7r/ya6urooPleXua3eAZbooar+ZLwp5B/1h3AaQ=
+=evUa
+-----END PGP SIGNATURE-----
 
-For unexpected interrupt (power fail) LUKS1 reencryption could lost
-some data. For LUKS2 it depends on used resilience mode (--resilience parameter) -
-it should completely recover if journal is used (as it stores data twice for
-active reencryption region).
-
-For more info read cryptsetup-reencrypt man page and section "4.9 Online Reencryption"
-in LUKS2 format definition (https://gitlab.com/cryptsetup/LUKS2-docs)
-
-In short, use the most recent cryptsetup version and LUKS2 format and it should work :)
-
-Milan
+--------------LI4iWQhzeYDeNeQBd4HXKJhh--
