@@ -1,181 +1,212 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05on2085.outbound.protection.outlook.com [40.107.21.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D58B23BE
-	for <cryptsetup@lists.linux.dev>; Sat,  6 Jul 2024 19:31:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720294319; cv=none; b=hVOpV6cUfH10wotq0S3NuDr5vqLUra2LYCVmBZCIdsGgFv7wIRgAdx26KrHgd7Pi4lxUCQXCoJ+hv3tb5wZDzMxs7YFx0xYrrwzulCVnFPCXvQtJ/PvhnPVN6DF4ffor81WIFb20azKykh8gMU14dICJvcXSvWuWbBY/WU00rTA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720294319; c=relaxed/simple;
-	bh=NA/31B4nWJ+s8k4Q76NxBkDq67Oq8y1H+tMpbdNnJdY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=qtmsOa7X75Vuezwl2uV9H5PtaUw3+yX4SC1bkS2TQAsT+AGwJ+OsyQqPzRP3B/7sCiDvAllGLsDvdcHIZ/PZyYZaz7mdYdClcDRvrLLz0s0q4+Pn2TeCoLGgoS2gfW2o44s7/1kMVUiKkdsGq/Zkel5q7xDf9gBR0t665m9enEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jvT1VAqC; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4443717E907
+	for <cryptsetup@lists.linux.dev>; Wed, 17 Jul 2024 13:29:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.21.85
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1721222946; cv=fail; b=s4iTirPBdOOZSoOy3XUn9sRwP3ITirrqWsLckmjaS3FYMLd8vhm+BU++ncVGi13kYxmlQd/M4WcPd1Kl7nOxp4Mwmc3yjzuiq0CKTlnnq9FiPE58ONqNjiv/flNfIFjrSurljRZm4TE2Pt3SCAoHZ6B/8aXTgPJsNkZChopMQ6A=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1721222946; c=relaxed/simple;
+	bh=BCVoML7C0mYw18rf2duhS3uKwPBGXYnMQrIhvPZTjyA=;
+	h=Message-ID:Date:From:Subject:To:Content-Type:MIME-Version; b=ERHgGablp/FJt0m74jrXzPZqIMY7fOXnn+CmST1tROaFq4fpg073sGdRL+pTqJpJFsxvI0YXQxax5yoVipCcXhq1rSr/YV91EYZBtNbz166WyjAsvJNKs4iLWG56Q6BHWlYYD1PF5gzz4W5vNMrTgPcROth94WlIwNe/8/XH+DA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=siemens.com; spf=pass smtp.mailfrom=siemens.com; dkim=pass (2048-bit key) header.d=siemens.com header.i=@siemens.com header.b=EcF0Q0C+; arc=fail smtp.client-ip=40.107.21.85
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=siemens.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=siemens.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jvT1VAqC"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-57cf8880f95so3453191a12.3
-        for <cryptsetup@lists.linux.dev>; Sat, 06 Jul 2024 12:31:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720294316; x=1720899116; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=VZuaDTDjn9vfmbw34ru7RTvpswoJBk8SJrBYHfMAPzE=;
-        b=jvT1VAqCq3TGpb3IdRZV1W6sHWVQ7cLTgJTtN4MgFnr2CUA0BWWlKpEkRRR1fy16sH
-         BxFdw5CBC01TMgymMRKAETwdrs523Af3/Uc2KUOu1OG0nby/9D7PAPwKgHoWcRm4WHlE
-         //W23F/PSnUAdbIq/W8RXTDv7ekaxy/Chjh1JeQL8Hzhkgueayc9Yg9Hrog1/Hk0G9UQ
-         pKQ2XxJdmopo5ryLWwCinV4bNw8CexLoHVTcYEkJeN3BA4eLyD3UJd8H8uJJ/BXOJ4a/
-         e9JAcloZQJMPKs4HXh51qJkv0H3FBm0K9C3V5fyOnyC5FoZZfiz0esOu5cFfNI/xx4pu
-         trRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720294316; x=1720899116;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VZuaDTDjn9vfmbw34ru7RTvpswoJBk8SJrBYHfMAPzE=;
-        b=UXsBP4DTTrpljHQC2wuKqMFxmPGNvHFCTJEkDcCNxDTS5HtsYoslu1wsPJh78Ud0OK
-         BOpFg73mVO0nGp57vb9fjkGqi0Wjw1hm4WzFOY1y/W6fwk6gwZmdfdl3/ltp195eQyq/
-         zEk5KMl1mkd9urjWb69AaR7bcYpgRmg/oE4Wagz6KKi+0w017h5FUf0kKaRL6e2H5er/
-         h/pQ2PusjpxFRUXCQMg2igl5I2/xqRfTj1t5y0bMsCjQRIB5VaahcrSP2WK1YKeFAoZ3
-         5yCYYsdUkDWSrJyGlxeEBBaI6GQgnEII3I+RFnR8O6rFiUI3H1K9vaRiKTvXRNsGbTFF
-         oihg==
-X-Forwarded-Encrypted: i=1; AJvYcCWmdw0y7DkBgQSTTaJXV8EYB5LxE15iarw6lAmZfCkpLYrUwsL3c5bXA2pv1ZrUJcPbxLdjpb/Tc797Jbw/RialpNpwbJHOaUBilQ==
-X-Gm-Message-State: AOJu0YwK/2JyBTkpz8ZvdRXRY0gJKWASn5mWmLei1crCx1b86uvb8OHq
-	kMGOoIKO0dHeQ+QbARf5IjdjVCMTzFMPb0EEDOsdb0nImXCjT64PzJOTLQ==
-X-Google-Smtp-Source: AGHT+IGI2W+aIbHatBVYgh65uuiGhiLo7Gc/uH10m0F0JHq6MRiyvkxhfi9173Am5hy8Me3mnfHXAg==
-X-Received: by 2002:a05:6402:84d:b0:585:5c4d:f840 with SMTP id 4fb4d7f45d1cf-58e5c8269b8mr4451543a12.30.1720294315484;
-        Sat, 06 Jul 2024 12:31:55 -0700 (PDT)
-Received: from [192.168.8.101] (89-24-52-227.nat.epc.tmcz.cz. [89.24.52.227])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-58bffed021esm5780719a12.89.2024.07.06.12.31.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 06 Jul 2024 12:31:54 -0700 (PDT)
-Message-ID: <aef46d3a-82f0-4b02-be43-d53f2bc9b45a@gmail.com>
-Date: Sat, 6 Jul 2024 21:31:53 +0200
+	dkim=pass (2048-bit key) header.d=siemens.com header.i=@siemens.com header.b="EcF0Q0C+"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=kEQuv0pK4DOWumglO/k49uE8VP1p+2KpimQgF4r1uPbwBu/pAGb/4lrnZ/81R5f76z6+3xua1w7N2zPlE84Q7zx7tDfXUj3gnm7lnUbXzRo0BCNJYLwfgG0oQr/DeeC1uFRbEh87c1Ku6C7OZAw+yyYLI50l/rNWg/DQZ9wJPKW/jJBhMLTxfftac4hk/C/mGH+o0Fj88ej+au/3IR0Getbqspm0JwdmxNTLrIvdGgwezcv2tmiajqH4XwzZkgu6zJuemb9tTJUrC55clJF1kJcRxgiXrxBXw1cisUxEhkZ3x3HC2L6ptnUSq6ghwqrPaCcuj7doCJ9Fn5q/bEcstg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=uVojhR7NRX4OQy4rndMMe6x9l8nUcnKYpbEMFIjFONs=;
+ b=trZrkseWJiXpGNgXf9rjHXEHIrC3xVm3QjNCLrd9vOZmRfLfkRi/uPUtH8Y8c/EfSvC36M+/S4+ji+zuseCIYSA4xwn0cs6F9ZXt/PYOTDSq5MsjloJz40z82/hFvaqQUpvSN2tT9wMH++xUetonzoU9i6s1ydXMGGOR++369haQf4PFILsMzlBPfFjvDtuLqwVdE3bLiJrm+8qkMQ+O5Tb4+FkPshu/EXnS/nejxRWCe4gNAP0wDYKra17m0XE1nN0vpSK3FEz984hJVderhY0/aUKynVYPdslEyK9HEGlZdjs6r2WEjgpPUL5qu2OedzAbWv9w98fj2mpUjskm3w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=siemens.com; dmarc=pass action=none header.from=siemens.com;
+ dkim=pass header.d=siemens.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=siemens.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=uVojhR7NRX4OQy4rndMMe6x9l8nUcnKYpbEMFIjFONs=;
+ b=EcF0Q0C+GntHH1nVor1stLCu+yPiG8xA4+L4VrpydA21bMckKqAWUSLrqmNGF1f90ewiPzGvTLJZQtZh4Z9b6u+Wz02nhGwEtjimIBQ7NK4Nuy6yudY63X/LQRdqiXDf2UoFDd/DSunuGe3gScJkQNDvO+hPjdlI69TEbn3FoBKLZHkh4GIihGgytm+lnRaKTR3XsS25+nh3khJwnQ0dQATWNeGzOHAWXySMgdkHwyCf3LjjwdyhmQpaeRwNx+fX3NXmhlRSEM6cjz08n/gsCKqmeR/KKw81biEOJSonHPAeH7aJ5QYGjOu3KkBY3b5rTawjgRAJ/dJzt3skOTZ/TA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=siemens.com;
+Received: from AM9PR10MB4085.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:20b:1f9::22)
+ by AS1PR10MB5747.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:20b:47e::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7762.29; Wed, 17 Jul
+ 2024 13:28:59 +0000
+Received: from AM9PR10MB4085.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::3087:c116:dfed:1ca2]) by AM9PR10MB4085.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::3087:c116:dfed:1ca2%7]) with mapi id 15.20.7784.013; Wed, 17 Jul 2024
+ 13:28:59 +0000
+Message-ID: <946e1e13-c77d-40b0-8d41-4731247d298b@siemens.com>
+Date: Wed, 17 Jul 2024 15:28:57 +0200
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US, de-DE
+From: Gylstorff Quirin <quirin.gylstorff@siemens.com>
+Subject: encrypt partition on embedded device with TPM without passhrase
+Autocrypt: addr=quirin.gylstorff@siemens.com; keydata=
+ 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
+ XSdq0hnpafc1V+voPJq3LMxUvLNrwg==
+To: cryptsetup@lists.linux.dev,
+ "Koch, Stefan (DI PA DCP R&D 3)" <stefan-koch@siemens.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: FR0P281CA0117.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:a8::15) To AM9PR10MB4085.EURPRD10.PROD.OUTLOOK.COM
+ (2603:10a6:20b:1f9::22)
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Interaction between OPAL drives, LUKS and TRIM/discard
-To: neitsab <neitsab@esrevart.net>, cryptsetup@lists.linux.dev
-References: <1254eca3-84b0-4202-8ac1-fbb5214a5aa5@esrevart.net>
-Content-Language: en-US
-From: Milan Broz <gmazyland@gmail.com>
-Autocrypt: addr=gmazyland@gmail.com; keydata=
- xsFNBE94p38BEADZRET8y1gVxlfDk44/XwBbFjC7eM6EanyCuivUPMmPwYDo9qRey0JdOGhW
- hAZeutGGxsKliozmeTL25Z6wWICu2oeY+ZfbgJQYHFeQ01NVwoYy57hhytZw/6IMLFRcIaWS
- Hd7oNdneQg6mVJcGdA/BOX68uo3RKSHj6Q8GoQ54F/NpCotzVcP1ORpVJ5ptyG0x6OZm5Esn
- 61pKE979wcHsz7EzcDYl+3MS63gZm+O3D1u80bUMmBUlxyEiC5jo5ksTFheA8m/5CAPQtxzY
- vgezYlLLS3nkxaq2ERK5DhvMv0NktXSutfWQsOI5WLjG7UWStwAnO2W+CVZLcnZV0K6OKDaF
- bCj4ovg5HV0FyQZknN2O5QbxesNlNWkMOJAnnX6c/zowO7jq8GCpa3oJl3xxmwFbCZtH4z3f
- EVw0wAFc2JlnufR4dhaax9fhNoUJ4OSVTi9zqstxhEyywkazakEvAYwOlC5+1FKoc9UIvApA
- GvgcTJGTOp7MuHptHGwWvGZEaJqcsqoy7rsYPxtDQ7bJuJJblzGIUxWAl8qsUsF8M4ISxBkf
- fcUYiR0wh1luUhXFo2rRTKT+Ic/nJDE66Ee4Ecn9+BPlNODhlEG1vk62rhiYSnyzy5MAUhUl
- stDxuEjYK+NGd2aYH0VANZalqlUZFTEdOdA6NYROxkYZVsVtXQARAQABzSBNaWxhbiBCcm96
- IDxnbWF6eWxhbmRAZ21haWwuY29tPsLBlQQTAQgAPwIbAwYLCQgHAwIGFQgCCQoLBBYCAwEC
- HgECF4AWIQQqKRgkP95GZI0GhvnZsFd72T6Y/AUCYaUUZgUJJPhv5wAKCRDZsFd72T6Y/D5N
- D/438pkYd5NyycQ2Gu8YAjF57Od2GfeiftCDBOMXzh1XxIx7gLosLHvzCZ0SaRYPVF/Nr/X9
- sreJVrMkwd1ILNdCQB1rLBhhKzwYFztmOYvdCG9LRrBVJPgtaYqO/0493CzXwQ7FfkEc4OVB
- uhBs4YwFu+kmhh0NngcP4jaaaIziHw/rQ9vLiAi28p1WeVTzOjtBt8QisTidS2VkZ+/iAgqB
- 9zz2UPkE1UXBAPU4iEsGCVXGWRz99IULsTNjP4K3p8ZpdZ6ovy7X6EN3lYhbpmXYLzZ3RXst
- PEojSvqpkSQsjUksR5VBE0GnaY4B8ZlM3Ng2o7vcxbToQOsOkbVGn+59rpBKgiRadRFuT+2D
- x80VrwWBccaph+VOfll9/4FVv+SBQ1wSPOUHl11TWVpdMFKtQgA5/HHldVqrcEssWJb9/tew
- 9pqxTDn6RHV/pfzKCspiiLVkI66BF802cpyboLBBSvcDuLHbOBHrpC+IXCZ7mgkCrgMlZMql
- wFWBjAu8Zlc5tQJPgE9eeQAQrfZRcLgux88PtxhVihA1OsMNoqYapgMzMTubLUMYCCsjrHZe
- nzw5uTcjig0RHz9ilMJlvVbhwVVLmmmf4p/R37QYaqm1RycLpvkUZUzSz2NCyTcZp9nM6ooR
- GhpDQWmUdH1Jz9T6E9//KIhI6xt4//P15ZfiIs7BTQRPeKd/ARAA3oR1fJ/D3GvnoInVqydD
- U9LGnMQaVSwQe+fjBy5/ILwo3pUZSVHdaKeVoa84gLO9g6JLToTo+ooMSBtsCkGHb//oiGTU
- 7KdLTLiFh6kmL6my11eiK53o1BI1CVwWMJ8jxbMBPet6exUubBzceBFbmqq3lVz4RZ2D1zKV
- njxB0/KjdbI53anIv7Ko1k+MwaKMTzO/O6vBmI71oGQkKO6WpcyzVjLIip9PEpDUYJRCrhKg
- hBeMPwe+AntP9Om4N/3AWF6icarGImnFvTYswR2Q+C6AoiAbqI4WmXOuzJLKiImwZrSYnSfQ
- 7qtdDGXWYr/N1+C+bgI8O6NuAg2cjFHE96xwJVhyaMzyROUZgm4qngaBvBvCQIhKzit61oBe
- I/drZ/d5JolzlKdZZrcmofmiCQRa+57OM3Fbl8ykFazN1ASyCex2UrftX5oHmhaeeRlGVaTV
- iEbAvU4PP4RnNKwaWQivsFhqQrfFFhvFV9CRSvsR6qu5eiFI6c8CjB49gBcKKAJ9a8gkyWs8
- sg4PYY7L15XdRn8kOf/tg98UCM1vSBV2moEJA0f98/Z48LQXNb7dgvVRtH6owARspsV6nJyD
- vktsLTyMW5BW9q4NC1rgQC8GQXjrQ+iyQLNwy5ESe2MzGKkHogxKg4Pvi1wZh9Snr+RyB0Rq
- rIrzbXhyi47+7wcAEQEAAcLBfAQYAQgAJgIbDBYhBCopGCQ/3kZkjQaG+dmwV3vZPpj8BQJh
- pRSXBQkk+HAYAAoJENmwV3vZPpj8BPMP/iZV+XROOhs/MsKd7ngQeFgETkmt8YVhb2Rg3Vgp
- AQe9cn6aw9jk3CnB0ecNBdoyyt33t3vGNau6iCwlRfaTdXg9qtIyctuCQSewY2YMk5AS8Mmb
- XoGvjH1Z/irrVsoSz+N7HFPKIlAy8D/aRwS1CHm9saPQiGoeR/zThciVYncRG/U9J6sV8XH9
- OEPnQQR4w/V1bYI9Sk+suGcSFN7pMRMsSslOma429A3bEbZ7Ikt9WTJnUY9XfL5ZqQnjLeRl
- 8243OTfuHSth26upjZIQ2esccZMYpQg0/MOlHvuFuFu6MFL/gZDNzH8jAcBrNd/6ABKsecYT
- nBInKH2TONc0kC65oAhrSSBNLudTuPHce/YBCsUCAEMwgJTybdpMQh9NkS68WxQtXxU6neoQ
- U7kEJGGFsc7/yXiQXuVvJUkK/Xs04X6j0l1f/6KLoNQ9ep/2In596B0BcvvaKv7gdDt1Trgg
- vlB+GpT+iFRLvhCBe5kAERREfRfmWJq1bHod/ulrp/VLGAaZlOBTgsCzufWF5SOLbZkmV2b5
- xy2F/AU3oQUZncCvFMTWpBC+gO/o3kZCyyGCaQdQe4jS/FUJqR1suVwNMzcOJOP/LMQwujE/
- Ch7XLM35VICo9qqhih4OvLHUAWzC5dNSipL+rSGHvWBdfXDhbezJIl6sp7/1rJfS8qPs
-In-Reply-To: <1254eca3-84b0-4202-8ac1-fbb5214a5aa5@esrevart.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR10MB4085:EE_|AS1PR10MB5747:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7770cc8a-039a-4c9e-e7f8-08dca6646a4c
+X-MS-Exchange-AtpMessageProperties: SA
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?Yjk3ZjQyQmtzRGZZNXF6V0hzZjZ6UkxZcEVINk9nMEE5TTFQZmdIdnFZMmZy?=
+ =?utf-8?B?MzJqUWlQUEVncFhScm1YRGxjQWNoeldWUGVPVWMvSEJCMWl0dnUrNXpvakhX?=
+ =?utf-8?B?b2pjN0tBSHMvNGJsbEUwYXNzbmF5V2tGeUdtUXFYVzVTU3U5VmJ6dGZJeDVZ?=
+ =?utf-8?B?d3dNcE15bkdic0ZVMFFleG1tK1RmQU81aEkxdm9ITWxpNm5Lb21BRHpLYmdv?=
+ =?utf-8?B?L1FUOWZ6NTlXSXpSM25JUzZnZ0lPOTRUTW0zQzNFdTJZeEFudElDQjJlQkIz?=
+ =?utf-8?B?MHI1MzFHRmg1cFVqYm9sbFQxajdwR2xRbnZDUVQ4VDBJaUVCNklZeFNodlU4?=
+ =?utf-8?B?Nm80dDB2WWtvMStFZkVkVkVPTCswQ1hZSUpZb2RFUHQyekFhQjR5SytuQzJX?=
+ =?utf-8?B?aE5PemZVb1N3SlQ1UGdiejlEMWRJSlhMaVRmTHZEd0hPRmNPUHNVRUVIb3Bt?=
+ =?utf-8?B?dmZ4T2tQVCszakVNN1FmZ2NraGlkOHJwZGQ5UXMvTmRoR0VPNEhCc3d5ODZM?=
+ =?utf-8?B?Skt0b2RqVGFUblRUKzBWV0E2MWE5bEcxOVpydDRHdHAvOVVJZFRQNWduU2NN?=
+ =?utf-8?B?OUV1R2tnbDk3K1Y4L01mbVphRzBack5WVlMrcGdXSzVNZjlVeFJiYmlxTlZL?=
+ =?utf-8?B?SWpqbWFmbFhmUERKOW5nb0Q3cHFVYnloUlpRMFNQS2N5c1ZoRlBjYmhGNnFC?=
+ =?utf-8?B?cUVTWndYQzZZNVBWbTlaN0xRR1ZPb25xOXY2YXJSZTVkZHAxakQ1S2VheHMv?=
+ =?utf-8?B?Z3ExLytqMk1IWnQxamxaQ3VuODZkT01yNS9IK21ISkFjUEdaam1uV0djSXJ6?=
+ =?utf-8?B?QzVSVUVidGtBc1JDdjNJMWVXWEtieW56UXE0NGlicEIzdzFFUUIyRXhWS2JG?=
+ =?utf-8?B?V0FMa0tNdmJrMlkyTVNCd3dXY1pSVkpLdnNpUDc2TFcvN29CNTlPVFMrNGVQ?=
+ =?utf-8?B?RlJ2MzBKcDAzb2hNSTQ2MGRJRjg4RHU3dmZtazd5L2YyZjd4Z3BjSi9SdkZ1?=
+ =?utf-8?B?TFVSRk5aTjhZYVIzQUJHNXdrcThXdSs0MWtSenlNODBta0QrbUk2YitnbG5L?=
+ =?utf-8?B?ejFsU3Mzdk1nRHJLbUcwaWZhRE1IS01pTGFFQ3RDSFVHc0JRazFYRG0zQ0ZK?=
+ =?utf-8?B?aVB4aXdweWdyQnloUXVESE9wN3htNjlzdFRZSk1GcDN2MWJpUG9QQ2NMY1Rz?=
+ =?utf-8?B?SFg4SURhUko1ZVFxaDFCd2x3bVZmUk1haitJdHFKZ1JPeVBzVWd6NmVONGxU?=
+ =?utf-8?B?QXNyWnpZZEJybkN1MXBJM1lQNGZHY0hORmRacnlOMWNMaGVvaTlQdnBhNUlr?=
+ =?utf-8?B?VVAwbzUzaTdTTmNtbHpPenA5eVp5MTZlKzVjZXkzb0JpQ2NVMm5MamUrbWc3?=
+ =?utf-8?B?OGEwZ0tDR05pcFcvcEd2ZlorRE56RHgrWS9MblpIK29GNmpLb0xoV2JxanBL?=
+ =?utf-8?B?UTRRS25YN044WjZkTEtYZlRkd21JWWJjYThTN3B5dVY3MEtheEFONDYremJx?=
+ =?utf-8?B?WmlucmJGZW45YXgrOW9ZT3BpRytIcjlJaE9NYUNKSDA4bkJTR2EzQVVVYURx?=
+ =?utf-8?B?UFBwZHQ1SWpLT1dDNFRsRzNTTXNrSVRUYW9uZEtyYjRoNHpwODQwYnczNHRl?=
+ =?utf-8?B?Mm9Fd3RMSzZuVXZzam1LZnFmbStTMVA4dlgxUjYwVmswZXdLKzNpS2dUcEhG?=
+ =?utf-8?B?SktTZ0dkclJGTFBaVlhRTE5vamJVczRoY1ljN1EwTDN1VUY5Z0V2bEJnWXJI?=
+ =?utf-8?B?ckVsRWNZcXpMRlcxMFZkR3BoNkp4S05GSnR0UnN1bkVUNmJBWnpwTWk4ZW1Y?=
+ =?utf-8?B?NS9DeTJjYnJGemtNVVFWUT09?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM9PR10MB4085.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?SlJqYmJXUEZHRFIycndCZ0NRMXhJM1NIUTk4MkZFd2NnYitTOTB3bUVzWmdr?=
+ =?utf-8?B?eVFFbjg3MFZwVXNKM2lqZ21Qa2FGM1VBVHp2Y2JBcFJVNnFndzdyR0Q4Umg4?=
+ =?utf-8?B?STAwNlRCZGNzbzF2c2taRStYV3lxaDh5dFVsaWp2Y2labFZOdk1LTlA4SCtt?=
+ =?utf-8?B?aW5VV0xkTVdOUjlxOVFQWXRYMnZ3bWJwVHN6NU9BMzBZenJublg4aGZvem02?=
+ =?utf-8?B?QWRDU3FGaFBkcGowYis4VklSWjRzeUZKald3N2d3SjBuZnN0Z0xVRkJ3aVM4?=
+ =?utf-8?B?RG8xTjkvWDdJQzA4SnI4em5ob2JIdWZLT1ZWUzZPcEtjTGdvbTBSRDQ2ZS9s?=
+ =?utf-8?B?dklmNVZwdWpNNXd0a1VTK2FhWC9Id1hlUnJDWlNaSmZNSnh6NnNCYU91MnN6?=
+ =?utf-8?B?ZkZtSnVsVlJRdm5BY3dadDE4TkxOOXN2L3lsaVJKb0Y1UmFmV0pOMDgxOE5G?=
+ =?utf-8?B?cHlLZUdDajU0NHdnZ1BvU1c3ZllRS2UrcFJycEUrcHI3UFdvTjNJeG9jY1Y1?=
+ =?utf-8?B?UVZLdUtzR3M4UmY1emRMc1NsVENnSUNOcHdoYXpkTXVKTUZuK2JZVU1NOG5Z?=
+ =?utf-8?B?VVJNWUxjVk83SWJ3bkZzMlJla3N0Tkh2Z2l4bmU5K2JqRXc1b3JJMWlnVjFa?=
+ =?utf-8?B?U29CRWdmL1dJbTJnakphZVZsTU5VMStLb0VEOEZmMEZVZlJERkdsMTlvRk9V?=
+ =?utf-8?B?L2UvZm0xaFo1T3pzWFdnS3pRNXp0dWNSelM3TlMyMXdBYlN5WkhpdHl6NEFS?=
+ =?utf-8?B?cUN2TFJ5M1NIbU1KdHhrOWY1aFRjMzAwT2JuaDBWc2dPKzVPWHRDTlRsME9Q?=
+ =?utf-8?B?SVAyek9FMC9tZjlpK2JLZ0lWcDZWcHNycWE4YXJRSWIyZ2lwemRVMkxwekhN?=
+ =?utf-8?B?N0dWdE55Vm1mL0FsSEc1cDZTOC8wTG90Vyt0R0tqZmhoOHhIMUl4NW5Vc0hC?=
+ =?utf-8?B?M0xuZGhhNjhpK0JtbTU4aUhDYUdkZWhMSlI3aUU5enZkVUlCQno0QU1iNmpj?=
+ =?utf-8?B?cGorNHllMy9jQmJhbmw1WGlwWXVFNkw1ZFRybFR4bXBJNXpLUHc3eVgyWmdO?=
+ =?utf-8?B?UlFBNEcwdlUrek8zdlk5QWYrY0ZuYTZWWXFHdnlyc0pnOHZBbXZOZ0ROdC9F?=
+ =?utf-8?B?V1NLT3MvL1hiZU4yRHB4dFppUFFGbFNjRWplMUd0Q3hNa1pGTTBrQmhySmRz?=
+ =?utf-8?B?QU5PUGFPa1o0bEJqWXhxbjdwQVlXUFRRVU9kN0ZJeDJQMzJRYXZGWkVHRFpz?=
+ =?utf-8?B?UHdmNVZmVFcvbWRwbmh1MkhhZ0paYVZkYXkrelhSakxPZUJsSXRRenZFd0gz?=
+ =?utf-8?B?Vk9hcVQ3ajRFZ01kTGg1QzV3bzdLV0tWbkY5TytOWEdZTlE2ci9XMXRzdG9S?=
+ =?utf-8?B?VjQ3ZEVEL0d0dG1aR2Fld2VXY0k5ZWVwOGV5RDdUbzlXREFxSTVSSVFsOVBJ?=
+ =?utf-8?B?U1l6d3pRblMxdW5hbWx5KzE4cXNXZ3dQelR0SUVSRnZGR3E0dzlKWHNjbjln?=
+ =?utf-8?B?R0J4THJzOHhRWDVFZ1Jsc3g3RHZmR05hZVdTYzZvNjQ0Y0h1WHQ5UzVFUWJ0?=
+ =?utf-8?B?MmhETEU2M2RiREJtei9TaTlpUFl2cTNVa25VNGV3L1J6TE4xRkprOFFHUjNk?=
+ =?utf-8?B?Ry95bmNPSDlPMm5wMjlOUGVkUTZRVisrS1k4MitYazZkV01yNjFON2hhREFj?=
+ =?utf-8?B?dmhYNGhVdm51eVlOZkNFYXVJZUFRb1NLV0VsYzZOZzNGMmQwTE5zWUxxWXNj?=
+ =?utf-8?B?UmdiNU5RckVHekN2dDcwRUhBUmJRanM1ZVI4VHljd0R1ZlRXUFZXWUtSaU84?=
+ =?utf-8?B?OGw1c3FTRHllMDhLaVlpWThVazdHL3N4Z1lHQTdRN2VSVWRva2I0T2hiekV0?=
+ =?utf-8?B?QmtuNklrVENPNDRmUkJzOWljOWZXUDNrM3dpOURJMis2SDFNUDdSNWR3bzZW?=
+ =?utf-8?B?QUY2a1FGTnBlREJGRStzMEhmYW5ZaGszMFVzY1crZ0NmNkdGM1BlaWQ3ZE9w?=
+ =?utf-8?B?OGtyd0VrVFp2N2ZkMDh0MUx1aXVoM0tub2pZejhnUDN6cnJ5YXZDakREZW9P?=
+ =?utf-8?B?NGJuNHowTysxWThIZ2QzRHJ6RzBCQ1VLYXVPeXlOZlloTXlOZWtZN2JBczVG?=
+ =?utf-8?B?QTlkVkoxVlRyZUVlSDhxNk1PK1RxN2p1OVNIWnhzV2N2RUF6OGF1cGRNaDdX?=
+ =?utf-8?B?blE9PQ==?=
+X-OriginatorOrg: siemens.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7770cc8a-039a-4c9e-e7f8-08dca6646a4c
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR10MB4085.EURPRD10.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jul 2024 13:28:59.1310
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 38ae3bcd-9579-4fd4-adda-b42e1495d55a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: WycR069ga5JV5F9mpxkKr0uF8aH787pNgSAKOsYrfQQbplJzqtBiIvQW+DS1O3Cq5jkyJHGvTIp41LSsoA+PpNyneQSdhC0JfdG1Si2meho=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS1PR10MB5747
 
-Hi,
+Dear all,
 
-On 7/5/24 3:34 PM, neitsab wrote:
-> I have been trying out the new OPAL support on the root drive for a new
-> Arch Linux install (using a Samsung 980 Pro and --hw-opal-only): to my
-> surprise it worked flawlessly and I could boot from my OPAL-encrypted,
-> LUKS-managed SED. I really wanted to thank you for adding this support
-> to cryptsetup: it's a whole world of improved usability and integration
-> compared with sedutils.
-> 
-> After the fact I wanted to add discard support to my LUKS container so I
-> ran:
-> 
-> ```
-> cryptsetup refresh --allow-discards --persistent /dev/nvme0n1p2 root
+we have the scenario to encrypt an partition on an embedded device with 
+TPM.
 
-(There should be only name (test) not device. Open takes the device param.)
+Currently we encrypt the partition with a temporary key and afterwards 
+we enroll the TPM token.
 
-> Enter passphrase for /dev/nvme0n1p2:
-> Unsupported parameters on device root.
-> ```
-
-If you use --hw-only, there is no sw encryption layer (only a dm linear
-mapping to isolate locking range) and so discard are not blocked.
-
-IOW with sw+hw encryption (--hw-opal) it works as normal LUKS2 device
-(discards need to be enabled), with hw OPAL only (--hw-opal-only) there
-is no way to disable discards.
-
-You can always check which device in storage stack blocks/allows discards
-with lsblk, for example here it is with discards enabled (--hw-opal):
-
-# lsblk -D /dev/nvme0n1
-NAME    DISC-ALN DISC-GRAN DISC-MAX DISC-ZERO
-nvme0n1        0      512B       2T         0
-└─test         0      512B       2T         0
-
-This is with discards blocked on dm-crypt device (discard max size -> 0)
-
-# lsblk -D /dev/nvme0n1
-NAME    DISC-ALN DISC-GRAN DISC-MAX DISC-ZERO
-nvme0n1        0      512B       2T         0
-└─test         0      512B       0B         0
-
-
-...
-
-> This made me wonder about the interaction between hardware-only OPAL,
-> LUKS and TRIM/discard. In the hardware-only OPAL encrypted case, I guess
-> there are no barriers to discards being sent to the drive. Is that why
-> --allow-discards is an "unsupported parameter" and fstrim works by default?
-
-yes, but it is a little but confusing. maybe a better error description
-would help too.
-
-> If so, do you think it's something that could be added to the docs, a
-> bit like there is a warning about incompatibility with --tcrypt-hidden
-> so as to warn users there is no need to try that?
-
-yes, we should add some note to documentation, you can create an issue
-for the cryptsetup project, if you want.
+After the token is enrolled with delete the temporary key.
 
 
-Thanks,
-Milan
+Is there a way to encrypt the partition directly with TPM token without 
+using a temporary key?
+
+Using a token  should work both with cryptsetup luksFormat and 
+cryptsetup reencrypt.
+
+Best regards,
+
+-- 
+Quirin Gylstorff
+
+Siemens AG
+Technology
