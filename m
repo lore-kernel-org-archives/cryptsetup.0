@@ -1,110 +1,132 @@
-Received: from mail-200167.simplelogin.co (mail-200167.simplelogin.co [176.119.200.167])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-108-mta93.mxroute.com (mail-108-mta93.mxroute.com [136.175.108.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A9A266AB
-	for <cryptsetup@lists.linux.dev>; Wed, 25 Sep 2024 16:32:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=176.119.200.167
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727281980; cv=pass; b=PvwImadNShWBtu2bCIK0oFSZaIu+xXJRJmWsYKOFihyq/LWDlbYVdc35fxPgto8/xzGO6MUAGI2urv87Afz5PTC2ZoVarklvtGxs2pxaXv86EOJFp/LkwiK4n5FdN/nAzRM28YiNR8AiSYZvWok8k8v33Wq3/2wOvvVpTe/68+s=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727281980; c=relaxed/simple;
-	bh=YJgbWdGlf8usXgEPBXJQPWAboPaBh5c6O8vnF7q+RIs=;
-	h=Date:Subject:MIME-Version:Content-Type:From:To:Message-ID; b=ULl4YO4PJEJ27nRRofAQ8ciDVqta80FWXwNq7WvZXK6xALHOF8kP4xUtcRvh9zmz/V1ZgPlFQKkQBPvtbNf0P5hVFpJsodpPesLfKVb7bgnrSWvMycDlVxGgfPBnNFX/qRf3qGlCt1vwOjoYKX3zsH5CZgAPDW+y+LjSHV9aPn8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=slmail.me; spf=pass smtp.mailfrom=slmail.me; dkim=pass (1024-bit key) header.d=slmail.me header.i=@slmail.me header.b=Bq2pguH2; arc=pass smtp.client-ip=176.119.200.167
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=slmail.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=slmail.me
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BC4134BD
+	for <cryptsetup@lists.linux.dev>; Thu, 26 Sep 2024 11:43:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.175.108.93
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1727351043; cv=none; b=qJ2tZGassLv4cQoMR3i02fh4hGrC5SawzuYNQlk50iy4jG/Ugse2wODPGYQccbMwNqgfTzAMCuuS90lBiiZ0QAOuQVs7N3S6SNhsnVLmLJCaEjW/Sgn/Zd7r0NpxsSMkap2JA0nYyxDh2zu5dTdZMa77o3ebBXZduVqVH2VdVGc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1727351043; c=relaxed/simple;
+	bh=c7RcQDJhbjcNEZ+C89UNTYy+Nr5N/rzAm12U8r2jYXw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=rzml2qzTpfBu1YHatXf0uHPjmxd3HXn8iKD5Udk1ifvmQNpMr1ZiJvp9jVR5DVxFL+0hMlRsgvZR7EcrzhGG/ISmbj1ivdDC8ITYXNzGGGBTFQeqeUuWjHANBk5KHNFudUxOEe6n/LysBPTuP37SJdunAdTQdSuDiRkRb+nWOpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=esrevart.net; spf=pass smtp.mailfrom=esrevart.net; dkim=pass (2048-bit key) header.d=esrevart.net header.i=@esrevart.net header.b=axg1TMsK; arc=none smtp.client-ip=136.175.108.93
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=esrevart.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=esrevart.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=slmail.me header.i=@slmail.me header.b="Bq2pguH2"
-ARC-Seal: i=1; a=rsa-sha256; d=simplelogin.co; s=arc-20230626; t=1727281970;
-	cv=none; b=1ltOufP0faGAMCXuuShSIPsIV5nxqJtqMVwLQW6oIwGFNndUBJKCpm5epe21IiTUJB2nnGqSEUlvlXZh5kOkLU1L2wdb/WsBFrkuX2uLw7nVEkZRzwRb5kuVPBg97syAS1JEXUXjhDaR1uc7Sl/cwulTh3FRfC9UdcRjef0qOjkKsG6NAOiOeAQD7ESf3o5pN65NCPRyP87rwgudKacXTsGl7qIQMtdr/tmRopARQBrc39WOov1KDnUqF1yxz43rvPG5gBK/6YvnZXXL9VEAh5GA+SrVDBE0B9jYOieqCp+UaytVmKyX7bjM4JwXmd8UHIAS7t3+bs/t3HkX4kAZWw==
-ARC-Message-Signature: i=1; a=rsa-sha256; d=simplelogin.co; s=arc-20230626;
-	t=1727281970; c=relaxed/simple;
-	bh=YJgbWdGlf8usXgEPBXJQPWAboPaBh5c6O8vnF7q+RIs=;
-	h=Date:Subject:From:To; b=VJHuoCdy7K6ToiWOwFSpdzsfn4RxoKNtBg8/s+Z/KI1emIwa3LBl948C+uTl8HrkQTQOo1P600zFWQHzNPu8lC3OO3N/JfuH4fTS5+Xo1n3rp4yzxT6C3Z9v61ujRi7+UZCnc8sVeqPAUWWbicwHSy/RF1lG8zfBkqnj4G3Ige9s0zDQDAmWjPPDnhsNE5TTKCVduzYs/UFFRkrp6/2NaNXnTWc1NtUWjxbVsMH0TNJX3Ukk+c7VzcAYKm/zy5phLzU1JQXPOce+vZ511o2qvfU71r5uEJx4zL8QTbc1W1+N3jniHSTEi9/4/K0Xu0VYtbZRGBzaFlgtgrDE9lLKiw==
-ARC-Authentication-Results: i=1; mail.protonmail.ch
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=slmail.me; s=dkim;
-	t=1727281970;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=YJgbWdGlf8usXgEPBXJQPWAboPaBh5c6O8vnF7q+RIs=;
-	b=Bq2pguH2dY8fSMfermA+4AE3Peg6oyNs84tqmu67BSCeG4wLs8J2tOJE6V+Oq15zi3Zyok
-	ZJSw39h1unc4gNEXt2liyeobh/N/dkimFAdMjGW0Puk1hsIwPIn/WQm1fsouywTHjNp9AP
-	I2Wsuqupi7F75sDnGwumvoBKcc6k6B4=
-Date: Wed, 25 Sep 2024 16:32:46 +0000
-Subject: labeling drives, related to the file system choice
+	dkim=pass (2048-bit key) header.d=esrevart.net header.i=@esrevart.net header.b="axg1TMsK"
+Received: from filter006.mxroute.com ([136.175.111.3] filter006.mxroute.com)
+ (Authenticated sender: mN4UYu2MZsgR)
+ by mail-108-mta93.mxroute.com (ZoneMTA) with ESMTPSA id 1922e20731f0003e01.001
+ for <cryptsetup@lists.linux.dev>
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+ Thu, 26 Sep 2024 11:38:51 +0000
+X-Zone-Loop: 7be79d1a9d6861049db450303d68b6ecacc9ae455077
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=esrevart.net; s=x; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:
+	From:References:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=85kc3xCDTFgcEk2jVbb8kvPN0eh96x2Cyx3wGsi3WAo=; b=axg1TMsKh+dSgcVF2e15sP7dov
+	bXbk65+2z+T1kdL7TcR71m+3NPN0+okEoCQGR4gU5xfoTzMrJQ0jH06BZNbQGobu66ph6pvBNbu/P
+	B/vrHhYZWXcEerxM/H2vuBp5poZlh5WDHZEFJ4iQLcDtHQ5uRJkpDXX6lvIDhIaTrJo93oCBk3xma
+	lu3SQZloHnds7k0VI3Ozfgi7clqwV1g82tn6EQkxMyBGrRQuD1muxjjnWgKmL2Gji/Zh3c0IfXL2Y
+	l8DBIj4h3NjgOOcR0cxrrPzaaAraqLqnAdnjgsvBeZuxTUTl4EyJrOoBjhHCM8LG+Q/LczLvci9zV
+	fWHUS2hA==;
+Message-ID: <36293944-c584-4b90-81c7-3c422855eef8@esrevart.net>
+Date: Thu, 26 Sep 2024 13:38:49 +0200
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: iam.frightful278@slmail.me
+User-Agent: Mozilla Thunderbird
+Subject: Re: labeling drives, related to the file system choice
 To: cryptsetup development <cryptsetup@lists.linux.dev>
-Message-ID: <172728197032.7.12095949214977275668.444357846@slmail.me>
-X-SimpleLogin-Type: Reply
-X-SimpleLogin-EmailLog-ID: 444357846
-X-SimpleLogin-Want-Signing: yes
+References: <172728197032.7.12095949214977275668.444357846@slmail.me>
+Content-Language: en-US, fr-FR
+From: Bastien TRAVERSE <neitsab@esrevart.net>
+In-Reply-To: <172728197032.7.12095949214977275668.444357846@slmail.me>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authenticated-Id: contact@esrevart.net
 
-hi again,
-been exploring online (via tutorials, and utube vids), how to best encrypt =
-my drives using LUKS.=20
-i'm pretty clear on the process now.=20
+[Forgot to cc' the list when I replied yesterday, copying the reply here 
+so people know this has been answered]
 
-but are a couple of pieces that aren't so clear, yet.=20
-few points if i may.=20
+Hi phil,
 
-1. where is the best place to find all the documentation around cryptsetup,=
- the commands, various file systems and related flags, and any helpful info=
-rmation for someone learning.
+ >1. where is the best place to find all the documentation around 
+cryptsetup, the commands,
 
+If you check out the project's homepage[0], you will find a handy 
+section called "Help!" which starts with "Documentation". The first 
+resource linked there is the FAQ[2] which I do hope you have already 
+read, and the third mentions the "manuals (aka man page, man pages, 
+man-page)".
 
-2. i found this good website:=20
-https://www.linuxfordevices.com/tutorials/linux/encrypting-partitions-with-=
-luks
+Those manuals constitute the reference documentation for all cryptsetup 
+commands (as well as all Linux commands generally speaking), and are 
+thus the best place to read up on it. I like using the Arch Linux 
+manpage portal[2] to browse them, because they are nicely formatted and 
+generally as current as can be.
 
-there are many tutorials of course and videos. but this is the only one i'v=
-e seen that includes a command to LABEL THE DRIVE.=20
-which to me is a great feature... so that when i enter my newly encrypted d=
-rive > enter passphrase > the drive shows, with this label, instead of 'luk=
-s-346987sjlk (big string of characters)..=20
+ > various file systems and related flags
 
-so, my query is, in the tutorial in the website, the guy uses FS exfat... a=
-nd as a result he utilises, the -n flag, followed by 'volume name/label'...=
-=20
-i've tried this command, using=20
-mkfs.btrfs
-mkfs.ext4=20
-but neither of these work with this '-n volume_name' ...=20
+Cryptsetup is independent of any particular filesystem. It sits at the 
+block layer, underneath the FS. As such you won't find much information 
+about file system usage here, and are better advised to check with the 
+relevant communities or on general purpose forums like your distro's.
 
-so, i'm seeing that this -n flag corresponds to using mkfs.exfat alone?
+ > and any helpful information for someone learning.
 
-here's the full cmd from the website tutorial (in case not looked)
+The Arch Wiki is a well-regarded source for end-user focused advice on 
+how to use something on Linux. Start with [3] and go down the rabbit 
+hole from there.
 
-sudo mkfs.exfat /dev/mapper/map_point -n volume_name
+By the way, there you'll find great articles about filesystems too, and 
+e.g. the Btrfs one mentions how to label the FS in its default 
+FS-creation example.[4]
 
-so, IS THERE A WAY TO LABEL DRIVES USING OTHER FILESYSTEMS, in particular B=
-TRFS?=20
-i've not found any docs online showing this, and it's quite specific.=20
+ >so, i'm seeing that this -n flag corresponds to using mkfs.exfat alone?
 
+All those commands have their own manpage, which will teach you all the 
+option flags that can or cannot be used with them and their meanings. 
+Option flags differ between filesystems yes, despite the similar `mkfs.` 
+prefix.
 
-3. lastly, how important is the mount folder? sometimes i've seen /mnt/ use=
-d or /temp/mnt/ and some use mkdir and create a whole new directory... is t=
-his part only used for the initial set up of the drive, so it doesn't reall=
-y matter? as when i plug the drive, my laptop seems to mount it to 'media..=
-.. etc.'=20
+ >so, IS THERE A WAY TO LABEL DRIVES USING OTHER FILESYSTEMS, in 
+particular BTRFS?
+ >i've not found any docs online showing this, and it's quite specific.
 
-(just wanted to verify this, as i'm no expert and just learning the ways of=
- these fields).=20
+See the aforementioned ArchWiki Btrfs link.
 
-thanks for reading.=20
-appreciate any advice to these 3 queries.=20
+By the way, writing in uppercase is generally read as equivalent to 
+shouting and frowned upon as such, so for your future participation in 
+online forums I suggest you refrain from it... Except when you do want 
+to shout (but then be ready to bare the consequences ;-))
 
-phil
+ >3. lastly, how important is the mount folder? [...] so it doesn't 
+really matter?
 
+Yup, no importance whatsoever, at least insofar as cryptsetup is 
+concerned. It does matters from a system administration perspective, 
+e.g. the rights needed to mount and access the directory have to be 
+considered depending on your use case, but it doesn't impact the way 
+cryptsetup works (to the best of my knowledge at least).
 
+ >thanks for reading.
+ >appreciate any advice to these 3 queries.
 
-Sent with Proton Mail secure email.
+Pleasure, happy hacking and good exploration to you phil!
 
+-- Bastien
+
+[0]: https://gitlab.com/cryptsetup/cryptsetup
+[1]: https://gitlab.com/cryptsetup/cryptsetup/wikis/FrequentlyAskedQuestions
+[2]: https://man.archlinux.org/search?q=Cryptsetup&go=Go
+[3]: https://wiki.archlinux.org/title/Dm-crypt
+[4]: https://wiki.archlinux.org/title/Btrfs#File_system_on_a_single_device
