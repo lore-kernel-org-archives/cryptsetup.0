@@ -1,42 +1,58 @@
-Received: from mail-108-mta93.mxroute.com (mail-108-mta93.mxroute.com [136.175.108.93])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BC4134BD
-	for <cryptsetup@lists.linux.dev>; Thu, 26 Sep 2024 11:43:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.175.108.93
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB34635
+	for <cryptsetup@lists.linux.dev>; Fri, 11 Oct 2024 07:08:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727351043; cv=none; b=qJ2tZGassLv4cQoMR3i02fh4hGrC5SawzuYNQlk50iy4jG/Ugse2wODPGYQccbMwNqgfTzAMCuuS90lBiiZ0QAOuQVs7N3S6SNhsnVLmLJCaEjW/Sgn/Zd7r0NpxsSMkap2JA0nYyxDh2zu5dTdZMa77o3ebBXZduVqVH2VdVGc=
+	t=1728630504; cv=none; b=ZR9hxs/n9EgkTuU0Y5/aU+FsCfabhSSGeYyPKByOIrKF6z1I1UYpNUjOPiwYVdq+jcMU4wV7HcKcFFC0lampxjseqWPj9E3mPz/HevWZuDThV7XCSRYTbznoKR/juWJQRqrJYyB8VnH1itFVtQy8XQaA/ZjDEgGeCp+3Q9WuDZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727351043; c=relaxed/simple;
-	bh=c7RcQDJhbjcNEZ+C89UNTYy+Nr5N/rzAm12U8r2jYXw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=rzml2qzTpfBu1YHatXf0uHPjmxd3HXn8iKD5Udk1ifvmQNpMr1ZiJvp9jVR5DVxFL+0hMlRsgvZR7EcrzhGG/ISmbj1ivdDC8ITYXNzGGGBTFQeqeUuWjHANBk5KHNFudUxOEe6n/LysBPTuP37SJdunAdTQdSuDiRkRb+nWOpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=esrevart.net; spf=pass smtp.mailfrom=esrevart.net; dkim=pass (2048-bit key) header.d=esrevart.net header.i=@esrevart.net header.b=axg1TMsK; arc=none smtp.client-ip=136.175.108.93
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=esrevart.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=esrevart.net
+	s=arc-20240116; t=1728630504; c=relaxed/simple;
+	bh=ntk+MHPG+QA3TP/1Ev/1XV2HbWjyVq9Ybt7lbKgaYsg=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=EfyZZQBsaB/8PpTwbYdqG19g++XgKK+DwH+L7AgPbC1rCM6xHfAHh9TMV5Uhyn78+6W+hq2S3lnWnMq/Kqeqx7jzsg6kNaEGXuS3EKoFkK5SmVyoTg/D+m5n2tmVp0ep0+V76neBBPWf8jRfxTN9/A4AEbNk4bi8ztnzMSeEgCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aEQbby+f; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=esrevart.net header.i=@esrevart.net header.b="axg1TMsK"
-Received: from filter006.mxroute.com ([136.175.111.3] filter006.mxroute.com)
- (Authenticated sender: mN4UYu2MZsgR)
- by mail-108-mta93.mxroute.com (ZoneMTA) with ESMTPSA id 1922e20731f0003e01.001
- for <cryptsetup@lists.linux.dev>
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
- Thu, 26 Sep 2024 11:38:51 +0000
-X-Zone-Loop: 7be79d1a9d6861049db450303d68b6ecacc9ae455077
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=esrevart.net; s=x; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:
-	From:References:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=85kc3xCDTFgcEk2jVbb8kvPN0eh96x2Cyx3wGsi3WAo=; b=axg1TMsKh+dSgcVF2e15sP7dov
-	bXbk65+2z+T1kdL7TcR71m+3NPN0+okEoCQGR4gU5xfoTzMrJQ0jH06BZNbQGobu66ph6pvBNbu/P
-	B/vrHhYZWXcEerxM/H2vuBp5poZlh5WDHZEFJ4iQLcDtHQ5uRJkpDXX6lvIDhIaTrJo93oCBk3xma
-	lu3SQZloHnds7k0VI3Ozfgi7clqwV1g82tn6EQkxMyBGrRQuD1muxjjnWgKmL2Gji/Zh3c0IfXL2Y
-	l8DBIj4h3NjgOOcR0cxrrPzaaAraqLqnAdnjgsvBeZuxTUTl4EyJrOoBjhHCM8LG+Q/LczLvci9zV
-	fWHUS2hA==;
-Message-ID: <36293944-c584-4b90-81c7-3c422855eef8@esrevart.net>
-Date: Thu, 26 Sep 2024 13:38:49 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aEQbby+f"
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a83562f9be9so209728066b.0
+        for <cryptsetup@lists.linux.dev>; Fri, 11 Oct 2024 00:08:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728630500; x=1729235300; darn=lists.linux.dev;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eywVYX8Gi7f+f5c0e5z1bVac7Uj/dXzvsc8qg7Iysko=;
+        b=aEQbby+fMqNCP7vS8fbaguZ1o2eOYhBRtOdnXEJvpWCXucQ5eM6t11+w9zl8rLwDvA
+         dTKHc9ifq0TKObIWNreyZjNP3r0Jkkqcs1J9ufChm/0aET01ByxfAg5k4hjESwa+iNV9
+         pg+J1CzJvtU1aCW70tQj9ro88/aRuJ6e1BsssTT6yOj+coym5Q5yiXo+1ZVtPY5e3IsH
+         OHD5e/yJVeJvTOwQt+K4ntE7WvX+B4DDkEJlfzLLG4+VNgcdV4eVctoKQTdIOemo3gXk
+         pRLPUg/4fKfbteBjH6l43QJ/gfkkKRAV96f4rK4f7x952/dvvfIXK9htIL1hlrG5gzJ2
+         3U0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728630500; x=1729235300;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=eywVYX8Gi7f+f5c0e5z1bVac7Uj/dXzvsc8qg7Iysko=;
+        b=sGLc+vhdt8ZNMk/+Q7yVGw676JZzLKejiq4ME8lrFoljjGkuU0bnsGP2E+ZB+leQl/
+         Ng56Gr1RPRwTajYzITiY0XT+jE3rIrHmXm52u0nZg1hizSE7PP4Fbtb5VQuWbPC8SuLE
+         5TAz5XS6QQiOY4rWJlxY1t1YFApwLLpKfaKWRpI2nSFpJ76k/5kZJgiHiASdo5fNIp13
+         rg2GX5NiLG+8hyLG+g5Dnd0i73u71kIqp5a0oG8LJlRItWITAMoqeolwvV2SCJLB6WCz
+         QuWVf0SLF32npdKahdPXzYzRCbs8WMv8Ox7RX0OLVhKbcZgoVSE2mkAvrq90W/2ASGEM
+         HwyA==
+X-Gm-Message-State: AOJu0Yz6OW7qHZOALj9bUSX60N8vr5RcwHmVgFyWXTcZqrnbVVEuCxHm
+	WMf3HOGMF+MDP+mjj58r7eqIco/qwquzu1YJZBgPlz1JPiYoYT6gh+PxVWDj
+X-Google-Smtp-Source: AGHT+IGmJZ/fYegKj8P/OCOOVugQPcPnuNPWGv/dL0TQDph7dsEGy/K9HseI3lFzFocNg9whFnpjJw==
+X-Received: by 2002:a17:907:c895:b0:a99:627e:37d0 with SMTP id a640c23a62f3a-a99b95a477amr128592766b.25.1728630500399;
+        Fri, 11 Oct 2024 00:08:20 -0700 (PDT)
+Received: from ?IPV6:2001:4c4e:1121:1c00:6a48:4fbd:c71a:3c33? (20014C4E11211C006A484FBDC71A3C33.dsl.pool.telekom.hu. [2001:4c4e:1121:1c00:6a48:4fbd:c71a:3c33])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a99a80dc18csm177963866b.156.2024.10.11.00.08.19
+        for <cryptsetup@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Oct 2024 00:08:19 -0700 (PDT)
+Message-ID: <32be1215-bcab-425b-99cd-3adc26590b14@gmail.com>
+Date: Fri, 11 Oct 2024 09:08:18 +0200
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
@@ -44,89 +60,36 @@ List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: labeling drives, related to the file system choice
-To: cryptsetup development <cryptsetup@lists.linux.dev>
-References: <172728197032.7.12095949214977275668.444357846@slmail.me>
-Content-Language: en-US, fr-FR
-From: Bastien TRAVERSE <neitsab@esrevart.net>
-In-Reply-To: <172728197032.7.12095949214977275668.444357846@slmail.me>
+Content-Language: hu
+To: cryptsetup@lists.linux.dev
+From: =?UTF-8?Q?Kiss_Istv=C3=A1n?= <keraform@gmail.com>
+Subject: Issues with LUKS Password Management Options
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authenticated-Id: contact@esrevart.net
+Content-Transfer-Encoding: 8bit
 
-[Forgot to cc' the list when I replied yesterday, copying the reply here 
-so people know this has been answered]
+Dear Developers,
 
-Hi phil,
+I would like to bring to your attention an issue regarding the password 
+management of LUKS-encrypted volumes. Currently, the LUKS password 
+prompt offers three options for remembering the password, with the 
+default setting being to remember the password until logout. However, I 
+rarely turn off my computer, and I often keep it in standby mode for 
+weeks. As a result, the LUKS-encrypted volume remains unlocked for 
+extended periods, which is not ideal from a security perspective.
 
- >1. where is the best place to find all the documentation around 
-cryptsetup, the commands,
+Every time, I have to manually ensure that the password is only stored 
+temporarily (forgotten immediately), which can be inconvenient and is 
+easy to overlook. I believe it would be helpful if users had the option 
+to set "forget the password immediately" as the default behavior, 
+perhaps through a simple checkbox, avoiding unnecessary compromises 
+between convenience and security.
 
-If you check out the project's homepage[0], you will find a handy 
-section called "Help!" which starts with "Documentation". The first 
-resource linked there is the FAQ[2] which I do hope you have already 
-read, and the third mentions the "manuals (aka man page, man pages, 
-man-page)".
+I would like to ask if such a change is planned for the future or if you 
+have any suggestions on how this can be more efficiently handled with 
+the current system configuration.
 
-Those manuals constitute the reference documentation for all cryptsetup 
-commands (as well as all Linux commands generally speaking), and are 
-thus the best place to read up on it. I like using the Arch Linux 
-manpage portal[2] to browse them, because they are nicely formatted and 
-generally as current as can be.
+Thank you for your attention, and I look forward to your response.
 
- > various file systems and related flags
+Best regards,
+     István Kiss
 
-Cryptsetup is independent of any particular filesystem. It sits at the 
-block layer, underneath the FS. As such you won't find much information 
-about file system usage here, and are better advised to check with the 
-relevant communities or on general purpose forums like your distro's.
-
- > and any helpful information for someone learning.
-
-The Arch Wiki is a well-regarded source for end-user focused advice on 
-how to use something on Linux. Start with [3] and go down the rabbit 
-hole from there.
-
-By the way, there you'll find great articles about filesystems too, and 
-e.g. the Btrfs one mentions how to label the FS in its default 
-FS-creation example.[4]
-
- >so, i'm seeing that this -n flag corresponds to using mkfs.exfat alone?
-
-All those commands have their own manpage, which will teach you all the 
-option flags that can or cannot be used with them and their meanings. 
-Option flags differ between filesystems yes, despite the similar `mkfs.` 
-prefix.
-
- >so, IS THERE A WAY TO LABEL DRIVES USING OTHER FILESYSTEMS, in 
-particular BTRFS?
- >i've not found any docs online showing this, and it's quite specific.
-
-See the aforementioned ArchWiki Btrfs link.
-
-By the way, writing in uppercase is generally read as equivalent to 
-shouting and frowned upon as such, so for your future participation in 
-online forums I suggest you refrain from it... Except when you do want 
-to shout (but then be ready to bare the consequences ;-))
-
- >3. lastly, how important is the mount folder? [...] so it doesn't 
-really matter?
-
-Yup, no importance whatsoever, at least insofar as cryptsetup is 
-concerned. It does matters from a system administration perspective, 
-e.g. the rights needed to mount and access the directory have to be 
-considered depending on your use case, but it doesn't impact the way 
-cryptsetup works (to the best of my knowledge at least).
-
- >thanks for reading.
- >appreciate any advice to these 3 queries.
-
-Pleasure, happy hacking and good exploration to you phil!
-
--- Bastien
-
-[0]: https://gitlab.com/cryptsetup/cryptsetup
-[1]: https://gitlab.com/cryptsetup/cryptsetup/wikis/FrequentlyAskedQuestions
-[2]: https://man.archlinux.org/search?q=Cryptsetup&go=Go
-[3]: https://wiki.archlinux.org/title/Dm-crypt
-[4]: https://wiki.archlinux.org/title/Btrfs#File_system_on_a_single_device
