@@ -1,121 +1,143 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from mailgw1.uni-kl.de (mailgw1.uni-kl.de [131.246.120.220])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3442F1A262D
-	for <cryptsetup@lists.linux.dev>; Sat,  9 Nov 2024 23:33:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39B21CEAAA
+	for <cryptsetup@lists.linux.dev>; Tue, 19 Nov 2024 17:06:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=131.246.120.220
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731195228; cv=none; b=LN5e/gAUpYbRv+ZH6TcqPNdRsIUJkpWSyEINSM5/taydfaxaJNxoGCI3l5zeGVGNYEdoj11cJiQQQQ6Z1EoLpNH6e3nq6GDAC9GeYU03I6QzfUh4+eCngge0QYkQzdlJxlhbRJUR4+EqDM/B/77RcudWYPqH0IcSrkwc1wNRlE0=
+	t=1732036011; cv=none; b=UkWADPGnek+kxz60gbvuETMQ/4vY2txBid7L6kue6q6Svwfx6n5XicrC4fMnG/0kJZcGP0I/vpz+emH+0RcLk7CYu98FspzAEawoEuoCauElx6yWxjKsDsJNJ89gVsRZ8DVzqnJJn6PoJt8kJwvrDvcLdTUDCaMnFHFg73AaqkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731195228; c=relaxed/simple;
-	bh=wuHz7mresQbOjkXgNrDmjoXb2DJj1joAsITytTsiN08=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=KTlJ2P2p6qHNSnfm94ISB+HY7qqdPqOtTtj/wPmE1228JJNK/F8/D3IKar3OjyjsBUTR4AVVtuADBdrJtc5p8fQ6RNLq10aJ7F8Lb/iwimH5PSVChyjseLjAC9GvVRvpDOHQvel4mKW8euaz4XW4+apL5sOE1tdurmI2OKeHGNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=punchcutter.ml1.net; spf=pass smtp.mailfrom=punchcutter.ml1.net; dkim=pass (2048-bit key) header.d=ml1.net header.i=@ml1.net header.b=DoHfsWS8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bE6fTuT3; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=punchcutter.ml1.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=punchcutter.ml1.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ml1.net header.i=@ml1.net header.b="DoHfsWS8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bE6fTuT3"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 17BCC1140110
-	for <cryptsetup@lists.linux.dev>; Sat,  9 Nov 2024 18:33:44 -0500 (EST)
-Received: from phl-imap-12 ([10.202.2.86])
-  by phl-compute-10.internal (MEProxy); Sat, 09 Nov 2024 18:33:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ml1.net; h=cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1731195224;
-	 x=1731281624; bh=86D5mMdIvYfMM/UjuChx7yFkrScjEx6zkJoOs+qbJhs=; b=
-	DoHfsWS8Jtk7w+ZZaxzYaU6DiM81fre2f1Evx7M/tQeqTmddr0KoB3ldE8fHU4YF
-	FyBnIqYqU3szsn4BGEzoA3FV+D5P4kR1zNKNQe1PFUpfjyrHhVRC/Bum8ePWxpCo
-	vwbgKELeoKHzswKqsTCkFYpCoCZl8TmWhmrJpAPOl6L4hS0pVt68TJdoxq5DrxSE
-	OeldPwOb052QC7S/ZUsxXqfyU60wSmeVaOnyJGa6Xsy+ZMC12+RZH+Kfbpm+Xk98
-	WgxkZK6iRUYfdnOVULzVAQmx9Vd8KXjTcScVAkiAOsJtzozm312DCThGh6wXUcnL
-	QQ33XXYF2Spwdh69dCbivw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1731195224; x=1731281624; bh=8
-	6D5mMdIvYfMM/UjuChx7yFkrScjEx6zkJoOs+qbJhs=; b=bE6fTuT3dJw1BKnKG
-	ITT7RTr63A8eHIUdb1jhDUuF1vjHrdM0x9Zkx8/nmF9l7fJpXROorU/qietDIxCQ
-	Ov9+VWnxsxx8VqmOhXsZ8Wd8t/xOy7DhPl7muHWdEcbLadBV+Gwpnjsk2CTUXvNx
-	BmcAXg3DNTh24Nc0IIqM0l0Qs/HZD7qYnFLp8HBi0hC5yzj6bh/Ge1NX3Ih5n+wu
-	XW7r6HUkz909wEkMYBMtsgLMZsBhg3Rb9tEChMSVH5iAzYDjCc7nrI44dAT3UvJM
-	sDshfhIVlX7r2empN9kJ/ZrxHRfXs8iCil0azm+k5nsQgyge+wSoQknkjrcPHmWP
-	eH1mw==
-X-ME-Sender: <xms:V_EvZ-8UOTfK7K__R1CwiLfHz0-Ma5Bi45kn3wz_3IB_V7TVs_pQwg>
-    <xme:V_EvZ-u_ZqJyeICmJNIllbc0ah30EmGvbkmiew8mSwUdVjzXullyh6xdggXyjMS0U
-    -HFeYRFa6ZY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtdelgdduudcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecuofgrihhlucfuphhrihhngh
-    culdeftddmnecujfgurhepofggfffhvffkjghfufgtgfesthejredtredttdenucfhrhho
-    mhepfdffrghvihguucflucfkrghnnhhutggtihdfuceophgvlhgtghhfrhhghhgtiiihse
-    hpuhhntghhtghuthhtvghrrdhmlhdurdhnvghtqeenucggtffrrghtthgvrhhnpeegffel
-    feffkeeuhffgteethedujefgudeuteduleegfefgjeeghedtfedtfeeigeenucevlhhush
-    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpvghltghgfhhrghhh
-    tgiihiesphhunhgthhgtuhhtthgvrhdrmhhluddrnhgvthdpnhgspghrtghpthhtohepud
-    dpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghrhihpthhsvghtuhhpsehlihhs
-    thhsrdhlihhnuhigrdguvghv
-X-ME-Proxy: <xmx:V_EvZ0AxMSQYqx-TZ1QdOUMO1SJVX38DyL-2XVBWO4YR6XSi_M6nhw>
-    <xmx:V_EvZ2fkFMfqM5QjeOSjDpLxsLOzf0lvUqHjab3WUR00qAdGMUnzQA>
-    <xmx:V_EvZzOOUabIliOCJVSl9GYt_HYflUgdaHsb1FJ41_6sJuTMtje5qg>
-    <xmx:V_EvZwn6ZejMWVDN7fFeWko59ekYtSL5G6P6n_KbPG3vPgfdNE-AkA>
-    <xmx:WPEvZ1U2ez5dKVlJ1sFguprM42RNirRoB2Eg4onRS-sqRcjOviT8SfDR>
-Feedback-ID: i5bfa418f:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id CE06F1C20066; Sat,  9 Nov 2024 18:33:43 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	s=arc-20240116; t=1732036011; c=relaxed/simple;
+	bh=+5Zzomo8leUI495FN2NGxO43qaeLEch0Aig2GAljg2c=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=Xntltc8IdaUFA3/Gu6rVCY6eh39tkPajwMSLPfRaRcjz87rdQl4OMi+SXEMxneXSv3h49cW3bUvrBbIhPYTupF1MRM8dbajn241HXc8X/k5ltz/S0tzgt8K7SoMgP/0a0jFFwk2/V0dAfYzT24kCpNTH7rAH/XTee5v0oWwshT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rptu.de; spf=pass smtp.mailfrom=rptu.de; arc=none smtp.client-ip=131.246.120.220
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rptu.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rptu.de
+Received: from [IPV6:2003:c2:1703:bc00:aba5:5547:3244:bea2] (p200300c21703bc00aba555473244bea2.dip0.t-ipconnect.de [IPv6:2003:c2:1703:bc00:aba5:5547:3244:bea2])
+	(authenticated bits=0)
+	by mailgw1.uni-kl.de (8.14.4/8.14.4/Debian-8+deb8u2) with ESMTP id 4AJH6bO2025931
+	(version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <cryptsetup@lists.linux.dev>; Tue, 19 Nov 2024 18:06:45 +0100
+Message-ID: <36eee136-9d15-4f4e-ac0b-083e6d6c3f95@rptu.de>
+Date: Tue, 19 Nov 2024 18:06:37 +0100
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Sat, 09 Nov 2024 16:31:47 -0700
-From: "David J Iannucci" <pelcgfrghczy@punchcutter.ml1.net>
+User-Agent: Mozilla Thunderbird
 To: cryptsetup@lists.linux.dev
-Message-Id: <b4893f23-50ea-4bc6-84a2-05a3d7e19d62@app.fastmail.com>
-In-Reply-To: <962b6cfb-d47e-4284-b044-91dd38858e0a@gmail.com>
-References: <1730260948-20104-mlmmj-67cc752c@lists.linux.dev>
- <444a19f7-c557-4b7e-aad9-202a3f2e4876@app.fastmail.com>
- <1b63da83-8290-4d15-8f58-adf5ca6d903a@gmail.com>
- <12f16036-a407-4ca7-9708-1c0f751f5e5d@app.fastmail.com>
- <962b6cfb-d47e-4284-b044-91dd38858e0a@gmail.com>
-Subject: Re: device-mapper: reload ioctl ... failed: No such file or directory
-Content-Type: text/plain
+Content-Language: en-GB, de-DE
+From: Thorsten Giese <tgiese@rptu.de>
+Subject: can't mount LUKS partition with cryptsetup
+Organization: =?UTF-8?Q?Technische_Universit=C3=A4t_Kaiserslautern?=
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Spam-Score:  (0.862)
+X-Spam-Flag: NO
 
-On Sat, Nov 2, 2024, at 17:34, Milan Broz wrote:
->> Nov  2 16:31:36 linux kernel: loop0: detected capacity change from 0 to 209715200
->> Nov  2 16:31:36 linux kernel: device-mapper: table: 254:0: crypt: Error allocating crypto tfm
->> Nov  2 16:31:36 linux kernel: device-mapper: ioctl: error adding target to table
->
-> Ok, *this* is the issue. Some kernel module is perhaps missing or misconfigured.
->
-> According to log, aes-xts-plain64 should be your image cipher.
->
-> Do you have aes, xts (and ecb, which xts internally use) kernel crypto
-> modules compiled and available?
+Hello there,
 
-Apparently I didn't. I added those modules to my kernel, and then I was
-able to open the volume, no problem. Thanks much :=)
+tl;dr I have a Ubuntu on a NVME with encrypted root where I can boot the 
+system with the correct passphrase but can not mount the partition in a 
+live Liux with cryptsetup.
 
-> Does "cryptsetup benchmark --cipher aes-xts" work?
+I have a weird problem and no clue where to go with it.
+I try to keep it short and really hope someone can push me in the right 
+direction.
 
-It does now!
+I have a setup with an encrypted root partition from the Ubunut/Debian 
+installer, 3 partitions nvme0n1p1 (BIOS boot, 1M), nvme0n1p2 (ext2, 
+/boot, 1G) and nvme0n1p3 (LUKS, propably with LVM inside (I know lvscan)).
 
-I was putting together a new message here to ask for help with yet
-another old TC volume, but I eventually figured out that I had the
-wrong passphrase, and found that passphrase, so we're all good :=}
-Seems strange to me that if the passphrase doesn't work, that it
-doesn't simply tell you that... or maybe there's something about the
-decrypting process that means that even cryptsetup can't necessarily
-tell the difference between a wrong phrase and some other problem....
-Anyway, no worries.
+I had a rather long system freeze, and after that /boot was empty (no 
+clue why) and I was at the grub rescue shell with no options. I ran 
+multiple live-Linux-Distros (grml, ubuntu, ...) and read everywhere, 
+that a dm-crypt Partition ist mountable with "cryptsetup open" (to get 
+my data).
 
-Thanks again,
-Dave
+When presented with
+
+Enter passphrase for /dev/nvme0n1p3:
+No key available with this passphrase.
+
+I thought the LUKS header might also be corrupted and just thought: bad 
+luck.
+
+root@foobar:~# cryptsetup luksDump /dev/nvme0n1p3
+LUKS header information
+Version:       	2
+Epoch:         	3
+Metadata area: 	16384 [bytes]
+Keyslots area: 	16744448 [bytes]
+UUID:          	18d1e37e-3960-4f86-82f2-231bee10d5f0
+Label:         	(no label)
+Subsystem:     	(no subsystem)
+Flags:       	(no flags)
+
+Data segments:
+   0: crypt
+	offset: 16777216 [bytes]
+	length: (whole device)
+	cipher: aes-xts-plain64
+	sector: 512 [bytes]
+
+Keyslots:
+   0: luks2
+	Key:        512 bits
+	Priority:   normal
+	Cipher:     aes-xts-plain64
+	Cipher key: 512 bits
+	PBKDF:      argon2i
+	Time cost:  7
+	Memory:     1048576
+	Threads:    4
+	Salt:       2d d6 9d 46 b8 84 10 d4 22 e9 d4 71 31 37 63 91
+	            70 93 c4 01 87 b7 b2 ea 17 14 8f 9b 9b e9 40 1a
+	AF stripes: 4000
+	AF hash:    sha256
+	Area offset:32768 [bytes]
+	Area length:258048 [bytes]
+	Digest ID:  0
+Tokens:
+Digests:
+   0: pbkdf2
+	Hash:       sha256
+	Iterations: 140183
+	Salt:       23 13 a0 eb 7d bd ab 94 e2 17 94 ea 35 cb 21 be
+	            7f 6f 13 03 b3 7c 9f a5 0d 5d b7 aa 0c 95 98 0e
+	Digest:     77 5e 1d 86 8d f9 ad 68 b2 b0 07 84 a9 d3 b4 14
+	            fb 36 e3 3b 1b 12 bc 35 27 18 db b6 04 0a 9b 46
+
+(UUID, Salt and Digest modified)
+
+Now it gets interesting: when I set up originally the NVME had some 
+strange errors and I thought it might be broken and ordered a new one. 
+The new one had the same errors and I ended up to fix it with 
+nvme_core.default_ps_max_latency_us=0. I put the first NVME aside as a 
+spare part.
+
+Now I wanted to install fresh on that NVME. I put it in my server and 
+after entering the passphrase the system came up (proof: this NVME works 
+AND I know the correct passphrase). I looked for any data.
+
+Then I booted a live Linux to see if I could mount it with cryptsetup 
+and got the same error message as with the "broken" NVME. Now I hope 
+there is a way to get it to boot and recover my data. I read around and 
+can't find any recent documentation for the process. I read (from 2023) 
+that grub2 does not support argon2i also it is in my header, so maybe 
+that is a clue or Ubuntu has a patched Version.
+
+Before entering the passphrase it says something about 
+/scripts/init-premount, maybe there is a hint on how to mount it, but I 
+can't find it anywhere.
+
+How can I mount a dm-crypt Volume from command line or how can I 
+reinstall grub/boot without a system. I also tried supergrml to no success.
+
+Thank you very much for your attention
+kind regards
+Thorsten
+
+
