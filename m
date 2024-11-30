@@ -1,133 +1,152 @@
-Received: from pio-pvt-msa2.bahnhof.se (pio-pvt-msa2.bahnhof.se [79.136.2.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D531E884
-	for <cryptsetup@lists.linux.dev>; Sat, 30 Nov 2024 16:31:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.136.2.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE01192598
+	for <cryptsetup@lists.linux.dev>; Sat, 30 Nov 2024 16:45:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732984273; cv=none; b=IV1G3Xhjv4q5DO+w8bH62xqBpj/nucqN4q8W7bB+oMw/lu2pGet4pcavIDFwz0tBXibSoYtlsxzGMWKQKgwZDJ+5tN2mfbznPeym38JfgBEL7VthKoc+/jVjM4UseBf8FjQq4Dx1YMtNJTx6xQrSmp+iGdHiPQkhWD5YrDx7WOg=
+	t=1732985153; cv=none; b=S21ufZw/gXsUQIdGFAABlRh0KHZ1S1dDUV77jcUSRRpXd54GTKeyMCpjSDP6oiYoiWn3n+aqNXsaAeAaodXcxIFRWj1yUmrBsrGn6IVTdJo7lrw2i6not3fwAvtqV43BAWPLiYySs1KIuFPBeZ41ZcT36xzYD/fy1b4Vq8Pwp+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732984273; c=relaxed/simple;
-	bh=Kz9ac2Me9jqpy2pMkt+eVX0Iqa4TdB43ZLFKcQiA1R8=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qWQvohNtXBSYueIgZRf96iaE04GbQqq4Aq55bxnpZFUT4qJwfFLG3kjbhryb7AoXVo4vE701kJQb63+/yuBevHKRl2O8p4lLjH0CHg68pUMJ2X/OOPrOOiy3Fz3JwvHwIn/ZimEn0nDvQe+jTUdNCj1PMuwXMVH1cjr4U0eBdfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ewoof.net; spf=pass smtp.mailfrom=ewoof.net; arc=none smtp.client-ip=79.136.2.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ewoof.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ewoof.net
-Received: from localhost (localhost [127.0.0.1])
-	by pio-pvt-msa2.bahnhof.se (Postfix) with ESMTP id B4D263F322
-	for <cryptsetup@lists.linux.dev>; Sat, 30 Nov 2024 17:23:31 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at bahnhof.se
-X-Spam-Flag: NO
-X-Spam-Score: 1.544
-X-Spam-Level: *
-Received: from pio-pvt-msa2.bahnhof.se ([127.0.0.1])
-	by localhost (pio-pvt-msa2.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id IUlk5Io0Fpr7 for <cryptsetup@lists.linux.dev>;
-	Sat, 30 Nov 2024 17:23:30 +0100 (CET)
-Received: 
-	by pio-pvt-msa2.bahnhof.se (Postfix) with ESMTPA id 271A43F316
-	for <cryptsetup@lists.linux.dev>; Sat, 30 Nov 2024 17:23:30 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by localhost (Postfix) with ESMTPS id 8CE8D1D00207
-	for <cryptsetup@lists.linux.dev>; Sat, 30 Nov 2024 17:23:29 +0100 (CET)
-Date: Sat, 30 Nov 2024 16:23:28 +0000
-From: Michael =?utf-8?B?S2rDtnJsaW5n?= <152cc69a347e@ewoof.net>
-To: cryptsetup@lists.linux.dev
-Subject: Re: echo "pass" piped to sudo tee cryptsetup luksOpen overwritten
- LUKS partition
-Message-ID: <0acf97fd-cc7f-4678-9f33-d7091e489325@home.arpa>
-References: <CANbVO27bAb9E+Vt6k1J4VGSj18aY950Lq=ZqucBDJbfO4NLThQ@mail.gmail.com>
+	s=arc-20240116; t=1732985153; c=relaxed/simple;
+	bh=o8xElPTKpmfBUYECItdFEy+2xIlMUbPYTIrr4LzIrJ0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=uQ0I5b8jZXYM0cjn9FXyNtGjvfdK4Pets7wfiZABecxu0BP8sSp6oWbCQvkBVvBD0Nnd4dnKFt2CnvYp/ig7vvGlVhd+gugpxfqClKi5ZEJoOqQZwTIOVBzN/JZkpozqVXCU1gHMwse+oSPN1F5DK/7MUfI0hRilrGcJC4MF3Nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dSUBs7/P; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dSUBs7/P"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-385dfb168cbso993071f8f.1
+        for <cryptsetup@lists.linux.dev>; Sat, 30 Nov 2024 08:45:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1732985150; x=1733589950; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=o8xElPTKpmfBUYECItdFEy+2xIlMUbPYTIrr4LzIrJ0=;
+        b=dSUBs7/PGV5M9Z8LjQ6rL5ZEfWIRF0HYbdE2XvprDoffqq8ruBnF7QaPm8uScf1Q77
+         MztpcSdrKOHRvDW5CNTeFamK2dMFOKLBPHLoa47lUerV9KEPbuTlkFhddRcS54KxWj5n
+         gFRqYKP0jAbVGupjPMVNqd19ma34Cwz6CAo/xQ2Mx46SrYLLgK7B9jZIWSy4gkQG0qf8
+         ZGbNz/1ECX/lTC7y0o6IVAfHtYa8/GsmfLYxld+H3jQsqJpOV3UGAFE6c4mgEdLP/Yay
+         bnpIOFw0kqEEucjcoINSpfYbGYwL3WMsWPvg9Aw31dM6hOLAPB5lGUl4vHvG6szaTZaB
+         F9gQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732985150; x=1733589950;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=o8xElPTKpmfBUYECItdFEy+2xIlMUbPYTIrr4LzIrJ0=;
+        b=hIW2K9/OQWfOIJ4rqU5dhHKYF+yQQDTUaOamDz7oBbes4znhC87R/CM2KlGT/c1jzh
+         qbYkpRBwKArYG/zIVjHmWO/WbS5tW3mossTMPtmCKEqbvP83k9GIHD3gSc9UMqHxUFAo
+         lMEEPjUaeKUf2TXZqQnu8Ui4ayoolfAsVAYS7SZiC1zKB7yBSMgKIyaYBM+ktryuleEO
+         weMwrME331Wvo/suM5k2gjKqPqIhh+u8uPLNhGM+FQKEGNvSS1erMSwu+bF1hUnxze2+
+         LLBHqVH4Q2bUMrY0PQ0IozmKRoq7l6GVqMVD9UK/uxu0gesgkFQER4bEvgCTXd3O9LWp
+         DTig==
+X-Forwarded-Encrypted: i=1; AJvYcCX0Bd7jjqTR2FrP5p6bL5B2RZdYaTweOcrq4X6xXR3mliE3CnPXWRbiAE5iFxwpQXIV45t2V+ZK1mte@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz5qQwIqVbHH7Zn3GgRZzi2+p4o7um5Mo7qJ8IArwbvk18PMNi7
+	8yfdzOP/CDoI+ptimV8lShSCHQxrLWw2c6Zvi/MAJWYBKalF6Fa/
+X-Gm-Gg: ASbGncu4BBQAHd/Ez2Pwgt8E2EqT2xd6sFwoEi63DTJ0/QU78A/bKWrr46LE+KbTqJN
+	i7k+a9Cu2n2ncZeysT6ccU77U/f3+o3IUy97uJ3XqS9PgO7RFEh6b2CEAl2dYj4pugoN6m4KkEZ
+	haM2TedXzt1SKoz4xWkl06oCaC3FdVIIS50GcqEMLO9ZsrPjdxwfzUTDqFsinN+z1P1aVZqzLXk
+	h/jhlgiYvWWKdZ/c3t1aNMMrpQ/sIHfcJ1nG0k6l2+VsXsOmo1j1FYY3RzAoocw244k0hokmAc=
+X-Google-Smtp-Source: AGHT+IFRXe7Coa8jsxzQKvEpTczqXyJPqWSE9D5t9a28qHMck4MLBiD0jrH8oM0j5gIkdvVRQEH5DA==
+X-Received: by 2002:a05:6000:2cd:b0:382:4485:2db2 with SMTP id ffacd0b85a97d-385c6eb8d9emr15552459f8f.1.1732985150015;
+        Sat, 30 Nov 2024 08:45:50 -0800 (PST)
+Received: from [192.168.2.30] (85-70-151-113.rcd.o2.cz. [85.70.151.113])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-434aa763c50sm121414055e9.12.2024.11.30.08.45.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 30 Nov 2024 08:45:49 -0800 (PST)
+Message-ID: <65f3cf0c-e421-40d4-affe-e757fa68f6c9@gmail.com>
+Date: Sat, 30 Nov 2024 17:45:48 +0100
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: echo "pass" piped to sudo tee cryptsetup luksOpen overwritten
+ LUKS partition
+To: Rafal Babinicz <babiniczr@gmail.com>, cryptsetup@lists.linux.dev
+References: <CANbVO27bAb9E+Vt6k1J4VGSj18aY950Lq=ZqucBDJbfO4NLThQ@mail.gmail.com>
+Content-Language: en-US
+From: Milan Broz <gmazyland@gmail.com>
+Autocrypt: addr=gmazyland@gmail.com; keydata=
+ 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
 In-Reply-To: <CANbVO27bAb9E+Vt6k1J4VGSj18aY950Lq=ZqucBDJbfO4NLThQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 30 Nov 2024 14:36 +0100, from babiniczr@gmail.com (Rafal Babinicz):
+On 11/30/24 2:36 PM, Rafal Babinicz wrote:
+> During disk replacement I rendered my old LUKS encrypted disk unrecognized (my verbatim shell history attached).
+
+You just discovered why LUKS header backup is kind of useful.
+
 > TL:DR can I revert what I did there? Especially that line:
 > $ echo "passphrase" | sudo tee cryptsetup luksOpen /dev/sdb3 enc
-> 
-> Basically I wanted to see passphrase to check whether I type it out
-> correctly so echoed it and piped with sudo tee to cryptsetup luksOopen, and
-> I think there is where I've overwritten something.
 
-I think you may be in luck, actually, because it _looks_ at a glance
-like only the first few dozen bytes (specifically the first 48 bytes)
-have been damaged by your overwriting the first part of the partition
-with the attempted passphrase.
+So this is the tee command what overwritten the header, not cryptsetup.
 
-In LUKS 1, that part of the header contains the LUKS magic constant,
-LUKS version, cipher name and cipher mode. In LUKS 2, it contains the
-magic constant, LUKS version, header size, sequence ID and the
-beginning of the label. (For links to the on-disk format
-specifications, see section 1.2 of the FAQ at
-<https://gitlab.com/cryptsetup/cryptsetup/-/wikis/FrequentlyAskedQuestions>.)
+That said, you perhaps overwrote only 48 bytes.
 
-If you hexdump the first 64 bytes or so of the header on-disk, this is
-what it actually contains:
+Try this:
 
-00000000: 6f64 7973 656a 6145 6665 6d65 7279 637a  odysejaEfemerycz
-00000010: 6e61 4769 6c67 616d 6573 7a61 5469 6368  naGilgameszaTich
-00000020: 6567 6f42 6961 6c65 676f 5769 6c6b 610a  egoBialegoWilka.
-00000030: 6e36 3400 0000 0000 0000 0000 0000 0000  n64.............
+# create a fake container
+truncate -s 16M fake.img
 
-Annotating this based on the LUKS 1 on-disk header format (the | mark
-the first nibble of each byte for each field):
+# format it with the same cipher you had in your image (password is not important)
+echo | cryptsetup luksFormat --type luks1 --cipher aes-xts-plain64 fake.img
 
-00000000: 6f64 7973 656a 6145 6665 6d65 7279 637a  odysejaEfemerycz
-.         | |  | |  | |                                              LUKS_MAGIC
-.                        | |                                         LUKS version
-.                             | |  | |  | |  | |                     cipher name
-00000010: 6e61 4769 6c67 616d 6573 7a61 5469 6368  naGilgameszaTich
-.         | |  | |  | |  | |  | |  | |  | |  | |                     cipher name
-00000020: 6567 6f42 6961 6c65 676f 5769 6c6b 610a  egoBialegoWilka.
-.         | |  | |  | |  | |                                         cipher name
-.                             | |  | |  | |  | |                     cipher mode
-00000030: 6e36 3400 0000 0000 0000 0000 0000 0000  n64.............
-.         | |  | |  | |  | |  | |  | |  | |  | |                     cipher mode
+# replace these 48 bytes (it contain magic, version and cipher only)
+dd if=fake.img of=luksheaderdamage.img bs=48 count=1 conv=notrunc
 
-The "n64" followed by zeroes may conceivably be the end of "plain64",
-so this looks like a plausible match.
+Now the image is LUKS1 gain, try you password.
 
-If instead we try to annotate the binary data as a LUKS 2 header:
+The one you provided is not correct, so either you redacted it or something else happened.
 
-00000000: 6f64 7973 656a 6145 6665 6d65 7279 637a  odysejaEfemerycz
-.         | |  | |  | |                                              magic
-.                        | |                                         version
-.                             | |  | |  | |  | |                     hdr_size
-00000010: 6e61 4769 6c67 616d 6573 7a61 5469 6368  naGilgameszaTich
-.         | |  | |  | |  | |                                         seqid
-.                             | |  | |  | |  | |                     label[0..7]
-00000020: 6567 6f42 6961 6c65 676f 5769 6c6b 610a  egoBialegoWilka.
-.         | |  | |  | |  | |  | |  | |  | |  | |                     label[8..23]
-00000030: 6e36 3400 0000 0000 0000 0000 0000 0000  n64.............
-.         | |  | |  | |  | |  | |  | |  | |  | |                     label[24..39]
+BTW with LUKS2 format this would be fixed automatically as there is backup header.
 
-This appears less likely, but it's conceivable that you might have had
-a 27 byte label ending in "n64". Still, without a more in-depth
-analysis, my working hypothesis would be that this was a LUKS 1, not a
-LUKS 2, header. Unfortunately I believe this means that there's only
-one copy of the header, leaving recovery tools less to work with.
-
-In either case, _the information stored in this part of the header is
-relatively non-critical_. Key data does not begin until byte 108
-(start of key-bytes) in the LUKS 1 header, or around byte 104 (start
-of salt) in LUKS 2.
-
-So _if_ you know the passphrase, whether the header is LUKS 1 or LUKS
-2 (which stores an extra copy of the header, but seems a worse fit),
-while I'm not sure whether there are ready-made tools available to do
-it properly, it is _quite possibly_ the case that a valid, working
-header can be constructed from what's left _given_ that you know the
-passphrase.
-
--- 
-Michael Kjörling
-🔗 https://michael.kjorling.se
+Milan
 
