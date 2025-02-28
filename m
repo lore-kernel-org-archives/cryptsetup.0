@@ -1,278 +1,69 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-107160.simplelogin.co (mail-107160.simplelogin.co [79.135.107.160])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68BD8BEC
-	for <cryptsetup@lists.linux.dev>; Thu, 27 Feb 2025 21:19:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740691181; cv=none; b=Q6lEax4cxzIWhcPje1oLPO9XqLGt2zTyWM1kzrFRb7lI4PmEx2YAVcRDhMHQwlJuevLq9xlSingtfUKdRck/XvUEH9AyJHE2IhqBVhkf7JY5Nys/rSX+KlJKEi2Pckjvjjo5AyVhQQXJB8Y6zMEFxnLpdKS2P9ip9YoNUqYqjnw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740691181; c=relaxed/simple;
-	bh=QhgvnHBSocipL4tlUI9uR9Fj26AxgEFLpOdWLj2iYPs=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=ES2I3JthQLckAqv2OB8+J28NweBaDcgyBZ/1WrRigZVcFM0OZnHuFLntyLWcRju4SzBIIRjAEfRteP9k8YvnmcvyDUyEpQq5hqdvETZld2mfd1ZCfpjkL3Wb0nBFLDwhw/IohqXs3UzaR0FtTT1Y6yZfXsAWrsV8WD9WRLxwwI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M8RfClqt; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAAC31ABED9
+	for <cryptsetup@lists.linux.dev>; Fri, 28 Feb 2025 22:22:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=79.135.107.160
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1740781322; cv=pass; b=DbWiLDD9mBUDvmEDvRobOwqTJAwwxfgYKGxHrU1pNn6BYgAoWiN88GH9bLesxFM+K/HZ4ap1y+R7R1sBn8f76Wgu/uvEOwgRpwqathNx/NyYS0jmAfoyUnhfXPGIWDHgcGqWkkxwiplVf69fEj9NQHWC21G7mZH3CrBRVknfghc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1740781322; c=relaxed/simple;
+	bh=mrSvhZewWBuq50nMcQqPKnO/3KgLKst9IdSDVS1v+Xs=;
+	h=Date:Subject:In-Reply-To:MIME-Version:Content-Type:From:To:
+	 Message-ID:References; b=feddb3eMUmc+lGghibdg6zgzYz0hk+GBvIanq47OEAuXF3XjqQ1ctGEASK+i2HSCWXYMkzBj3KUky+2vtFUVmqITTZQf/Sc1QCiHwNW/EiNrUrE3UqTMzog/gM7AeLOQ+lxxoB4LOkrYV1OaWZWb6HLRDHboKr6QvGOoH1D+I8A=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aleeas.com; spf=pass smtp.mailfrom=aleeas.com; dkim=pass (1024-bit key) header.d=aleeas.com header.i=@aleeas.com header.b=skcEE7TZ; arc=pass smtp.client-ip=79.135.107.160
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aleeas.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aleeas.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M8RfClqt"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43690d4605dso9583205e9.0
-        for <cryptsetup@lists.linux.dev>; Thu, 27 Feb 2025 13:19:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740691178; x=1741295978; darn=lists.linux.dev;
-        h=autocrypt:subject:from:to:content-language:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=QhgvnHBSocipL4tlUI9uR9Fj26AxgEFLpOdWLj2iYPs=;
-        b=M8RfClqtrL6yStFDZ6ejGBO1/eYlVGAYRltfu8dRGa2+0zwCovCyrR9z9ASAQ7BBjY
-         JeZrtQwEk01crLZxazlVoZjQ+gURnyD41EsQtUbQ65yqqIpxHzmIsiMacOopF3i8AN+e
-         HkcbPPJuszKepmGOwK7aZXQKnmuSC1jFXNkPTBYJmlGK0SqkJQoL8ztsNt/CG6MxhxP3
-         1oqYXakrHHR+nUF7fO8v1gYOND/VmNe/zQXQtl67Yc2RNJ/U/SWk1Caqx88LHwGSrHGr
-         eQw1+6Ec6EvFgGVQKAQDTrBoLAHFLNf0NCsQCPvfWTZQjuxomMC8xLX2jXdaIyI40K99
-         dgrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740691178; x=1741295978;
-        h=autocrypt:subject:from:to:content-language:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QhgvnHBSocipL4tlUI9uR9Fj26AxgEFLpOdWLj2iYPs=;
-        b=CdH0Jj7vHEbbcNobaYV/E5x7NdM38oWrhWk7tWVq1NTxEpBotj5d43rnJYi01eElO5
-         v2Er2r9U+9qLMFztEj+d6ji1eT9zRdRMTC5s1dzCww/zLcPOdIbjyJizMHOk+K1Ky6+/
-         Bx1neZInULnzbzUjxSiyvv4Bkkhqq0N8TDJzf7gmHy0otgy7ZIDbMMIPmD8UynMR5d5p
-         gafEXEt1Yb1fX4C3WgQ4YJQYPvHCIf2kFIP/AwdkwWgr1Hkuk1SjVXN5+bO8l+1mxACR
-         3r5RdUmpVdWY7Mr/SEeY+ekDCvAsFKyngHzVdNoV+rsHEf0+koeRO216tlFFoO8An7jn
-         cStg==
-X-Gm-Message-State: AOJu0YzI0LLNnhHxM5FwmOz1Tk1P8Ztags68Qn2wtlqpqKxbwSRbs3ei
-	v0s3i4ZgeaBSng02ZIaMfekQH+1r46hsOga6njuIShmk3rlLudj1WXiDOnI0
-X-Gm-Gg: ASbGncuP6OF5omqXTT5Jh38wXN7qUr+CnqKz84KZIJrJWoBrMBGbZPUp6gnhXTz/K3o
-	k60vqN1+Cogrb/QrLH9pq7H2N+W/qOV7qOCVaIbtejCJDv5OvV2lKfTSpCZ8BkxwpK8pMIgihnU
-	911XapojkMJnIGsAl7MsIH6GIAImBMyXizI494Vfsjif3EeJdmKc5WJ8vqjIM31XpMZ1x2B2X6Y
-	++/nadxeuFgrEJ7SjZV6pMNFj3hhxVoe2RmH/yCWaAibdA1q0aZvpgAHBsvVxH2+AOK3QcodJln
-	t446U9iZBiCrBX+GVqQxJzs4lYc8hj+QEfO+1dp6q0zY74VJ3g0=
-X-Google-Smtp-Source: AGHT+IH97agLTTOWfvGFsTkRGwUkbndaAHWtSHca6HWNJeEyEWxqRkOuAVeitKggiW701S+KPto66A==
-X-Received: by 2002:a5d:5f96:0:b0:38d:e3e2:27e5 with SMTP id ffacd0b85a97d-390ec7ca98fmr518630f8f.5.1740691178003;
-        Thu, 27 Feb 2025 13:19:38 -0800 (PST)
-Received: from [192.168.2.22] (85-70-151-113.rcd.o2.cz. [85.70.151.113])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43aba57145esm66134375e9.30.2025.02.27.13.19.37
-        for <cryptsetup@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Feb 2025 13:19:37 -0800 (PST)
-Message-ID: <9ebe4e65-e5ee-4eb3-b0db-90de426c7863@gmail.com>
-Date: Thu, 27 Feb 2025 22:19:29 +0100
+	dkim=pass (1024-bit key) header.d=aleeas.com header.i=@aleeas.com header.b="skcEE7TZ"
+ARC-Seal: i=1; a=rsa-sha256; d=simplelogin.co; s=arc-20230626; t=1740780792;
+	cv=none; b=nvLz3Saw4LFK66A6Q/EocIi/dqWXxaYmOw2hM3M+GHgVbJhxd3ekNWDayD03QCF0tvlUN33M5vV2KOCIOZ0/ZEgo4pYBCDDh9dPAENe8veL47vK49dIA7qh+ElGQGWNWOStBeJ6H89AlIAv/h5H6W/TnyUjdCLUeSevZj8rVHHgEy0g3DRPt7VV4Cp4/HOR4EJMmuJA98Nw3nVgGv9bel+IDCX3wZYS6k+/CEwWG9PjsZHqohqyleFQRz7/bVlGeRa4m4Gsi9Cps/XDfdoWOPO1dqg/yBZHE5wyhUhAcyx8Rf6cYkOSDwA8b1pvLfwlIRywev0m8kd1NSheVlsgTkQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; d=simplelogin.co; s=arc-20230626;
+	t=1740780792; c=relaxed/simple;
+	bh=mrSvhZewWBuq50nMcQqPKnO/3KgLKst9IdSDVS1v+Xs=;
+	h=Date:Subject:In-Reply-To:From:To:References; b=gkFeylq9g2EQbUv+863lx8w1LzKn/dDIO6jW5+6PIXzsdSeNFc5K4zbTKmC2toelFhQliftXB0M1BzFSTqRLpPu1GgNE+QtJ8xKK84KcMr7uB5X6IqhK7KJl4RdYZpEl++GTuea5ecyYFtBdDRDmMseUOhVMcUCCUSF8Vp++PE5nR288GsW5RIl7WS45bMuyzVcFUEMYjHsKm/h37O353RAivPLae2/Clfyq/3MjmAYITrvvQkcylrk08mQEKKINnVIlugZ3eN06yDND5ydjEWu2GAnJNureufHzcUwFFnMNOXrWMOAvRJc1drukBB+KwwF3pSUuFNe6VuM9H6HyzQ==
+ARC-Authentication-Results: i=1; mail.protonmail.ch
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aleeas.com; s=dkim;
+	t=1740780791;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=mrSvhZewWBuq50nMcQqPKnO/3KgLKst9IdSDVS1v+Xs=;
+	b=skcEE7TZTlEDbW8YOSwa6lzJMjdjw0sgnUysQbotBos/z9Hxd7ojuPzZB8XzroWh0c8UbR
+	GdVQ0syVNpUnK8hxjsf7LNcwGfTk0QE2KLRYr5cdXACFoL83llI9qN0RCOxIwnJVSJyhEb
+	wOYndU/KaBF/ouOlwx121mnVHGL9NxY=
+Date: Fri, 28 Feb 2025 22:13:05 +0000
+Subject: Re: New requirements for XTS encryption mode (IEEE 1619 standard)
+In-Reply-To: <9ebe4e65-e5ee-4eb3-b0db-90de426c7863@gmail.com>
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Darek Hisc <darek.hisc@aleeas.com>
 To: cryptsetup development <cryptsetup@lists.linux.dev>
-From: Milan Broz <gmazyland@gmail.com>
-Subject: New requirements for XTS encryption mode (IEEE 1619 standard)
-Autocrypt: addr=gmazyland@gmail.com; keydata=
- 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
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------So3Zt8tXt30RAuAp0Fi8O0Od"
+Message-ID: <174078079146.6.14579579361719164927.619041945@aleeas.com>
+References: <9ebe4e65-e5ee-4eb3-b0db-90de426c7863@gmail.com>
+X-SimpleLogin-Type: Reply
+X-SimpleLogin-EmailLog-ID: 619041945
+X-SimpleLogin-Want-Signing: yes
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------So3Zt8tXt30RAuAp0Fi8O0Od
-Content-Type: multipart/mixed; boundary="------------IuBU241expWfuqmVc8SA70fp";
- protected-headers="v1"
-From: Milan Broz <gmazyland@gmail.com>
-To: cryptsetup development <cryptsetup@lists.linux.dev>
-Message-ID: <9ebe4e65-e5ee-4eb3-b0db-90de426c7863@gmail.com>
-Subject: New requirements for XTS encryption mode (IEEE 1619 standard)
 
---------------IuBU241expWfuqmVc8SA70fp
-Content-Type: multipart/mixed; boundary="------------dKwVQH8S4BPmKTKrmt2pxca0"
+> this draft is behind a paywall; even with a paid subscription, IEEE requi=
+res additional fees to download it.
 
---------------dKwVQH8S4BPmKTKrmt2pxca0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+This is madness! :(
 
-SGksDQoNCk1hbnkgZGlzayBlbmNyeXB0aW9uIHN5c3RlbXMgY3VycmVudGx5IHV0aWxpemUg
-QUVTLVhUUyBlbmNyeXB0aW9uLCB3aGljaCBpcyB0aGUgZGVmYXVsdCBmb3IgTFVLUyBhbmQg
-cGxhaW4gbW9kZSBpbiBjcnlwdHNldHVwLg0KDQpBIHJlY2VudCBkcmFmdCBvZiB0aGUgSUVF
-RSBBRVMtWFRTIHN0YW5kYXJkIHByb3Bvc2VkIG5ldyByZXF1aXJlbWVudHMgZm9yIFhUUyBp
-bXBsZW1lbnRhdGlvbiwgbm90YWJseSB0aGUgbWFuZGF0b3J5IHVzZSBvZiBrZXkgc2NvcGVz
-LiBVbmZvcnR1bmF0ZWx5LCB0aGlzIGRyYWZ0IGlzIGJlaGluZCBhIHBheXdhbGw7IGV2ZW4g
-d2l0aCBhIHBhaWQgc3Vic2NyaXB0aW9uLCBJRUVFIHJlcXVpcmVzIGFkZGl0aW9uYWwgZmVl
-cyB0byBkb3dubG9hZCBpdC4NCg0KVGhlc2UgY2hhbmdlcyB3aWxsIHNpZ25pZmljYW50bHkg
-aW1wYWN0IExVS1MgKGFuZCBsaWtlbHkgbWFueSBvdGhlciBvcGVuLXNvdXJjZSBzb2Z0d2Fy
-ZSBwcm9qZWN0cyB0aGF0IHV0aWxpemUgWFRTIG1vZGUpLiBJbiBsaWdodCBvZiB0aGlzLCB3
-ZSBwcmVwYXJlZCBhbiBpbmRlcGVuZGVudCBzdW1tYXJpemF0aW9uIHBhcGVyIGV4cGxhaW5p
-bmcgdGhlIGlzc3VlcyBhc3NvY2lhdGVkIHdpdGggWFRTIG1vZGUuDQoNCk91ciBwYXBlciBp
-cyBub3cgYXZhaWxhYmxlIHVuZGVyIGEgQ0MtQlkgbGljZW5zZSBvbiBBcnhpdjoNCiAgKlhU
-UyBNb2RlIFJldmlzaXRlZDogSGlnaCBIb3BlcyBmb3IgS2V5IFNjb3Blcz8qDQogIGh0dHBz
-Oi8vYXJ4aXYub3JnL2Ficy8yNTAyLjE4NjMxDQoNCkkgd2VsY29tZSBhbnkgY29tbWVudHMs
-IGFkZGl0aW9uYWwgaW5mb3JtYXRpb24sIG9yIHN1Z2dlc3Rpb25zLiBUaGUgc291cmNlIG9m
-IHRoZSBwYXBlciBpcyBhdmFpbGFibGUgb24gbXkgR2l0SHViOiBodHRwczovL2dpdGh1Yi5j
-b20vbWJyb3oveHRzLXBhcGVyLCB3aGVyZSB5b3UgY2FuIGNyZWF0ZSBpc3N1ZXMgdG8gc2hh
-cmUgeW91ciB0aG91Z2h0cy4NCg0KVGhhbmtzLA0KTWlsYW4NCg0KWzFdIFAxNjE5L0QxMiwg
-T2N0IDIwMjQgLSBJRUVFIERyYWZ0IFN0YW5kYXJkIGZvciBDcnlwdG9ncmFwaGljIFByb3Rl
-Y3Rpb24gb2YgRGF0YSBvbiBCbG9jay1PcmllbnRlZCBTdG9yYWdlIERldmljZXMNCmh0dHBz
-Oi8vaWVlZXhwbG9yZS5pZWVlLm9yZy9kb2N1bWVudC8xMDcyMDcyNw0KDQo=
---------------dKwVQH8S4BPmKTKrmt2pxca0
-Content-Type: application/pgp-keys; name="OpenPGP_0xD9B0577BD93E98FC.asc"
-Content-Disposition: attachment; filename="OpenPGP_0xD9B0577BD93E98FC.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: base64
+> we prepared an independent summarization paper explaining the issues asso=
+ciated with XTS mode.
 
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tDQoNCnhzRk5CRTk0cDM4QkVB
-RFpSRVQ4eTFnVnhsZkRrNDQvWHdCYkZqQzdlTTZFYW55Q3VpdlVQTW1Qd1lEbzlxUmUNCnkw
-SmRPR2hXaEFaZXV0R0d4c0tsaW96bWVUTDI1WjZ3V0lDdTJvZVkrWmZiZ0pRWUhGZVEwMU5W
-d29ZeTU3aGgNCnl0WncvNklNTEZSY0lhV1NIZDdvTmRuZVFnNm1WSmNHZEEvQk9YNjh1bzNS
-S1NIajZROEdvUTU0Ri9OcENvdHoNClZjUDFPUnBWSjVwdHlHMHg2T1ptNUVzbjYxcEtFOTc5
-d2NIc3o3RXpjRFlsKzNNUzYzZ1ptK08zRDF1ODBiVU0NCm1CVWx4eUVpQzVqbzVrc1RGaGVB
-OG0vNUNBUFF0eHpZdmdlellsTExTM25reGFxMkVSSzVEaHZNdjBOa3RYU3UNCnRmV1FzT0k1
-V0xqRzdVV1N0d0FuTzJXK0NWWkxjblpWMEs2T0tEYUZiQ2o0b3ZnNUhWMEZ5UVprbk4yTzVR
-YngNCmVzTmxOV2tNT0pBbm5YNmMvem93TzdqcThHQ3BhM29KbDN4eG13RmJDWnRINHozZkVW
-dzB3QUZjMkpsbnVmUjQNCmRoYWF4OWZoTm9VSjRPU1ZUaTl6cXN0eGhFeXl3a2F6YWtFdkFZ
-d09sQzUrMUZLb2M5VUl2QXBBR3ZnY1RKR1QNCk9wN011SHB0SEd3V3ZHWkVhSnFjc3FveTdy
-c1lQeHREUTdiSnVKSmJsekdJVXhXQWw4cXNVc0Y4TTRJU3hCa2YNCmZjVVlpUjB3aDFsdVVo
-WEZvMnJSVEtUK0ljL25KREU2NkVlNEVjbjkrQlBsTk9EaGxFRzF2azYycmhpWVNueXoNCnk1
-TUFVaFVsc3REeHVFallLK05HZDJhWUgwVkFOWmFscWxVWkZURWRPZEE2TllST3hrWVpWc1Z0
-WFFBUkFRQUINCnpTQk5hV3hoYmlCQ2NtOTZJRHhuYldGNmVXeGhibVJBWjIxaGFXd3VZMjl0
-UHNMQmZnUVRBUUlBS0FVQ1QzaW4NCmZ3SWJBd1VKRXN3REFBWUxDUWdIQXdJR0ZRZ0NDUW9M
-QkJZQ0F3RUNIZ0VDRjRBQUNna1EyYkJYZTlrK21QeHANCmJnLy9aV0RjUVZOQUtPV0N2aU5u
-TnZUMzE1V2JEcmpzSjZGQXBGODNoQjUycVFPOXR2amI1Wlk1NDc5NHV3b2YNCmlkT3FpMFhG
-b0xrb0x5aUpra3ZjM1E5U25NODloeWh6cnhuaDJ5bTRyVXI0Y0w2RjllOTl1QzY1NmVyNHRl
-bE0NCmJnOU9TUFIyaU51cXNBenlNaE9HTUVubm05N1lRMlFXT252YkM4UWdvUUI1VnZGM25a
-TWdxVFBUeGN0bFVmYzcNCnQ0QmxHY0lCTEcwb0lOVU5EZjQ0MUtBWGdNUDA1a1ZLMENEUWQw
-MkNUUG9rMlFzaGJnNmF3NTZlU1NVVEI0YXENClpNOFN0MXlTSjJjY01EUkM5bUNxY05GdHV1
-UHlBQUpBSkZtRXZseGFoZDBCQTBtd1YzY2UzOEpCYlRxczVrMFgNCjJKVmxqSE9iZ25mcDNX
-RHR1WThMajB1OEt2TjBDQVlKaFJ1aFk0MGZBUmg4RVBma052SXgvNzQwdWVleHNVQlcNCjNO
-MS9sQ2VBQmFPS3R1MTFrVlV4dkR4YUZSUWMySTV2bC9zWk11blNqSlFRaXdyV05icndaZ2lk
-d2tIenZpem0NCkxqZGdIZ0NKZUVDK3R1MXFpZlRDT2xsdWZ2WGFnalltckg0aG0vUXo2Kzkx
-bExrc3JIb294cDNuQWNONzhkNS8NCkU0cmVhbXgwK0RsZU9KMnlEMVVlUDJ3VURkQjIzT1FV
-M2lwVkRZd0l1SXZEV2laU0lWd1h5RExodWM2NHRpNHQNClNjVUdmdWNFS01FUjFlTFRKK3pJ
-TEhaOVI0SzdDMkJoRUdTQXl4a2VlWC9aOHBMTk9KMVJkVStCK1pGTlh1SUgNCkxKYmdyQWlP
-T3FyMDdXUGJ2UlQxTHZPL3cvNG0zMUQ5S2FsYzRKeXFuOStwanRuQ3daVUVFd0VJQUQ4Q0d3
-TUcNCkN3a0lCd01DQmhVSUFna0tDd1FXQWdNQkFoNEJBaGVBRmlFRUtpa1lKRC9lUm1TTkJv
-YjUyYkJYZTlrK21Qd0YNCkFtR2xGR1lGQ1NUNGIrY0FDZ2tRMmJCWGU5ayttUHcrVFEvK04v
-S1pHSGVUY3NuRU5ocnZHQUl4ZWV6bmRobjMNCm9uN1Fnd1RqRjg0ZFY4U01lNEM2TEN4Nzh3
-bWRFbWtXRDFSZnphLzEvYkszaVZhekpNSGRTQ3pYUWtBZGF5d1kNCllTczhHQmM3WmptTDNR
-aHZTMGF3VlNUNExXbUtqdjlPUGR3czE4RU94WDVCSE9EbFFib1FiT0dNQmJ2cEpvWWQNCkRa
-NEhEK0kybW1pTTRoOFA2MFBieTRnSXR2S2RWbmxVOHpvN1FiZkVJckU0blV0bFpHZnY0Z0lL
-Z2ZjODlsRDUNCkJOVkZ3UUQxT0loTEJnbFZ4bGtjL2ZTRkM3RXpZeitDdDZmR2FYV2VxTDh1
-MStoRGQ1V0lXNlpsMkM4MmQwVjcNCkxUeEtJMHI2cVpFa0xJMUpMRWVWUVJOQnAybU9BZkda
-VE56WU5xTzczTVcwNkVEckRwRzFScC91ZmE2UVNvSWsNClduVVJiay90ZzhmTkZhOEZnWEhH
-cVlmbFRuNVpmZitCVmIva2dVTmNFanpsQjVkZFUxbGFYVEJTclVJQU9meHgNCjVYVmFxM0JM
-TEZpVy9mN1hzUGFhc1V3NStrUjFmNlg4eWdyS1lvaTFaQ091Z1JmTk5uS2NtNkN3UVVyM0E3
-aXgNCjJ6Z1I2NlF2aUZ3bWU1b0pBcTRESldUS3BjQlZnWXdMdkdaWE9iVUNUNEJQWG5rQUVL
-MzJVWEM0THNmUEQ3Y1kNClZZb1FOVHJERGFLbUdxWURNekU3bXkxREdBZ3JJNngyWHA4OE9i
-azNJNG9ORVI4L1lwVENaYjFXNGNGVlM1cHANCm4rS2YwZCswR0dxcHRVY25DNmI1RkdWTTBz
-OWpRc2szR2FmWnpPcUtFUm9hUTBGcGxIUjlTYy9VK2hQZi95aUkNClNPc2JlUC96OWVXWDRp
-TE93VTBFVDNpbmZ3RVFBTjZFZFh5Znc5eHI1NkNKMWFzblExUFN4cHpFR2xVc0VIdm4NCjR3
-Y3VmeUM4S042VkdVbFIzV2lubGFHdk9JQ3p2WU9pUzA2RTZQcUtERWdiYkFwQmgyLy82SWhr
-MU95blMweTQNCmhZZXBKaStwc3RkWG9pdWQ2TlFTTlFsY0ZqQ2ZJOFd6QVQzcmVuc1ZMbXdj
-M0hnUlc1cXF0NVZjK0VXZGc5Y3kNCmxaNDhRZFB5bzNXeU9kMnB5TCt5cU5aUGpNR2lqRTh6
-dnp1cndaaU85YUJrSkNqdWxxWE1zMVl5eUlxZlR4S1ENCjFHQ1VRcTRTb0lRWGpEOEh2Z0o3
-VC9UcHVEZjl3Rmhlb25HcXhpSnB4YjAyTE1FZGtQZ3VnS0lnRzZpT0ZwbHoNCnJzeVN5b2lK
-c0dhMG1KMG4wTzZyWFF4bDFtSy96ZGZndm00Q1BEdWpiZ0lObkl4UnhQZXNjQ1ZZY21qTThr
-VGwNCkdZSnVLcDRHZ2J3YndrQ0lTczRyZXRhQVhpUDNhMmYzZVNhSmM1U25XV2EzSnFINW9n
-a0VXdnVlempOeFc1Zk0NCnBCV3N6ZFFFc2duc2RsSzM3VithQjVvV25ua1pSbFdrMVloR3dM
-MU9EeitFWnpTc0dsa0lyN0JZYWtLM3hSWWINCnhWZlFrVXI3RWVxcnVYb2hTT25QQW93ZVBZ
-QVhDaWdDZld2SUpNbHJQTElPRDJHT3k5ZVYzVVovSkRuLzdZUGYNCkZBak5iMGdWZHBxQkNR
-TkgvZlAyZVBDMEZ6VyszWUwxVWJSK3FNQUViS2JGZXB5Y2c3NUxiQzA4akZ1UVZ2YXUNCkRR
-dGE0RUF2QmtGNDYwUG9za0N6Y011UkVudGpNeGlwQjZJTVNvT0Q3NHRjR1lmVXA2L2tjZ2RF
-YXF5SzgyMTQNCmNvdU8vdThIQUJFQkFBSEN3V1VFR0FFQ0FBOEZBazk0cDM4Q0d3d0ZDUkxN
-QXdBQUNna1EyYkJYZTlrK21QekkNClJBLy9iQWYwTmc4ZEorSWd5ZFJ0ZFQ5WDJ4WUt5dWtr
-QTNIbHJPSW1Pb0E0VGhydi9IVmU3VTI4QWtpUXQyRHgNCk9tTlpZSVYwQnF2TCtkV0FEMUhZ
-Q2RRZ3NnVldWTHByc0ZmcU9ZSG5BV0tzZHF5TlpIdFBDOUo2ZHJud3YwdmMNCkVSMGR0REpq
-TURQNE1KTVRhNEpOak5KWWIyOVdmYkltdmlEUnRJY1Z1allGb1pLMlpCYTFFYzd5UGZrNENz
-eUUNCitZM1FoOUd5OFowOE5ycnhJbitNVkFUQmJvY0tzN2oxSkF2a0ZrK28xZ3JHbnczTlRY
-bkI4Z0V5Z0FLSEh5VWcNCnpyNU55bjVxSjI4RVpyN1ZjMUZQMmxVaUt2MEpCY0hULzl2VlhK
-MUdyZCtWRjJjd1lmdE1XUktSNjZsVGFVUzINCkJYMHRhNklRUVNqOG5TUnNvS2FwUm5pQ2ZU
-bTFENEkxNmo5Yk9vRWZGZFZzTWtjcllGdGZocTk3cWdSOGdadFYNCkNKa3JYMkNBUlorYTFK
-K05QL2VyQVNkNk0xQTNuM2FNRjN4QkZmRnNvdHpQcGxtaHpFeENZd3VPQ1dJQmZQZXINClVR
-aDFNdWdodkcvb1Q4WmFwUjZ4L0VWRStLOTBKMTBYcFBpOFZNaS8zUVJDNURwQ2luM0tjMTRX
-QUU0dUVieVUNCldMS2IzUG1mbVphUzZxRmFKTnRmMlR5Wm9kVDBBQ2d1djlYczRlbDBqOEZS
-YUNxTHZFWlM0cktMTnhiOEVZM1oNCjRMQzYxUWZ5QWJnNVAxMTRtdVZaNHJvOGR6aFowendr
-WkxHZUVzWVBzUXBMbzZYUFQvMzJQUDhhSG4vS0tYK0sNCk03b3VDRWhWZVdzelIyMEJNSzZz
-eFRCUis0YU5xU0tDZGdyNDJqcnR2elJtSnA3Q3dYd0VHQUVJQUNZQ0d3d1cNCklRUXFLUmdr
-UDk1R1pJMEdodm5ac0ZkNzJUNlkvQVVDWWFVVWx3VUpKUGh3R0FBS0NSRFpzRmQ3MlQ2WS9B
-VHoNCkQvNG1WZmwwVGpvYlB6TENuZTU0RUhoWUJFNUpyZkdGWVc5a1lOMVlLUUVIdlhKK21z
-UFk1Tndwd2RIbkRRWGENCk1zcmQ5N2Q3eGpXcnVvZ3NKVVgyazNWNFBhclNNbkxiZ2tFbnNH
-Tm1ESk9RRXZESm0xNkJyNHg5V2Y0cTYxYksNCkVzL2pleHhUeWlKUU12QS8ya2NFdFFoNXZi
-R2owSWhxSGtmODA0WElsV0ozRVJ2MVBTZXJGZkZ4L1RoRDUwRUUNCmVNUDFkVzJDUFVwUHJM
-aG5FaFRlNlRFVExFckpUcG11TnZRTjJ4RzJleUpMZlZreVoxR1BWM3krV2FrSjR5M2sNClpm
-TnVOemszN2gwcllkdXJxWTJTRU5uckhIR1RHS1VJTlB6RHBSNzdoYmhidWpCUy80R1F6Y3gv
-SXdIQWF6WGYNCitnQVNySG5HRTV3U0p5aDlrempYTkpBdXVhQUlhMGtnVFM3blU3angzSHYy
-QVFyRkFnQkRNSUNVOG0zYVRFSWYNClRaRXV2RnNVTFY4Vk9wM3FFRk81QkNSaGhiSE8vOGw0
-a0Y3bGJ5VkpDdjE3Tk9GK285SmRYLytpaTZEVVBYcWYNCjlpSitmZWdkQVhMNzJpcis0SFE3
-ZFU2NElMNVFmaHFVL29oVVM3NFFnWHVaQUJFVVJIMFg1bGlhdFd4NkhmN3ANCmE2ZjFTeGdH
-bVpUZ1U0TEFzN24xaGVVamkyMlpKbGRtK2NjdGhmd0ZONkVGR1ozQXJ4VEUxcVFRdm9EdjZO
-NUcNClFzc2hnbWtIVUh1STB2eFZDYWtkYkxsY0RUTTNEaVRqL3l6RU1Mb3hQd29lMXl6TitW
-U0FxUGFxb1lvZURyeXgNCjFBRnN3dVhUVW9xUy9xMGhoNzFnWFgxdzRXM3N5U0plcktlLzlh
-eVgwdktqN0E9PQ0KPVZYS3ENCi0tLS0tRU5EIFBHUCBQVUJMSUMgS0VZIEJMT0NLLS0tLS0N
-Cg==
+You are great and I just wanted to thank you for your work! For so many yea=
+rs!
 
---------------dKwVQH8S4BPmKTKrmt2pxca0--
+Cheers!
+Darek
 
---------------IuBU241expWfuqmVc8SA70fp--
-
---------------So3Zt8tXt30RAuAp0Fi8O0Od
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEKikYJD/eRmSNBob52bBXe9k+mPwFAmfA1uEACgkQ2bBXe9k+
-mPwmRg//cCMvcuGnUWbi50L0CE+vT+AK+qaaxic+H6fK8uMDjeWCDIa8qpt9dXZE
-HkiXMCRAQh5IsCF3JdXVxN/OY3NwgUmFw1uNAO9hmNZ62rcelUA50eDl/8XgJfCN
-TJ6Rq1QG4wDrHcMqaq2fuofoUXK3j26ITmI6dzUZW0P1DHpzaiw9LpdCRjmnLuOC
-Sa7UCa+EpaoHMZ3l9ihZYTsdg0sOnInFMTey+4OeY6vqfdtXmDjpreinMAu5jYpT
-XgTR01JSLematpjtd7S7kDWUsjUTiobFqk9yNEOkUNi39Yii8R19ZLVbOKxGEJlP
-GrrpWzBKqfDzIAVrXKBPUOAnLAf3Jd02XXgRCgzwTZ7gLYVUrUV1nerfznZ2ctLd
-YTKNCXWVi7isqzxHz+XM8nbtP5jOvXRODzgVBvMg0HeQtWp3H6b/XXqj21AznIB5
-tU5EKl/HdJhLuqctRsPZmkhh9RWXvrh53m83pcbzoCORf7tYI60zKANqXlkqfomM
-c9MwnoTo5aFSVDrJrvXAtYaCmvyBgWNqSwAGBAws0hWZ8aQmkT5ISeGrGP3C/ofl
-11eZuqmAFoLfouLftJssilNlmLqpnDB2Zh2Fnn2W84AxDkzifYtr7B0VFglJumPS
-HMBVX3MZSFHPaGiLZRc/JpzhRlngTEPMgcRgFwBKDiG4qy6OydY=
-=wrpt
------END PGP SIGNATURE-----
-
---------------So3Zt8tXt30RAuAp0Fi8O0Od--
