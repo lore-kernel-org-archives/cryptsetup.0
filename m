@@ -1,38 +1,41 @@
-Received: from mail-107166.simplelogin.co (mail-107166.simplelogin.co [79.135.107.166])
+Received: from mail-107162.simplelogin.co (mail-107162.simplelogin.co [79.135.107.162])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CAD14B96E
-	for <cryptsetup@lists.linux.dev>; Sat,  5 Apr 2025 15:47:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=79.135.107.166
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1FBB4086A
+	for <cryptsetup@lists.linux.dev>; Sat,  5 Apr 2025 16:37:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=79.135.107.162
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743868080; cv=pass; b=Jr/ihDWaH7ln99h4AIrsrrF/bO8q2ODhkBIGm01GkgNSr+99w07ivZXDCdLrQNcgV2JjYth+EpX9eL85CjjXgQMRjk2dMFVWrgbhcwMjuPSakrtsaehCicXLrZ9/YjteK9VQy+efXo/2+GXeQBz5umMzir2v6ujc66Yt/sfK2oQ=
+	t=1743871081; cv=pass; b=ROz5DMBuaraa2aBo7M1I35z0NBdsLoZ6PKVRn7ra4cXDY2mZjt+tKW+e8OkWTPMy0+jW09kNjToytLMTXKMMcumMIrWPDurBnv+JevzvYWeD/vaYH6XHeUkRPlYp7TznVU/7UY9mcFj1eBpv9ElvAuGwZASRV454krGtmmsN1iw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743868080; c=relaxed/simple;
-	bh=17/8CyxNTjuzq1TBEADRBH3fQSBLV+wgRJNoMhb/1gU=;
-	h=Date:Subject:MIME-Version:Content-Type:From:To:Message-ID; b=AQMM9z/2q11AuC+d2dWWYG2ePDXzyN5Sn/jwlqPhDFJixTwiJsVLLkD4fD9y2vQZ9dk2wF7qsYAyJP9u8aa8YGDEW5Gvv2pWLXMA9BIV2ZuxM6Ys62jqn02k56pOdbW6nGZTVgWobugzKMtpzAYcFuJoS9uITj1m0+XqYodqT/M=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=passmail.net; spf=pass smtp.mailfrom=passmail.net; dkim=pass (1024-bit key) header.d=passmail.net header.i=@passmail.net header.b=xETN5jRI; arc=pass smtp.client-ip=79.135.107.166
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=passmail.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=passmail.net
+	s=arc-20240116; t=1743871081; c=relaxed/simple;
+	bh=SrAsWdZqfXP2w7o13GRMvmAfzc4SUVLdBJYMG2zA0U8=;
+	h=Date:Subject:In-Reply-To:MIME-Version:Content-Type:From:To:Cc:
+	 Message-ID:References; b=KFmtICLwThAITxciNJYVMsHf4SE0cy5L4++sfaE04v+cedtP38kK3WWDx8I7oKoku6jliTA+BfeyJjMqus/qFsE5blpsDn5fVGRqAs/ikFGdVTuhYwxDWr8ktpnCXVch/AKVlnLUMmnJu/GPxPTJiAh2gZdobhX3TRTAKLz843A=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aleeas.com; spf=pass smtp.mailfrom=aleeas.com; dkim=pass (1024-bit key) header.d=aleeas.com header.i=@aleeas.com header.b=GsRE260K; arc=pass smtp.client-ip=79.135.107.162
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aleeas.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aleeas.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=passmail.net header.i=@passmail.net header.b="xETN5jRI"
-ARC-Seal: i=1; a=rsa-sha256; d=simplelogin.co; s=arc-20230626; t=1743867693;
-	cv=none; b=h4XT9oOcEigeq5AvwYkDWj58DTDocGYL9DxUQpCJM2pX1sM9lsqEZ5MDoSqCqZMq+deTIvM6nhaJ024ocOfTeCSe29DPSfMheX0934+9eR5X6zVIgN6MZGMJxS8MTOGD9o8SuzwnMN3U7HwfM79NzpSf5UIUl1P2q+OA+lwzEe4NLyouG5LggwqrpNW3ujnu+7uRNwLTtyPiasrVAGpPVZEmK3LJZPhOBvKqv2XnZNKsu3gPRZg3xoDlkcCLLKucYp0LSruUMSpKEuA7MdMpPw8ypQ5WP5EU4sE+KHclViWVB9PtVurW9ZmxAsbz9rF8ejTwkg3j46DID3Yacyq+iQ==
+	dkim=pass (1024-bit key) header.d=aleeas.com header.i=@aleeas.com header.b="GsRE260K"
+ARC-Seal: i=1; a=rsa-sha256; d=simplelogin.co; s=arc-20230626; t=1743870144;
+	cv=none; b=sEf2CsqvRCY3a9BFOYd85R9qSXXO5dkRRAktOpHSn0hf1CkwuMuYuobjLWgTpltKxqFRhpwdLMYVL5J1LAvC7Sj98NTArTXy9ohvJtDmqbBf9TWab5yZjkunBOn7nK8DmBxLH54v21K+0565fhx4N6D2jNpVCYk3h/1M1DfdxuQDHQkYN+T6gI9Hb2r08XdSjLI64rH7X8fBtw6+y2l01wgCUDApR0FPnFIGqVmw73gCZeYuJoJdG+Sm2YxcqhvQdYPLwaHap8DzEqCgTywT6q/r5eDbbjOqKz/41GVRo69e66EvzrIyyst3LOUPqKcuFKlipK5Al+Tlt4mSoe8D1w==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=simplelogin.co; s=arc-20230626;
-	t=1743867693; c=relaxed/simple;
-	bh=17/8CyxNTjuzq1TBEADRBH3fQSBLV+wgRJNoMhb/1gU=;
-	h=Date:Subject:From:To; b=BQqcDb0oKl3cd35jJ0SzhOKwoaEqGNFd6m23PHsYTjdyLBG0l5qy7PK/gRiiWbidB9rUYjo34uvziYiediHNJszMI3k1BurO1XYpbFFWMhd9glT4fP9ch2GmcduNuau3C6uQrik60+FW22rxQfJyBSqkEpkg2QJ0KYLUQrPvm7sGWjd8LpIR3gfEfioI5N26yOuWQhTPNOpccWhSH8BLvOkA3ja1aEKrrmFYVfvtElvB3vL/mFNzxH80sAOClACB7MNYh53kLmcKX8NravaqZy8BuDAHi8Jt34qylTE4U3aTAp3PhZ2+htje5XjfUDDwhRbsi/xT7NT125z2YpJklw==
+	t=1743870144; c=relaxed/simple;
+	bh=SrAsWdZqfXP2w7o13GRMvmAfzc4SUVLdBJYMG2zA0U8=;
+	h=Date:Subject:In-Reply-To:From:To:Cc:References; b=HBYOo2q33DtZ4XCehsRQl6KBrpBl9v7RLzqiglVeA75V5GkR7M+yP4RVr6pXicp2KHXX40K03R4bDLD/seCVKmNvTzL6zct3o36gGLbIMKWPiSe7Mr/Dg9tS1cZslWr0cCBvJE5iHp3XR6C7DXVl8IyolcXnTZ7SL3M6M7covaLJ7H/v3zQ2FPcHjIZQ7YI8/arrT1NpyQwHBxTkRIto7bDAYE1ymCBxMVX/uLmCUSj4n42TPGC/shTzs3vSZ1lkiwdoSErVYUqG+y8V8qgYoG3SkCBbf+d0DQtcIaOvVBiS5ftAVCwXgyzCgWlxs6Pl4MOjNhMYfS3OzAKR2NMGjQ==
 ARC-Authentication-Results: i=1; mail.protonmail.ch
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=passmail.net;
-	s=dkim; t=1743867693;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aleeas.com; s=dkim;
+	t=1743870144;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=17/8CyxNTjuzq1TBEADRBH3fQSBLV+wgRJNoMhb/1gU=;
-	b=xETN5jRIYPWDSdMnUO/CmFxSDX0xdQqL6hEzikMHk2ZO+0a1hbEKe+FXn5V0ntZ4TErUcV
-	DG7PCnvby9PPelD4iZ/+Nl0gPYI5hGnCppy78TpkBlYdrEy3gObrHmTLdrolyu60OxM3Sh
-	CcemPCTY69Lfc5OBzXXuX2TaRrWTq/c=
-Date: Sat, 05 Apr 2025 15:41:26 +0000
-Subject: Looking for LUKS GUI
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=SrAsWdZqfXP2w7o13GRMvmAfzc4SUVLdBJYMG2zA0U8=;
+	b=GsRE260KJwCBMkGzVKT9xVTSDgqkEv8tEZ3GD919+LWdbkIjvG4vzRQpDdbRF6BafDT7Qn
+	KxXBQ6JBF57ezx8SREwz0P8LsQpDGUaWd21WfSlxPL9EN1oq+RAMPV4sWLSG1797lej5SR
+	BtquCbcr1n410P0WrWT+PIyyK7U4R0w=
+Date: Sat, 05 Apr 2025 16:22:18 +0000
+Subject: Re: Looking for LUKS GUI
+In-Reply-To: <174386769355.6.1636033258357958528.666033728@passmail.net>
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
@@ -41,28 +44,30 @@ List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-From: Oliver <oxid.oxidize842@passmail.net>
-To: cryptsetup@lists.linux.dev
-Message-ID: <174386769355.6.1636033258357958528.666033728@passmail.net>
+From: Darek Hisc <darek.hisc@aleeas.com>
+To: Oliver <oxid.oxidize842@passmail.net>
+Cc: cryptsetup@lists.linux.dev
+Message-ID: <174387014408.7.5961259197743680938.666080459@aleeas.com>
+References: <174386769355.6.1636033258357958528.666033728@passmail.net>
 X-SimpleLogin-Type: Reply
-X-SimpleLogin-EmailLog-ID: 666033728
+X-SimpleLogin-EmailLog-ID: 666080459
 X-SimpleLogin-Want-Signing: yes
 
-Hi
 
-I am looking for good encryption local-only folder tool.
+> I tried to find Linux GUI install guide, but I can=E2=80=99t find it.
 
-I took a look on LUKS but=E2=80=A6 I tried to find Linux GUI install guide,=
- but I can=E2=80=99t find it.
+Try ZuluCrypt https://github.com/mhogomchungu/zuluCrypt
 
-I run Linux Mint 22 Xia (Cinnamon)
+> how really secure LUKS?
 
-Secondly, how really secure LUKS? I need to store some really important inf=
-ormation (journalism) and in my situation it MUST be encrypted and treated =
-as highly classified information. It is really important.
+TLDR: This is a golden standard for Linux for many years to encrypt FDE (wh=
+ole disk) in all Linux distributions I know.
+To encrypt files, use ZuluCrypt or VeraCrypt (create containers for files).
 
-I am journalist, so this is highly important n
+> I am journalist
 
-I really don=E2=80=99t have time to try everything myself, as if I will mes=
-s something up, I will be in whole ocean of trouble.
+Me too ;)
+
+Cheers!
+
 
