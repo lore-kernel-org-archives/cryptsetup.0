@@ -1,42 +1,38 @@
-Received: from ste-pvt-msa2.bahnhof.se (ste-pvt-msa2.bahnhof.se [213.80.101.71])
+Received: from mail-107166.simplelogin.co (mail-107166.simplelogin.co [79.135.107.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8204A1F8917
-	for <cryptsetup@lists.linux.dev>; Tue,  4 Mar 2025 20:38:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.80.101.71
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741120710; cv=none; b=RXtksklFt5X1lkG+lVpjM4jmfkYXE79n3Dfcm4D/Zk2fMQ/Q6JjPgukg37t/3XGo22vfZ2VRq9EkD3bSnOdd01bhsW6XOrsWKAkRNW37JFYgaL442aP1YP1XZAc59PH89PR8P0IZnvKlr2IdI0xb0VcTgllX7Qs/VlPKIK+1tqk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741120710; c=relaxed/simple;
-	bh=cXtczH02XDy/KTB9vdqfb8IKk5Pud+6HNf33Ycvti6Y=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ueSFyTzGKfk6ZVvmRzyp5DIcNWs3eqk5RvbrDwIEQnbMjntNCpahA1KSCXt3aa7I7PQr51i1QlV+Q7J9f1TjDMpnqL6MOeQx9T/7gXurjdD3BXkECTrmyZ2OvZ8qwcBw82X+tlRSI3XXgWmV1g/zFo06Yd1p8mBom6x2GvzQaXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ewoof.net; spf=pass smtp.mailfrom=ewoof.net; arc=none smtp.client-ip=213.80.101.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ewoof.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ewoof.net
-Received: from localhost (localhost [127.0.0.1])
-	by ste-pvt-msa2.bahnhof.se (Postfix) with ESMTP id ECCB73F9A0
-	for <cryptsetup@lists.linux.dev>; Tue,  4 Mar 2025 21:31:04 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at bahnhof.se
-X-Spam-Flag: NO
-X-Spam-Score: 0.244
-X-Spam-Level:
-Received: from ste-pvt-msa2.bahnhof.se ([127.0.0.1])
-	by localhost (ste-pvt-msa2.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id urQInM6WmnmX for <cryptsetup@lists.linux.dev>;
-	Tue,  4 Mar 2025 21:31:03 +0100 (CET)
-Received: 
-	by ste-pvt-msa2.bahnhof.se (Postfix) with ESMTPA id E4CF13F93D
-	for <cryptsetup@lists.linux.dev>; Tue,  4 Mar 2025 21:31:03 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by localhost (Postfix) with ESMTPS id 2CDE21D002A3
-	for <cryptsetup@lists.linux.dev>; Tue,  4 Mar 2025 21:31:03 +0100 (CET)
-Date: Tue, 4 Mar 2025 20:31:02 +0000
-From: Michael =?utf-8?B?S2rDtnJsaW5n?= <152cc69a347e@ewoof.net>
-To: cryptsetup@lists.linux.dev
-Subject: Re: Boot with encrypted disk but only with USB Stick
-Message-ID: <333fe5ad-3786-4388-81ad-3e3d4066099d@home.arpa>
-References: <01a001db8cee$fc0f5550$f42dfff0$@m4com.de>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CAD14B96E
+	for <cryptsetup@lists.linux.dev>; Sat,  5 Apr 2025 15:47:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=79.135.107.166
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1743868080; cv=pass; b=Jr/ihDWaH7ln99h4AIrsrrF/bO8q2ODhkBIGm01GkgNSr+99w07ivZXDCdLrQNcgV2JjYth+EpX9eL85CjjXgQMRjk2dMFVWrgbhcwMjuPSakrtsaehCicXLrZ9/YjteK9VQy+efXo/2+GXeQBz5umMzir2v6ujc66Yt/sfK2oQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1743868080; c=relaxed/simple;
+	bh=17/8CyxNTjuzq1TBEADRBH3fQSBLV+wgRJNoMhb/1gU=;
+	h=Date:Subject:MIME-Version:Content-Type:From:To:Message-ID; b=AQMM9z/2q11AuC+d2dWWYG2ePDXzyN5Sn/jwlqPhDFJixTwiJsVLLkD4fD9y2vQZ9dk2wF7qsYAyJP9u8aa8YGDEW5Gvv2pWLXMA9BIV2ZuxM6Ys62jqn02k56pOdbW6nGZTVgWobugzKMtpzAYcFuJoS9uITj1m0+XqYodqT/M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=passmail.net; spf=pass smtp.mailfrom=passmail.net; dkim=pass (1024-bit key) header.d=passmail.net header.i=@passmail.net header.b=xETN5jRI; arc=pass smtp.client-ip=79.135.107.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=passmail.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=passmail.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=passmail.net header.i=@passmail.net header.b="xETN5jRI"
+ARC-Seal: i=1; a=rsa-sha256; d=simplelogin.co; s=arc-20230626; t=1743867693;
+	cv=none; b=h4XT9oOcEigeq5AvwYkDWj58DTDocGYL9DxUQpCJM2pX1sM9lsqEZ5MDoSqCqZMq+deTIvM6nhaJ024ocOfTeCSe29DPSfMheX0934+9eR5X6zVIgN6MZGMJxS8MTOGD9o8SuzwnMN3U7HwfM79NzpSf5UIUl1P2q+OA+lwzEe4NLyouG5LggwqrpNW3ujnu+7uRNwLTtyPiasrVAGpPVZEmK3LJZPhOBvKqv2XnZNKsu3gPRZg3xoDlkcCLLKucYp0LSruUMSpKEuA7MdMpPw8ypQ5WP5EU4sE+KHclViWVB9PtVurW9ZmxAsbz9rF8ejTwkg3j46DID3Yacyq+iQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; d=simplelogin.co; s=arc-20230626;
+	t=1743867693; c=relaxed/simple;
+	bh=17/8CyxNTjuzq1TBEADRBH3fQSBLV+wgRJNoMhb/1gU=;
+	h=Date:Subject:From:To; b=BQqcDb0oKl3cd35jJ0SzhOKwoaEqGNFd6m23PHsYTjdyLBG0l5qy7PK/gRiiWbidB9rUYjo34uvziYiediHNJszMI3k1BurO1XYpbFFWMhd9glT4fP9ch2GmcduNuau3C6uQrik60+FW22rxQfJyBSqkEpkg2QJ0KYLUQrPvm7sGWjd8LpIR3gfEfioI5N26yOuWQhTPNOpccWhSH8BLvOkA3ja1aEKrrmFYVfvtElvB3vL/mFNzxH80sAOClACB7MNYh53kLmcKX8NravaqZy8BuDAHi8Jt34qylTE4U3aTAp3PhZ2+htje5XjfUDDwhRbsi/xT7NT125z2YpJklw==
+ARC-Authentication-Results: i=1; mail.protonmail.ch
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=passmail.net;
+	s=dkim; t=1743867693;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=17/8CyxNTjuzq1TBEADRBH3fQSBLV+wgRJNoMhb/1gU=;
+	b=xETN5jRIYPWDSdMnUO/CmFxSDX0xdQqL6hEzikMHk2ZO+0a1hbEKe+FXn5V0ntZ4TErUcV
+	DG7PCnvby9PPelD4iZ/+Nl0gPYI5hGnCppy78TpkBlYdrEy3gObrHmTLdrolyu60OxM3Sh
+	CcemPCTY69Lfc5OBzXXuX2TaRrWTq/c=
+Date: Sat, 05 Apr 2025 15:41:26 +0000
+Subject: Looking for LUKS GUI
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
@@ -44,35 +40,29 @@ List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <01a001db8cee$fc0f5550$f42dfff0$@m4com.de>
+Content-Transfer-Encoding: quoted-printable
+From: Oliver <oxid.oxidize842@passmail.net>
+To: cryptsetup@lists.linux.dev
+Message-ID: <174386769355.6.1636033258357958528.666033728@passmail.net>
+X-SimpleLogin-Type: Reply
+X-SimpleLogin-EmailLog-ID: 666033728
+X-SimpleLogin-Want-Signing: yes
 
-On 4 Mar 2025 11:19 +0100, from dnichterwitz@m4com.de (Dirk Nichterwitz):
-> I have configured my system to boot a luks encrypted harddisk. I addes a
-> keyfile on a usb stick and this works to boot automaticaly when plugged in .
-> But ist her a way to configure the system to only boot with stick ? because
-> if i unplug the stick the system ask für passphrase.
+Hi
 
-To cryptsetup, a key file (in the sense of its --key-file parameter;
-not --volume-key-file/--master-key-file) _is_ a passphrase. See
-cryptsetup-open(8) under OPTIONS.
+I am looking for good encryption local-only folder tool.
 
-So you will need something outside of cryptsetup to detect whether the
-USB stick is plugged in and if not, stop the boot process and/or
-prompt to insert the USB stick, before the boot process gets to the
-point of unlocking the container. Exactly how to do that will depend
-on your distribution and init system, but as Arno suggested, will
-likely involve tweaking the initrd. For example, on a Debian-based
-system, you'd likely start out somewhere under /etc/initramfs-tools.
+I took a look on LUKS but=E2=80=A6 I tried to find Linux GUI install guide,=
+ but I can=E2=80=99t find it.
 
-Note that doing this won't add any security compared to your current
-situation; anyone who wants to attack the container can still do so
-normally, because they can either remove the storage device or make a
-full-disk copy of it and attack that with no regard to your boot
-scripts.
+I run Linux Mint 22 Xia (Cinnamon)
 
--- 
-Michael Kjörling
-🔗 https://michael.kjorling.se
+Secondly, how really secure LUKS? I need to store some really important inf=
+ormation (journalism) and in my situation it MUST be encrypted and treated =
+as highly classified information. It is really important.
+
+I am journalist, so this is highly important n
+
+I really don=E2=80=99t have time to try everything myself, as if I will mes=
+s something up, I will be in whole ocean of trouble.
 
