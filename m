@@ -1,84 +1,167 @@
-Received: from arnowagner.info (mail.tansi.org [84.19.178.47])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 832A41DE4FB
-	for <cryptsetup@lists.linux.dev>; Sat, 17 May 2025 10:37:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.19.178.47
+Received: from zepto.billmerriam.com (zepto.billmerriam.com [71.19.150.204])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09DA023E25A
+	for <cryptsetup@lists.linux.dev>; Mon, 26 May 2025 17:22:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=71.19.150.204
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747478261; cv=none; b=tz8n5i06xgQgPZ69FV9bjc/Q9w5yyD8qkbXR5ZfTYeQS1iHUDzd7vIZRWL8scHkr+QaBvLirrav+g77o8fnCaUohStqPiaI1gr1l33lyXb5dgYsk9gPOtgnJu/i46ag9gAX2T3Ue2UjR9lPcCErI24fui6p87ieP0BDK+24a/bI=
+	t=1748280145; cv=none; b=h1qW1NxUobND/8Jq6eA5WJHf74y2+8LuxUDc85tKbeVYuiMexHC3fmpNP6+wT9FecgHNAQV0P+v9jrkVHWJVDRuTog+hH/n7pTCfAn+I7RHMbIKjscWaqWMbOpGaHVIauRoSkOyogdOF1aA3FSLUsPCo59t3YmPpVAM+MKDk1EU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747478261; c=relaxed/simple;
-	bh=nZ+fdO1WQzNe72TIAXma0/uz1eN8BtATojDk3fXhLco=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bNgS/91J7SbPPtDPW/oBO3nxZAsW8MNlLucCuhHuaPLN7NgJl5cTBLPerekU9PeZMkuBNGFJ0th2M81XpvFpQIVG+b+iPOpmnK8jnJn6jRzGA4c0BY4btqhbEM2Z2xkt8/Eaat4SLICZK3HPurEAUfLW0Nsq94tyHu1K9OUl5xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=arnowagner.info; spf=pass smtp.mailfrom=arnowagner.info; arc=none smtp.client-ip=84.19.178.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=arnowagner.info
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arnowagner.info
-Received: from gatewagner.dyndns.org (81-6-44-245.init7.net [81.6.44.245])
-	by v1.tansi.org (Postfix) with ESMTPA id DC742140094;
-	Sat, 17 May 2025 12:30:06 +0200 (CEST)
-Received: by gatewagner.dyndns.org (Postfix, from userid 1000)
-	id 5706D17A1A9; Sat, 17 May 2025 12:30:43 +0200 (CEST)
-Date: Sat, 17 May 2025 12:30:43 +0200
-From: Arno Wagner <wagner@arnowagner.info>
-To: Alexander Grund <alexander.grund@tu-dresden.de>
-Cc: cryptsetup@lists.linux.dev
-Subject: Re: Are there known security issues during creation of LUKS
- containers?
-Message-ID: <aChlU6dvZRH8AjIf@tansi.org>
-Reply-To: Arno Wagner <arno@wagner.name>
-References: <d936a762-b75b-46b6-9fe7-1652c10afb6d@tu-dresden.de>
- <8a487ad4-b0a7-46ec-9969-d16da7607998@tu-dresden.de>
+	s=arc-20240116; t=1748280145; c=relaxed/simple;
+	bh=FHxPWCurfrB1UVR9ATp4YdIiZ/+9k1sZoQR5qp+c0hc=;
+	h=Message-ID:Subject:From:To:In-Reply-To:References:Content-Type:
+	 MIME-Version:Date; b=OOoDHssbsMARq5/8M8qtG+zDqagqbMQcbLLucUa4YV2lQP7jaXl7wnjMhhT5TYDFpoRppliLTkdG0MvcYbAtZZMLOq52gOwn9Cb4+6vgD2KS1cW07/NGbBHnIdDOnwCK6t+/UbfBZEAOcXzzvdIlXcB/W8l1I+y0Qjgw0C9mGAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=billmerriam.com; spf=pass smtp.mailfrom=billmerriam.com; dkim=pass (1024-bit key) header.d=billmerriam.com header.i=@billmerriam.com header.b=K0bq9x6d; dkim=pass (1024-bit key) header.d=billmerriam.com header.i=@billmerriam.com header.b=wquzLsvH; arc=none smtp.client-ip=71.19.150.204
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=billmerriam.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=billmerriam.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=billmerriam.com header.i=@billmerriam.com header.b="K0bq9x6d";
+	dkim=pass (1024-bit key) header.d=billmerriam.com header.i=@billmerriam.com header.b="wquzLsvH"
+Received: from localhost (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
+	 client-signature RSA-PSS (2048 bits) client-digest SHA256)
+	(Client CN "zepto.billmerriam.com", Issuer "R11" (not verified))
+	by zepto.billmerriam.com (Postfix) with ESMTPS id B26FF11BCD94;
+	Mon, 26 May 2025 13:14:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=billmerriam.com;
+	s=default; t=1748279677;
+	bh=FHxPWCurfrB1UVR9ATp4YdIiZ/+9k1sZoQR5qp+c0hc=;
+	h=Subject:From:To:In-Reply-To:References:Date;
+	b=K0bq9x6diSlhHsE6jC7KZSim0zbITo+DqLw/dpSDuTjxlEjeuN5SGXKRBnega+HBM
+	 jjbFhh+e2SeF1UqhvCgTWjdpOvqDV8R1ae65twlXiHde8mfXp2ibpeHIRWRUCEeE+2
+	 BgNjVePa1nqqRYVIdXR+vaJQayflyIdViPTijE/M=
+X-Virus-Scanned: amavis at billmerriam.com
+Received: from zepto.billmerriam.com ([127.0.0.1]) (using TLS with cipher TLS_AES_256_GCM_SHA384)
+ by localhost (zepto.billmerriam.com [127.0.0.1]) (amavis, port 10024)
+ with ESMTPS id 4RV3j7VvxlnR; Mon, 26 May 2025 13:14:01 -0400 (EDT)
+Received: from giga.billmerriam.com (unknown [192.168.1.11])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
+	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
+	(Client CN "centi.billmerriam.com", Issuer "Bill Merriam CA" (not verified))
+	by zepto.billmerriam.com (Postfix) with ESMTPS id 96F1711BCD8D;
+	Mon, 26 May 2025 13:13:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=billmerriam.com;
+	s=default; t=1748279640;
+	bh=FHxPWCurfrB1UVR9ATp4YdIiZ/+9k1sZoQR5qp+c0hc=;
+	h=Subject:From:To:In-Reply-To:References:Date;
+	b=wquzLsvHmCSwvVee95U25B+uAmVIxML7Bf0M1CmECJGuDabolvcemuDouIGOz+j0/
+	 5ApN87kdt+VdCcaFMlcS/1zekNwrwKT8OddULzUy7rkzd/RtJ2DE+DOF6YKKqGrSgF
+	 oLGX88Q7Q18Eqs0cHtspJlIl4A4Pb4sFUoS1rmPI=
+Received: from [192.168.1.129] (unknown [192.168.1.129])
+	by giga.billmerriam.com (Postfix) with ESMTP id 2C5CB7205;
+	Mon, 26 May 2025 13:14:01 -0400 (EDT)
+Message-ID: <47354dc28e0149e8b29c8c7a8b6465ebb5ff1d07.camel@billmerriam.com>
+Subject: Re: Looking for LUKS GUI
+From: Bill Merriam <lists@billmerriam.com>
+To: Michael =?ISO-8859-1?Q?Kj=F6rling?= <152cc69a347e@ewoof.net>, 
+	cryptsetup@lists.linux.dev
+In-Reply-To: <01aeab8b-341b-4930-bd3e-becf9a42f907@home.arpa>
+References: <174386769355.6.1636033258357958528.666033728@passmail.net>
+	 <174387014408.7.5961259197743680938.666080459@aleeas.com>
+	 <01aeab8b-341b-4930-bd3e-becf9a42f907@home.arpa>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8a487ad4-b0a7-46ec-9969-d16da7607998@tu-dresden.de>
+Date: Fri, 09 May 2025 20:17:49 -0400
+User-Agent: Evolution 3.56.1 (by Flathub.org) 
 
-Hi Alexander,
+I have never used qubes-os but my understanding is that it intends to
+provide a secure environment without the loopholes you have mentioned.
 
-there should not be any issues. AFAIK, everything critical is done in
-locked memory and the only things going to disk are the ones that stay 
-there.
+btw, I use LUKS encryption with a Yubico Bio key so decryption requires
+a password and a pin and a thumb print.  I hope this prevents someone
+with a key logger from getting access but I can't be sure.  The Yubikey
+emits FIDO2 credentials that LUKS uses for the decryption key.
 
-Obviously, if you have, say, a keylogger active when entering a 
-passphrase, that is an issue. But that is not different from
-what happens with an exiting container. 
+I will write up the process I use and send it to the list so others can
+criticize it or benefit from it.
 
-As to documentation, that would be the LUKS specification.
+Bill
 
-Regards,
-Arno
-
-
-On Fri, May 16, 2025 at 14:29:00 CEST, Alexander Grund wrote:
-> Hi all,
-> 
-> we are planning to use LUKS containers on machines with limited local
-> storage but access to a large, but shared file system.
-> So far I've only found security considerations for existing LUKS containers.
-> 
-> Are there any information on issues possible during **creation** of a LUKS
-> container?
-> I.e. if it is possible for someone with access to files on the file system,
-> where the container is being created by `cryptsetup luksFormat`, is able to
-> infer any information on the key during the process?
-> 
-> Can anyone point me to relevant information/research?
-> 
-> Thanks,
-> Alexander Grund
-> 
-
-
-
--- 
-Arno Wagner,     Dr. sc. techn., Dipl. Inform.,    Email: arno@wagner.name
-GnuPG: ID: CB5D9718  FP: 12D6 C03B 1B30 33BB 13CF  B774 E35C 5FA1 CB5D 9718
-----
-A good decision is based on knowledge and not on numbers. -- Plato
-
-If it's in the news, don't worry about it.  The very definition of 
-"news" is "something that hardly ever happens." -- Bruce Schneier
+On Sat, 2025-04-05 at 17:47 +0000, Michael Kj=C3=B6rling wrote:
+> On 5 Apr 2025 16:22 +0000, from darek.hisc@aleeas.com=C2=A0(Darek Hisc):
+> > > I tried to find Linux GUI install guide, but I can=E2=80=99t find it.
+> >=20
+> > Try ZuluCrypt https://github.com/mhogomchungu/zuluCrypt
+>=20
+> I'm not familiar with ZuluCrypt (looks like it's just a front-end for
+> creating and mounting encrypted block devices?) but keep in mind that
+> temporary files can be left scattered around the file system,
+> particularly in places like /tmp, ~/.cache, ~/.local/state and
+> ~/.local/tmp.
+>=20
+> The minimum for a situation like you describe should probably be:
+>=20
+> - LUKS for full-disk encryption at the system level _including_ the
+> =C2=A0 boot loader and kernel
+> - Optionally separate encryption of different projects' data
+> - Different, _unrelated_ passphrases for each such container
+> - Use tmpfs for /tmp
+> - Use encrypted swap with an ephemeral encryption key
+> - A drop-by-default firewall configuration
+> - Always make sure you are running up-to-date software, and be
+> =C2=A0 _extremely_ restrictive about installing from third-party
+> =C2=A0 repositories
+> - Strong, unique passwords/passphrases _everywhere_
+> - Maintain physical control of the hardware (so that an adversary
+> =C2=A0 can't, for example, plug in a flush-with-the-port USB key logger
+> =C2=A0 while you are out for lunch)
+>=20
+> Your system might already be configured to do some of this;
+> especially
+> the last is not about software at all; and this mailing list is the
+> wrong place to go into depth on how to set it all up. My point is
+> that
+> although LUKS and full-disk encryption can be an important component,
+> _just_ LUKS (especially if used only for select data) probably won't
+> be enough especially if an adversary is able to image the storage.
+>=20
+> For passwords and passphrases, I have a web page at
+> <https://michael.kjorling.se/password-tips/> which is pretty much
+> what
+> it says on the tin. It's meant to be applicable to and _actionable_
+> by
+> the general public; I basically wrote it because I grew tired of
+> having to repeat it. :-)
+>=20
+>=20
+> > > how really secure LUKS?
+> >=20
+> > TLDR: This is a golden standard for Linux for many years to encrypt
+> > FDE (whole disk) in all Linux distributions I know.
+> > To encrypt files, use ZuluCrypt or VeraCrypt (create containers for
+> > files).
+>=20
+> Unless you go out of your way to do otherwise, LUKS (via cryptsetup)
+> uses well-understood industry-standard algorithms, and also includes
+> techniques to make adversarial key recovery more difficult. (For
+> example, the "anti-forensic stripes" or AF stripes in the LUKS header
+> means that even a partially overwritten LUKS header is essentially
+> useless for gaining access to the contents of the container it is
+> associated with, often _even if_ you know a valid passphrase.
+> Exceptions to this exist, but they are highly specific.)
+>=20
+> Essentially, if a LUKS container created with modern defaults uses a
+> strong passphrase, then even for a highly resourceful adversary, it
+> is
+> believed to be computationally infeasible to gain access to the
+> contents of that container _without_ actually somehow knowing a valid
+> passphrase.
+>=20
+> Note all the caveats in that sentence, because they _are_ important.
+>=20
+> There _is_ a possibility that a weakness would be found in, say,
+> Argon2 or AES-XTS which would change the security assumptions
+> underlying LUKS; but personally, I would consider that unlikely, and
+> if it were to happen, you certainly won't be alone in being in
+> trouble
+> with regards to data confidentiality.
+>=20
+> https://xkcd.com/538/=C2=A0applies.
