@@ -1,128 +1,84 @@
-Received: from ste-pvt-msa2.bahnhof.se (ste-pvt-msa2.bahnhof.se [213.80.101.71])
+Received: from shakotay.alphanet.ch (shakotay.alphanet.ch [46.140.72.222])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A8570838
-	for <cryptsetup@lists.linux.dev>; Sat,  5 Apr 2025 17:53:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.80.101.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C9C1CAA9C
+	for <cryptsetup@lists.linux.dev>; Sat, 10 May 2025 15:51:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.140.72.222
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743875617; cv=none; b=bznQMxe/sP6pcLjS7QBoIC5knrvMV4PqfvzRK6i6wjSr3duZ86FdyPHIx+ySzfNkTm+J9XVWcHnCV5vmeYfMxk+JXDymDQ+819GZKK8UbA7zDMb+p1hp2TdZd6gQsr4R761dC/I1SUPuRahhBp0nd1xWJIASoP4AYXZ+h/35jzI=
+	t=1746892290; cv=none; b=lRhBvQs1DfGj06H3RIociy5WGwnmTwoeEhOiC/29T5jC7csMI79z0F1wFLQRlTGbRWmGFkjcWsmLKO4jkfPgkM9iFPqP6yUtof7FAtmSdKO04ocf3Ac6afOojSmI+WnNwDSZXwHzlFofkYydrPaAFK8B4ix7s+U1VyLFyiC7Fz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743875617; c=relaxed/simple;
-	bh=q0/pgokrqvCLAKbi3OXE0aLueKOEEzTk7y8sJyBS4IA=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ke0epGgEHD+541A5N7jTaR3CJIKp4DeWrWnioBjAuJg9pBQwCTSs+RdKaN1d0ocVCuF186BwSsAH7Nd7sySqVr3CUc/3EVLhgBjWAA8rPbKz4eeBC2UqC6ReJDk6OilrIr72Vf1G9m/GIpa0Wq427UMMJrvjTIgKRu58eS8L+uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ewoof.net; spf=pass smtp.mailfrom=ewoof.net; arc=none smtp.client-ip=213.80.101.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ewoof.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ewoof.net
-Received: from localhost (localhost [127.0.0.1])
-	by ste-pvt-msa2.bahnhof.se (Postfix) with ESMTP id 04B283F43D
-	for <cryptsetup@lists.linux.dev>; Sat,  5 Apr 2025 19:47:38 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at bahnhof.se
-X-Spam-Flag: NO
-X-Spam-Score: -1.156
-X-Spam-Level:
-Received: from ste-pvt-msa2.bahnhof.se ([127.0.0.1])
-	by localhost (ste-pvt-msa2.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id XAIvywu759Wx for <cryptsetup@lists.linux.dev>;
-	Sat,  5 Apr 2025 19:47:36 +0200 (CEST)
-Received: 
-	by ste-pvt-msa2.bahnhof.se (Postfix) with ESMTPA id DB4473F2BC
-	for <cryptsetup@lists.linux.dev>; Sat,  5 Apr 2025 19:47:36 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by localhost (Postfix) with ESMTPS id 7DF491D00227
-	for <cryptsetup@lists.linux.dev>; Sat,  5 Apr 2025 19:47:36 +0200 (CEST)
-Date: Sat, 5 Apr 2025 17:47:35 +0000
-From: Michael =?utf-8?B?S2rDtnJsaW5n?= <152cc69a347e@ewoof.net>
+	s=arc-20240116; t=1746892290; c=relaxed/simple;
+	bh=5HfM/ANG9r2hzJu7b9559951UYbhNsJy8jcko3kwTOs=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=KWmGTM37YSORBi4WlzaPTzvW7nyudcT2RzJ5MmpkALVwEHQMESddTMNDbE8Nh6dTGmssf2AVkx4LqFlMJhSpUW84zSC0mX5nC0+GNrQ4oqwbzA04YBsVxgDxe6/3ZD/OpbDoHUSxe29GpkKf7aDrqr/QSPdXcuiac69TXcYTOrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alphanet.ch; spf=pass smtp.mailfrom=alphanet.ch; dkim=pass (2048-bit key) header.d=alphanet.ch header.i=@alphanet.ch header.b=np+v1Fo8; arc=none smtp.client-ip=46.140.72.222
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alphanet.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alphanet.ch
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=alphanet.ch header.i=@alphanet.ch header.b="np+v1Fo8"
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by shakotay.alphanet.ch (Postfix) with ESMTP id E43E612416D7
+	for <cryptsetup@lists.linux.dev>; Sat, 10 May 2025 17:51:24 +0200 (CEST)
+Received: from reliant.alphanet.ch (reliant.alphanet.ch [192.168.1.30])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by shakotay.alphanet.ch (Postfix) with ESMTPS id 1E0A51240A7C
+	for <cryptsetup@lists.linux.dev>; Sat, 10 May 2025 17:51:17 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=alphanet.ch; s=mail;
+	t=1746892277; bh=5HfM/ANG9r2hzJu7b9559951UYbhNsJy8jcko3kwTOs=;
+	h=Date:From:To:Subject:From;
+	b=np+v1Fo8hV/fjlYWimN6TF6o/oPYfof+aOPjm79qdxOw1v3N4CLdFD8MPWMWR1um9
+	 Kr7NLaAwew9DoYHbzNvvIM/ZfdouDzUmYarFhTNfikL7rmQGgwqPXkhILco7Uw3Doe
+	 D5qbIGf2pOqotzEPtpSpP+wWIWsvKaScHrEcSSV4HSCC9NETf6mh4DOnsiHsun97ih
+	 n/xhFBGr+5Y2SR5AELDyq/FM4gBEiVdX3XxiaXOCm6dczON69pSL5zXHkqyGEcy9JX
+	 o+JBBIweWsxbfwZgwfAr0GD9lhVoO5Gn8VYlwTlPROmnq3SvvyCnzrheV0EiOA6tZJ
+	 NW5QnolbiYUNw==
+Received: by reliant.alphanet.ch (Postfix, from userid 1000)
+	id 0E2A576CA27; Sat, 10 May 2025 17:51:17 +0200 (CEST)
+Date: Sat, 10 May 2025 17:51:17 +0200
+From: Marc SCHAEFER <schaefer@alphanet.ch>
 To: cryptsetup@lists.linux.dev
-Subject: Re: Looking for LUKS GUI
-Message-ID: <01aeab8b-341b-4930-bd3e-becf9a42f907@home.arpa>
-References: <174386769355.6.1636033258357958528.666033728@passmail.net>
- <174387014408.7.5961259197743680938.666080459@aleeas.com>
+Subject: Equivalent of --integrity-recalculate
+Message-ID: <aB919cDdLQfSsb0V@alphanet.ch>
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <174387014408.7.5961259197743680938.666080459@aleeas.com>
 
-On 5 Apr 2025 16:22 +0000, from darek.hisc@aleeas.com (Darek Hisc):
->> I tried to find Linux GUI install guide, but I can’t find it.
-> 
-> Try ZuluCrypt https://github.com/mhogomchungu/zuluCrypt
+Hello,
 
-I'm not familiar with ZuluCrypt (looks like it's just a front-end for
-creating and mounting encrypted block devices?) but keep in mind that
-temporary files can be left scattered around the file system,
-particularly in places like /tmp, ~/.cache, ~/.local/state and
-~/.local/tmp.
+If you create a cryptsetup/luks device with integrity with:
 
-The minimum for a situation like you describe should probably be:
+   cryptsetup luksFormat -q --type luks2 --integrity hmac-sha256 $dev
 
-- LUKS for full-disk encryption at the system level _including_ the
-  boot loader and kernel
-- Optionally separate encryption of different projects' data
-- Different, _unrelated_ passphrases for each such container
-- Use tmpfs for /tmp
-- Use encrypted swap with an ephemeral encryption key
-- A drop-by-default firewall configuration
-- Always make sure you are running up-to-date software, and be
-  _extremely_ restrictive about installing from third-party
-  repositories
-- Strong, unique passwords/passphrases _everywhere_
-- Maintain physical control of the hardware (so that an adversary
-  can't, for example, plug in a flush-with-the-port USB key logger
-  while you are out for lunch)
+and then open it:
 
-Your system might already be configured to do some of this; especially
-the last is not about software at all; and this mailing list is the
-wrong place to go into depth on how to set it all up. My point is that
-although LUKS and full-disk encryption can be an important component,
-_just_ LUKS (especially if used only for select data) probably won't
-be enough especially if an adversary is able to image the storage.
+   cryptsetup open $dev backup-copy
 
-For passwords and passphrases, I have a web page at
-<https://michael.kjorling.se/password-tips/> which is pretty much what
-it says on the tin. It's meant to be applicable to and _actionable_ by
-the general public; I basically wrote it because I grew tired of
-having to repeat it. :-)
+you then get, according to lsblk, two additional devices:
 
+   - backup-copy (the transparently decrypted/encrypting volume)
 
->> how really secure LUKS?
-> 
-> TLDR: This is a golden standard for Linux for many years to encrypt
-> FDE (whole disk) in all Linux distributions I know.
-> To encrypt files, use ZuluCrypt or VeraCrypt (create containers for files).
+   - backup-copy_dif (the integrity device)
 
-Unless you go out of your way to do otherwise, LUKS (via cryptsetup)
-uses well-understood industry-standard algorithms, and also includes
-techniques to make adversarial key recovery more difficult. (For
-example, the "anti-forensic stripes" or AF stripes in the LUKS header
-means that even a partially overwritten LUKS header is essentially
-useless for gaining access to the contents of the container it is
-associated with, often _even if_ you know a valid passphrase.
-Exceptions to this exist, but they are highly specific.)
+(which is similar, AFAIK, as when you use dm-integrity with LVM)
 
-Essentially, if a LUKS container created with modern defaults uses a
-strong passphrase, then even for a highly resourceful adversary, it is
-believed to be computationally infeasible to gain access to the
-contents of that container _without_ actually somehow knowing a valid
-passphrase.
+If you create an integrity device separately, you get a
 
-Note all the caveats in that sentence, because they _are_ important.
+   integritysetup --integrity-recalculate open $dev integrity
 
-There _is_ a possibility that a weakness would be found in, say,
-Argon2 or AES-XTS which would change the security assumptions
-underlying LUKS; but personally, I would consider that unlikely, and
-if it were to happen, you certainly won't be alone in being in trouble
-with regards to data confidentiality.
+command which allows to recalculate the integrity blocks.
 
-https://xkcd.com/538/ applies.
+I don't think cryptsetup has this option (*); is there a way to
+do it anyway?  Or maybe remove the backup-copy_dif and
+re-add it?
 
--- 
-Michael Kjörling
-🔗 https://michael.kjorling.se
+Thank you for any pointer.
 
+(*) it looks there is a feature request pending
+       https://gitlab.com/cryptsetup/cryptsetup/-/issues/854
