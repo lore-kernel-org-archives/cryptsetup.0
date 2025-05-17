@@ -1,194 +1,84 @@
-Received: from mailout4.zih.tu-dresden.de (mailout4.zih.tu-dresden.de [141.30.67.75])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0215523C515
-	for <cryptsetup@lists.linux.dev>; Fri, 16 May 2025 12:29:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.30.67.75
+Received: from arnowagner.info (mail.tansi.org [84.19.178.47])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 832A41DE4FB
+	for <cryptsetup@lists.linux.dev>; Sat, 17 May 2025 10:37:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.19.178.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747398547; cv=none; b=r8DplIgPFv8NwS2MmH+3PLx211iUKxqZKiEKaMfsbB6gS+/RlQiI39Lo9MGINMURTHRX2cD/JpgtFz7ADzlYpvYsFeugJRyPu9oMpPU//QHbHImxgyUZieJ2Z7k2EP3r1CKRgOOAKJfVt0HXR+ZhRtU2DFo+J+Fw+9u+ohVmB94=
+	t=1747478261; cv=none; b=tz8n5i06xgQgPZ69FV9bjc/Q9w5yyD8qkbXR5ZfTYeQS1iHUDzd7vIZRWL8scHkr+QaBvLirrav+g77o8fnCaUohStqPiaI1gr1l33lyXb5dgYsk9gPOtgnJu/i46ag9gAX2T3Ue2UjR9lPcCErI24fui6p87ieP0BDK+24a/bI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747398547; c=relaxed/simple;
-	bh=WtIr3BQfYALWtp1/Y8LBCfE1/C6jfYwmcPuuL9q8b2M=;
-	h=Message-ID:Date:MIME-Version:Subject:References:To:From:
-	 In-Reply-To:Content-Type; b=RYYGnT3lqY4DMjdZH8hKfUBovfzkFKcZeeT8V1nKfW/XgvAlsYiZbTnDY4FznSK2Pgo5iRU8vb25Zy5Ca2zajCHsjJ3K2pc48PRDEd4e/ukQ6NMINWtX3idS6/JAgxQA8OhxeyP29eiLRzpp6WOp/UQTZ8akaLxrf4ULYzhkULs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=tu-dresden.de; spf=pass smtp.mailfrom=tu-dresden.de; dkim=pass (2048-bit key) header.d=tu-dresden.de header.i=@tu-dresden.de header.b=maJIOtx2; arc=none smtp.client-ip=141.30.67.75
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=tu-dresden.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tu-dresden.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tu-dresden.de header.i=@tu-dresden.de header.b="maJIOtx2"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=tu-dresden.de; s=dkim2022; h=Content-Type:In-Reply-To:From:To:References:
-	Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=WtIr3BQfYALWtp1/Y8LBCfE1/C6jfYwmcPuuL9q8b2M=; b=maJIOtx2LK6waOGeY0uyBhRRbl
-	WxZLqcjA7sxgdm32D+ldaX7kC+l6UmcnesIkaUVl4EBDFceakjIz/w71qUQrrbrQkf4e7q7iP7Z66
-	dE7N5WzRCwdAE71iQk2zd4nY/EpQZm4aV9PbFr6PYioBSXuB5oZc1MkW6wPKiBKX7M3T8xhS9iGv5
-	RlGjc9bJjiar2wnGD3pEl3tagkTE9kxoTmioepknfgUOAwjVCmc8pdZ8t/Zx0QU7NWlK3BbLwuhHX
-	h8Z6CiRpG/1aA2RtwmVDzd4I72DmTd16BqDSLpXm4wgqT8vufrk5e9ZeAkgLRh8kF3AzDulc7hNSy
-	5f5F3k3Q==;
-Received: from [172.26.34.141] (helo=msx.tu-dresden.de)
-	by mailout4.zih.tu-dresden.de with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <alexander.grund@tu-dresden.de>)
-	id 1uFuBT-001yDC-3n
-	for cryptsetup@lists.linux.dev; Fri, 16 May 2025 14:29:03 +0200
-Received: from [141.76.91.220] (141.76.91.220) by
- msx-l421.msx.ad.zih.tu-dresden.de (172.26.34.141) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.10; Fri, 16 May 2025 14:29:00 +0200
-Message-ID: <8a487ad4-b0a7-46ec-9969-d16da7607998@tu-dresden.de>
-Date: Fri, 16 May 2025 14:29:00 +0200
+	s=arc-20240116; t=1747478261; c=relaxed/simple;
+	bh=nZ+fdO1WQzNe72TIAXma0/uz1eN8BtATojDk3fXhLco=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bNgS/91J7SbPPtDPW/oBO3nxZAsW8MNlLucCuhHuaPLN7NgJl5cTBLPerekU9PeZMkuBNGFJ0th2M81XpvFpQIVG+b+iPOpmnK8jnJn6jRzGA4c0BY4btqhbEM2Z2xkt8/Eaat4SLICZK3HPurEAUfLW0Nsq94tyHu1K9OUl5xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=arnowagner.info; spf=pass smtp.mailfrom=arnowagner.info; arc=none smtp.client-ip=84.19.178.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=arnowagner.info
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arnowagner.info
+Received: from gatewagner.dyndns.org (81-6-44-245.init7.net [81.6.44.245])
+	by v1.tansi.org (Postfix) with ESMTPA id DC742140094;
+	Sat, 17 May 2025 12:30:06 +0200 (CEST)
+Received: by gatewagner.dyndns.org (Postfix, from userid 1000)
+	id 5706D17A1A9; Sat, 17 May 2025 12:30:43 +0200 (CEST)
+Date: Sat, 17 May 2025 12:30:43 +0200
+From: Arno Wagner <wagner@arnowagner.info>
+To: Alexander Grund <alexander.grund@tu-dresden.de>
+Cc: cryptsetup@lists.linux.dev
+Subject: Re: Are there known security issues during creation of LUKS
+ containers?
+Message-ID: <aChlU6dvZRH8AjIf@tansi.org>
+Reply-To: Arno Wagner <arno@wagner.name>
+References: <d936a762-b75b-46b6-9fe7-1652c10afb6d@tu-dresden.de>
+ <8a487ad4-b0a7-46ec-9969-d16da7607998@tu-dresden.de>
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Are there known security issues during creation of LUKS containers?
-Content-Language: en-US, de-DE
-References: <d936a762-b75b-46b6-9fe7-1652c10afb6d@tu-dresden.de>
-To: <cryptsetup@lists.linux.dev>
-From: Alexander Grund <alexander.grund@tu-dresden.de>
-In-Reply-To: <d936a762-b75b-46b6-9fe7-1652c10afb6d@tu-dresden.de>
-X-Forwarded-Message-Id: <d936a762-b75b-46b6-9fe7-1652c10afb6d@tu-dresden.de>
-Content-Type: multipart/signed; protocol="application/pkcs7-signature";
-	micalg=sha-512; boundary="------------ms000806040706090703000600"
-X-ClientProxiedBy: MSX-L416.msx.ad.zih.tu-dresden.de (172.26.34.136) To
- msx-l421.msx.ad.zih.tu-dresden.de (172.26.34.141)
-X-TUD-Virus-Scanned: mailout4.zih.tu-dresden.de
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8a487ad4-b0a7-46ec-9969-d16da7607998@tu-dresden.de>
 
---------------ms000806040706090703000600
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Hi Alexander,
 
-SGkgYWxsLA0KDQp3ZSBhcmUgcGxhbm5pbmcgdG8gdXNlIExVS1MgY29udGFpbmVycyBvbiBt
-YWNoaW5lcyB3aXRoIGxpbWl0ZWQgbG9jYWwgDQpzdG9yYWdlIGJ1dCBhY2Nlc3MgdG8gYSBs
-YXJnZSwgYnV0IHNoYXJlZCBmaWxlIHN5c3RlbS4NClNvIGZhciBJJ3ZlIG9ubHkgZm91bmQg
-c2VjdXJpdHkgY29uc2lkZXJhdGlvbnMgZm9yIGV4aXN0aW5nIExVS1MgY29udGFpbmVycy4N
-Cg0KQXJlIHRoZXJlIGFueSBpbmZvcm1hdGlvbiBvbiBpc3N1ZXMgcG9zc2libGUgZHVyaW5n
-ICoqY3JlYXRpb24qKiBvZiBhIA0KTFVLUyBjb250YWluZXI/DQpJLmUuIGlmIGl0IGlzIHBv
-c3NpYmxlIGZvciBzb21lb25lIHdpdGggYWNjZXNzIHRvIGZpbGVzIG9uIHRoZSBmaWxlIA0K
-c3lzdGVtLCB3aGVyZSB0aGUgY29udGFpbmVyIGlzIGJlaW5nIGNyZWF0ZWQgYnkgYGNyeXB0
-c2V0dXAgbHVrc0Zvcm1hdGAsIA0KaXMgYWJsZSB0byBpbmZlciBhbnkgaW5mb3JtYXRpb24g
-b24gdGhlIGtleSBkdXJpbmcgdGhlIHByb2Nlc3M/DQoNCkNhbiBhbnlvbmUgcG9pbnQgbWUg
-dG8gcmVsZXZhbnQgaW5mb3JtYXRpb24vcmVzZWFyY2g/DQoNClRoYW5rcywNCkFsZXhhbmRl
-ciBHcnVuZA0KDQo=
+there should not be any issues. AFAIK, everything critical is done in
+locked memory and the only things going to disk are the ones that stay 
+there.
 
---------------ms000806040706090703000600
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: Kryptografische S/MIME-Signatur
+Obviously, if you have, say, a keylogger active when entering a 
+passphrase, that is an issue. But that is not different from
+what happens with an exiting container. 
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgMFADCABgkqhkiG9w0BBwEAAKCC
-EXowggUSMIID+qADAgECAgkA4wvV+K8l2YEwDQYJKoZIhvcNAQELBQAwgYIxCzAJBgNVBAYT
-AkRFMSswKQYDVQQKDCJULVN5c3RlbXMgRW50ZXJwcmlzZSBTZXJ2aWNlcyBHbWJIMR8wHQYD
-VQQLDBZULVN5c3RlbXMgVHJ1c3QgQ2VudGVyMSUwIwYDVQQDDBxULVRlbGVTZWMgR2xvYmFs
-Um9vdCBDbGFzcyAyMB4XDTE2MDIyMjEzMzgyMloXDTMxMDIyMjIzNTk1OVowgZUxCzAJBgNV
-BAYTAkRFMUUwQwYDVQQKEzxWZXJlaW4genVyIEZvZXJkZXJ1bmcgZWluZXMgRGV1dHNjaGVu
-IEZvcnNjaHVuZ3NuZXR6ZXMgZS4gVi4xEDAOBgNVBAsTB0RGTi1QS0kxLTArBgNVBAMTJERG
-Ti1WZXJlaW4gQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkgMjCCASIwDQYJKoZIhvcNAQEBBQAD
-ggEPADCCAQoCggEBAMtg1/9moUHN0vqHl4pzq5lN6mc5WqFggEcVToyVsuXPztNXS43O+FZs
-FVV2B+pG/cgDRWM+cNSrVICxI5y+NyipCf8FXRgPxJiZN7Mg9mZ4F4fCnQ7MSjLnFp2uDo0p
-eQcAIFTcFV9Kltd4tjTTwXS1nem/wHdN6r1ZB+BaL2w8pQDcNb1lDY9/Mm3yWmpLYgHurDg0
-WUU2SQXaeMpqbVvAgWsRzNI8qIv4cRrKO+KA3Ra0Z3qLNupOkSk9s1FcragMvp0049ENF4N1
-xDkesJQLEvHVaY4l9Lg9K7/AjsMeO6W/VRCrKq4Xl14zzsjz9AkH4wKGMUZrAcUQDBHHWekC
-AwEAAaOCAXQwggFwMA4GA1UdDwEB/wQEAwIBBjAdBgNVHQ4EFgQUk+PYMiba1fFKpZFK4OpL
-4qIMz+EwHwYDVR0jBBgwFoAUv1kgNgB5oKAia4zV8mHSuCzLgkowEgYDVR0TAQH/BAgwBgEB
-/wIBAjAzBgNVHSAELDAqMA8GDSsGAQQBga0hgiwBAQQwDQYLKwYBBAGBrSGCLB4wCAYGZ4EM
-AQICMEwGA1UdHwRFMEMwQaA/oD2GO2h0dHA6Ly9wa2kwMzM2LnRlbGVzZWMuZGUvcmwvVGVs
-ZVNlY19HbG9iYWxSb290X0NsYXNzXzIuY3JsMIGGBggrBgEFBQcBAQR6MHgwLAYIKwYBBQUH
-MAGGIGh0dHA6Ly9vY3NwMDMzNi50ZWxlc2VjLmRlL29jc3ByMEgGCCsGAQUFBzAChjxodHRw
-Oi8vcGtpMDMzNi50ZWxlc2VjLmRlL2NydC9UZWxlU2VjX0dsb2JhbFJvb3RfQ2xhc3NfMi5j
-ZXIwDQYJKoZIhvcNAQELBQADggEBAIcL/z4Cm2XIVi3WO5qYi3FP2ropqiH5Ri71sqQPrhE4
-eTizDnS6dl2e6BiClmLbTDPo3flq3zK9LExHYFV/53RrtCyD2HlrtrdNUAtmB7Xts5et6u5/
-MOaZ/SLick0+hFvu+c+Z6n/XUjkurJgARH5pO7917tALOxrN5fcPImxHhPalR6D90Bo0fa3S
-PXez7vTXTf/D6OWST1k+kEcQSrCFWMBvf/iu7QhCnh7U3xQuTY+8npTD5+32GPg8SecmqKc2
-2CzeIs2LgtjZeOJVEqM7h0S2EQvVDFKvaYwPBt/QolOLV5h7z/0HJPT8vcP9SpIClxvyt7bP
-ZYoaorVyGTkwggWWMIIEfqADAgECAgwcbjQkPzrYLBvMkTUwDQYJKoZIhvcNAQELBQAwgZUx
-CzAJBgNVBAYTAkRFMUUwQwYDVQQKEzxWZXJlaW4genVyIEZvZXJkZXJ1bmcgZWluZXMgRGV1
-dHNjaGVuIEZvcnNjaHVuZ3NuZXR6ZXMgZS4gVi4xEDAOBgNVBAsTB0RGTi1QS0kxLTArBgNV
-BAMTJERGTi1WZXJlaW4gQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkgMjAeFw0xNjEyMTIxNDM5
-MTZaFw0zMTAyMjIyMzU5NTlaMHMxCzAJBgNVBAYTAkRFMRAwDgYDVQQIDAdTYWNoc2VuMRAw
-DgYDVQQHDAdEcmVzZGVuMSgwJgYDVQQKDB9UZWNobmlzY2hlIFVuaXZlcnNpdGFldCBEcmVz
-ZGVuMRYwFAYDVQQDDA1UVSBEcmVzZGVuIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIB
-CgKCAQEA5+CCc42Y1+0J5tpASWPSYx/0Pxqj97P1DdzCbTh3XwppRsAMtqNwS8sTxgHMmbNA
-ol18t3EqIkTH/iSXEhd5cf6OSyHumVbgvZTvjMh/c7R3VGZiwqimlhk4/UJV8nVPvrL24Guk
-D17Rsv+iLe5Mse7HIMJ7e9ciArdCBV5W6kk/5O24/ZhttIEs/2I3i8MTlGoBaesNgkUy/cRa
-A0hw1BBTrDbfK1vhbxV/CWb+czy0F0M5W31LToGrXuwoFrhggn5X/LrFXvCb8/9w+jSk8WzG
-vJw6MlPGXHwuTfjf7oei/S0j7iHq5fyIH3lEs58M4kwxlLViv2rc3KJkTX5xmQIDAQABo4IC
-BTCCAgEwEgYDVR0TAQH/BAgwBgEB/wIBATAOBgNVHQ8BAf8EBAMCAQYwKQYDVR0gBCIwIDAN
-BgsrBgEEAYGtIYIsHjAPBg0rBgEEAYGtIYIsAQEEMB0GA1UdDgQWBBRS/r63JMIbCh1GUo5E
-JCr0SEA9ATAfBgNVHSMEGDAWgBST49gyJtrV8UqlkUrg6kviogzP4TCBjwYDVR0fBIGHMIGE
-MECgPqA8hjpodHRwOi8vY2RwMS5wY2EuZGZuLmRlL2dsb2JhbC1yb290LWcyLWNhL3B1Yi9j
-cmwvY2FjcmwuY3JsMECgPqA8hjpodHRwOi8vY2RwMi5wY2EuZGZuLmRlL2dsb2JhbC1yb290
-LWcyLWNhL3B1Yi9jcmwvY2FjcmwuY3JsMIHdBggrBgEFBQcBAQSB0DCBzTAzBggrBgEFBQcw
-AYYnaHR0cDovL29jc3AucGNhLmRmbi5kZS9PQ1NQLVNlcnZlci9PQ1NQMEoGCCsGAQUFBzAC
-hj5odHRwOi8vY2RwMS5wY2EuZGZuLmRlL2dsb2JhbC1yb290LWcyLWNhL3B1Yi9jYWNlcnQv
-Y2FjZXJ0LmNydDBKBggrBgEFBQcwAoY+aHR0cDovL2NkcDIucGNhLmRmbi5kZS9nbG9iYWwt
-cm9vdC1nMi1jYS9wdWIvY2FjZXJ0L2NhY2VydC5jcnQwDQYJKoZIhvcNAQELBQADggEBAEzY
-RPywOGl/wZ/Mdz2gLDMbO39f7+iQcrVPRy/lbjjLt+0bouai8xTj1I9N+W4ZOhGww55gXMNO
-nBiKouODdNcazTxW6+glA4+5K9bxkAKu9kl9J2ezpcMw1PNTFFcS1yG+thGQTtuy+3S3fI6V
-Ifxi+RawFri9sC7010qS3RwOShmhsLk3iEjlDQ180zkBzsdevWHt1svALpqsc+7DcHuP+MgY
-vkow/1uyHp3vyeTE9K7hdxcfXwRQ9IkeCo9xLJUeykuosqrTOQNe4Yw4hPhrJfRtoyH92SFq
-deZenVeU6+rkquev61X3fPi+/ySpUOGyWPdggN65bQ81E8nLFYUwggbGMIIFrqADAgECAgwm
-07eMjwHoSOEcYhMwDQYJKoZIhvcNAQELBQAwczELMAkGA1UEBhMCREUxEDAOBgNVBAgMB1Nh
-Y2hzZW4xEDAOBgNVBAcMB0RyZXNkZW4xKDAmBgNVBAoMH1RlY2huaXNjaGUgVW5pdmVyc2l0
-YWV0IERyZXNkZW4xFjAUBgNVBAMMDVRVIERyZXNkZW4gQ0EwHhcNMjIwNjIzMTAwMTMzWhcN
-MjUwNjIyMTAwMTMzWjB1MQswCQYDVQQGEwJERTEoMCYGA1UECgwfVGVjaG5pc2NoZSBVbml2
-ZXJzaXRhZXQgRHJlc2RlbjEOMAwGA1UEBAwFR3J1bmQxEjAQBgNVBCoMCUFsZXhhbmRlcjEY
-MBYGA1UEAwwPQWxleGFuZGVyIEdydW5kMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKC
-AgEAs+KDA2bkQNG7zC/qSaTr5pnrPkfbsk+UeRqRrXdClxZrzQCB2wx/ZbA9j3YB0b1GyqI/
-wUJDjuJ04gR6deurUS0Y1cMXjy0i+BwKuS44LoocrpWnk3qSBH5IftsPAZhP1WpnzfdDxvnN
-UYz9dO7UvRnJxJiLtHQEJ59CEyMPD6W2OM0jQGsS1e4YcK22/xrWdw8qCMWHAPBqmTZvZ8Pp
-bWFrh+HkBzsPjhLbtBDRNyL8b+HdW2oMlH3Qoff0GT7y7uYlC7rGwL9zD2JSAoSNXxYbz0Ig
-QCsxJD35UkPO+qwqP13WSLi3GB8Y00AqiYFAsbfDy2CtcDucoEXGqLZywGG2hfidX56cLLw8
-pD9AaMY5mgUCWgqd6mLcjxNErvzLWhroXBpHdk91OBHanyh3c7gY9bah8Z7Z9OJqP0bvjSZD
-75rlq1cuekJxLL8CqJ+/H4PinrO9bMq9LRZo7oQuklV5+4E1U4J4Ml0nK9iRI6aTIyEwR4yq
-Jr99yXMrAiasTBxwntmB0bhg2j6OGaq0Hzp1G2xne/aGYWPgzK6ZSDfwKV1nmaxpX/voTTr4
-GkI0ua3ZZQOqteZLH056mvayFuTmoduIYyb30vhkLb++ycmEOPNBWLcr5la/KHvxlOPwT+9X
-RPiNz2ak4tiLooP2xsv3jdQQCJwRZHSU0XoxyXMCAwEAAaOCAlYwggJSMAkGA1UdEwQCMAAw
-DgYDVR0PAQH/BAQDAgXgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDAdBgNVHQ4E
-FgQUIy37iPHwwBgq6PmdtmcqcsV/t0owHwYDVR0jBBgwFoAUUv6+tyTCGwodRlKORCQq9EhA
-PQEwKAYDVR0RBCEwH4EdYWxleGFuZGVyLmdydW5kQHR1LWRyZXNkZW4uZGUwgY0GA1UdHwSB
-hTCBgjA/oD2gO4Y5aHR0cDovL2NkcDEucGNhLmRmbi5kZS90dS1kcmVzZGVuLWcyLWNhL3B1
-Yi9jcmwvY2FjcmwuY3JsMD+gPaA7hjlodHRwOi8vY2RwMi5wY2EuZGZuLmRlL3R1LWRyZXNk
-ZW4tZzItY2EvcHViL2NybC9jYWNybC5jcmwwgdsGCCsGAQUFBwEBBIHOMIHLMDMGCCsGAQUF
-BzABhidodHRwOi8vb2NzcC5wY2EuZGZuLmRlL09DU1AtU2VydmVyL09DU1AwSQYIKwYBBQUH
-MAKGPWh0dHA6Ly9jZHAxLnBjYS5kZm4uZGUvdHUtZHJlc2Rlbi1nMi1jYS9wdWIvY2FjZXJ0
-L2NhY2VydC5jcnQwSQYIKwYBBQUHMAKGPWh0dHA6Ly9jZHAyLnBjYS5kZm4uZGUvdHUtZHJl
-c2Rlbi1nMi1jYS9wdWIvY2FjZXJ0L2NhY2VydC5jcnQwPgYDVR0gBDcwNTAPBg0rBgEEAYGt
-IYIsAQEEMBAGDisGAQQBga0hgiwBAQQKMBAGDisGAQQBga0hgiwCAQQKMA0GCSqGSIb3DQEB
-CwUAA4IBAQATNeqkhBtVAhE0k/THOEDhXBz4fIlhEIzvQ/Hxwho9mdyEPs1hyDgD4RlGk8Zz
-rMQiWbbjVym3Uw950eZ9+hsAr++Jc5X+H+qtIPqBc3c6rvRsc1fRtSx+LOpEGVz/Bm5f12r8
-jlEBaYwN01AR/rVFlKyhcS4EdmNpht3tecqR1+LNwEDGr0UZ5SsM7UHVZh9ImUF9uMRpXWkE
-PpmUYYhJ5SGTXq1z1CezLZay+fH3JqrdjUNUBmuptwc77MUWrpUZ7b/k9HTdBdC+vF6E9S8T
-G3GY9JS+/XFFu6zeSbIW3+2OEFCdi2beCpFptofAxZcR3VTmgUIhe64xf1XrivbNMYIE2jCC
-BNYCAQEwgYMwczELMAkGA1UEBhMCREUxEDAOBgNVBAgMB1NhY2hzZW4xEDAOBgNVBAcMB0Ry
-ZXNkZW4xKDAmBgNVBAoMH1RlY2huaXNjaGUgVW5pdmVyc2l0YWV0IERyZXNkZW4xFjAUBgNV
-BAMMDVRVIERyZXNkZW4gQ0ECDCbTt4yPAehI4RxiEzANBglghkgBZQMEAgMFAKCCAicwGAYJ
-KoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjUwNTE2MTIyOTAwWjBP
-BgkqhkiG9w0BCQQxQgRADwAmQP/e/pgFshyGVR5HvlXv/vdeolUXmI+sIf8lSeGO0XRPFj/i
-ic5VP+gupg0be1RG159O4YiDOu46u6u74zBsBgkqhkiG9w0BCQ8xXzBdMAsGCWCGSAFlAwQB
-KjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwDgYIKoZIhvcNAwICAgCAMA0GCCqGSIb3DQMC
-AgFAMAcGBSsOAwIHMA0GCCqGSIb3DQMCAgEoMIGUBgkrBgEEAYI3EAQxgYYwgYMwczELMAkG
-A1UEBhMCREUxEDAOBgNVBAgMB1NhY2hzZW4xEDAOBgNVBAcMB0RyZXNkZW4xKDAmBgNVBAoM
-H1RlY2huaXNjaGUgVW5pdmVyc2l0YWV0IERyZXNkZW4xFjAUBgNVBAMMDVRVIERyZXNkZW4g
-Q0ECDCbTt4yPAehI4RxiEzCBlgYLKoZIhvcNAQkQAgsxgYaggYMwczELMAkGA1UEBhMCREUx
-EDAOBgNVBAgMB1NhY2hzZW4xEDAOBgNVBAcMB0RyZXNkZW4xKDAmBgNVBAoMH1RlY2huaXNj
-aGUgVW5pdmVyc2l0YWV0IERyZXNkZW4xFjAUBgNVBAMMDVRVIERyZXNkZW4gQ0ECDCbTt4yP
-AehI4RxiEzANBgkqhkiG9w0BAQEFAASCAgAcJNCrixmmSP+TxQ8jI3zk2npLXpyLJXCdNHXT
-ywZz8VwOou3uX7ZW9GGozmF4UfK0RBVzlolbHYsbmkk1axUaEbEuQ8URJH1htxNlwGqUk6zc
-6aeieiwV3Bxv5CNL11z1yDGtXYlZG4ZIlzzCkG8YZC/cNmEqiAh1qxsuq8jQXxmjMOli0b2u
-czLXxdv7siItT3esy14kO/sO1h8VFiJag9vPLw8ZQAmy3MSTWxgAven3q0wD2oRz5duVj6k2
-QX523BARBdxvLZzVs3A7GJjzy3KAc69xKMEAi3xIUZ1IiOIbBPzm2TU9dOyR8qSLMWNxb/Cv
-D2teSiIiGDLVcKmI86wlmc83+ZGpoc/KOo2HYQBwFDdvaE6XjNoz1gZMmaHuuw2JEtAarGA1
-mEbmHjE73G9ga19/HT6oD3XZkE8VSqfsPjnBvARxCAZ6MoB/D/NUFoA9rFHLdugxjjd8IRWK
-L1aT6amG9q6RvE+TaIWJ9+uotSLuFY0zHOKGUEGyqEL/C8dyIc6vm6thWaulXGEewVyuvOni
-vbSnCy1e9Eyxykfj02aLpmQfIpGJeIAXNWoVofsXKzCOnta0J3D2yvsixr25YsZdm8cphgcN
-yAPvdPSFe4uT9Km2V6eMOj0UZfD70mZZQCbihqlwZptZ1gp+jEI3A39PXIx2ETeh9aOm1QAA
-AAAAAA==
---------------ms000806040706090703000600--
+As to documentation, that would be the LUKS specification.
+
+Regards,
+Arno
+
+
+On Fri, May 16, 2025 at 14:29:00 CEST, Alexander Grund wrote:
+> Hi all,
+> 
+> we are planning to use LUKS containers on machines with limited local
+> storage but access to a large, but shared file system.
+> So far I've only found security considerations for existing LUKS containers.
+> 
+> Are there any information on issues possible during **creation** of a LUKS
+> container?
+> I.e. if it is possible for someone with access to files on the file system,
+> where the container is being created by `cryptsetup luksFormat`, is able to
+> infer any information on the key during the process?
+> 
+> Can anyone point me to relevant information/research?
+> 
+> Thanks,
+> Alexander Grund
+> 
+
+
+
+-- 
+Arno Wagner,     Dr. sc. techn., Dipl. Inform.,    Email: arno@wagner.name
+GnuPG: ID: CB5D9718  FP: 12D6 C03B 1B30 33BB 13CF  B774 E35C 5FA1 CB5D 9718
+----
+A good decision is based on knowledge and not on numbers. -- Plato
+
+If it's in the news, don't worry about it.  The very definition of 
+"news" is "something that hardly ever happens." -- Bruce Schneier
