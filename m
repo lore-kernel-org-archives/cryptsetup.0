@@ -1,36 +1,44 @@
-Received: from server.novatec-inc.com (novatec-inc.com [24.142.169.12])
+Received: from ste-pvt-msa1.bahnhof.se (ste-pvt-msa1.bahnhof.se [213.80.101.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62FC125EFB9
-	for <cryptsetup@lists.linux.dev>; Thu, 19 Jun 2025 22:55:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=24.142.169.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F0227FD72
+	for <cryptsetup@lists.linux.dev>; Fri, 20 Jun 2025 12:55:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.80.101.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750373710; cv=none; b=qBWZJvfrnmmwlH7hiEQxVg3nT7g5lxWY1t/g1d+9ZvzijZYi8wKJ7GiO2hfrfp/JCJUTz2/PAFdQqTbNh5/VktQeyHivtapqK3h7iAQ4UTq1mzrKeaLdiLjYV9LO4EiKlxQzEeRM625gruyNHlYyJfMOec3XGcmpmL/ruCuHI1A=
+	t=1750424120; cv=none; b=Bh/EPk0n+AOIrU8/xDCwE6F7XbJ/pXqflvc+GZL1r75KFpkVlFMwb2mEqTRHLK8YsJOH5K80TKFMjvejQqSLH95I/INQ5bilHxJ5l9sO4x3qUuT0CnYiFt7M/CiGYPNA/m9g7mMtKBTOsURv57VIt4eJ1KMXcQvu2Oiy0b4P+58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750373710; c=relaxed/simple;
-	bh=ScQHVqTE+Jb5Oe67skZXyIQXvrNefaQrNGneR+1qZpI=;
-	h=From:Message-Id:Date:To:Subject:References:In-Reply-To:
-	 MIME-Version:Content-Type; b=WKOB6OU+UvIemcwQXf1AUSixtOwb0BmmNhDvtywvhthBZEUYntvoE8rg8cy30OO+mYSwoiLlmL0jn6osntPw1R0C27B14sb4VEYKxTn+jDlVgsuMn2hWKWE4fgqKebBTDXAa3rqGVWyyLpgBFQU5T+zvFcrJUlhkY+OYwqZ/duE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=novatec-inc.com; spf=pass smtp.mailfrom=novatec-inc.com; arc=none smtp.client-ip=24.142.169.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=novatec-inc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=novatec-inc.com
-Received: from server.novatec-inc.com (localhost [127.0.0.1])
-	by server.novatec-inc.com (8.18.1/8.17.2) with ESMTPS id 55JMt1Mk027294
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO)
-	for <cryptsetup@lists.linux.dev>; Thu, 19 Jun 2025 18:55:01 -0400
-Received: (from mfoley@localhost)
-	by server.novatec-inc.com (8.18.1/8.18.1/Submit) id 55JMt0n4027293
-	for cryptsetup@lists.linux.dev; Thu, 19 Jun 2025 18:55:00 -0400
-From: Mark Foley <mfoley@novatec-inc.com>
-Message-Id: <202506192255.55JMt0n4027293@server.novatec-inc.com>
-Date: Thu, 19 Jun 2025 18:55:00 -0400
-Organization: Novatec Software Engineering, LLC
+	s=arc-20240116; t=1750424120; c=relaxed/simple;
+	bh=2PCvtLb5aXc4xlkr5dwyFUVDe1SC1JFJr62epsy4PdQ=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=c5GTGYIuJnf3MUa0/KIORUoIeHBZHV85ACC156wl6kvgqweqFZ1AmVx6+UFPR4H2m9ooBdU0KmmthN3ufDiZKRqcwECokyMsZ56w8gxzGsrKAiJEkE/fwQcpBarDraOgWxBC2D75ua+6w80kGxSgluC3dyOrJAKjUSZw8OyPm6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ewoof.net; spf=pass smtp.mailfrom=ewoof.net; arc=none smtp.client-ip=213.80.101.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ewoof.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ewoof.net
+Received: from localhost (localhost [127.0.0.1])
+	by ste-pvt-msa1.bahnhof.se (Postfix) with ESMTP id 7D8713F774
+	for <cryptsetup@lists.linux.dev>; Fri, 20 Jun 2025 14:49:30 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at bahnhof.se
+X-Spam-Flag: NO
+X-Spam-Score: -1.156
+X-Spam-Level:
+Received: from ste-pvt-msa1.bahnhof.se ([127.0.0.1])
+	by localhost (ste-pvt-msa1.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id jpOOrmk6Bh2i for <cryptsetup@lists.linux.dev>;
+	Fri, 20 Jun 2025 14:49:29 +0200 (CEST)
+Received: 
+	by ste-pvt-msa1.bahnhof.se (Postfix) with ESMTPA id 624E13F3F0
+	for <cryptsetup@lists.linux.dev>; Fri, 20 Jun 2025 14:49:29 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by localhost (Postfix) with ESMTPS id BAC071D0017B
+	for <cryptsetup@lists.linux.dev>; Fri, 20 Jun 2025 14:49:28 +0200 (CEST)
+Date: Fri, 20 Jun 2025 12:49:27 +0000
+From: Michael =?utf-8?B?S2rDtnJsaW5n?= <152cc69a347e@ewoof.net>
 To: cryptsetup@lists.linux.dev
 Subject: Re: Using Windows and bitlocker
+Message-ID: <c500224e-4289-4600-96ed-86025015ab9b@home.arpa>
 References: <202506191557.55JFvYQZ004708@server.novatec-inc.com>
  <70be44da-a130-407e-b529-d6e7ee820b1e@home.arpa>
-In-Reply-To: <70be44da-a130-407e-b529-d6e7ee820b1e@home.arpa>
-User-Agent: Heirloom mailx 12.5 6/20/10
+ <202506192255.55JMt0n4027293@server.novatec-inc.com>
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
@@ -38,116 +46,103 @@ List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Report: 
-	* -1.0 ALL_TRUSTED Passed through trusted hosts only via SMTP
-	* -1.9 BAYES_00 BODY: Bayes spam probability is 0 to 1%
-	*      [score: 0.0000]
+In-Reply-To: <202506192255.55JMt0n4027293@server.novatec-inc.com>
 
-On Thu, 19 Jun 2025 21:45:30 Michael Kjörling <152cc69a347e@ewoof.net>wrote:
->
-> On 19 Jun 2025 11:57 -0400, from mfoley@novatec-inc.com (Mark Foley):
-> > [...] I've downloaded and installed cryptsetup 2.7.5. [...]
->
-> Most Linux distributions include cryptsetup in their repositories; you
-> should not need to download and install it manually through
-> out-of-band means. Using the distribution's packaged version is
-> generally better unless you are working on the cryptsetup code; you
-> get updates through the distribution's normal update process, and you
-> don't risk unknowingly introducing incompatibilities between for
-> example the kernel, libcryptsetup, and cryptsetup.
+On 19 Jun 2025 18:55 -0400, from mfoley@novatec-inc.com (Mark Foley):
+> One thought that occured to me ...  perhaps a Windows user, for example, might
+> have to enter the passphrase when mapping this encrypted partition.
 
-Michael, thanks for your prompt response. My distro (Slackware) does not ship
-with cryptsetup, but I built/installed from
-https://gitlab.com/cryptsetup/cryptsetup. The build, make and 'make test' all
-completed without error. Slackware is pretty generic in terms of kernel and libs.
+I don't see any meaningful way in which that would work, at least in
+the context of LUKS. Samba would be looking for the contents of the
+mounted file system, for which the LUKS container first needs to be
+opened; if the file system is not mounted, for example because the
+LUKS container has not yet been opened, to Samba the backing location
+for the share is just an empty directory and it would appear as such
+to remote clients accessing it that way.
 
-> > I have a couple of empty partitions ready to test with, and I believe I can set
-> > up an encrypted partition using 'cryptsetup luksFormat' and 'cryptsetup
-> > luksOpen' per numerous examples I've seen.
-> > 
-> > Questions:
-> > 
-> > Is cryptsetup the right choice for Windows/Samba access of entrypted drives/
-> > partitions on Linux?
-> > 
-> > If so, do I need to use BitLocker from Windows?
-> > 
-> > If so, How do I set that up with cryptsetup?
->
-> I'm afraid you are confusing two somewhat different, related concepts,
-> and that this is a significant source of your confusion.
->
-> Microsoft's Bitlocker, LUKS on Linux, VeraCrypt, and others are
-> examples of _full-disk encryption_ (FDE) solutions.
->
-> Full-disk encryption is mainly about protecting _data at rest_. The
-> typical example is if someone steals a laptop, or an external storage
-> device used to hold backups. (It's also useful in other situations, of
-> course.)
+> But,
+> regardless of whether bitLocker, LUKS or some other disk encryption mechanism is
+> used, if a Windows user, or a Linux user on the Samba host, can read/write these
+> "encrypted" files, I would assume than any malicious actor that would gain
+> access to either the Windows workstation or the Linux host, would also have
+> read/write access to these files, unencrypted. Yes?
 
-Yes, that "at rest" thing was something I was suspecting. There is little chance
-of someone stealing this server as it is in a secure location behind two locked
-entries with keycard, motion detection alarms, etc.
+Correct. LUKS doesn't change who has access and how after the
+container is opened. It _does_ protect typically the underlying file
+system block device from _meaningful_ access in situations where the
+container has not been opened.
 
-The reason I am investigating this is because our insurer recommended that we
-encrypt the sensitive data on this Samba share.
+(An adversary can of course read out the ciphertext as well as the
+LUKS header if the latter is not detached, but having access to those
+will generally not allow inferring anything about the actual
+_meaningful_ data stored there except _possibly_ roughly how much is
+stored and where within the container; assuming in the case of the
+LUKS header being available to an adversary that the container uses a
+strong passphrase.)
 
-> Once the system is booted and the volume is unlocked, full-disk
-> encryption is generally designed to allow access to the storage device
-> as if it was not encrypted in the first place. 
 
-One thought that occured to me ...  perhaps a Windows user, for example, might
-have to enter the passphrase when mapping this encrypted partition.  But,
-regardless of whether bitLocker, LUKS or some other disk encryption mechanism is
-used, if a Windows user, or a Linux user on the Samba host, can read/write these
-"encrypted" files, I would assume than any malicious actor that would gain
-access to either the Windows workstation or the Linux host, would also have
-read/write access to these files, unencrypted. Yes?
+> In which case encrypting would be useless. I think that might go for
+> exfiltration as well if, for example, a malicious actor acquired scp
+> credentials. In such a case scp'ing the "encrypted" files would exfiltrate them
+> unencrypted since, presumably, the credentialled user would be able to
+> read/write these files in an unencrypted matter. 
+> 
+> Is all the correct?
 
-In which case encrypting would be useless. I think that might go for
-exfiltration as well if, for example, a malicious actor acquired scp
-credentials. In such a case scp'ing the "encrypted" files would exfiltrate them
-unencrypted since, presumably, the credentialled user would be able to
-read/write these files in an unencrypted matter. 
+The files would be encrypted _on disk_ (at rest), but when read
+through normal means the dm-crypt mapping (set up through cryptsetup
+and configured through LUKS) what the file I/O syscalls would provide
+is the plaintext data. That in turn is what Samba would expose to
+remote clients, being what Samba sees.
 
-Is all the correct?
+LUKS does not offer the kind of granular access control I get the
+distinct feeling that you are looking for.
 
-[snip]
 
-> What you are more likely looking for here is _access control_.
+> Yes, I already use access controls on files and directories on this Samba share.
+> But, that means authorized users can access these files. If a malicious actor
+> gains access to a legitimate user's workstation, he/she can access these files
+> without problem, right?
 
-Yes, I already use access controls on files and directories on this Samba share.
-But, that means authorized users can access these files. If a malicious actor
-gains access to a legitimate user's workstation, he/she can access these files
-without problem, right?
+Yes, and LUKS (or any other kind of full-disk encryption itself) would
+not change that. From the point of view of the remote server, the
+computer would be accessing files using valid credentials.
 
-If everything I've theorized above is true, it doesn't sound like LUKS, or other
-disk/partition encryption is going to be useful.
 
-[snip]
+> If everything I've theorized above is true, it doesn't sound like LUKS, or other
+> disk/partition encryption is going to be useful.
+> 
+> [snip]
+> 
+> As I mentioned, the goal was to satisfy the cyber-insurance provider's request
+> that we encrypt high-value data.
+> 
+> Currently, only authorized users with Windows domain credential can access the
+> Samba share, and there are certain folders/files further restricted with ACLs.
 
-> So, _ignoring_ the tooling: _what's your goal?_ At-rest protection,
-> access control during use, or both?
->
-> -- 
-> Michael Kjörling
-> 🔗 https://michael.kjorling.se
+The latter is probably about the best you can do for access control.
+You might consider reversing the ACL setup, only allowing access on a
+need-to-have basis rather than blocking access to particularly
+sensitive data, but that doesn't change the overall argument in this
+thread.
 
-As I mentioned, the goal was to satisfy the cyber-insurance provider's request
-that we encrypt high-value data.
+LUKS can be used to prevent wholesale access to the data for someone
+who gains access to the underlying block device. That can include, for
+example, a decommissioned partly-faulty drive which someone might be
+able to get their hands on later and send off to a data recovery firm.
 
-Currently, only authorized users with Windows domain credential can access the
-Samba share, and there are certain folders/files further restricted with ACLs.
 
-The root user has access for the purposes of backup.  The only Linux user on
-this system is me, and I am the only one who can log in from the outside world
-(restricted in /etc/ssh/sshd_config).  There is also a batch-only user which
-does scheduled (cron) file transmission via sftp.  There are countermeasure in
-place to detect and block anyone trying to break into the Linux host within 10
-seconds of the attempt (and I get notified) -- although logfiles show they've
-never actually tried my user ID. 
+> So, what's the verdict? LUKS is the wrong tool for the job?
 
-So, what's the verdict? LUKS is the wrong tool for the job?
+For access control purposes in a multi-user remote environment, yes, I
+would say LUKS is likely not the best tool. Samba's ACLs and
+restricting access to the file system the files are stored within on
+the server to the user which Samba runs as is probably a better
+alternative in the situation you describe.
 
-Thanks --Mark
+-- 
+Michael Kjörling
+🔗 https://michael.kjorling.se
+
