@@ -1,300 +1,159 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C26431AF0A
-	for <cryptsetup@lists.linux.dev>; Tue, 19 Aug 2025 09:21:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ACAD27A46F
+	for <cryptsetup@lists.linux.dev>; Fri,  5 Sep 2025 20:13:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755595297; cv=none; b=Voh32JLwmH8gMBsnG8OFUGWY5DcLXJcXwIYS2+Gdjltk/IrdF+b5H56lp8X4WzRcq9zeYC2Bh9MugBB9UYU5Fkx4UhqbaLsaPPBDqYUoI7iMURefRWKUZ4l0ICVVYbFRzXZYNcO62EXm94eHWHiCadibj5kX1lZeGpLo7pj36Ps=
+	t=1757103237; cv=none; b=GeBzymqjYp0MXdnr6YiNJxuX5iOcZ8bwzifhnN+e5AefNsRExwYraYXK9ShoNZVqUML5I0iQEwJDmfmnkvsKMH3RfmoGzvD9JJ69hRM1ULTZEoUNafSqpvYcvtdUzuh3GTpodgdEz+u+f7urp4Cju4T2W2IzYvfLX9Q/LN9KcyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755595297; c=relaxed/simple;
-	bh=0Uki1uApdHzkqgAPzIVLZg+8iDnMz3CLXfvI1ksh3+U=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=glfVsQzi02XBtZp2G7ewUVFq0WTwnflH874tyixn7URkEvTMpHkbd9IPTMsvDNVGBZhfll3sBVKwaAX6zXoqdo9SFLX0bMQtIFhN71CdIH4+msDva+g9PP+ktA6K+Dj8BZ0JErDrVXT1d/YRi9uGVqyIunX3wou+PcNPBnCZovA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FXD08bSw; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1757103237; c=relaxed/simple;
+	bh=owi9zk7xk0z43eVieI9hAI/hDgBJk3d+WwoAaBX3IWo=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=UQCTh3dzPXqEAHBopODOe5//2/ViDg9fCfOh+5olJW/PvLtpumaSazvIXICWWigUGrjxDkeBOlNGFNJmCnnlor7bNTTPXLkEjKP7pvzN42/ZLAL63vgFL5uyqvLGR/zGJ7fgl8HpHuDggSroZl0YyZjoQqgfpXxo/q/OrDr6pVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hgDdC1jx; arc=none smtp.client-ip=74.125.224.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FXD08bSw"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-45a1b05d252so35535745e9.1
-        for <cryptsetup@lists.linux.dev>; Tue, 19 Aug 2025 02:21:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hgDdC1jx"
+Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-6032c696bd6so155201d50.1
+        for <cryptsetup@lists.linux.dev>; Fri, 05 Sep 2025 13:13:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755595294; x=1756200094; darn=lists.linux.dev;
-        h=autocrypt:content-language:to:subject:from:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=0Uki1uApdHzkqgAPzIVLZg+8iDnMz3CLXfvI1ksh3+U=;
-        b=FXD08bSwZLIGL6wJoJPrutAsR4ur0sfrN0PCxvT5j1MK6yFh/alGV04+OmYgmtze3P
-         7vqM+AFhf2fD50pV8HR1Aa411i1DcABFmqG9KTG9y9i8EmW9TqmViXsX1drmayWXJpF8
-         jQZfC+NLFRD9Ghqu86Z2fPtxppyfJgqfBoxpqyLamEupYlwC41d2J7gDneYNw3ije0xG
-         kXDAf2/qgIUbAMRDD3/b66TZP63dHG54FA0RCmznIzuJimG5JZpjwYEsf079U9AdlGsF
-         MuK1pjtWQWnrJSuRahNGfdp6DdaepB+Kbv8iR5yrOtqO4jWiLoAIwk2cO/IpeNzQawB7
-         sA7Q==
+        d=gmail.com; s=20230601; t=1757103235; x=1757708035; darn=lists.linux.dev;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=9vqVUVK+aCj1BZxeA4BCT/IbShZ/DaPtmdqLaJjnG8g=;
+        b=hgDdC1jxHSWhfQpzH1eKxT4cf9WlC1mF/chGc+LgZuX8DwhONwJeyZPbRELTn8B6tu
+         zyfpd3HK2ZyIlavgnHkcjUBseLyXyk27X8VwC4DITCxpmbqyhZe+PwQg7dtnFp1G8Y1h
+         13M9UMyT5V2d5HDCvZrtRcEHrNY/srqAhfX3ZeYrOAUHRit4vyspxLiYY1vHGAr0blrq
+         5/ZXFKgcL24TaiamtRYBYXsCK6zVWVHyPRmVsnYL0Zvkip3qoHfQLmf5VJVah+PMVieI
+         ZLjfPfsswbKP5MMZoEAUeiYlXQLJOwf8HhCezqnx0SMSi6l2nlcc/u8LHguH+fB1oIiG
+         Do9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755595294; x=1756200094;
-        h=autocrypt:content-language:to:subject:from:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0Uki1uApdHzkqgAPzIVLZg+8iDnMz3CLXfvI1ksh3+U=;
-        b=cEDCjDB89iZJpHJshYkmeVTdU7a5EqyBMytvPSAogr0Jv/i180kzbRShrXPfzsL54r
-         16huykbZvGxeO8rhvvL2O36LEX3Tqq45MhjNTlKzwlcSEtiyTsnJi9el+2ABs/hoDE/n
-         wz5AXJypqErFsTibx03S9PlaPy4uMuvIIXAMTR9qQP7Vbb9xGvOBc2bUMD8VFhpvy66b
-         7znEm6zM1mpzxkBYR++u+o3hXMppk1KzvFpoqiyLK8OA4cNFaQMZEBYX6re/chpXfBC0
-         I0/A3NB9mue74ZeahKAilBpff0/sHKzjTGVpiAMHAiU6Xo2rLMvoejPR4ShdEBIbXS4H
-         Bd6A==
-X-Gm-Message-State: AOJu0Yx+ozRE7lR3gBx8p37eoTNGeCVZ3K/pLplIyraVOLE7xMpvbPCJ
-	DajctOkg3bxr2P/zoXezBjBajGEZqylNn6AN5dkOPV/+Z53AZIIAoVbJlI/P4Q==
-X-Gm-Gg: ASbGncsFl5k40MEtcEYg79/pceXRQjpbJ7+FKjfF7cFhFOdFIMz4uGoVeUmk3sih7k6
-	6iK7oshjpMZQrGhvUN+a7A+tVDd0dvZmk7ipjv9W5r3yQRtrIu0rEaht5B4g8tNR2dis+F2CS04
-	f9rDLnX6hx7xCeKRHbvRz2JKTiW1fUqjFEIdi/Toa05ugFJHyS50lof6Dv40sJlZ1qKLpp5VzXn
-	z9XKXb1AGo47qSt0POBunrNkB0KeWaJjYUHXSbmeaG4mnbo/D9+VP6bFAbjMOWLtuJrjrQ4G5ef
-	aWjQMROZY+7/a+6bmZ0qeSi8HG78WDebH6HBQ/iB1YATq3ZKjYfz9EsMCMSnrGWYew8HU8rjtXZ
-	a4KbcLVBWyQyQsEK3MEg8sQhFQCItJhhiBIPsaTCLZZ0BpTE=
-X-Google-Smtp-Source: AGHT+IHQA2/wnqony3JCHuaR+Zigu2Wb4e13noIiWL5LOAshLjDpkdLeCrQMc/Fk3C2OnS1IyN5a+Q==
-X-Received: by 2002:a05:6000:26c1:b0:3a4:d6ed:8e2e with SMTP id ffacd0b85a97d-3c0ec194b11mr1356800f8f.41.1755595293553;
-        Tue, 19 Aug 2025 02:21:33 -0700 (PDT)
-Received: from [192.168.2.22] (85-70-151-113.rcd.o2.cz. [85.70.151.113])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b437779b5sm11558665e9.1.2025.08.19.02.21.31
-        for <cryptsetup@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Aug 2025 02:21:32 -0700 (PDT)
-Message-ID: <8016eeb7-a169-472d-9c9f-cc9ec00e36d7@gmail.com>
-Date: Tue, 19 Aug 2025 11:21:23 +0200
+        d=1e100.net; s=20230601; t=1757103235; x=1757708035;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9vqVUVK+aCj1BZxeA4BCT/IbShZ/DaPtmdqLaJjnG8g=;
+        b=LazVSXESb77MaZwC2tAs2pOPmB3goKhxBqNUvTZ1oViVSqvBFrBe1w8k0u45uj1lFX
+         Olh8h/ALSDqpLOoifHuaC141z9yzZ+fN/FFxxojLVYc77EbdULLoWejOPybRwJ+IcQPM
+         M4bFVUM6D/euLbHKR9/2CTZFg0m/FaufZy4TFA38WSYbpJ1s2KJBqWZVXPy4+KI9WfC2
+         ovmGnWbsOZDU5ecE5JSeix3hANAkrxwcNFxio2dGknc0GoRad5lk4pu9iE1zYLOByHKl
+         jIGxTMdakN3h1FWb9DJ4bsNMk9e6yR8f0QjHOhiYRed0ZvGA3m4xGfMW+4Y18LEBumam
+         Rl/A==
+X-Gm-Message-State: AOJu0YxGNKKiEbdB+XJ6A4YVNnU1do/eLcGi4QWgVa1aXuSQ8DQdnXrZ
+	KlCf9ojBKxJsVhHpBfwYMBUcB5TJxKQIY3X8Z9j4/41wYyG7I+zBOjlvs/cdzDsqeAFF/Fzz12K
+	cclr1IFijMdXyfGypj4wbOCJXR6TLc/Et2R/D
+X-Gm-Gg: ASbGncsyXM3Vu91q2EWYgUBYwaeU0BrximwhdA9gnfy73wnQLz2QhgczHpSCDCd/bkm
+	Zc61uDYOGTyxJ2S7+lK4bHT9jqThaUt+PqI1F0twirSw+hzW/h++bOgq99iTnSkABZlF2aLLgx8
+	qCqzRxdnnzFTL9UXvChQlQwllpShBhekOYFoCmjl3CpymmhIVBIeIGy2RYQaLU2MvgIwsxqekP2
+	UHZfh/srqbx/wzd8BG6bLTDqNOSXL7X97mgSfEGKPFqh/sNY417
+X-Google-Smtp-Source: AGHT+IFG/hPRJnklFW2F6eCRCehactvMCyW5eT6wQbLDHaaAzFnB7alPPTF5u/aW5oFpXWtKNXNYOmRd7fFV70RfZ6k=
+X-Received: by 2002:a05:690e:2506:20b0:5fc:2821:3956 with SMTP id
+ 956f58d0204a3-61036122653mr194196d50.37.1757103234959; Fri, 05 Sep 2025
+ 13:13:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Milan Broz <gmazyland@gmail.com>
-Subject: [ANNOUNCE] cryptsetup 2.8.1
-To: cryptsetup development <cryptsetup@lists.linux.dev>
-Content-Language: en-US
-Autocrypt: addr=gmazyland@gmail.com; keydata=
- xsFNBE94p38BEADZRET8y1gVxlfDk44/XwBbFjC7eM6EanyCuivUPMmPwYDo9qRey0JdOGhW
- hAZeutGGxsKliozmeTL25Z6wWICu2oeY+ZfbgJQYHFeQ01NVwoYy57hhytZw/6IMLFRcIaWS
- Hd7oNdneQg6mVJcGdA/BOX68uo3RKSHj6Q8GoQ54F/NpCotzVcP1ORpVJ5ptyG0x6OZm5Esn
- 61pKE979wcHsz7EzcDYl+3MS63gZm+O3D1u80bUMmBUlxyEiC5jo5ksTFheA8m/5CAPQtxzY
- vgezYlLLS3nkxaq2ERK5DhvMv0NktXSutfWQsOI5WLjG7UWStwAnO2W+CVZLcnZV0K6OKDaF
- bCj4ovg5HV0FyQZknN2O5QbxesNlNWkMOJAnnX6c/zowO7jq8GCpa3oJl3xxmwFbCZtH4z3f
- EVw0wAFc2JlnufR4dhaax9fhNoUJ4OSVTi9zqstxhEyywkazakEvAYwOlC5+1FKoc9UIvApA
- GvgcTJGTOp7MuHptHGwWvGZEaJqcsqoy7rsYPxtDQ7bJuJJblzGIUxWAl8qsUsF8M4ISxBkf
- fcUYiR0wh1luUhXFo2rRTKT+Ic/nJDE66Ee4Ecn9+BPlNODhlEG1vk62rhiYSnyzy5MAUhUl
- stDxuEjYK+NGd2aYH0VANZalqlUZFTEdOdA6NYROxkYZVsVtXQARAQABzSBNaWxhbiBCcm96
- IDxnbWF6eWxhbmRAZ21haWwuY29tPsLBlQQTAQgAPwIbAwYLCQgHAwIGFQgCCQoLBBYCAwEC
- HgECF4AWIQQqKRgkP95GZI0GhvnZsFd72T6Y/AUCYaUUZgUJJPhv5wAKCRDZsFd72T6Y/D5N
- D/438pkYd5NyycQ2Gu8YAjF57Od2GfeiftCDBOMXzh1XxIx7gLosLHvzCZ0SaRYPVF/Nr/X9
- sreJVrMkwd1ILNdCQB1rLBhhKzwYFztmOYvdCG9LRrBVJPgtaYqO/0493CzXwQ7FfkEc4OVB
- uhBs4YwFu+kmhh0NngcP4jaaaIziHw/rQ9vLiAi28p1WeVTzOjtBt8QisTidS2VkZ+/iAgqB
- 9zz2UPkE1UXBAPU4iEsGCVXGWRz99IULsTNjP4K3p8ZpdZ6ovy7X6EN3lYhbpmXYLzZ3RXst
- PEojSvqpkSQsjUksR5VBE0GnaY4B8ZlM3Ng2o7vcxbToQOsOkbVGn+59rpBKgiRadRFuT+2D
- x80VrwWBccaph+VOfll9/4FVv+SBQ1wSPOUHl11TWVpdMFKtQgA5/HHldVqrcEssWJb9/tew
- 9pqxTDn6RHV/pfzKCspiiLVkI66BF802cpyboLBBSvcDuLHbOBHrpC+IXCZ7mgkCrgMlZMql
- wFWBjAu8Zlc5tQJPgE9eeQAQrfZRcLgux88PtxhVihA1OsMNoqYapgMzMTubLUMYCCsjrHZe
- nzw5uTcjig0RHz9ilMJlvVbhwVVLmmmf4p/R37QYaqm1RycLpvkUZUzSz2NCyTcZp9nM6ooR
- GhpDQWmUdH1Jz9T6E9//KIhI6xt4//P15ZfiIs7BTQRPeKd/ARAA3oR1fJ/D3GvnoInVqydD
- U9LGnMQaVSwQe+fjBy5/ILwo3pUZSVHdaKeVoa84gLO9g6JLToTo+ooMSBtsCkGHb//oiGTU
- 7KdLTLiFh6kmL6my11eiK53o1BI1CVwWMJ8jxbMBPet6exUubBzceBFbmqq3lVz4RZ2D1zKV
- njxB0/KjdbI53anIv7Ko1k+MwaKMTzO/O6vBmI71oGQkKO6WpcyzVjLIip9PEpDUYJRCrhKg
- hBeMPwe+AntP9Om4N/3AWF6icarGImnFvTYswR2Q+C6AoiAbqI4WmXOuzJLKiImwZrSYnSfQ
- 7qtdDGXWYr/N1+C+bgI8O6NuAg2cjFHE96xwJVhyaMzyROUZgm4qngaBvBvCQIhKzit61oBe
- I/drZ/d5JolzlKdZZrcmofmiCQRa+57OM3Fbl8ykFazN1ASyCex2UrftX5oHmhaeeRlGVaTV
- iEbAvU4PP4RnNKwaWQivsFhqQrfFFhvFV9CRSvsR6qu5eiFI6c8CjB49gBcKKAJ9a8gkyWs8
- sg4PYY7L15XdRn8kOf/tg98UCM1vSBV2moEJA0f98/Z48LQXNb7dgvVRtH6owARspsV6nJyD
- vktsLTyMW5BW9q4NC1rgQC8GQXjrQ+iyQLNwy5ESe2MzGKkHogxKg4Pvi1wZh9Snr+RyB0Rq
- rIrzbXhyi47+7wcAEQEAAcLBfAQYAQgAJgIbDBYhBCopGCQ/3kZkjQaG+dmwV3vZPpj8BQJh
- pRSXBQkk+HAYAAoJENmwV3vZPpj8BPMP/iZV+XROOhs/MsKd7ngQeFgETkmt8YVhb2Rg3Vgp
- AQe9cn6aw9jk3CnB0ecNBdoyyt33t3vGNau6iCwlRfaTdXg9qtIyctuCQSewY2YMk5AS8Mmb
- XoGvjH1Z/irrVsoSz+N7HFPKIlAy8D/aRwS1CHm9saPQiGoeR/zThciVYncRG/U9J6sV8XH9
- OEPnQQR4w/V1bYI9Sk+suGcSFN7pMRMsSslOma429A3bEbZ7Ikt9WTJnUY9XfL5ZqQnjLeRl
- 8243OTfuHSth26upjZIQ2esccZMYpQg0/MOlHvuFuFu6MFL/gZDNzH8jAcBrNd/6ABKsecYT
- nBInKH2TONc0kC65oAhrSSBNLudTuPHce/YBCsUCAEMwgJTybdpMQh9NkS68WxQtXxU6neoQ
- U7kEJGGFsc7/yXiQXuVvJUkK/Xs04X6j0l1f/6KLoNQ9ep/2In596B0BcvvaKv7gdDt1Trgg
- vlB+GpT+iFRLvhCBe5kAERREfRfmWJq1bHod/ulrp/VLGAaZlOBTgsCzufWF5SOLbZkmV2b5
- xy2F/AU3oQUZncCvFMTWpBC+gO/o3kZCyyGCaQdQe4jS/FUJqR1suVwNMzcOJOP/LMQwujE/
- Ch7XLM35VICo9qqhih4OvLHUAWzC5dNSipL+rSGHvWBdfXDhbezJIl6sp7/1rJfS8qPs
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------HJr9Nco88Q9BG4DwH0Iz0g0D"
+From: mattwood2000@gmail.com
+Date: Fri, 5 Sep 2025 16:13:44 -0400
+X-Gm-Features: Ac12FXxwqK_GJA8pfoODBrqFp6eSIx9shw7y30qqxqp-dCgjtNZwHMhTThTPh3I
+Message-ID: <CADjezmZ3BCvsOimijKjjkAsw5KRDtC1gFNpJi5PX4qGU-tkU7Q@mail.gmail.com>
+Subject: luksOpen with pkcs11 token error: The field is sensitive and cannot
+ be revealed
+To: cryptsetup@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------HJr9Nco88Q9BG4DwH0Iz0g0D
-Content-Type: multipart/mixed; boundary="------------pbxTjKFkCA43CqBj2SGYuRKE";
- protected-headers="v1"
-From: Milan Broz <gmazyland@gmail.com>
-To: cryptsetup development <cryptsetup@lists.linux.dev>
-Message-ID: <8016eeb7-a169-472d-9c9f-cc9ec00e36d7@gmail.com>
-Subject: [ANNOUNCE] cryptsetup 2.8.1
+Hello,
 
---------------pbxTjKFkCA43CqBj2SGYuRKE
-Content-Type: multipart/mixed; boundary="------------du02Hf1bnrjGDzH5kFpgY7jL"
+I'm working with a secure element and trying to unlock a luks2 partition.
 
---------------du02Hf1bnrjGDzH5kFpgY7jL
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+I have successfully enrolled the device with a pkcs11 URI, but when I
+attempt to unlock the partition I get:
 
-VGhlIGNyeXB0c2V0dXAgMi44LjEgc3RhYmxlIHJlbGVhc2UgaXMgYXZhaWxhYmxlIGF0DQoN
-CiAgIGh0dHBzOi8vZ2l0bGFiLmNvbS9jcnlwdHNldHVwL2NyeXB0c2V0dXANCg0KUGxlYXNl
-IG5vdGUgdGhhdCByZWxlYXNlIHBhY2thZ2VzIGFyZSBsb2NhdGVkIG9uIGtlcm5lbC5vcmcN
-Cg0KICAgaHR0cHM6Ly93d3cua2VybmVsLm9yZy9wdWIvbGludXgvdXRpbHMvY3J5cHRzZXR1
-cC92Mi44Lw0KDQpGZWVkYmFjayBhbmQgYnVnIHJlcG9ydHMgYXJlIHdlbGNvbWVkIChwbGVh
-c2UgdXMgcHJvamVjdCBwYWdlIGlzc3VlIHRyYWNrZXIpLg0KDQpDcnlwdHNldHVwIDIuOC4x
-IFJlbGVhc2UgTm90ZXMNCj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KU3RhYmxl
-IGJ1Zy1maXggcmVsZWFzZSB3aXRoIG1pbm9yIGV4dGVuc2lvbnMuDQoNCkFsbCB1c2VycyBv
-ZiBjcnlwdHNldHVwIDIuOC4wIG11c3QgdXBncmFkZSB0byB0aGlzIHZlcnNpb24uDQoNCkNo
-YW5nZXMgc2luY2UgdmVyc2lvbiAyLjguMA0Kfn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+
-DQoNCiogRml4IHN0YXR1cyBhbmQgZGVhY3RpdmF0aW9uIG9mIFRDUllQVCAoVmVyYUNyeXB0
-IGNvbXBhdGlibGUpIGRldmljZXMgdGhhdCB1c2UgY2hhaW5lZCBjaXBoZXJzLg0KDQoqIEZp
-eCB1bmxvY2tpbmcgQklUTEsgKEJpdExvY2tlciBjb21wYXRpYmxlKSBkZXZpY2VzIHdpdGgg
-bXVsdGlieXRlIFVURjggY2hhcmFjdGVycyBpbiB0aGUgcGFzc3BocmFzZS4NCg0KKiBEbyBu
-b3QgYWxsb3cgYWN0aXZhdGlvbiBvZiB0aGUgTFVLUzIgZGV2aWNlIGlmIHRoZSB1c2VkIGtl
-eXNsb3QgaXMgbm90IGVuY3J5cHRlZCAoaXQgdXNlcyBhIG51bGwgY2lwaGVyKS4NCg0KICAg
-U3VjaCBhIGNvbmZpZ3VyYXRpb24gY2Fubm90IGJlIGNyZWF0ZWQgYnkgY3J5cHRzZXR1cCwg
-YnV0IGNhbiBiZSBjcmFmdGVkIG91dHNpZGUgb2YgaXQuDQogICBOdWxsIGNpcGhlciBpcyBz
-b21ldGltZXMgdXNlZCB0byBjcmVhdGUgYW4gZW1wdHkgY29udGFpbmVyIGZvciBsYXRlciBy
-ZWVuY3J5cHRpb24uDQogICBPbmx5IGFuIGVtcHR5IHBhc3NwaHJhc2UgY2FuIGFjdGl2YXRl
-IHN1Y2ggYSBjb250YWluZXIgKHRoZSBzYW1lIGFzIGluIExVS1MxKS4NCg0KKiBEbyBub3Qg
-c2lsZW50bHkgZGVjcmVhc2UgUEJLREYgcGFyYWxsZWwgY29zdCAodGhyZWFkcykgaWYgc2V0
-IGJ5IGFuIG9wdGlvbi4NCiAgIFRoZSBtYXhpbXVtIHBhcmFsbGVsIGNvc3QgaXMgbGltaXRl
-ZCB0byA0IHRocmVhZHMuDQoNCiogRml4ZXMgdG8gY29uZmlndXJhdGlvbiBhbmQgaW5zdGFs
-bGF0aW9uIHNjcmlwdHMuDQoNCiAgIE1lc29uIGFuZCBhdXRvY29uZiB0b29scyBub3cgcHJv
-cGVybHkgc3VwcG9ydCAtLXByZWZpeCBvcHRpb24gZm9yIHRlbXBvcmFyeSBkaXJlY3Rvcnkg
-aW5zdGFsbGF0aW9uLg0KICAgTXVsdGlwbGUgZml4ZXMgYW5kIGNsZWFudXBzIHRvIGNvbmZp
-Zy5oIGZvciBjb21wYXRpYmlsaXR5IGJldHdlZW4gTWVzb24gYW5kIGF1dG9jb25mLg0KICAg
-Rml4IHRoZSBsdWtzMi1leHRlcm5hbC10b2tlbnMtcGF0aCBNZXNvbiBvcHRpb24gdG8gd29y
-ayB0aGUgc2FtZSBhcyBpbiBhdXRvY29uZi4NCiAgIEZpeCBNZXNvbiBpbnN0YWxsIGZvciB0
-b29sIGJpbmFyaWVzLCBpbnN0YWxsIGZ2YXVsdDJPcGVuIG1hbiBwYWdlIGFuZCBpbmNsdWRl
-IHRlc3QvZnV6ei9tZXNvbi5idWlsZCBpbiByZWxlYXNlLg0KDQoqIE1ham9yIHVwZGF0ZSB0
-byBtYW51YWwgcGFnZXMuDQoNCiAgIFRyeSB0byBleHBsYWluIHRoZSBQQktERiBoYXJkY29k
-ZWQgbGltaXRzLg0KICAgQWRkIGEgYmV0dGVyIGV4cGxhbmF0aW9uIGZvciBhdXRvbWF0aWMg
-aW50ZWdyaXR5IHRhZyByZWNhbGN1bGF0aW9uLg0KICAgTWVudGlvbiBjcnlwdC92ZXJpdHkv
-aW50ZWdyaXR5dGFiLg0KICAgUmVtb3ZlIG9yIHJlZm9ybXVsYXRlIHNvbWUgbWlzbGVhZGlu
-ZyB3YXJuaW5ncyBwcmVzZW50IG9ubHkgd2l0aCBvbGQgYW5kIG5vIGxvbmdlciBzdXBwb3J0
-ZWQga2VybmVscy4NCiAgIENsYXJpZnkgdGhhdCBzb21lIGNvbW1hbmRzIGRvIG5vdCB3aXBl
-IGRhdGEgYW5kIHVuaWZ5IE9QQUwgcmVzZXQgd29yZGluZy4NCiAgIENsYXJpZnkgdGhlIC0t
-bGFiZWwgb3B0aW9uLg0KICAgVGhlcmUgYXJlIGFsc28gbWFueSBvdGhlciBncmFtbWFyIGFu
-ZCBzdHlsaXN0aWMgZml4ZXMgdG8gdW5pZnkgdGhlIG1hbi1wYWdlIHN0eWxlLg0KDQoqIEZp
-eGVzIGZvciBmYWxzZS1wb3NpdGl2ZSBhbmQgYW5ub3lpbmcgKG9wdGlvbmFsKSB3YXJuaW5n
-cyBhZGRlZCBpbiByZWNlbnQgY29tcGlsZXJzLg0K
---------------du02Hf1bnrjGDzH5kFpgY7jL
-Content-Type: application/pgp-keys; name="OpenPGP_0xD9B0577BD93E98FC.asc"
-Content-Disposition: attachment; filename="OpenPGP_0xD9B0577BD93E98FC.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: base64
+Failed to get attributes of a found private key: The field is
+sensitive and cannot be revealed
 
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tDQoNCnhzRk5CRTk0cDM4QkVB
-RFpSRVQ4eTFnVnhsZkRrNDQvWHdCYkZqQzdlTTZFYW55Q3VpdlVQTW1Qd1lEbzlxUmUNCnkw
-SmRPR2hXaEFaZXV0R0d4c0tsaW96bWVUTDI1WjZ3V0lDdTJvZVkrWmZiZ0pRWUhGZVEwMU5W
-d29ZeTU3aGgNCnl0WncvNklNTEZSY0lhV1NIZDdvTmRuZVFnNm1WSmNHZEEvQk9YNjh1bzNS
-S1NIajZROEdvUTU0Ri9OcENvdHoNClZjUDFPUnBWSjVwdHlHMHg2T1ptNUVzbjYxcEtFOTc5
-d2NIc3o3RXpjRFlsKzNNUzYzZ1ptK08zRDF1ODBiVU0NCm1CVWx4eUVpQzVqbzVrc1RGaGVB
-OG0vNUNBUFF0eHpZdmdlellsTExTM25reGFxMkVSSzVEaHZNdjBOa3RYU3UNCnRmV1FzT0k1
-V0xqRzdVV1N0d0FuTzJXK0NWWkxjblpWMEs2T0tEYUZiQ2o0b3ZnNUhWMEZ5UVprbk4yTzVR
-YngNCmVzTmxOV2tNT0pBbm5YNmMvem93TzdqcThHQ3BhM29KbDN4eG13RmJDWnRINHozZkVW
-dzB3QUZjMkpsbnVmUjQNCmRoYWF4OWZoTm9VSjRPU1ZUaTl6cXN0eGhFeXl3a2F6YWtFdkFZ
-d09sQzUrMUZLb2M5VUl2QXBBR3ZnY1RKR1QNCk9wN011SHB0SEd3V3ZHWkVhSnFjc3FveTdy
-c1lQeHREUTdiSnVKSmJsekdJVXhXQWw4cXNVc0Y4TTRJU3hCa2YNCmZjVVlpUjB3aDFsdVVo
-WEZvMnJSVEtUK0ljL25KREU2NkVlNEVjbjkrQlBsTk9EaGxFRzF2azYycmhpWVNueXoNCnk1
-TUFVaFVsc3REeHVFallLK05HZDJhWUgwVkFOWmFscWxVWkZURWRPZEE2TllST3hrWVpWc1Z0
-WFFBUkFRQUINCnpTQk5hV3hoYmlCQ2NtOTZJRHhuYldGNmVXeGhibVJBWjIxaGFXd3VZMjl0
-UHNMQmZnUVRBUUlBS0FVQ1QzaW4NCmZ3SWJBd1VKRXN3REFBWUxDUWdIQXdJR0ZRZ0NDUW9M
-QkJZQ0F3RUNIZ0VDRjRBQUNna1EyYkJYZTlrK21QeHANCmJnLy9aV0RjUVZOQUtPV0N2aU5u
-TnZUMzE1V2JEcmpzSjZGQXBGODNoQjUycVFPOXR2amI1Wlk1NDc5NHV3b2YNCmlkT3FpMFhG
-b0xrb0x5aUpra3ZjM1E5U25NODloeWh6cnhuaDJ5bTRyVXI0Y0w2RjllOTl1QzY1NmVyNHRl
-bE0NCmJnOU9TUFIyaU51cXNBenlNaE9HTUVubm05N1lRMlFXT252YkM4UWdvUUI1VnZGM25a
-TWdxVFBUeGN0bFVmYzcNCnQ0QmxHY0lCTEcwb0lOVU5EZjQ0MUtBWGdNUDA1a1ZLMENEUWQw
-MkNUUG9rMlFzaGJnNmF3NTZlU1NVVEI0YXENClpNOFN0MXlTSjJjY01EUkM5bUNxY05GdHV1
-UHlBQUpBSkZtRXZseGFoZDBCQTBtd1YzY2UzOEpCYlRxczVrMFgNCjJKVmxqSE9iZ25mcDNX
-RHR1WThMajB1OEt2TjBDQVlKaFJ1aFk0MGZBUmg4RVBma052SXgvNzQwdWVleHNVQlcNCjNO
-MS9sQ2VBQmFPS3R1MTFrVlV4dkR4YUZSUWMySTV2bC9zWk11blNqSlFRaXdyV05icndaZ2lk
-d2tIenZpem0NCkxqZGdIZ0NKZUVDK3R1MXFpZlRDT2xsdWZ2WGFnalltckg0aG0vUXo2Kzkx
-bExrc3JIb294cDNuQWNONzhkNS8NCkU0cmVhbXgwK0RsZU9KMnlEMVVlUDJ3VURkQjIzT1FV
-M2lwVkRZd0l1SXZEV2laU0lWd1h5RExodWM2NHRpNHQNClNjVUdmdWNFS01FUjFlTFRKK3pJ
-TEhaOVI0SzdDMkJoRUdTQXl4a2VlWC9aOHBMTk9KMVJkVStCK1pGTlh1SUgNCkxKYmdyQWlP
-T3FyMDdXUGJ2UlQxTHZPL3cvNG0zMUQ5S2FsYzRKeXFuOStwanRuQ3daVUVFd0VJQUQ4Q0d3
-TUcNCkN3a0lCd01DQmhVSUFna0tDd1FXQWdNQkFoNEJBaGVBRmlFRUtpa1lKRC9lUm1TTkJv
-YjUyYkJYZTlrK21Qd0YNCkFtR2xGR1lGQ1NUNGIrY0FDZ2tRMmJCWGU5ayttUHcrVFEvK04v
-S1pHSGVUY3NuRU5ocnZHQUl4ZWV6bmRobjMNCm9uN1Fnd1RqRjg0ZFY4U01lNEM2TEN4Nzh3
-bWRFbWtXRDFSZnphLzEvYkszaVZhekpNSGRTQ3pYUWtBZGF5d1kNCllTczhHQmM3WmptTDNR
-aHZTMGF3VlNUNExXbUtqdjlPUGR3czE4RU94WDVCSE9EbFFib1FiT0dNQmJ2cEpvWWQNCkRa
-NEhEK0kybW1pTTRoOFA2MFBieTRnSXR2S2RWbmxVOHpvN1FiZkVJckU0blV0bFpHZnY0Z0lL
-Z2ZjODlsRDUNCkJOVkZ3UUQxT0loTEJnbFZ4bGtjL2ZTRkM3RXpZeitDdDZmR2FYV2VxTDh1
-MStoRGQ1V0lXNlpsMkM4MmQwVjcNCkxUeEtJMHI2cVpFa0xJMUpMRWVWUVJOQnAybU9BZkda
-VE56WU5xTzczTVcwNkVEckRwRzFScC91ZmE2UVNvSWsNClduVVJiay90ZzhmTkZhOEZnWEhH
-cVlmbFRuNVpmZitCVmIva2dVTmNFanpsQjVkZFUxbGFYVEJTclVJQU9meHgNCjVYVmFxM0JM
-TEZpVy9mN1hzUGFhc1V3NStrUjFmNlg4eWdyS1lvaTFaQ091Z1JmTk5uS2NtNkN3UVVyM0E3
-aXgNCjJ6Z1I2NlF2aUZ3bWU1b0pBcTRESldUS3BjQlZnWXdMdkdaWE9iVUNUNEJQWG5rQUVL
-MzJVWEM0THNmUEQ3Y1kNClZZb1FOVHJERGFLbUdxWURNekU3bXkxREdBZ3JJNngyWHA4OE9i
-azNJNG9ORVI4L1lwVENaYjFXNGNGVlM1cHANCm4rS2YwZCswR0dxcHRVY25DNmI1RkdWTTBz
-OWpRc2szR2FmWnpPcUtFUm9hUTBGcGxIUjlTYy9VK2hQZi95aUkNClNPc2JlUC96OWVXWDRp
-TE93VTBFVDNpbmZ3RVFBTjZFZFh5Znc5eHI1NkNKMWFzblExUFN4cHpFR2xVc0VIdm4NCjR3
-Y3VmeUM4S042VkdVbFIzV2lubGFHdk9JQ3p2WU9pUzA2RTZQcUtERWdiYkFwQmgyLy82SWhr
-MU95blMweTQNCmhZZXBKaStwc3RkWG9pdWQ2TlFTTlFsY0ZqQ2ZJOFd6QVQzcmVuc1ZMbXdj
-M0hnUlc1cXF0NVZjK0VXZGc5Y3kNCmxaNDhRZFB5bzNXeU9kMnB5TCt5cU5aUGpNR2lqRTh6
-dnp1cndaaU85YUJrSkNqdWxxWE1zMVl5eUlxZlR4S1ENCjFHQ1VRcTRTb0lRWGpEOEh2Z0o3
-VC9UcHVEZjl3Rmhlb25HcXhpSnB4YjAyTE1FZGtQZ3VnS0lnRzZpT0ZwbHoNCnJzeVN5b2lK
-c0dhMG1KMG4wTzZyWFF4bDFtSy96ZGZndm00Q1BEdWpiZ0lObkl4UnhQZXNjQ1ZZY21qTThr
-VGwNCkdZSnVLcDRHZ2J3YndrQ0lTczRyZXRhQVhpUDNhMmYzZVNhSmM1U25XV2EzSnFINW9n
-a0VXdnVlempOeFc1Zk0NCnBCV3N6ZFFFc2duc2RsSzM3VithQjVvV25ua1pSbFdrMVloR3dM
-MU9EeitFWnpTc0dsa0lyN0JZYWtLM3hSWWINCnhWZlFrVXI3RWVxcnVYb2hTT25QQW93ZVBZ
-QVhDaWdDZld2SUpNbHJQTElPRDJHT3k5ZVYzVVovSkRuLzdZUGYNCkZBak5iMGdWZHBxQkNR
-TkgvZlAyZVBDMEZ6VyszWUwxVWJSK3FNQUViS2JGZXB5Y2c3NUxiQzA4akZ1UVZ2YXUNCkRR
-dGE0RUF2QmtGNDYwUG9za0N6Y011UkVudGpNeGlwQjZJTVNvT0Q3NHRjR1lmVXA2L2tjZ2RF
-YXF5SzgyMTQNCmNvdU8vdThIQUJFQkFBSEN3V1VFR0FFQ0FBOEZBazk0cDM4Q0d3d0ZDUkxN
-QXdBQUNna1EyYkJYZTlrK21QekkNClJBLy9iQWYwTmc4ZEorSWd5ZFJ0ZFQ5WDJ4WUt5dWtr
-QTNIbHJPSW1Pb0E0VGhydi9IVmU3VTI4QWtpUXQyRHgNCk9tTlpZSVYwQnF2TCtkV0FEMUhZ
-Q2RRZ3NnVldWTHByc0ZmcU9ZSG5BV0tzZHF5TlpIdFBDOUo2ZHJud3YwdmMNCkVSMGR0REpq
-TURQNE1KTVRhNEpOak5KWWIyOVdmYkltdmlEUnRJY1Z1allGb1pLMlpCYTFFYzd5UGZrNENz
-eUUNCitZM1FoOUd5OFowOE5ycnhJbitNVkFUQmJvY0tzN2oxSkF2a0ZrK28xZ3JHbnczTlRY
-bkI4Z0V5Z0FLSEh5VWcNCnpyNU55bjVxSjI4RVpyN1ZjMUZQMmxVaUt2MEpCY0hULzl2VlhK
-MUdyZCtWRjJjd1lmdE1XUktSNjZsVGFVUzINCkJYMHRhNklRUVNqOG5TUnNvS2FwUm5pQ2ZU
-bTFENEkxNmo5Yk9vRWZGZFZzTWtjcllGdGZocTk3cWdSOGdadFYNCkNKa3JYMkNBUlorYTFK
-K05QL2VyQVNkNk0xQTNuM2FNRjN4QkZmRnNvdHpQcGxtaHpFeENZd3VPQ1dJQmZQZXINClVR
-aDFNdWdodkcvb1Q4WmFwUjZ4L0VWRStLOTBKMTBYcFBpOFZNaS8zUVJDNURwQ2luM0tjMTRX
-QUU0dUVieVUNCldMS2IzUG1mbVphUzZxRmFKTnRmMlR5Wm9kVDBBQ2d1djlYczRlbDBqOEZS
-YUNxTHZFWlM0cktMTnhiOEVZM1oNCjRMQzYxUWZ5QWJnNVAxMTRtdVZaNHJvOGR6aFowendr
-WkxHZUVzWVBzUXBMbzZYUFQvMzJQUDhhSG4vS0tYK0sNCk03b3VDRWhWZVdzelIyMEJNSzZz
-eFRCUis0YU5xU0tDZGdyNDJqcnR2elJtSnA3Q3dYd0VHQUVJQUNZQ0d3d1cNCklRUXFLUmdr
-UDk1R1pJMEdodm5ac0ZkNzJUNlkvQVVDWWFVVWx3VUpKUGh3R0FBS0NSRFpzRmQ3MlQ2WS9B
-VHoNCkQvNG1WZmwwVGpvYlB6TENuZTU0RUhoWUJFNUpyZkdGWVc5a1lOMVlLUUVIdlhKK21z
-UFk1Tndwd2RIbkRRWGENCk1zcmQ5N2Q3eGpXcnVvZ3NKVVgyazNWNFBhclNNbkxiZ2tFbnNH
-Tm1ESk9RRXZESm0xNkJyNHg5V2Y0cTYxYksNCkVzL2pleHhUeWlKUU12QS8ya2NFdFFoNXZi
-R2owSWhxSGtmODA0WElsV0ozRVJ2MVBTZXJGZkZ4L1RoRDUwRUUNCmVNUDFkVzJDUFVwUHJM
-aG5FaFRlNlRFVExFckpUcG11TnZRTjJ4RzJleUpMZlZreVoxR1BWM3krV2FrSjR5M2sNClpm
-TnVOemszN2gwcllkdXJxWTJTRU5uckhIR1RHS1VJTlB6RHBSNzdoYmhidWpCUy80R1F6Y3gv
-SXdIQWF6WGYNCitnQVNySG5HRTV3U0p5aDlrempYTkpBdXVhQUlhMGtnVFM3blU3angzSHYy
-QVFyRkFnQkRNSUNVOG0zYVRFSWYNClRaRXV2RnNVTFY4Vk9wM3FFRk81QkNSaGhiSE8vOGw0
-a0Y3bGJ5VkpDdjE3Tk9GK285SmRYLytpaTZEVVBYcWYNCjlpSitmZWdkQVhMNzJpcis0SFE3
-ZFU2NElMNVFmaHFVL29oVVM3NFFnWHVaQUJFVVJIMFg1bGlhdFd4NkhmN3ANCmE2ZjFTeGdH
-bVpUZ1U0TEFzN24xaGVVamkyMlpKbGRtK2NjdGhmd0ZONkVGR1ozQXJ4VEUxcVFRdm9EdjZO
-NUcNClFzc2hnbWtIVUh1STB2eFZDYWtkYkxsY0RUTTNEaVRqL3l6RU1Mb3hQd29lMXl6TitW
-U0FxUGFxb1lvZURyeXgNCjFBRnN3dVhUVW9xUy9xMGhoNzFnWFgxdzRXM3N5U0plcktlLzlh
-eVgwdktqN0E9PQ0KPVZYS3ENCi0tLS0tRU5EIFBHUCBQVUJMSUMgS0VZIEJMT0NLLS0tLS0N
-Cg==
+Digging into this a bit it seems that the the private key slot is
+marked as CKR_ATTRIBUTE_SENSITIVE, which to me makes sense.
 
---------------du02Hf1bnrjGDzH5kFpgY7jL--
+I'm confused why this error is happening because it's my understanding
+that the purpose of the secure element is to keep the private key safe
+and perform the cryptographic operations within the device.  I would
+not expect the private key to be returned.
 
---------------pbxTjKFkCA43CqBj2SGYuRKE--
+The device is a Microchip ECC608.
 
---------------HJr9Nco88Q9BG4DwH0Iz0g0D
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+Any advice would be appreciated.  Full log below.
 
------BEGIN PGP SIGNATURE-----
+Thanks, Matt
 
-iQIzBAEBCAAdFiEEKikYJD/eRmSNBob52bBXe9k+mPwFAmikQhMACgkQ2bBXe9k+
-mPwp0RAAziJCxzqjQu+B0qvLoTK0d+j7KZZ5mlDoGZhRCRtURACasvzFEgCNGe3F
-wJvA+XJDB+Tx65KmRzd9I1YiEVnM+HYeGrVhPinNBJ5y35SZ8pcMJoBjujYd6J6F
-BnLvVpdt/6vGYFCxHd9aZLUAvfSUWDbGPk0lforSRI10tF6fb8l1ohGfFaFIYa98
-N5Y+XC2hv+YymlEJ1mSxNz899s4ojYGzX863dM+5f6fR9fIvJI6DvxxMjuh1JeUV
-ucqYWBk7uKpS/wJ3a3x1OFiNecxdb8jK8joMY0wMebGMwumCRYGZ1xvERVNsU4LB
-rjWiDabqYyX0uElmORpVfXBK2BQMcNWF+4qWbZzPkKe+laYLMqfcJJaU0FYgtu9S
-gy60gLUWwiZIan5e8QRup33sLNc4hUFyahn2D4s/E21OVCceOv6HSJ944XVlq1cX
-+GxYcfZn/UnXQNR0pV7sI7aFU+EEjRDcnBr8hMAe5HHWyXutIEcbZg/rTZyngcWN
-p8SkpwvBSSbevoWp10p9XKC08oUtyxy6sLpbVEVqnVhgEAs+wa8+pga5ASa16zEl
-O7WpzeFwyIStLHCEb5pO1+Te0NU1n5lf8KmIpcRSYuVafYvntnG+RqpyOZrqiKcd
-C2N9H8WiLXuMVMVftyrE+LWS4cxIYqyQBPT8uGCQ2MY0cFyqHv4=
-=VHSa
------END PGP SIGNATURE-----
-
---------------HJr9Nco88Q9BG4DwH0Iz0g0D--
+cryptsetup luksOpen /dev/mmcblk0p4 test --token-id 0 --token-only --debug
+# cryptsetup 2.7.2 processing "cryptsetup luksOpen /dev/mmcblk0p4 test
+--token-id 0 --token-only --debug"
+# Verifying parameters for command open.
+# Running command open.
+# Installing SIGINT/SIGTERM handler.
+# Unblocking interruption on signal.
+# Allocating context for crypt device /dev/mmcblk0p4.
+# Trying to open and read device /dev/mmcblk0p4 with direct-io.
+# Initialising device-mapper backend library.
+# Trying to load any crypt type from device /dev/mmcblk0p4.
+# Crypto backend (OpenSSL 3.2.4 11 Feb 2025
+[default][legacy][threads][argon2]) initialized in cryptsetup library
+version 2.7.2.
+# Detected kernel Linux 6.12.22-linux4microchip-2025.04 armv7l.
+# Loading LUKS2 header (repair disabled).
+# Acquiring read lock for device /dev/mmcblk0p4.
+# Opening lock resource file /run/cryptsetup/L_179:4
+# Verifying lock handle for /dev/mmcblk0p4.
+# Device /dev/mmcblk0p4 READ lock taken.
+# Trying to read primary LUKS2 header at offset 0x0.
+# Opening locked device /dev/mmcblk0p4
+# Verifying locked device handle (bdev)
+# LUKS2 header version 2 of size 16384 bytes, checksum sha256.
+# Checksum:56ae1c95c37b2df138652ed1c587ce1aa1ee5f38baf80609e04329a3e70cbe5d
+(on-disk)
+# Checksum:56ae1c95c37b2df138652ed1c587ce1aa1ee5f38baf80609e04329a3e70cbe5d
+(in-memory)
+# Trying to read secondary LUKS2 header at offset 0x4000.
+# Reusing open ro fd on device /dev/mmcblk0p4
+# LUKS2 header version 2 of size 16384 bytes, checksum sha256.
+# Checksum:5f527aa9c9c9f2343bbd38d27f80d065399b5523d8676987aa0003d0e3b67dec
+(on-disk)
+# Checksum:5f527aa9c9c9f2343bbd38d27f80d065399b5523d8676987aa0003d0e3b67dec
+(in-memory)
+# Device size 134217728, offset 16777216.
+# Device /dev/mmcblk0p4 READ lock released.
+# Only 1 active CPUs detected, PBKDF threads decreased from 4 to 1.
+# Not enough physical memory detected, PBKDF max memory decreased from
+1048576kB to 76828kB.
+# PBKDF argon2i, time_ms 2000 (iterations 0), max_memory_kb 76828,
+parallel_threads 1.
+# Activating volume test [keyslot -1] using token.
+# dm version   [ opencount flush ]   [16384] (*1)
+# dm versions   [ opencount flush ]   [16384] (*1)
+# Detected dm-ioctl version 4.48.0.
+# Detected dm-verity version 1.10.0.
+# Detected dm-crypt version 1.28.0.
+# Device-mapper backend running with UDEV support enabled.
+# dm status test  [ opencount noflush ]   [16384] (*1)
+# Trying to load /usr/lib/cryptsetup/libcryptsetup-token-systemd-pkcs11.so.
+# Loading symbol cryptsetup_token_open@CRYPTSETUP_TOKEN_1.0.
+# Loading symbol cryptsetup_token_buffer_free@CRYPTSETUP_TOKEN_1.0.
+# Loading symbol cryptsetup_token_validate@CRYPTSETUP_TOKEN_1.0.
+# Loading symbol cryptsetup_token_dump@CRYPTSETUP_TOKEN_1.0.
+# Loading symbol cryptsetup_token_open_pin@CRYPTSETUP_TOKEN_1.0.
+# Loading symbol cryptsetup_token_version@CRYPTSETUP_TOKEN_1.0.
+# Token handler systemd-pkcs11-1.0 systemd-v256.5 (256.5) loaded successfully.
+# Requesting JSON for token 0.
+No login into security token 'MCHP' required.
+Failed to get attributes of a found private key: The field is
+sensitive and cannot be revealed
+# Token 0 (systemd-pkcs11) open failed with -5.
+# Releasing crypt device /dev/mmcblk0p4 context.
+# Releasing device-mapper backend.
+# Closing read only fd for /dev/mmcblk0p4.
+Command failed with code -1 (wrong or missing parameters).
+# Unloading systemd-pkcs11 token handler.
