@@ -1,159 +1,134 @@
-Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ACAD27A46F
-	for <cryptsetup@lists.linux.dev>; Fri,  5 Sep 2025 20:13:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F1F36124
+	for <cryptsetup@lists.linux.dev>; Mon,  8 Sep 2025 12:35:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757103237; cv=none; b=GeBzymqjYp0MXdnr6YiNJxuX5iOcZ8bwzifhnN+e5AefNsRExwYraYXK9ShoNZVqUML5I0iQEwJDmfmnkvsKMH3RfmoGzvD9JJ69hRM1ULTZEoUNafSqpvYcvtdUzuh3GTpodgdEz+u+f7urp4Cju4T2W2IzYvfLX9Q/LN9KcyA=
+	t=1757334942; cv=none; b=uKE0lz7DnVD8Iw8rSm8zB2F1Wg1LA84An7KYSL2hr9hLLF/MmNheWPub9WTGM5Ou79LHpvhd9WmWnrtanAUwKwVk4l5daQhJMUrP4h4nMtz4GiRvDwv47zQtuvcfH/ew6hpiSoiQoyiqn6T1N2ipEaU9ZAhYl7brpCoeU3VtEfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757103237; c=relaxed/simple;
-	bh=owi9zk7xk0z43eVieI9hAI/hDgBJk3d+WwoAaBX3IWo=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=UQCTh3dzPXqEAHBopODOe5//2/ViDg9fCfOh+5olJW/PvLtpumaSazvIXICWWigUGrjxDkeBOlNGFNJmCnnlor7bNTTPXLkEjKP7pvzN42/ZLAL63vgFL5uyqvLGR/zGJ7fgl8HpHuDggSroZl0YyZjoQqgfpXxo/q/OrDr6pVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hgDdC1jx; arc=none smtp.client-ip=74.125.224.46
+	s=arc-20240116; t=1757334942; c=relaxed/simple;
+	bh=yhYcGVwp4mF/+WyI9l5/XO+yC8/JMDEvb57NUddkF4U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=mbtq4VM4kpSdiwCDW6a5CS+xvAsgwBrxDLSmNpX+pZSB4i1Hr8+4OldzRqVhOpGZ++3hdhFBOlnnrC5q3db6VvhFFMXOtnGron/YZ0A1STawuQfmQ84uM4JngSjDn2DJZFE8yU18uJCdfvfhstlJNliRazZ981TNWsIxcqNYz1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V8CYYCBk; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hgDdC1jx"
-Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-6032c696bd6so155201d50.1
-        for <cryptsetup@lists.linux.dev>; Fri, 05 Sep 2025 13:13:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V8CYYCBk"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-45de1e6d76fso13823655e9.2
+        for <cryptsetup@lists.linux.dev>; Mon, 08 Sep 2025 05:35:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757103235; x=1757708035; darn=lists.linux.dev;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=9vqVUVK+aCj1BZxeA4BCT/IbShZ/DaPtmdqLaJjnG8g=;
-        b=hgDdC1jxHSWhfQpzH1eKxT4cf9WlC1mF/chGc+LgZuX8DwhONwJeyZPbRELTn8B6tu
-         zyfpd3HK2ZyIlavgnHkcjUBseLyXyk27X8VwC4DITCxpmbqyhZe+PwQg7dtnFp1G8Y1h
-         13M9UMyT5V2d5HDCvZrtRcEHrNY/srqAhfX3ZeYrOAUHRit4vyspxLiYY1vHGAr0blrq
-         5/ZXFKgcL24TaiamtRYBYXsCK6zVWVHyPRmVsnYL0Zvkip3qoHfQLmf5VJVah+PMVieI
-         ZLjfPfsswbKP5MMZoEAUeiYlXQLJOwf8HhCezqnx0SMSi6l2nlcc/u8LHguH+fB1oIiG
-         Do9A==
+        d=gmail.com; s=20230601; t=1757334939; x=1757939739; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=yhYcGVwp4mF/+WyI9l5/XO+yC8/JMDEvb57NUddkF4U=;
+        b=V8CYYCBk8Nrp6YksuqVwlAUXZOsKJkoqmZ4ic1FOAOAl1259Xn5GRoe27TtMqDIP7N
+         myaMMI79Rg7ZR75ZOW+3FuUR7wb6oxcaG9ed5146pjFrsTAbEOV9LecKQIsGWrONo39z
+         U7MEdsrde9lPezPzhybfJLDUC3gQkSeg/trocwclYj5+NTXYSUmq6PSwmptHR+lEhImt
+         5V/TKyySLi6AIsti1VkC4IlZlSeJzME8WcxgMGvPGEXVMstLgwSbcK/Wh597g6LcGi2C
+         e2kvC3wNM/W87xlOgn33FfbE56GUGFJxytrRHfA7IOBvWp7zVLUjGdEIToDRa/CAn6JA
+         Ok2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757103235; x=1757708035;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9vqVUVK+aCj1BZxeA4BCT/IbShZ/DaPtmdqLaJjnG8g=;
-        b=LazVSXESb77MaZwC2tAs2pOPmB3goKhxBqNUvTZ1oViVSqvBFrBe1w8k0u45uj1lFX
-         Olh8h/ALSDqpLOoifHuaC141z9yzZ+fN/FFxxojLVYc77EbdULLoWejOPybRwJ+IcQPM
-         M4bFVUM6D/euLbHKR9/2CTZFg0m/FaufZy4TFA38WSYbpJ1s2KJBqWZVXPy4+KI9WfC2
-         ovmGnWbsOZDU5ecE5JSeix3hANAkrxwcNFxio2dGknc0GoRad5lk4pu9iE1zYLOByHKl
-         jIGxTMdakN3h1FWb9DJ4bsNMk9e6yR8f0QjHOhiYRed0ZvGA3m4xGfMW+4Y18LEBumam
-         Rl/A==
-X-Gm-Message-State: AOJu0YxGNKKiEbdB+XJ6A4YVNnU1do/eLcGi4QWgVa1aXuSQ8DQdnXrZ
-	KlCf9ojBKxJsVhHpBfwYMBUcB5TJxKQIY3X8Z9j4/41wYyG7I+zBOjlvs/cdzDsqeAFF/Fzz12K
-	cclr1IFijMdXyfGypj4wbOCJXR6TLc/Et2R/D
-X-Gm-Gg: ASbGncsyXM3Vu91q2EWYgUBYwaeU0BrximwhdA9gnfy73wnQLz2QhgczHpSCDCd/bkm
-	Zc61uDYOGTyxJ2S7+lK4bHT9jqThaUt+PqI1F0twirSw+hzW/h++bOgq99iTnSkABZlF2aLLgx8
-	qCqzRxdnnzFTL9UXvChQlQwllpShBhekOYFoCmjl3CpymmhIVBIeIGy2RYQaLU2MvgIwsxqekP2
-	UHZfh/srqbx/wzd8BG6bLTDqNOSXL7X97mgSfEGKPFqh/sNY417
-X-Google-Smtp-Source: AGHT+IFG/hPRJnklFW2F6eCRCehactvMCyW5eT6wQbLDHaaAzFnB7alPPTF5u/aW5oFpXWtKNXNYOmRd7fFV70RfZ6k=
-X-Received: by 2002:a05:690e:2506:20b0:5fc:2821:3956 with SMTP id
- 956f58d0204a3-61036122653mr194196d50.37.1757103234959; Fri, 05 Sep 2025
- 13:13:54 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1757334939; x=1757939739;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yhYcGVwp4mF/+WyI9l5/XO+yC8/JMDEvb57NUddkF4U=;
+        b=nQcH8a5FQBXnwbRDGfVvnr1DohbkbYMbwNJKUZKAxx3VD+77/CGtMTc5NFmIQltSV3
+         ryf/LnKQYKqpSNuPqgHHol0eXNVByU1AjbzfwQDJ8wXuLtRendPoXb4/wBmmwDp+jLSB
+         HsiOuH9XbghO//q/BHDpW+D1U/V+d9pJZJHldp9oPy9SVaXaegXg0eenGhj9EXR16Xr5
+         royA2Yon+rF1naVc4T3y/aj9U9owQKflDVJ2cQ9DJRBsDFb/bJ5yWKvcFBLBdVDQon8P
+         u/66AKuK/rTBBxrv7t96u9ZKB9xAs4pd3R8r4JAJlUNmdF5Ug0jUPKIG4FNdOkowuvi8
+         QLCQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVqgl7lxi4Yrkh/L+cPIo89n8skeQCWWEiInHjXXqTw71xXR+EyfMZ4j1kspZpWU5I8CoZSWLB/zlUY@lists.linux.dev
+X-Gm-Message-State: AOJu0YynABgLE3KEhoUgcDaJ4rX+tgTr3Q55zybLRskkg+sd7WD3GQ1t
+	buyh9o/P5lGD0+/vuiFv2sixk+4UTNV4yhrtL9Ok9gXUMQO1z/mQdHOUYRRj8Q==
+X-Gm-Gg: ASbGncuRLZCEGZiGoKMmboHofmRJ1uGiyjlbnlWHj73omyON/ARC57Sj4qpfO+FGCvn
+	TPlhL+KAK4JGkHBNnnsYwE6SpFvd4w2TgmWj3Tx/4AzS9yGdYOJOm6ad2s6tLBP/98qGiTo+t30
+	cjkArC53WxB5r2qGoA+58a20zFN9STJBaLXyXoba/KdREqIsUVaL8k18Cz+ZdaX227hnL7xJZM1
+	m8fswp6f24pWG/GVSp9BnFzzphIjcNAveO1Ly0mBRPnzBKn1J3HgArl+CkOh2lpSDQOaRQREEm1
+	wHlPldlBPnFVCJQSa40akqmheZDZW5ghV11e4ubVkNInqYeQD/Botyph157ncMvcEWrnktfhIc8
+	kWDt93HDwZ06HNo/j08+64wRZ7LKZ
+X-Google-Smtp-Source: AGHT+IFWcuKcFHo1BGjTWWrethlPkvnJLpk9Q9kNIYvxz/NcKxyUZ9fQULqTddrXXQwpHye/wlFlww==
+X-Received: by 2002:a05:600c:45d4:b0:45b:9a76:ebea with SMTP id 5b1f17b1804b1-45dddeeee4cmr66064345e9.20.1757334938570;
+        Mon, 08 Sep 2025 05:35:38 -0700 (PDT)
+Received: from [192.168.1.236] ([176.74.141.242])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45de24ab648sm75358665e9.5.2025.09.08.05.35.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Sep 2025 05:35:38 -0700 (PDT)
+Message-ID: <adcf53e4-c9ac-49aa-86fd-76904a0bbe61@gmail.com>
+Date: Mon, 8 Sep 2025 14:35:37 +0200
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: mattwood2000@gmail.com
-Date: Fri, 5 Sep 2025 16:13:44 -0400
-X-Gm-Features: Ac12FXxwqK_GJA8pfoODBrqFp6eSIx9shw7y30qqxqp-dCgjtNZwHMhTThTPh3I
-Message-ID: <CADjezmZ3BCvsOimijKjjkAsw5KRDtC1gFNpJi5PX4qGU-tkU7Q@mail.gmail.com>
-Subject: luksOpen with pkcs11 token error: The field is sensitive and cannot
- be revealed
-To: cryptsetup@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: luksOpen with pkcs11 token error: The field is sensitive and
+ cannot be revealed
+To: mattwood2000@gmail.com, cryptsetup@lists.linux.dev
+References: <CADjezmZ3BCvsOimijKjjkAsw5KRDtC1gFNpJi5PX4qGU-tkU7Q@mail.gmail.com>
+Content-Language: en-US
+From: Milan Broz <gmazyland@gmail.com>
+Autocrypt: addr=gmazyland@gmail.com; keydata=
+ xsFNBE94p38BEADZRET8y1gVxlfDk44/XwBbFjC7eM6EanyCuivUPMmPwYDo9qRey0JdOGhW
+ hAZeutGGxsKliozmeTL25Z6wWICu2oeY+ZfbgJQYHFeQ01NVwoYy57hhytZw/6IMLFRcIaWS
+ Hd7oNdneQg6mVJcGdA/BOX68uo3RKSHj6Q8GoQ54F/NpCotzVcP1ORpVJ5ptyG0x6OZm5Esn
+ 61pKE979wcHsz7EzcDYl+3MS63gZm+O3D1u80bUMmBUlxyEiC5jo5ksTFheA8m/5CAPQtxzY
+ vgezYlLLS3nkxaq2ERK5DhvMv0NktXSutfWQsOI5WLjG7UWStwAnO2W+CVZLcnZV0K6OKDaF
+ bCj4ovg5HV0FyQZknN2O5QbxesNlNWkMOJAnnX6c/zowO7jq8GCpa3oJl3xxmwFbCZtH4z3f
+ EVw0wAFc2JlnufR4dhaax9fhNoUJ4OSVTi9zqstxhEyywkazakEvAYwOlC5+1FKoc9UIvApA
+ GvgcTJGTOp7MuHptHGwWvGZEaJqcsqoy7rsYPxtDQ7bJuJJblzGIUxWAl8qsUsF8M4ISxBkf
+ fcUYiR0wh1luUhXFo2rRTKT+Ic/nJDE66Ee4Ecn9+BPlNODhlEG1vk62rhiYSnyzy5MAUhUl
+ stDxuEjYK+NGd2aYH0VANZalqlUZFTEdOdA6NYROxkYZVsVtXQARAQABzSBNaWxhbiBCcm96
+ IDxnbWF6eWxhbmRAZ21haWwuY29tPsLBlQQTAQgAPwIbAwYLCQgHAwIGFQgCCQoLBBYCAwEC
+ HgECF4AWIQQqKRgkP95GZI0GhvnZsFd72T6Y/AUCYaUUZgUJJPhv5wAKCRDZsFd72T6Y/D5N
+ D/438pkYd5NyycQ2Gu8YAjF57Od2GfeiftCDBOMXzh1XxIx7gLosLHvzCZ0SaRYPVF/Nr/X9
+ sreJVrMkwd1ILNdCQB1rLBhhKzwYFztmOYvdCG9LRrBVJPgtaYqO/0493CzXwQ7FfkEc4OVB
+ uhBs4YwFu+kmhh0NngcP4jaaaIziHw/rQ9vLiAi28p1WeVTzOjtBt8QisTidS2VkZ+/iAgqB
+ 9zz2UPkE1UXBAPU4iEsGCVXGWRz99IULsTNjP4K3p8ZpdZ6ovy7X6EN3lYhbpmXYLzZ3RXst
+ PEojSvqpkSQsjUksR5VBE0GnaY4B8ZlM3Ng2o7vcxbToQOsOkbVGn+59rpBKgiRadRFuT+2D
+ x80VrwWBccaph+VOfll9/4FVv+SBQ1wSPOUHl11TWVpdMFKtQgA5/HHldVqrcEssWJb9/tew
+ 9pqxTDn6RHV/pfzKCspiiLVkI66BF802cpyboLBBSvcDuLHbOBHrpC+IXCZ7mgkCrgMlZMql
+ wFWBjAu8Zlc5tQJPgE9eeQAQrfZRcLgux88PtxhVihA1OsMNoqYapgMzMTubLUMYCCsjrHZe
+ nzw5uTcjig0RHz9ilMJlvVbhwVVLmmmf4p/R37QYaqm1RycLpvkUZUzSz2NCyTcZp9nM6ooR
+ GhpDQWmUdH1Jz9T6E9//KIhI6xt4//P15ZfiIs7BTQRPeKd/ARAA3oR1fJ/D3GvnoInVqydD
+ U9LGnMQaVSwQe+fjBy5/ILwo3pUZSVHdaKeVoa84gLO9g6JLToTo+ooMSBtsCkGHb//oiGTU
+ 7KdLTLiFh6kmL6my11eiK53o1BI1CVwWMJ8jxbMBPet6exUubBzceBFbmqq3lVz4RZ2D1zKV
+ njxB0/KjdbI53anIv7Ko1k+MwaKMTzO/O6vBmI71oGQkKO6WpcyzVjLIip9PEpDUYJRCrhKg
+ hBeMPwe+AntP9Om4N/3AWF6icarGImnFvTYswR2Q+C6AoiAbqI4WmXOuzJLKiImwZrSYnSfQ
+ 7qtdDGXWYr/N1+C+bgI8O6NuAg2cjFHE96xwJVhyaMzyROUZgm4qngaBvBvCQIhKzit61oBe
+ I/drZ/d5JolzlKdZZrcmofmiCQRa+57OM3Fbl8ykFazN1ASyCex2UrftX5oHmhaeeRlGVaTV
+ iEbAvU4PP4RnNKwaWQivsFhqQrfFFhvFV9CRSvsR6qu5eiFI6c8CjB49gBcKKAJ9a8gkyWs8
+ sg4PYY7L15XdRn8kOf/tg98UCM1vSBV2moEJA0f98/Z48LQXNb7dgvVRtH6owARspsV6nJyD
+ vktsLTyMW5BW9q4NC1rgQC8GQXjrQ+iyQLNwy5ESe2MzGKkHogxKg4Pvi1wZh9Snr+RyB0Rq
+ rIrzbXhyi47+7wcAEQEAAcLBfAQYAQgAJgIbDBYhBCopGCQ/3kZkjQaG+dmwV3vZPpj8BQJh
+ pRSXBQkk+HAYAAoJENmwV3vZPpj8BPMP/iZV+XROOhs/MsKd7ngQeFgETkmt8YVhb2Rg3Vgp
+ AQe9cn6aw9jk3CnB0ecNBdoyyt33t3vGNau6iCwlRfaTdXg9qtIyctuCQSewY2YMk5AS8Mmb
+ XoGvjH1Z/irrVsoSz+N7HFPKIlAy8D/aRwS1CHm9saPQiGoeR/zThciVYncRG/U9J6sV8XH9
+ OEPnQQR4w/V1bYI9Sk+suGcSFN7pMRMsSslOma429A3bEbZ7Ikt9WTJnUY9XfL5ZqQnjLeRl
+ 8243OTfuHSth26upjZIQ2esccZMYpQg0/MOlHvuFuFu6MFL/gZDNzH8jAcBrNd/6ABKsecYT
+ nBInKH2TONc0kC65oAhrSSBNLudTuPHce/YBCsUCAEMwgJTybdpMQh9NkS68WxQtXxU6neoQ
+ U7kEJGGFsc7/yXiQXuVvJUkK/Xs04X6j0l1f/6KLoNQ9ep/2In596B0BcvvaKv7gdDt1Trgg
+ vlB+GpT+iFRLvhCBe5kAERREfRfmWJq1bHod/ulrp/VLGAaZlOBTgsCzufWF5SOLbZkmV2b5
+ xy2F/AU3oQUZncCvFMTWpBC+gO/o3kZCyyGCaQdQe4jS/FUJqR1suVwNMzcOJOP/LMQwujE/
+ Ch7XLM35VICo9qqhih4OvLHUAWzC5dNSipL+rSGHvWBdfXDhbezJIl6sp7/1rJfS8qPs
+In-Reply-To: <CADjezmZ3BCvsOimijKjjkAsw5KRDtC1gFNpJi5PX4qGU-tkU7Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hello,
+On 9/5/25 10:13 PM, mattwood2000@gmail.com wrote:
+> # Trying to load /usr/lib/cryptsetup/libcryptsetup-token-systemd-pkcs11.so.
 
-I'm working with a secure element and trying to unlock a luks2 partition.
+This is systemd plugin, we do not maintain it in our code.
 
-I have successfully enrolled the device with a pkcs11 URI, but when I
-attempt to unlock the partition I get:
+Perhaps the best is to ask on systemd lists.
 
-Failed to get attributes of a found private key: The field is
-sensitive and cannot be revealed
+But I like to see that they use the plugin API :)
 
-Digging into this a bit it seems that the the private key slot is
-marked as CKR_ATTRIBUTE_SENSITIVE, which to me makes sense.
+Milan
 
-I'm confused why this error is happening because it's my understanding
-that the purpose of the secure element is to keep the private key safe
-and perform the cryptographic operations within the device.  I would
-not expect the private key to be returned.
-
-The device is a Microchip ECC608.
-
-Any advice would be appreciated.  Full log below.
-
-Thanks, Matt
-
-cryptsetup luksOpen /dev/mmcblk0p4 test --token-id 0 --token-only --debug
-# cryptsetup 2.7.2 processing "cryptsetup luksOpen /dev/mmcblk0p4 test
---token-id 0 --token-only --debug"
-# Verifying parameters for command open.
-# Running command open.
-# Installing SIGINT/SIGTERM handler.
-# Unblocking interruption on signal.
-# Allocating context for crypt device /dev/mmcblk0p4.
-# Trying to open and read device /dev/mmcblk0p4 with direct-io.
-# Initialising device-mapper backend library.
-# Trying to load any crypt type from device /dev/mmcblk0p4.
-# Crypto backend (OpenSSL 3.2.4 11 Feb 2025
-[default][legacy][threads][argon2]) initialized in cryptsetup library
-version 2.7.2.
-# Detected kernel Linux 6.12.22-linux4microchip-2025.04 armv7l.
-# Loading LUKS2 header (repair disabled).
-# Acquiring read lock for device /dev/mmcblk0p4.
-# Opening lock resource file /run/cryptsetup/L_179:4
-# Verifying lock handle for /dev/mmcblk0p4.
-# Device /dev/mmcblk0p4 READ lock taken.
-# Trying to read primary LUKS2 header at offset 0x0.
-# Opening locked device /dev/mmcblk0p4
-# Verifying locked device handle (bdev)
-# LUKS2 header version 2 of size 16384 bytes, checksum sha256.
-# Checksum:56ae1c95c37b2df138652ed1c587ce1aa1ee5f38baf80609e04329a3e70cbe5d
-(on-disk)
-# Checksum:56ae1c95c37b2df138652ed1c587ce1aa1ee5f38baf80609e04329a3e70cbe5d
-(in-memory)
-# Trying to read secondary LUKS2 header at offset 0x4000.
-# Reusing open ro fd on device /dev/mmcblk0p4
-# LUKS2 header version 2 of size 16384 bytes, checksum sha256.
-# Checksum:5f527aa9c9c9f2343bbd38d27f80d065399b5523d8676987aa0003d0e3b67dec
-(on-disk)
-# Checksum:5f527aa9c9c9f2343bbd38d27f80d065399b5523d8676987aa0003d0e3b67dec
-(in-memory)
-# Device size 134217728, offset 16777216.
-# Device /dev/mmcblk0p4 READ lock released.
-# Only 1 active CPUs detected, PBKDF threads decreased from 4 to 1.
-# Not enough physical memory detected, PBKDF max memory decreased from
-1048576kB to 76828kB.
-# PBKDF argon2i, time_ms 2000 (iterations 0), max_memory_kb 76828,
-parallel_threads 1.
-# Activating volume test [keyslot -1] using token.
-# dm version   [ opencount flush ]   [16384] (*1)
-# dm versions   [ opencount flush ]   [16384] (*1)
-# Detected dm-ioctl version 4.48.0.
-# Detected dm-verity version 1.10.0.
-# Detected dm-crypt version 1.28.0.
-# Device-mapper backend running with UDEV support enabled.
-# dm status test  [ opencount noflush ]   [16384] (*1)
-# Trying to load /usr/lib/cryptsetup/libcryptsetup-token-systemd-pkcs11.so.
-# Loading symbol cryptsetup_token_open@CRYPTSETUP_TOKEN_1.0.
-# Loading symbol cryptsetup_token_buffer_free@CRYPTSETUP_TOKEN_1.0.
-# Loading symbol cryptsetup_token_validate@CRYPTSETUP_TOKEN_1.0.
-# Loading symbol cryptsetup_token_dump@CRYPTSETUP_TOKEN_1.0.
-# Loading symbol cryptsetup_token_open_pin@CRYPTSETUP_TOKEN_1.0.
-# Loading symbol cryptsetup_token_version@CRYPTSETUP_TOKEN_1.0.
-# Token handler systemd-pkcs11-1.0 systemd-v256.5 (256.5) loaded successfully.
-# Requesting JSON for token 0.
-No login into security token 'MCHP' required.
-Failed to get attributes of a found private key: The field is
-sensitive and cannot be revealed
-# Token 0 (systemd-pkcs11) open failed with -5.
-# Releasing crypt device /dev/mmcblk0p4 context.
-# Releasing device-mapper backend.
-# Closing read only fd for /dev/mmcblk0p4.
-Command failed with code -1 (wrong or missing parameters).
-# Unloading systemd-pkcs11 token handler.
