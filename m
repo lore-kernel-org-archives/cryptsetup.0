@@ -1,407 +1,173 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6791A4A3C
-	for <cryptsetup@lists.linux.dev>; Sat,  4 Oct 2025 00:36:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338483594B
+	for <cryptsetup@lists.linux.dev>; Sat,  4 Oct 2025 18:17:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759538211; cv=none; b=tBqDC7R/ZIrvel8AIaLV8VcmhMCC2qX0PIrc+IFxEp9Lsf7VgmKXfAb3KL/IohgWhqkfnefkKGL+ohwp6F2Bt1HBCCn4i5lKKQx4ZNPMtkaaeexWvYwFQZSA7NE5mkMl/iUSjuL+bAzjiQt0XRKTZbCmxy3uS3rJxFas6reT9OA=
+	t=1759601869; cv=none; b=Q1TtC05wosTblu39y1EPQOAGAYTdnETqP3vRZPCLGiJF3Z65Qq02/5PtL/Kn61ginmLFrbM9a98cyYMjlfi9JsbcD8U/Vx8Ftio7GEeS02CCgxiVze9W6XrQTdcnARvX7EkVFtzzoxwHTl6vu3dCSGPKEpur5Ve+2PRLANNI7lU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759538211; c=relaxed/simple;
-	bh=1qJtY+qyghMPZfaXTAUHaNV2RlB4RVPuRRb75VxSZt4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gYMjLcMDUY0JZ2JaQtnqpql+sNnV1WfzF87FEr0T9b9jQOLTDq1LmBweEqfO/ACChrzJqrslLr84IyuyI0gdE18AJqLoGDVMVHTWnA5Uj8/lye+tp3+cqoqekbVkP9Jyls2clv+QjHPtsfgfiCEBcjjVPMvHGv8UnxcegGlGkWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PuaOkGRe; arc=none smtp.client-ip=209.85.128.53
+	s=arc-20240116; t=1759601869; c=relaxed/simple;
+	bh=+ZRD0mvwQqGc+1uNlAgEdGLaGxNbIFTcqlsc+GqXrmU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:Cc:From:
+	 In-Reply-To:Content-Type; b=H5TvFu84NjbEYwyKVbCvjbViafTSPr6CHww1Ixd8RBf8bpPz8a5B0HTzlfLpv5xGJAbBbjKPzASL7HcxYdkqwQnCJ+889SFe49844M2x8zZR/mXljSyKnw9HQz9bzQ/EfNMb4nwnUn6/R+PsmYuBNtE2v16bWZ81xcQxzYYMtAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HekVS4f6; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PuaOkGRe"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-46e6c8bc46eso17408175e9.3
-        for <cryptsetup@lists.linux.dev>; Fri, 03 Oct 2025 17:36:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HekVS4f6"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-46e37d6c21eso23944145e9.0
+        for <cryptsetup@lists.linux.dev>; Sat, 04 Oct 2025 11:17:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759538207; x=1760143007; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=25GgLrSspi/xpkiCXQev3tGI/h/vO3sFHKhdJVjfzEo=;
-        b=PuaOkGRefBW6cgAaLo9Vu0SqWYDfzzAfsuHYyarUSeGRDjvKko+deT39re0zjcSPDm
-         cvmOn0uPlCHEIhZEqW3jkWBFxyDyC1JsAmx0EV0rH6SL5eWSJslKCop/V6TTpnFJ/RJY
-         jvtFRtM+1/2YXklb32bpCcbLw0jZkCaJY1K1E02DUDif1XJOTKCo614NLNQNUslXwcGn
-         LrpAKTUijGATfP2rSWGPT6j1NkOWK+f7oh1cSfDu9FYUyfbOsZiWOeHAprzWfakTNkEs
-         g7bvf8Zy0W7gPbOJYA7jS+oCnq4HnNTPKuirDow8fOl8PzofZF99FpYWIjkEmII+CrPd
-         0amA==
+        d=gmail.com; s=20230601; t=1759601866; x=1760206666; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:cc
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=9cyGb5/2JiYy3IRXvwWhCJO/NNAZYMww0Z4Jpzg8p3Q=;
+        b=HekVS4f6iQu50oPRjIBWsfX8CG5gfjMKTxyZEf9VDyP6L8/E+AUE72OcAKMXvyueyx
+         mVPwiM3fWA0WyEoZ5Uy2qBDrH9xRdKf/+uh3CHvWra6ICVxWgl4TYLPDllsF/Y+BvfuI
+         /ROTZcqJKMm1u+bED2pz+qwL4rNC6e1QexD2GDx9vjRRT9kLshmPvcVHETgtlWhEl96W
+         i8AJ1eIzF7aqBVC0rmqeEKoXYmcqpD5SWcWYPEw50V2vK8SKzfaTBKOYs6+7lopJ89ZC
+         T68NN8bR3KBjwvaHRygLtY61D2wytJDTE4aUKTJcMcSchS2S+xAvvle6tLdpQIVOJEML
+         c43Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759538207; x=1760143007;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=25GgLrSspi/xpkiCXQev3tGI/h/vO3sFHKhdJVjfzEo=;
-        b=YD3C9GBOxgx2q8fcc7ngJU3ohMlYkJbulsvk5K9kU5JbQItw9YnCxx0oe203FLvWEx
-         SAQN6WNvPDS60j53YvQ2b4s0nD4k4QcZQrZDOq0pL0ZumvzjBDPc+Nd8L1NvJzZrkeJj
-         SYp9kaA0D3nu6toSiiHl/EzoRHywIeKYwepeQaJJ9uIxqZFVXES44r6bUlClY2XdRcE7
-         8NA+at31Mpewm4NV/pVMIZJAvfdsg8l6J14kXTwA4LuVcUqgYpdw6/4aXQRW7Hk9BcK7
-         7HhtWBjUC363FezHJMBEd5rFqKDTFIzFBCtsoZUPx0wjENurP7TLUG5iQ9+KkX6K8nra
-         0quA==
-X-Gm-Message-State: AOJu0YwIaIMm/OWydTXcGiwaTupKnAJ5diS5kKYKithppZHZW1b5Qv3A
-	zn8bQOPe0xXWUhmZNbfqRRuIoUUEK1ChiWt8ipKxTY48TaMkr50DNKK+Saw8zQ==
-X-Gm-Gg: ASbGncu2oh9PrdcfUPzGt57LTHLR+CkRjKQt+GOV329cI8ydWdbpjLgyrxLhelXwt0g
-	yncGOhDjp/TwfvcUDZKD3mbBF6vHK8okUKruAJprg6CMwK1/UB8kV3RS6z+a3k3990H35ttPAMA
-	ZgzlzgmkoiVgT7B2V+h9BaH2/ASIWbsoT0OKon2XIu2/torOMhVxOhcyGKMr7LPK9O87mwFTQik
-	vDLNBbZEAlKbkU4C+gVzcrFgHmnIb1KUw7rxu6w4YrtXnb5RqwFSd4XzJ8jCcR1WwBqY5Fcv97Y
-	Zfeyd39xZBV/9VfYSBmzSjCO9zuLkyLMxad/ZtSeqjTN/9ouVxb/RfhV0hwNofCLIrs1JZut9pZ
-	Qg6NAGVGTizC8cklxDmn/iFhtu2IziKMKvZMbj26qHYcr/X8dKqfr4/aHhv1k
-X-Google-Smtp-Source: AGHT+IF8Uh/l/J+sAEe0ESV8GshMIv28mDSQXmKE3rvfXNYYCdypKg0Tnj0+hzlBMFU6plFk7ZNU5A==
-X-Received: by 2002:a05:600d:8110:b0:46e:6603:2a84 with SMTP id 5b1f17b1804b1-46e71151bedmr28491985e9.32.1759538207305;
-        Fri, 03 Oct 2025 17:36:47 -0700 (PDT)
-Received: from localhost.localdomain ([2a06:c701:9d5a:ed00:f05f:1922:a66f:12b4])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46e61a18b76sm152737795e9.18.2025.10.03.17.36.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Oct 2025 17:36:46 -0700 (PDT)
-From: Kfir Kahanov <kfirka3@gmail.com>
-To: cryptsetup@lists.linux.dev
-Cc: Kfir Kahanov <kfirka3@gmail.com>
-Subject: [PATCH 2/2] bitlocker: Add clearkey option
-Date: Sat,  4 Oct 2025 03:35:54 +0300
-Message-ID: <20251004003554.234647-3-kfirka3@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251004003554.234647-1-kfirka3@gmail.com>
-References: <20251004003554.234647-1-kfirka3@gmail.com>
+        d=1e100.net; s=20230601; t=1759601866; x=1760206666;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:cc
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9cyGb5/2JiYy3IRXvwWhCJO/NNAZYMww0Z4Jpzg8p3Q=;
+        b=jK1vj1JwLQoM77CPpGblHDrA0aGY6z9c9UKanmtnUixy/7pCea9COnTJgvx/+jfWXT
+         a0VAQcveXs9rEqbbRKUrdjLhRdjxPeUheRlcCXwtzSUby3Emx5gUBE/PJDfQ1fsGlc3T
+         WEBXGxine8rJIhKm2TuQ9kF7mKjAaJJ29b8F97dywJp8UEFK2E1HEab+zUNVSI9SY1LH
+         Q/v5C2qGrvRQ3kV9m1RTOHze8oudexG6z2HpPzp01VhlADGb1c3xdtWUWPZiRD9X3Dlq
+         xexlptGE4Pz+tvz6RM10hs0o3bxCiiaghl/OLynsMzEK/meog/4wHjxLTixMxJcn6Rst
+         k7kg==
+X-Forwarded-Encrypted: i=1; AJvYcCX9G2gnbnqrA2GvbF/1vsyMjuZ+4viK/GjLr5PPFnPtAghJnzr0LnkZ3II1S031/HZf9MQqTeoDR0hC@lists.linux.dev
+X-Gm-Message-State: AOJu0YzkdnLcjgmugVF1dtrBT9i1InriIqpcbXk7RqYKZIFrdhJYJLfs
+	HmW9/hdHO6+cP086HL2N0CPrkckMJM7dtL8UGx442w45BZZJY2xHO5yt
+X-Gm-Gg: ASbGncuU/gowEg7lQD9WUa//qBg6nG1ACCnvtco61UirKbSbAE6NA/V4H2ROijsaMxz
+	vU5QWNLVDdwBM2/QPhVF26xwwjbZsEKjUkxxy9YC+jK3K85C/7iv22BmWJ3vZyVpGrX2v8fsXey
+	snLZ3Fj2xLJ26WX1ca5hmMHM5lGdJZ9PusGYD5eTgpTuJcRG79938GVHrB403exkD+kaCAAlMy7
+	pA7ro8f8G+bklgG/JfCA+NR/KP9Yq+w4CF0JyRSFFz4Ar+2ab1ZEgtpiCbjV4Bc55nOwIi5bn7f
+	i1c9kthJW6aSNcHeUq5uTxgdI1koOlZVA997eqYk4rZI55ttVMIk+EUJtA0qiXpyx8KDdRBRi50
+	mrGOqhyQDGCNemUOKgPqJ+HORlJ9WIBskv0Wlv0Nnuo+DHAxJ3KAj925SiY49AKRx+d0vGBI4
+X-Google-Smtp-Source: AGHT+IHDaYVkLrn7u2D3tv2C6PZW+1RRKnGHjmD0NaXTbEY0HhKDrUd9fm8jTS1vwNBQjV+j8NJMRQ==
+X-Received: by 2002:a5d:5d88:0:b0:3ee:1523:2310 with SMTP id ffacd0b85a97d-4256715add3mr4632741f8f.27.1759601866149;
+        Sat, 04 Oct 2025 11:17:46 -0700 (PDT)
+Received: from [192.168.2.12] (85-70-151-113.rcd.o2.cz. [85.70.151.113])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4255d8acc4csm13041954f8f.16.2025.10.04.11.17.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 04 Oct 2025 11:17:45 -0700 (PDT)
+Message-ID: <61a493d0-0236-4508-aec9-b29ea6433244@gmail.com>
+Date: Sat, 4 Oct 2025 20:17:44 +0200
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] Bitlocker: Support clearkey
+To: Kfir Kahanov <kfirka3@gmail.com>, cryptsetup@lists.linux.dev
+References: <20251004003554.234647-1-kfirka3@gmail.com>
+Content-Language: en-US
+Cc: Vojtech Trefny <vtrefny@redhat.com>
+From: Milan Broz <gmazyland@gmail.com>
+Autocrypt: addr=gmazyland@gmail.com; keydata=
+ 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
+In-Reply-To: <20251004003554.234647-1-kfirka3@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-In order to bypass getting the password.
----
- lib/keyslot_context.c     | 97 +++++++++++++++++++++++++++++++++++++++
- lib/keyslot_context.h     |  2 +
- lib/libcryptsetup.h       | 24 ++++++++++
- lib/libcryptsetup.sym     |  1 +
- lib/setup.c               | 24 +++++++++-
- src/cryptsetup.c          | 20 +++++---
- src/cryptsetup_arg_list.h |  2 +
- src/cryptsetup_args.h     |  1 +
- src/utils_arg_names.h     |  1 +
- 9 files changed, 165 insertions(+), 7 deletions(-)
+On 10/4/25 2:35 AM, Kfir Kahanov wrote:
+> This code enable support for clearkey bitlocker protection.
+> Closes: #962
 
-diff --git a/lib/keyslot_context.c b/lib/keyslot_context.c
-index 1b137823..a6df53fb 100644
---- a/lib/keyslot_context.c
-+++ b/lib/keyslot_context.c
-@@ -304,6 +304,68 @@ static int get_fvault2_volume_key_by_key(struct crypt_device *cd,
- 	return get_key_by_key(cd, kc, -2 /* unused */, -2 /* unused */, r_vk);
- }
- 
-+/* Clearkey-specific functions */
-+static int get_luks1_volume_key_by_clearkey(struct crypt_device *cd __attribute__((unused)),
-+	struct crypt_keyslot_context *kc __attribute__((unused)),
-+	int keyslot __attribute__((unused)),
-+	struct volume_key **r_vk __attribute__((unused)))
-+{
-+	/* LUKS1 does not support clearkey protection */
-+	return -ENOTSUP;
-+}
-+
-+static int get_luks2_volume_key_by_clearkey(struct crypt_device *cd __attribute__((unused)),
-+	struct crypt_keyslot_context *kc __attribute__((unused)),
-+	int keyslot __attribute__((unused)),
-+	struct volume_key **r_vk __attribute__((unused)))
-+{
-+	/* LUKS2 does not support clearkey protection */
-+	return -ENOTSUP;
-+}
-+
-+static int get_plain_volume_key_by_clearkey(struct crypt_device *cd __attribute__((unused)),
-+	struct crypt_keyslot_context *kc __attribute__((unused)),
-+	struct volume_key **r_vk __attribute__((unused)))
-+{
-+	/* Plain does not support clearkey protection */
-+	return -ENOTSUP;
-+}
-+
-+static int get_bitlk_volume_key_by_clearkey(struct crypt_device *cd,
-+	struct crypt_keyslot_context *kc __attribute__((unused)),
-+	const struct bitlk_metadata *params,
-+	struct volume_key **r_vk)
-+{
-+	/* For BitLocker clearkey, call BITLK_get_volume_key without passphrase */
-+	return BITLK_get_volume_key(cd, NULL, 0, params, r_vk);
-+}
-+
-+static int get_fvault2_volume_key_by_clearkey(struct crypt_device *cd __attribute__((unused)),
-+	struct crypt_keyslot_context *kc __attribute__((unused)),
-+	const struct fvault2_params *params __attribute__((unused)),
-+	struct volume_key **r_vk __attribute__((unused)))
-+{
-+	/* FVAULT2 does not support clearkey protection */
-+	return -ENOTSUP;
-+}
-+
-+static int get_verity_volume_key_by_clearkey(struct crypt_device *cd __attribute__((unused)),
-+	struct crypt_keyslot_context *kc __attribute__((unused)),
-+	struct volume_key **r_vk __attribute__((unused)),
-+	struct volume_key **r_signature __attribute__((unused)))
-+{
-+	/* Verity does not support clearkey protection */
-+	return -ENOTSUP;
-+}
-+
-+static int get_integrity_volume_key_by_clearkey(struct crypt_device *cd __attribute__((unused)),
-+	struct crypt_keyslot_context *kc __attribute__((unused)),
-+	struct volume_key **r_vk __attribute__((unused)))
-+{
-+	/* Integrity does not support clearkey protection */
-+	return -ENOTSUP;
-+}
-+
- static int get_generic_signed_key_by_key(struct crypt_device *cd,
- 	struct crypt_keyslot_context *kc,
- 	struct volume_key **r_vk,
-@@ -629,6 +691,26 @@ void crypt_keyslot_context_init_by_key_internal(struct crypt_keyslot_context *kc
- 	crypt_keyslot_context_init_common(kc);
- }
- 
-+void crypt_keyslot_context_init_by_clearkey_internal(struct crypt_keyslot_context *kc)
-+{
-+	assert(kc);
-+
-+	kc->type = CRYPT_KC_TYPE_KEY;
-+
-+	kc->get_luks1_volume_key = get_luks1_volume_key_by_clearkey;
-+	kc->get_luks2_volume_key = get_luks2_volume_key_by_clearkey;
-+	kc->get_plain_volume_key = get_plain_volume_key_by_clearkey;
-+	kc->get_bitlk_volume_key = get_bitlk_volume_key_by_clearkey;
-+	kc->get_fvault2_volume_key = get_fvault2_volume_key_by_clearkey;
-+	kc->get_verity_volume_key = get_verity_volume_key_by_clearkey;
-+	kc->get_integrity_volume_key = get_integrity_volume_key_by_clearkey;
-+	
-+	kc->get_key_size = key_get_key_size;
-+	kc->context_free = key_context_free;
-+	crypt_keyslot_context_init_common(kc);
-+}
-+
-+
- static void signed_key_context_free(struct crypt_keyslot_context *kc)
- {
- 	assert(kc && kc->type == CRYPT_KC_TYPE_SIGNED_KEY);
-@@ -1196,6 +1278,21 @@ CRYPT_SYMBOL_EXPORT_OLD(int, crypt_keyslot_context_init_by_vk_in_keyring, 2, 7,
- 	return _crypt_keyslot_context_init_by_vk_in_keyring(key_description, kc, false);
- }
- 
-+CRYPT_SYMBOL_EXPORT_NEW(int, crypt_keyslot_context_init_by_clearkey, 2, 8, struct crypt_device *cd,
-+	struct crypt_keyslot_context **kc)
-+{
-+	if (!kc)
-+		return -EINVAL;
-+
-+	*kc = crypt_zalloc(sizeof(**kc));
-+	if (!*kc)
-+		return -ENOMEM;
-+
-+	crypt_keyslot_context_init_by_clearkey_internal(*kc);
-+
-+	return 0;
-+}
-+
- int crypt_keyslot_context_get_error(struct crypt_keyslot_context *kc)
- {
- 	return kc ? kc->error : -EINVAL;
-diff --git a/lib/keyslot_context.h b/lib/keyslot_context.h
-index a2e42b20..f373bf8d 100644
---- a/lib/keyslot_context.h
-+++ b/lib/keyslot_context.h
-@@ -175,6 +175,8 @@ void crypt_keyslot_context_init_by_token_internal(struct crypt_keyslot_context *
- void crypt_keyslot_context_init_by_keyring_internal(struct crypt_keyslot_context *kc,
- 	const char *key_description);
- 
-+void crypt_keyslot_context_init_by_clearkey_internal(struct crypt_keyslot_context *kc);
-+
- const char *keyslot_context_type_string(const struct crypt_keyslot_context *kc);
- 
- #endif /* KEYSLOT_CONTEXT_H */
-diff --git a/lib/libcryptsetup.h b/lib/libcryptsetup.h
-index 77eb29ef..07b18f70 100644
---- a/lib/libcryptsetup.h
-+++ b/lib/libcryptsetup.h
-@@ -1352,6 +1352,17 @@ int crypt_keyslot_context_init_by_vk_in_keyring(struct crypt_device *cd,
- 	const char *key_description,
- 	struct crypt_keyslot_context **kc);
- 
-+/**
-+ * Initialize keyslot context for clear key.
-+ *
-+ * @param cd crypt device handle initialized to LUKS device context
-+ * @param kc returns crypt keyslot context handle type CRYPT_KC_TYPE_KEY
-+ *
-+ * @return zero on success or negative errno otherwise.
-+ */
-+int crypt_keyslot_context_init_by_clearkey(struct crypt_device *cd,
-+	struct crypt_keyslot_context **kc);
-+
- /**
-  * Get error code per keyslot context from last failed call.
-  *
-@@ -1823,6 +1834,19 @@ int crypt_activate_by_keyring(struct crypt_device *cd,
- 	int keyslot,
- 	uint32_t flags);
- 
-+/**
-+ * Activate BITLK device using clearkey.
-+ *
-+ * @param cd crypt device handle
-+ * @param name name of device to create
-+ * @param flags activation flags
-+ *
-+ * @return @e 0 on success or negative errno value otherwise.
-+ */
-+int crypt_activate_by_clearkey(struct crypt_device *cd,
-+	const char *name,
-+	uint32_t flags);
-+
- /** lazy deactivation - remove once last user releases it */
- #define CRYPT_DEACTIVATE_DEFERRED (UINT32_C(1) << 0)
- /** force deactivation - if the device is busy, it is replaced by error device */
-diff --git a/lib/libcryptsetup.sym b/lib/libcryptsetup.sym
-index 3a54431a..f6463af2 100644
---- a/lib/libcryptsetup.sym
-+++ b/lib/libcryptsetup.sym
-@@ -61,6 +61,7 @@ CRYPTSETUP_2.0 {
- 		crypt_activate_by_volume_key;
- 		crypt_activate_by_signed_key;
- 		crypt_activate_by_keyring;
-+		crypt_activate_by_clearkey;
- 		crypt_deactivate;
- 		crypt_deactivate_by_name;
- 		crypt_volume_key_get;
-diff --git a/lib/setup.c b/lib/setup.c
-index 37e6f7d9..1be05cfe 100644
---- a/lib/setup.c
-+++ b/lib/setup.c
-@@ -5707,6 +5707,20 @@ int crypt_activate_by_signed_key(struct crypt_device *cd,
- 	return r;
- }
- 
-+int crypt_activate_by_clearkey(struct crypt_device *cd,
-+	const char *name,
-+	uint32_t flags)
-+{
-+	int r;
-+	struct crypt_keyslot_context kc = {};
-+
-+	crypt_keyslot_context_init_by_clearkey_internal(&kc);
-+	r = crypt_activate_by_keyslot_context(cd, name, CRYPT_ANY_SLOT /* unused */, &kc, CRYPT_ANY_SLOT, &kc, flags);
-+	crypt_keyslot_context_destroy_internal(&kc);
-+
-+	return r;
-+}
-+
- int crypt_deactivate_by_name(struct crypt_device *cd, const char *name, uint32_t flags)
- {
- 	struct crypt_device *fake_cd = NULL;
-@@ -5917,7 +5931,7 @@ int crypt_volume_key_get_by_keyslot_context(struct crypt_device *cd,
- 	struct volume_key *vk = NULL;
- 
- 	if (!cd || !volume_key || !volume_key_size ||
--	    (!kc && !isLUKS(cd->type) && !isTCRYPT(cd->type) && !isVERITY(cd->type)))
-+	    (!kc && !isLUKS(cd->type) && !isTCRYPT(cd->type) && !isVERITY(cd->type) && !isBITLK(cd->type)))
- 		return -EINVAL;
- 
- 	if (isLUKS2(cd->type) && keyslot != CRYPT_ANY_SLOT)
-@@ -5977,6 +5991,14 @@ int crypt_volume_key_get_by_keyslot_context(struct crypt_device *cd,
- 	} else if (isBITLK(cd->type)) {
- 		if (kc && kc->get_bitlk_volume_key)
- 			r = kc->get_bitlk_volume_key(cd, kc, &cd->u.bitlk.params, &vk);
-+		else if (!kc) {
-+			struct crypt_keyslot_context *kc_clearkey = NULL;
-+			r = crypt_keyslot_context_init_by_clearkey(cd, &kc_clearkey);
-+			if (r >= 0) {
-+				r = kc_clearkey->get_bitlk_volume_key(cd, kc_clearkey, &cd->u.bitlk.params, &vk);
-+			}
-+			crypt_keyslot_context_free(kc_clearkey);
-+		}
- 		if (r < 0)
- 			log_err(cd, _("Cannot retrieve volume key for BITLK device."));
- 	} else if (isFVAULT2(cd->type)) {
-diff --git a/src/cryptsetup.c b/src/cryptsetup.c
-index bd2ee780..134162c6 100644
---- a/src/cryptsetup.c
-+++ b/src/cryptsetup.c
-@@ -508,6 +508,11 @@ static int action_open_bitlk(void)
- 			goto out;
- 		r = crypt_activate_by_volume_key(cd, activated_name,
- 						 key, keysize, activate_flags);
-+	} else if (ARG_SET(OPT_CLEARKEY_ID)) {
-+		/* For clearkey, we don't need a passphrase - pass NULL to activate_by_passphrase */
-+		r = crypt_activate_by_clearkey(cd, activated_name, activate_flags);
-+		if (r < 0)
-+			log_err(_("No clearkey protection found on BITLK device."));
- 	} else {
- 		tries = set_tries_tty(false);
- 		do {
-@@ -617,14 +622,17 @@ static int bitlkDump_with_volume_key(struct crypt_device *cd)
- 	if (!vk)
- 		return -ENOMEM;
- 
--	r = tools_get_key(NULL, &password, &passwordLen,
--			  ARG_UINT64(OPT_KEYFILE_OFFSET_ID), ARG_UINT32(OPT_KEYFILE_SIZE_ID), ARG_STR(OPT_KEY_FILE_ID),
--			  ARG_UINT32(OPT_TIMEOUT_ID), 0, 0, cd);
--	if (r < 0)
--		goto out;
-+	if (!ARG_SET(OPT_CLEARKEY_ID)) {
-+		r = tools_get_key(NULL, &password, &passwordLen,
-+				  ARG_UINT64(OPT_KEYFILE_OFFSET_ID), ARG_UINT32(OPT_KEYFILE_SIZE_ID), ARG_STR(OPT_KEY_FILE_ID),
-+				  ARG_UINT32(OPT_TIMEOUT_ID), 0, 0, cd);
-+		if (r < 0)
-+			goto out;
-+	}		
- 
- 	r = crypt_volume_key_get(cd, CRYPT_ANY_SLOT, vk, &vk_size,
--				 password, passwordLen);
-+					password, passwordLen);
-+
- 	tools_passphrase_msg(r);
- 	check_signal(&r);
- 	if (r < 0)
-diff --git a/src/cryptsetup_arg_list.h b/src/cryptsetup_arg_list.h
-index 26652dd8..95b2c991 100644
---- a/src/cryptsetup_arg_list.h
-+++ b/src/cryptsetup_arg_list.h
-@@ -241,6 +241,8 @@ ARG(OPT_USE_DIRECTIO, '\0', POPT_ARG_NONE, N_("Use direct-io when accessing devi
- ARG(OPT_USE_FSYNC, '\0', POPT_ARG_NONE, N_("Use fsync after each block"), NULL, CRYPT_ARG_BOOL, {}, {})
- 
- ARG(OPT_WRITE_LOG, '\0', POPT_ARG_NONE, N_("Update log file after every block"), NULL, CRYPT_ARG_BOOL, {}, {})
-+ 
-+ARG(OPT_CLEARKEY, '\0', POPT_ARG_NONE, N_("Open BITLK device using only clearkey protection"), NULL, CRYPT_ARG_BOOL, {}, {})
- 
- /* aliases */
- 
-diff --git a/src/cryptsetup_args.h b/src/cryptsetup_args.h
-index 43926f99..3ef58b61 100644
---- a/src/cryptsetup_args.h
-+++ b/src/cryptsetup_args.h
-@@ -43,6 +43,7 @@
- /* avoid unshielded commas in ARG() macros later */
- #define OPT_ALIGN_PAYLOAD_ACTIONS		{ FORMAT_ACTION, REENCRYPT_ACTION }
- #define OPT_ALLOW_DISCARDS_ACTIONS		{ OPEN_ACTION }
-+#define OPT_CLEARKEY_ACTIONS			{ OPEN_ACTION, BITLKDUMP_ACTION }
- #define OPT_DEFERRED_ACTIONS			{ CLOSE_ACTION }
- #define OPT_DEVICE_SIZE_ACTIONS			{ OPEN_ACTION, RESIZE_ACTION, REENCRYPT_ACTION }
- #define OPT_DISABLE_BLKID_ACTIONS		{ FORMAT_ACTION, REENCRYPT_ACTION }
-diff --git a/src/utils_arg_names.h b/src/utils_arg_names.h
-index a01419d3..f50c26dc 100644
---- a/src/utils_arg_names.h
-+++ b/src/utils_arg_names.h
-@@ -20,6 +20,7 @@
- #define OPT_CANCEL_DEFERRED		"cancel-deferred"
- #define OPT_CHECK_AT_MOST_ONCE		"check-at-most-once"
- #define OPT_CIPHER			"cipher"
-+#define OPT_CLEARKEY			"clearkey"
- #define OPT_DATA_BLOCK_SIZE		"data-block-size"
- #define OPT_DATA_BLOCKS			"data-blocks"
- #define OPT_DATA_DEVICE			"data-device"
--- 
-2.43.0
+Hi,
+
+as this is not trivial feature, please submit it through
+merge request through GitLab project page.
+You already have issue there, so it should not be a problem.
+
+This way it can go through CI and all discussion and changes
+will be there. Also it need to include some tests.
+
+For the patch - we planned support for Bitlocker clearkey,
+so it is definitely something that I would lite to merge.
+
+However, I do not understand why you need to touch API
+and other formats. The whole implementation should be embedded
+in BITLK format support only.
+IMO if Bitlocker header contains CLEARKEY, it should be used
+directly. I know it will be a little bit tricky to support
+it through existing calls, but I definitely do not want new activation
+API call and commandline option for it.
+
+Anyway, this discussion should happen on Gitlab, we can
+discuss there possible options for integration.
+
+Thanks!
+Milan
+
+
+> 
+> 
+> Kfir Kahanov (2):
+>    bitlocker: Support clearkey
+>    bitlocker: Add clearkey option
+> 
+>   lib/bitlk/bitlk.c         | 106 +++++++++++++++++++++++++-------------
+>   lib/keyslot_context.c     |  97 ++++++++++++++++++++++++++++++++++
+>   lib/keyslot_context.h     |   2 +
+>   lib/libcryptsetup.h       |  24 +++++++++
+>   lib/libcryptsetup.sym     |   1 +
+>   lib/setup.c               |  24 ++++++++-
+>   src/cryptsetup.c          |  20 ++++---
+>   src/cryptsetup_arg_list.h |   2 +
+>   src/cryptsetup_args.h     |   1 +
+>   src/utils_arg_names.h     |   1 +
+>   10 files changed, 234 insertions(+), 44 deletions(-)
+> 
 
