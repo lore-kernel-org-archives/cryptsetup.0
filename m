@@ -1,66 +1,67 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338483594B
-	for <cryptsetup@lists.linux.dev>; Sat,  4 Oct 2025 18:17:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70411448E0
+	for <cryptsetup@lists.linux.dev>; Sat,  4 Oct 2025 18:34:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759601869; cv=none; b=Q1TtC05wosTblu39y1EPQOAGAYTdnETqP3vRZPCLGiJF3Z65Qq02/5PtL/Kn61ginmLFrbM9a98cyYMjlfi9JsbcD8U/Vx8Ftio7GEeS02CCgxiVze9W6XrQTdcnARvX7EkVFtzzoxwHTl6vu3dCSGPKEpur5Ve+2PRLANNI7lU=
+	t=1759602871; cv=none; b=kzk5pLHfdswBZaBIF4Snj1NgdwzlecJL4G++EIYJERX1vfxg/7Dv6ISPjCSBeqF6NbM+lbIapFFkTSy1K7+/T/8Rwb2S0hBk9YAx+Cltx3CgLdWNffLFFt8WnHqmuX3S3pIKt6YQS0VUrRSVeg1ldkitcib37WwTKK5hpQjgKHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759601869; c=relaxed/simple;
-	bh=+ZRD0mvwQqGc+1uNlAgEdGLaGxNbIFTcqlsc+GqXrmU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:Cc:From:
-	 In-Reply-To:Content-Type; b=H5TvFu84NjbEYwyKVbCvjbViafTSPr6CHww1Ixd8RBf8bpPz8a5B0HTzlfLpv5xGJAbBbjKPzASL7HcxYdkqwQnCJ+889SFe49844M2x8zZR/mXljSyKnw9HQz9bzQ/EfNMb4nwnUn6/R+PsmYuBNtE2v16bWZ81xcQxzYYMtAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HekVS4f6; arc=none smtp.client-ip=209.85.128.42
+	s=arc-20240116; t=1759602871; c=relaxed/simple;
+	bh=QyrJO8GJE06Dz8KQ9U8niHSekSiDKWPRs99WHxfBlas=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=RbTscT+guJc8aJcFszAQRhVJI+5wmuK0GJuUFJ5YmPtpXXpMHL4ktq3zZt/z7/7elevtNgxzpb8xcvhRr8WX6aWSNKmzsDwMdfPgsDQISBsS1su0UuOZ1sxd2oMrhHZRfsXfHQePL2kSlo1pKqnShi28Sx58pqI4wiX0z59j6pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g5wUqt3H; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HekVS4f6"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-46e37d6c21eso23944145e9.0
-        for <cryptsetup@lists.linux.dev>; Sat, 04 Oct 2025 11:17:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g5wUqt3H"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-46e48d6b95fso30120065e9.3
+        for <cryptsetup@lists.linux.dev>; Sat, 04 Oct 2025 11:34:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759601866; x=1760206666; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:cc
+        d=gmail.com; s=20230601; t=1759602868; x=1760207668; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=9cyGb5/2JiYy3IRXvwWhCJO/NNAZYMww0Z4Jpzg8p3Q=;
-        b=HekVS4f6iQu50oPRjIBWsfX8CG5gfjMKTxyZEf9VDyP6L8/E+AUE72OcAKMXvyueyx
-         mVPwiM3fWA0WyEoZ5Uy2qBDrH9xRdKf/+uh3CHvWra6ICVxWgl4TYLPDllsF/Y+BvfuI
-         /ROTZcqJKMm1u+bED2pz+qwL4rNC6e1QexD2GDx9vjRRT9kLshmPvcVHETgtlWhEl96W
-         i8AJ1eIzF7aqBVC0rmqeEKoXYmcqpD5SWcWYPEw50V2vK8SKzfaTBKOYs6+7lopJ89ZC
-         T68NN8bR3KBjwvaHRygLtY61D2wytJDTE4aUKTJcMcSchS2S+xAvvle6tLdpQIVOJEML
-         c43Q==
+        bh=Yu96ksSBCMqK3NW4s6K3DvAfHx9AYuTxYEJUiY+9PFc=;
+        b=g5wUqt3Hm0bw6aFb/Cn5+M6yEFYNeUQpanBqffORtejnal3atw+lbWTCZjmgPFI4e1
+         IiXtvCEppzLADKEirlyFy2ZFT3BjeWDnlL7Ml8ayeDuGbd8G42jWB8YLGI5dRLVehZH+
+         9lNWRFks7COYZTKyqUFWX9fCPX6AdhsGJfxu+u65hhSpgOv+wP1T9QEmBRSJBpe0QHXx
+         4pjw896S2uiK3zl++ibWjDuefuLxQyCu504rU1Z2skO+BCpCVcXOSp+kAkgLmDzEWoco
+         b9iaj1EjWEoGogR9pScreiX14HjSpqLakzhO0GZD6nCGvjBe+evN9Oldl4msNNyhY1OT
+         TV/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759601866; x=1760206666;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:cc
+        d=1e100.net; s=20230601; t=1759602868; x=1760207668;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=9cyGb5/2JiYy3IRXvwWhCJO/NNAZYMww0Z4Jpzg8p3Q=;
-        b=jK1vj1JwLQoM77CPpGblHDrA0aGY6z9c9UKanmtnUixy/7pCea9COnTJgvx/+jfWXT
-         a0VAQcveXs9rEqbbRKUrdjLhRdjxPeUheRlcCXwtzSUby3Emx5gUBE/PJDfQ1fsGlc3T
-         WEBXGxine8rJIhKm2TuQ9kF7mKjAaJJ29b8F97dywJp8UEFK2E1HEab+zUNVSI9SY1LH
-         Q/v5C2qGrvRQ3kV9m1RTOHze8oudexG6z2HpPzp01VhlADGb1c3xdtWUWPZiRD9X3Dlq
-         xexlptGE4Pz+tvz6RM10hs0o3bxCiiaghl/OLynsMzEK/meog/4wHjxLTixMxJcn6Rst
-         k7kg==
-X-Forwarded-Encrypted: i=1; AJvYcCX9G2gnbnqrA2GvbF/1vsyMjuZ+4viK/GjLr5PPFnPtAghJnzr0LnkZ3II1S031/HZf9MQqTeoDR0hC@lists.linux.dev
-X-Gm-Message-State: AOJu0YzkdnLcjgmugVF1dtrBT9i1InriIqpcbXk7RqYKZIFrdhJYJLfs
-	HmW9/hdHO6+cP086HL2N0CPrkckMJM7dtL8UGx442w45BZZJY2xHO5yt
-X-Gm-Gg: ASbGncuU/gowEg7lQD9WUa//qBg6nG1ACCnvtco61UirKbSbAE6NA/V4H2ROijsaMxz
-	vU5QWNLVDdwBM2/QPhVF26xwwjbZsEKjUkxxy9YC+jK3K85C/7iv22BmWJ3vZyVpGrX2v8fsXey
-	snLZ3Fj2xLJ26WX1ca5hmMHM5lGdJZ9PusGYD5eTgpTuJcRG79938GVHrB403exkD+kaCAAlMy7
-	pA7ro8f8G+bklgG/JfCA+NR/KP9Yq+w4CF0JyRSFFz4Ar+2ab1ZEgtpiCbjV4Bc55nOwIi5bn7f
-	i1c9kthJW6aSNcHeUq5uTxgdI1koOlZVA997eqYk4rZI55ttVMIk+EUJtA0qiXpyx8KDdRBRi50
-	mrGOqhyQDGCNemUOKgPqJ+HORlJ9WIBskv0Wlv0Nnuo+DHAxJ3KAj925SiY49AKRx+d0vGBI4
-X-Google-Smtp-Source: AGHT+IHDaYVkLrn7u2D3tv2C6PZW+1RRKnGHjmD0NaXTbEY0HhKDrUd9fm8jTS1vwNBQjV+j8NJMRQ==
-X-Received: by 2002:a5d:5d88:0:b0:3ee:1523:2310 with SMTP id ffacd0b85a97d-4256715add3mr4632741f8f.27.1759601866149;
-        Sat, 04 Oct 2025 11:17:46 -0700 (PDT)
+        bh=Yu96ksSBCMqK3NW4s6K3DvAfHx9AYuTxYEJUiY+9PFc=;
+        b=SRVweJL+67a/JRNaCm+b2GpCcJUVZxvLE6QIF0x07g2wb9E06MVqMMdSJkxlHRJUUK
+         Fx1PsivOrxEg51LWsp97zweLYUgoA9VYZkfX1xw/6hdX/7HKDCBsNr1vaLohR1koCqDH
+         2qGM5n5WSHa2B1t8ybOexXr8XzbKM5WmCwgamJs8/me8rojxxmxDglo9cXW9SqhKHmBW
+         XSgLt+Y0I6ZEwNDQPWeQnvL8eKtWEcXv2BcnHQbEZkM58SUtPFDxG/w0DZfvghsjB+26
+         urc1I4YJeDIkWDXmscyrBnOkNN+qXgQDGkLckUe4VxbGGvlNR5MUsCZn52ZKjFWRTgeS
+         FOMw==
+X-Forwarded-Encrypted: i=1; AJvYcCVNYReA/9Nqj0C8lkskLpibsCqB94bjOg6MLTmcGKbrFCFIAN+fcZv64NmEm0/+exanaAfFYdhIO/6H@lists.linux.dev
+X-Gm-Message-State: AOJu0YyGlfk5NQojiLqp3LKDelfDmN5AM6VfNrMC5pgYyKpf4CEisCh2
+	hCsnDgaFo247XaADESYHhAjaqB7LSpO2F5GrJve6qHUi3MMdphkdwSUB
+X-Gm-Gg: ASbGncvajkWPLLIOkBjIlELdJbSr5tmXfUzJ+ErTlhbODfmH+xWobj1o1EwgwrQSL8x
+	VYTtfb6EYYC/ndcjqu9cUzZTKKxjO/oTlfWbLxZyOvgaS1GKQwVwHJIF2V1WDyIC55lmO3IVP4G
+	hsyZNDIrouDKIew7xxck2OhjR/yEFtffphYHHP5GRfV+glVwWDK1Gav4eEZZ/xOBEU4Pj7I+2dI
+	S1W0MF8wxE66yKYJPMvMRIo+E5sw9fwS6VuK40qn+jwXGLUZT183mauQWXQ0MCw3oXjeObu80w9
+	2scKPKZravas+gjpSd6hekvt+mLnY0d9s/XJ0vu4ZeEaibOtehvnsX6DLzwk1KouItJogVS4IQy
+	SLTDpUYoM9lK8SpAckqqknrsEpMLcDwqo+ZUHyGgqqm9BWhSUU7kSpJQ3vuKtOC2cKsi8o3aLiS
+	zGUvEBRMs=
+X-Google-Smtp-Source: AGHT+IGxVWT06eYhFsj7pNWcp/BIlieBJyPY1aVIJB0KVU2RMhZ5vp8YVtA+Ec4laoeEGYvBFQBWZA==
+X-Received: by 2002:a05:6000:2408:b0:3e8:b4cb:c3dc with SMTP id ffacd0b85a97d-425671351a7mr4270173f8f.3.1759602867864;
+        Sat, 04 Oct 2025 11:34:27 -0700 (PDT)
 Received: from [192.168.2.12] (85-70-151-113.rcd.o2.cz. [85.70.151.113])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4255d8acc4csm13041954f8f.16.2025.10.04.11.17.45
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4255d8e970esm13171777f8f.35.2025.10.04.11.34.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 04 Oct 2025 11:17:45 -0700 (PDT)
-Message-ID: <61a493d0-0236-4508-aec9-b29ea6433244@gmail.com>
-Date: Sat, 4 Oct 2025 20:17:44 +0200
+        Sat, 04 Oct 2025 11:34:27 -0700 (PDT)
+Message-ID: <f71c3ee6-4c31-418e-a141-f941b22b8f5c@gmail.com>
+Date: Sat, 4 Oct 2025 20:34:26 +0200
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
@@ -68,11 +69,11 @@ List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Bitlocker: Support clearkey
-To: Kfir Kahanov <kfirka3@gmail.com>, cryptsetup@lists.linux.dev
-References: <20251004003554.234647-1-kfirka3@gmail.com>
+Subject: Re: known issue with specific kernel releases and snapshots on LVM on
+ md RAID integrity devices
+To: Marc SCHAEFER <schaefer@alphanet.ch>, cryptsetup@lists.linux.dev
+References: <aN/lO3XNKyrinSz5@alphanet.ch>
 Content-Language: en-US
-Cc: Vojtech Trefny <vtrefny@redhat.com>
 From: Milan Broz <gmazyland@gmail.com>
 Autocrypt: addr=gmazyland@gmail.com; keydata=
  xsFNBE94p38BEADZRET8y1gVxlfDk44/XwBbFjC7eM6EanyCuivUPMmPwYDo9qRey0JdOGhW
@@ -117,57 +118,92 @@ Autocrypt: addr=gmazyland@gmail.com; keydata=
  vlB+GpT+iFRLvhCBe5kAERREfRfmWJq1bHod/ulrp/VLGAaZlOBTgsCzufWF5SOLbZkmV2b5
  xy2F/AU3oQUZncCvFMTWpBC+gO/o3kZCyyGCaQdQe4jS/FUJqR1suVwNMzcOJOP/LMQwujE/
  Ch7XLM35VICo9qqhih4OvLHUAWzC5dNSipL+rSGHvWBdfXDhbezJIl6sp7/1rJfS8qPs
-In-Reply-To: <20251004003554.234647-1-kfirka3@gmail.com>
+In-Reply-To: <aN/lO3XNKyrinSz5@alphanet.ch>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 10/4/25 2:35 AM, Kfir Kahanov wrote:
-> This code enable support for clearkey bitlocker protection.
-> Closes: #962
+On 10/3/25 5:01 PM, Marc SCHAEFER wrote:
 
-Hi,
+> However, today I had integrity errors [1], without actual device errors nor anything specific
+> in the smartctl output [1]. It looks like some sectors could be redirected to the other
+> RAID1 mirror. However some other seem to have been also incorrect on the other devices,
+> thus was not corrected. This led to the snapshot device being invalidated. The only issue
+> is that the backup of this snapshot did not complete (I restic-backup and rsync it
+> to local and remote devices).
 
-as this is not trivial feature, please submit it through
-merge request through GitLab project page.
-You already have issue there, so it should not be a problem.
+I would not trust smart much, it is a nice indicator, but usually it prints error
+too late (or never...) 
+> This could be a completely minor issue, e.g. if there was some reboot which did
+> not complete integrity the CRC writes, for example, however there was no such
+> issue (the system is on a UPS and only experienced controlled reboots since it
+> was installed).
+> 
+> Do you see anything peculiar with this?
+I do not see anything special, just checksum errors that can be caused by many things.
 
-This way it can go through CI and all discussion and changes
-will be there. Also it need to include some tests.
+I would start with checking hardware, specifically reseat RAM modules and cables,
+check and run some extensive memory and other system tests etc.
+The error could happen just by flipping some bits in memory.
+Check system logs, there could be something that precedes this issue.
 
-For the patch - we planned support for Bitlocker clearkey,
-so it is definitely something that I would lite to merge.
+Also, if you re testing writes (likde with dd), do it with direct-io (dd oflag=direct).
+It will require to use proper block size, but writes should got directly
+to drive and not through cache (so you will see error immediately).
 
-However, I do not understand why you need to touch API
-and other formats. The whole implementation should be embedded
-in BITLK format support only.
-IMO if Bitlocker header contains CLEARKEY, it should be used
-directly. I know it will be a little bit tricky to support
-it through existing calls, but I definitely do not want new activation
-API call and commandline option for it.
-
-Anyway, this discussion should happen on Gitlab, we can
-discuss there possible options for integration.
-
-Thanks!
 Milan
 
-
+> 
+> As a work-around I did the following:
+>     - deleted all snapshots
+>     - allocated a LVM volume with all free blocks on the volume group
+>     - wrote /dev/zero to it with dd
+>     - sync
+>     - destroyed that LVM volume
+> 
+> Thank you for any idea or pointers!
 > 
 > 
-> Kfir Kahanov (2):
->    bitlocker: Support clearkey
->    bitlocker: Add clearkey option
+> [1]
+> 2025-10-03T13:15:16.359650+02:00 virtual kernel: [612220.519671] device-mapper: integrity: dm-2: Checksum failed at sector 0xd50a6b8
+> 2025-10-03T13:15:16.359662+02:00 virtual kernel: [612220.519703] md/raid1:md127: dm-2: rescheduling sector 223125176
+> 2025-10-03T13:15:16.361212+02:00 virtual kernel: [612220.524315] device-mapper: integrity: dm-3: Checksum failed at sector 0xd514028
+> 2025-10-03T13:15:16.361217+02:00 virtual kernel: [612220.524342] md/raid1:md127: dm-3: rescheduling sector 223164456
+> 2025-10-03T13:15:16.361218+02:00 virtual kernel: [612220.524393] device-mapper: integrity: dm-3: Checksum failed at sector 0xd514030
+> 2025-10-03T13:15:16.361219+02:00 virtual kernel: [612220.524415] md/raid1:md127: dm-3: rescheduling sector 223164464
+> 2025-10-03T13:15:16.361219+02:00 virtual kernel: [612220.524461] device-mapper: integrity: dm-3: Checksum failed at sector 0xd514020
+> 2025-10-03T13:15:16.361220+02:00 virtual kernel: [612220.524479] md/raid1:md127: dm-3: rescheduling sector 223164448
+> 2025-10-03T13:15:16.361220+02:00 virtual kernel: [612220.524550] device-mapper: integrity: dm-3: Checksum failed at sector 0xd514038
+> 2025-10-03T13:15:16.361221+02:00 virtual kernel: [612220.524570] md/raid1:md127: dm-3: rescheduling sector 223164472
+> 2025-10-03T13:15:16.361221+02:00 virtual kernel: [612220.524604] device-mapper: integrity: dm-3: Checksum failed at sector 0xd514008
+> 2025-10-03T13:15:16.361221+02:00 virtual kernel: [612220.524621] md/raid1:md127: dm-3: rescheduling sector 223164424
+> 2025-10-03T13:15:16.365237+02:00 virtual kernel: [612220.524712] device-mapper: integrity: dm-3: Checksum failed at sector 0xd514040
+> 2025-10-03T13:15:16.365246+02:00 virtual kernel: [612220.524731] md/raid1:md127: dm-3: rescheduling sector 223164480
+> 2025-10-03T13:15:16.365247+02:00 virtual kernel: [612220.524827] device-mapper: integrity: dm-3: Checksum failed at sector 0xd51401c
+> 2025-10-03T13:15:16.365248+02:00 virtual kernel: [612220.524842] md/raid1:md127: dm-3: rescheduling sector 223164440
+> 2025-10-03T13:15:16.381305+02:00 virtual kernel: [612220.542185] device-mapper: integrity: dm-2: Checksum failed at sector 0xd50a6b8
+> 2025-10-03T13:15:16.381317+02:00 virtual kernel: [612220.544723] md/raid1:md127: read error corrected (8 sectors at 223389368 on dm-2)
+> 2025-10-03T13:15:16.381351+02:00 virtual kernel: [612220.544729] md/raid1:md127: redirecting sector 223125176 to other mirror: dm-2
+> 2025-10-03T13:15:16.385216+02:00 virtual kernel: [612220.545002] device-mapper: integrity: dm-3: Checksum failed at sector 0xd514028
+> 2025-10-03T13:15:16.385227+02:00 virtual kernel: [612220.545204] md/raid1:md127: redirecting sector 223164456 to other mirror: dm-2
+> 2025-10-03T13:15:16.385228+02:00 virtual kernel: [612220.547073] md/raid1:md127: dm-2: rescheduling sector 223164456
+> 2025-10-03T13:15:16.393219+02:00 virtual kernel: [612220.553809] md/raid1:md127: redirecting sector 223164464 to other mirror: dm-2
+> 2025-10-03T13:15:16.393232+02:00 virtual kernel: [612220.554002] md/raid1:md127: dm-2: rescheduling sector 223164464
+> 2025-10-03T13:15:16.401225+02:00 virtual kernel: [612220.561696] md/raid1:md127: redirecting sector 223164448 to other mirror: dm-2
+> 2025-10-03T13:15:16.414212+02:00 virtual kernel: [612220.576446] md/raid1:md127: redirecting sector 223164472 to other mirror: dm-2
+> 2025-10-03T13:15:16.421730+02:00 virtual kernel: [612220.584276] md/raid1:md127: redirecting sector 223164424 to other mirror: dm-2
+> 2025-10-03T13:15:16.429237+02:00 virtual kernel: [612220.592338] md/raid1:md127: redirecting sector 223164480 to other mirror: dm-2
+> 2025-10-03T13:15:16.437263+02:00 virtual kernel: [612220.599077] md/raid1:md127: redirecting sector 223164440 to other mirror: dm-2
+> 2025-10-03T13:15:16.445281+02:00 virtual kernel: [612220.605304] md/raid1:md127: dm-2: unrecoverable I/O read error for block 223164456
+> 2025-10-03T13:15:16.449231+02:00 virtual kernel: [612220.612399] md/raid1:md127: dm-2: unrecoverable I/O read error for block 223164464
+> 2025-10-03T13:15:16.477217+02:00 virtual kernel: [612220.637038] md/raid1:md127: dm-2: unrecoverable I/O read error for block 223164448
+> 2025-10-03T13:15:16.485263+02:00 virtual kernel: [612220.647901] md/raid1:md127: dm-2: unrecoverable I/O read error for block 223164472
+> 2025-10-03T13:15:16.505219+02:00 virtual kernel: [612220.664740] md/raid1:md127: dm-2: unrecoverable I/O read error for block 223164424
+> 2025-10-03T13:15:16.533219+02:00 virtual kernel: [612220.696016] md/raid1:md127: dm-2: unrecoverable I/O read error for block 223164480
+> 2025-10-03T13:15:16.565224+02:00 virtual kernel: [612220.725286] md/raid1:md127: dm-2: unrecoverable I/O read error for block 223164440
+> 2025-10-03T13:15:16.629223+02:00 virtual kernel: [612220.789079] device-mapper: snapshots: Invalidating snapshot: Error reading/writing.
+> 2025-10-03T13:15:16.641509+02:00 virtual dmeventd[3523319]: WARNING: Snapshot vg1-121_snapshot changed state to: Invalid and should be removed.
+> 2025-10-03T13:15:16.641620+02:00 virtual dmeventd[3523319]: Unmounting invalid snapshot vg1-121_snapshot from /mnt/snapshot/121_snapshot.
 > 
->   lib/bitlk/bitlk.c         | 106 +++++++++++++++++++++++++-------------
->   lib/keyslot_context.c     |  97 ++++++++++++++++++++++++++++++++++
->   lib/keyslot_context.h     |   2 +
->   lib/libcryptsetup.h       |  24 +++++++++
->   lib/libcryptsetup.sym     |   1 +
->   lib/setup.c               |  24 ++++++++-
->   src/cryptsetup.c          |  20 ++++---
->   src/cryptsetup_arg_list.h |   2 +
->   src/cryptsetup_args.h     |   1 +
->   src/utils_arg_names.h     |   1 +
->   10 files changed, 234 insertions(+), 44 deletions(-)
+> 
 > 
 
