@@ -1,49 +1,43 @@
-Received: from shakotay.alphanet.ch (shakotay.alphanet.ch [46.140.72.222])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA90833993
-	for <cryptsetup@lists.linux.dev>; Sun,  5 Oct 2025 14:59:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.140.72.222
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF32340298
+	for <cryptsetup@lists.linux.dev>; Thu,  6 Nov 2025 14:38:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759676371; cv=none; b=BPD7xbEQbrCQUzqyijjk9SkcstvZlTmbqUJVkX10w2Jss6VSxfj+sjwyGy0828+dNFzQS+sh01CqEIMmcXOBUO6Nyv4UWYqEpzgJ+X1jdUHw+8pxSM8dH0eh/MYDoe9FJ0kmvjF4isQayb9ZCNuqn7GEX6r9Jb1z+nKqmb8O20k=
+	t=1762439908; cv=none; b=g+Lls8sPSWtwekcOjDgtD+OTqQXP+KpCgnYs8UWnvPAbzuTRIpyzZ5UWW2l5N7YUqLV6FMg2R4gwk4+dIOvlgrnWI4qr5ixbug8bcZfxcT7Vi//hFknRzepqDTXiGapF7MoLssR+vs/P8qqWh8o2r9Z/otxJKgMwQjstfLuyw54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759676371; c=relaxed/simple;
-	bh=lG+gq6Ei5Ji+d4lYiK04mGhMkbvT6vRmjcfE5qrs1Xw=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RnUYFOHTwABnq99ZuqcZG4H1mtNtCjTN3E1Af2TsaCfBq1GFZPDxY/nqPNqlEwwMFCQHcX6kBx6KDiMX5GgKilCcuT8u951SdRvMH96R6s05fSdFap9pskqU/bHbKFRwSAandWINmcKWGqTTQEQ5sNz6m/YX+v6RD1vEgcsZyF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alphanet.ch; spf=pass smtp.mailfrom=alphanet.ch; dkim=pass (2048-bit key) header.d=alphanet.ch header.i=@alphanet.ch header.b=OoE42III; arc=none smtp.client-ip=46.140.72.222
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alphanet.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alphanet.ch
+	s=arc-20240116; t=1762439908; c=relaxed/simple;
+	bh=TN9ucU9Yy2EZSz5Yy2Uglx9YreXQ6KBG15o02HACkto=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=BcQ6XMkT2F8sWIpdtXEoGZdjXX6bZW9TijfnrQvcZvDqFxAj4Vp2OzJq17QxWUwZUfDTBvQyfAmouLaS+VKnEU0p4IGoEnWuYIW/ImNN/pAj9iXwMBQnswfLsvWy8N1KE3vw9qdUhjEaEMDqIolDE2MJt6FqOHMZnpiiLywyOKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=XgOTDxOY; arc=none smtp.client-ip=178.21.23.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=alphanet.ch header.i=@alphanet.ch header.b="OoE42III"
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by shakotay.alphanet.ch (Postfix) with ESMTP id 16E093044EB5
-	for <cryptsetup@lists.linux.dev>; Sun,  5 Oct 2025 16:59:19 +0200 (CEST)
-Received: from reliant.alphanet.ch (reliant.alphanet.ch [192.168.1.30])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by shakotay.alphanet.ch (Postfix) with ESMTPS id 6D9693041AAD
-	for <cryptsetup@lists.linux.dev>; Sun,  5 Oct 2025 16:59:14 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=alphanet.ch; s=mail;
-	t=1759676354; bh=lG+gq6Ei5Ji+d4lYiK04mGhMkbvT6vRmjcfE5qrs1Xw=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=OoE42IIIW2oOmMtxBWVpZdqfueF4Dy4zD4/kuEQinDAijK2WLYLwJKB/gnQZcMC6T
-	 BT3X3yvh4V4RLSNQd2WKHlMyxF4pqNHwPoH8O2dvtKC9dzaSm4APzAiUYXhxRVttsy
-	 PmHaszDE5lnPBmOxcUgRdKKiLlA/Pz7AxpJdFmR9edT2vB1z2BMNwUwkV/FOVhOwlK
-	 1HPYSysPX2oc2UjQ8dj6hvArK9gtMPseX2Ddoi6LRnT/8XiYj0mF2wcphQecJ0yv2T
-	 fgfQm9XBbKPL4qjaHLyiQMjO8tL/EV6tzZ+gx6K2ET8EvyZUGAKYJgxtLZYJesLqS9
-	 oyhKFksGhg3hA==
-Received: by reliant.alphanet.ch (Postfix, from userid 1000)
-	id 67BB076CA27; Sun,  5 Oct 2025 16:59:14 +0200 (CEST)
-Date: Sun, 5 Oct 2025 16:59:14 +0200
-From: Marc SCHAEFER <schaefer@alphanet.ch>
+	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="XgOTDxOY"
+Received: from mail01.disroot.lan (localhost [127.0.0.1])
+	by disroot.org (Postfix) with ESMTP id BB67020D9B
+	for <cryptsetup@lists.linux.dev>; Thu,  6 Nov 2025 15:38:16 +0100 (CET)
+X-Virus-Scanned: SPAM Filter at disroot.org
+Received: from layka.disroot.org ([127.0.0.1])
+ by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
+ id DjbIExxfkI_n for <cryptsetup@lists.linux.dev>;
+ Thu,  6 Nov 2025 15:38:16 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
+	t=1762439896; bh=TN9ucU9Yy2EZSz5Yy2Uglx9YreXQ6KBG15o02HACkto=;
+	h=Date:From:To:Subject;
+	b=XgOTDxOYO1AjgmcxG9s53+9EXjVbtMcDnCS2f0L+JatmfmssJKEP3V5f9iZu0kvpJ
+	 fB+yJOiGL/5C36pgITcHQuOARlgHxSc1pE+lVllB/hPXTV3iQih/9xQyBDWgyKNn8g
+	 nRsMLmOfG74ropcBugWHLUcR0YwcWzAl1HaGwqNgy+BEIbinTJGK9Ra+e8SKSwuxgD
+	 pSd919bH3Rq8ybEWhi4xYfDaNt2r+7Fa6M/UHta+kxglbIrDO6v67wWX1DTGqiRPHg
+	 07bwDjWJwfXXG9ccytWzqKEN3/dLBbFP9QWxOfmeh35kaeIqzgoA8zq1B/DIWZMJtl
+	 s84ZE4HdJGBng==
+Date: Thu, 6 Nov 2025 15:38:06 +0100
+From: techmetx11 <techmetx11@disroot.org>
 To: cryptsetup@lists.linux.dev
-Subject: Re: known issue with specific kernel releases and snapshots on LVM
- on md RAID integrity devices
-Message-ID: <aOKHwjBZKdqGXj5m@alphanet.ch>
-References: <aN/lO3XNKyrinSz5@alphanet.ch>
- <f71c3ee6-4c31-418e-a141-f941b22b8f5c@gmail.com>
+Subject: Question about FAQ 5.21: "Why is there no "Nuke-Option"?"
+Message-ID: <ycc43yz54ybgnal5t3rcment6vjvanalx2g2z6rly4wxxpietn@nn222ctnfqaz>
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
@@ -52,57 +46,58 @@ List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f71c3ee6-4c31-418e-a141-f941b22b8f5c@gmail.com>
 
-Hello and thank you for your ideas,
+After seeing GrapheneOS's implementation of the same design idea, I feel
+like this idea wasn't given much thought in the FAQ.
 
-On Sat, Oct 04, 2025 at 08:34:26PM +0200, Milan Broz wrote:
-> > Do you see anything peculiar with this?
-> I do not see anything special, just checksum errors that can be caused by many things.
+> While this sounds attractive at first glance, it does not make sense
+> once a real security analysis is done.  One problem is that you have to
+> have some kind of HSM (Hardware Security Module) in order to implement
+> it securely.  In the movies, a HSM starts to smoke and melt once the
+> Nuke-Option has been activated.  In actual reality, it just wipes some
+> battery-backed RAM cells.  A proper HSM costs something like
+> 20'000...100'000 EUR/USD and there a Nuke-Option may make some sense.
+> BTW, a chipcard or a TPM is not a HSM, although some vendors are
+> promoting that myth.
 
-Indeed.
+This paragraph ignores the fact that the TPMs that come with computers
+have improved on-par to the standard of HSMs, and are now integrated
+straight in the CPU in most cases, rather than being a seperate chip or
+card that can be simply bus-probed or manipulated physically.
 
-> I would start with checking hardware, specifically reseat RAM modules and cables,
-> check and run some extensive memory and other system tests etc.
+> Now think of the typical LUKS application scenario, i.e.  disk
+> encryption.  Usually the ones forcing you to hand over your password
+> will have access to the disk as well, and, if they have any real
+> suspicion, they will mirror your disk before entering anything supplied
+> by you.  This neatly negates any Nuke-Option.  If they have no suspicion
+> (just harassing people that cross some border for example), the
+> Nuke-Option would work, but see above about likely negative consequences
+> and remember that a Nuke-Option may not work reliably on SSD and hybrid
+> drives anyways.
 
-I did extensive memory checks before, and I did them again, found nothing
-(memtest86, long kernel compilation loops). What I find peculiar is that in
-most cases, both RAID1 mirrors had an integrity error at the same blocks:
-especially knowing that each RAID1 mirror is, in this case, over its own
-dm-integrity device.
+Disk mirroring is a valid concern, but can be fixed by having layered
+configurations, such as: having a outer configuration that decrypts the
+inner configuration.
+The outer configuration can have keyslots for the hardware security
+chips, to decrypt the inner configuration (which includes the keyslot
+parameters for the duress password and the normal password, and other
+LUKS parameters). Not only does this make it so that wiping the
+HSM/TPM/etc. permanently destroys any chance of decrypting the inner
+configuration and thus the rest of the hard drive, this may also make it
+hard to determine if the hard drive is "booby-trapped" just from reading
+the LUKS header.
 
-But maybe I am mistaken, and there is some optimisation which makes both
-dm-integrity devices recognize the original block to be written is shared
-between the two device and it is optimized by dm-integrity to be calculated
-only once?  If yes, then a simple RAM corruption would explain this issue.
+Why was not such a design considered for this kind of setup? (if it wasn't
+due to complexity). Computers have advanced so far after
+(persumably) this FAQ entry was written
 
-> Check system logs, there could be something that precedes this issue.
+> Still, if you have a good use-case (i.e.  non-abstract real-world
+> situation) where a Nuke-Option would actually be beneficial, please let
+> me know.
 
-No, there was nothing, I get logcheck summaries for this system and there
-was no I/O error or anything before this.  I also monitor temperatures,
-and there were quite ok just before and during the issues.
-
-Locating the issue more closely I determined which LV contained errors (the
-errors, except the correcte one, were always at the same addresses), then
-checked all the files from the LV (*) (as errors were on both R1 copies, it
-should have shown something), and the error is only seen when reading the raw
-device LV, but not in the files theselves.  This also explain why the
-initial error was on a snapshot (that is temporary, quickly deleted).
-
-I thus wrote a big new file filling the LV fs, no error, then re-read the raw
-LV volume without errors. I am now running a md raidcheck again, that should
-tell me if the dm-integrity CRCs are now written correctly on both
-devices.
-
-Another question: does --enable-discard really work?  Looking at the
-documentation, I am not sure it really works with crc32 and bitmap
-integrity mode, do you have a final answer?  If you have no idea,
-I will do some tests on a spare system to see what combination
-of options really does discard (I am not sure how to test this,
-presumably NVMs have a namespace-full percentage, not sure
-it's really reliable). Do you have any suggestion?
-
-Thank you and have a nice week.
-
-(*) simple read, then backup comparison for the files that don't
-    change.
+Imagine if you were being tortured by people to unlock a hard drive that
+you didn't want them to see the contents of, and so you give them the
+password to hopefully make it so that it wipes the TPM/HSM/etc. of the
+computer and destroy any chance of unlocking the contents, thus making
+their job futile and saving information from ending up on your
+adversaries' hands (even if it meant it cost you your life)
