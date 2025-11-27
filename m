@@ -1,174 +1,224 @@
-Received: from mail-il1-f193.google.com (mail-il1-f193.google.com [209.85.166.193])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320C31F09B3
-	for <cryptsetup@lists.linux.dev>; Wed, 12 Nov 2025 05:18:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05CF315D2F
+	for <cryptsetup@lists.linux.dev>; Thu, 27 Nov 2025 07:59:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762924727; cv=none; b=YgjoijxhmWlq6Ru1JGaEtz5VgUWa/ICII+/xmTD5v4EXgRhleDhLxXLDH1b7s3rO0KqQF1uN6DERjP7Zmv3AL5nRriXT3Lxhah8ZjL9Kzy/5C9XuhIbA7ltSCsQlVQZUW3e2vOoXQBu3MLhGCRHFBl0VfwO4N+AdoCXmSbn7dP8=
+	t=1764230358; cv=none; b=foTqEi7rMqllmx82vpasnwMh3dmdd8nEDLN7pwJSqa5YOnmqHlevYSB04kHaczyPy/D9hnE/UOjz3hhWaFfmRnqGVUcvQb5zIxreAuvzRJavXMvlW921OtzxgGYiimsLDY7ASiD3OLLQdTG+sX5fLufZWrGT037jLdPdGoOljmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762924727; c=relaxed/simple;
-	bh=c6/7tzoz4PT3gVjKzbmDjcFcQEgyG78OrsyW90YOUEI=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=Mlct3RcDVDH+9ZIloQxjzCUKIuhMZZelpa2dJ1H3pxX5RQkNwGlpkgv5cA0S2rZuxbK8maVftJg4RllWdX35PkDVQBuzqtDAV06eI5ovdoqLKirBGQihE/uiTp88PjKdAFQzhvZbuhIzraCZyce4rfCyl20mX9oPBphTaToZkwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MkS/L63R; arc=none smtp.client-ip=209.85.166.193
+	s=arc-20240116; t=1764230358; c=relaxed/simple;
+	bh=8e9pgmMtexm38fPOLh878dOcYTDs/MJtm+gpCClVin0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Vome4wU45hK5Zsvd7eMOaIW3Fp0kdJrrjq5MjTfMpgmI79+RhA/R/68otvWJrPDbs4nrg0vPD7SdhAE5RKfD97BnJgPULGeov/iRYhemTpdlieUlKrduCFofSuWebB5EHwDGeyql/ZNtnML3SjKpgr4c3VgR9S7CI6n/1QATeh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nEjYKgTg; arc=none smtp.client-ip=209.85.208.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MkS/L63R"
-Received: by mail-il1-f193.google.com with SMTP id e9e14a558f8ab-4346dfd5b44so124055ab.3
-        for <cryptsetup@lists.linux.dev>; Tue, 11 Nov 2025 21:18:45 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nEjYKgTg"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-644f90587e5so1025683a12.0
+        for <cryptsetup@lists.linux.dev>; Wed, 26 Nov 2025 23:59:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762924725; x=1763529525; darn=lists.linux.dev;
-        h=mime-version:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ezl4SSQLTdq74CW82/F96/qsFWv/FcEbMyqJZMgIA2A=;
-        b=MkS/L63RA+2acDAvdL8irmiUWAYhNaecWIelaF1U3ZmLoO4Vx0kcEN7Ot4Mo1pwwMf
-         sUHsSV9r4TJ+fpwRiOgYIbJd6jQzdvGBk5NYSC0p+liejOfsbdptRXNAph7OXThJP7HJ
-         8VJQlsxjJms2P2ba9nRg7Ytf/VaIUWuYpos2MfG0iIZ+pV53qIa8/xdDORTjYBopJwO9
-         d4R7BSm3CvqoEcPYh4CEyxcuIr2mlzwp0fk2DepBFFYS1XEaNDJzZ8qkwYSIEauu6i8O
-         hJBXBVqZbO3sWvQKLQTwG8OYMaUqCmzD1uhRzdO9o/S0wbPLq4YsU18sr1Fv3uxE535y
-         7PxQ==
+        d=gmail.com; s=20230601; t=1764230355; x=1764835155; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=z9iBKcpWfLkBP0f8MQKdR3ZLtXd1IIP5cJjZBkNDvwo=;
+        b=nEjYKgTgUH9xQbbvfN388/J8L2p64gZfqCGL9geFWutMZzeGHExGVdEFD8Mc6SvzGx
+         9kvAvfn6au2HrC0960czno7+KCF9NwQgmc72ukdW5P36dsDmMuaj+otphv7oFxVJloD6
+         genzvarRx+IumQh9ts1UTOrUA4aEEfFd/m9ADF2XGS6f//o4ZDhEFRQnlHxJQy3kmXnW
+         XxoCm+a8T4Jx7nat8yYLBCiboyyHEMBLtYJemj7W7kKeFbUilelN1++PI9olmNnEWdB4
+         MIzolAMXyBTSAKIT9GRFNEaFLlu8XqliiRTwzBnZivEef+4+4dSgDb6bC/fryUZEb2ss
+         6w7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762924725; x=1763529525;
-        h=mime-version:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ezl4SSQLTdq74CW82/F96/qsFWv/FcEbMyqJZMgIA2A=;
-        b=CjiwtY6YAO330qNXb51hC8ITXTp3lfZyfWCRktrXPcuBT0j+K5fQ/Z/Jg2mfMYSqMe
-         /gZ6AYUB7C3jQEH0P0dGoUtGNRfTPYI5VXYkCHtFBK7N2kuQz/5amOh2q5Q+Wz9EDRCH
-         IemAs3THm656ojYHc9M2nwccIrmOgQlht4OPy1Al8edkZF4DrAx8ZE/sQ1/8iy1mp0E6
-         /2dh0MsqxBpmpgnTZR+TnZC0JnolenV1x0akbclubVaW1ULUFQk88lseufybb9ylHj1V
-         k9N8ZaISup+MGYVm+4qkX8Pos0Nl1btiaVO6aw+zGCXcY5f9Hq7WZDY/xhksCN+gCpXt
-         9Yeg==
-X-Forwarded-Encrypted: i=1; AJvYcCUl4LJiMzVsEVbpPM2erzgDsHqU+IxXAzyOW6Kqdqgc1KEieykpALlby2AqPIKX6OKlI4hKPw7Skyup@lists.linux.dev
-X-Gm-Message-State: AOJu0YzF40SQBDEKgC6XGn60nOpHBgNCGeQrN59Coaxg3ibCuSazQtP8
-	o5zGR8hZ6JonZ3fhDsX6DBObvh9L6fU5jYjiJB74JJiFaqoh9iBD2DFv
-X-Gm-Gg: ASbGncsnOt6tjO2T5YnYUem/K0jlUrCAcj2qv6ULxi2cVcaSFAReDSZ8mBJwBYPnYmn
-	3DDvQT4fKkzdjwg0cviSGsu67785gUTXZBIuJa8jTksRQT3KqMTxac6E3xdfrKIyqe4LKtzBTCk
-	oi2p4VgsLYI+F7FrNjXvKZkNIq1qNL+YoaSt/G5eM8SKCdeNIQiJIFO5bNTmpuCAoY6VKColU02
-	msgXXfsn52kH/cuLcVmVxJtQMUv8mEqxcc/zCrQ0rMjoDFyW41TTheFZGwW6ZPSGRiJFaX/SzPi
-	jES4FqnmOI3CpmIxW5+ALpXiGp/mqJJ3yNZKV0oEr4eojK5kVgHqP/Otm1i6K813OzK+v0Vxyh4
-	+GzVYYjLY27b3LimU3g1isUTuOFv29k7f/y4ZBtl+Z3h09uUNeArGjrgtUXxd/etYNviEvDzKz5
-	UalP+PuXcE
-X-Google-Smtp-Source: AGHT+IG+CGWHKYLx/mgjt5y0vC6+WM/NIsUYelFqXQlQ4OGrBX/1QS3A/YpW77DPQRnBU2qp1nCKvA==
-X-Received: by 2002:a05:6e02:3807:b0:433:2421:d752 with SMTP id e9e14a558f8ab-43473de377cmr8414505ab.7.1762924725169;
-        Tue, 11 Nov 2025 21:18:45 -0800 (PST)
-Received: from kf-m2g5 ([2607:fb90:cf2c:12ad:3e02:9a49:f465:3655])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-4347338d4d7sm6753305ab.20.2025.11.11.21.18.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Nov 2025 21:18:44 -0800 (PST)
-Date: Tue, 11 Nov 2025 23:18:35 -0600
-From: Aaron Rainbolt <arraybolt3@gmail.com>
-To: linux-mm@kvack.org, cryptsetup@lists.linux.dev
-Cc: linux-kernel@vger.kernel.org, adrelanos@whonix.org
-Subject: Hard system lock-ups when using encrypted swap and RAM is exhausted
-Message-ID: <20251111231835.1232ad8f@kf-m2g5>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.41; x86_64-pc-linux-gnu)
+        d=1e100.net; s=20230601; t=1764230355; x=1764835155;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=z9iBKcpWfLkBP0f8MQKdR3ZLtXd1IIP5cJjZBkNDvwo=;
+        b=goLzx/JQixrSiuoGsm8XRiPG5YXAWThk3uwtmJKvuIxpMGNm8pX0OgClQDilptMvZz
+         haAGtOIN/djx3PRrvAybwyXfJMlkWR0JHG2ldxcKPRudAAzLrbu9ioyux1MDx2Fehfik
+         9DZLOFoPfPHAsyKSRg5Oix6TWR6eKKAgUCQuRjMxMC2Xx74RaaEexgGHaUlXq6sqw5Yf
+         BzRrT9s2TqPzMjdqVm4kxeuB6xRqz+lhndWJAk/s+dtGqL4SG+sYxhG9tfKCFQZu9TmN
+         jy3TJPY0Holq4tFgomiB3bNWoAYqKqjRSmGG8HwTUqQhuXue3SuDeUyucYwC2XMigk+n
+         srug==
+X-Forwarded-Encrypted: i=1; AJvYcCUCM2KHlu/nC4Z/18jjXX3Vrbp1k0UZpcmeIKCJpyxBExLX4yZfB+z4dp43U49RC0ID2oGlb/BQwP08@lists.linux.dev
+X-Gm-Message-State: AOJu0YxLw6zJPQKo43Wt9UTO91Y/MvaiSQunjhd7n/IRUW8tJdnizltP
+	qXpIqMuYReBcOnizXJB9+gSXHlX0j+sOsnhLOqVc2hzeaS4kW05OZswa
+X-Gm-Gg: ASbGnctjS95IvC0e8ZkIAK42PYSS8qZ7viPD/Bsx+1mUdpwuEnwtLQxwsrh8SUgSlGg
+	mMyK1UTMaqQJmN8W0sWf13/evx4JkIqRC8wjfRC8WDAYCdae+iYgoiuc8/pF49K7pdn5bKLWk51
+	QJvrn1XR7/XX2/4qIt4JLS0KnCBgOaeeKmETcBYL/tKqEhkxoEN5uva3X3IWAXnnfUpnoOOrPMZ
+	PeaIIGCp9RjXZ+JNYVnY+Xk4pmbdTlHShW0k1ItMrnMrqPzvrHL61wTi8w8e7S/2JB/WkFM3g0J
+	XMAA3/amWw7XsIy7yXZ8mA4v+R5ox3bVluD+PdNp3GicIlllLlA70nHBE8AP4ZtgOSF9lt+UcYC
+	WwAmJjd2bKLCQmt6DHYIp4rm4GOaxL+csphEMktXIxlbpdA2ooToR/Z1vMK//qrmooW3/Rp0cVT
+	t9KOEqdZohlCCGd1U=
+X-Google-Smtp-Source: AGHT+IGUOKW6F5FS113p653lsKvlpeK2sBEh6Ngnt2v9kCLGX4w6J8eiuyMeBBixqNwPaFIiEPaPKQ==
+X-Received: by 2002:a17:907:7fa2:b0:b5c:66ce:bfe6 with SMTP id a640c23a62f3a-b76c558f2eamr1050311066b.55.1764230354708;
+        Wed, 26 Nov 2025 23:59:14 -0800 (PST)
+Received: from [192.168.1.27] ([176.74.141.242])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b76f51a9819sm97759866b.25.2025.11.26.23.59.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Nov 2025 23:59:14 -0800 (PST)
+Message-ID: <2b8b83fa-5cf5-4f97-b796-0c738ce3a548@gmail.com>
+Date: Thu, 27 Nov 2025 08:59:13 +0100
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/Z4RQJJ68rzCF8i_e+DrlMou";
- protocol="application/pgp-signature"; micalg=pgp-sha512
+User-Agent: Mozilla Thunderbird
+Subject: Re: Hard system lock-ups when using encrypted swap and RAM is
+ exhausted
+To: Aaron Rainbolt <arraybolt3@gmail.com>, linux-mm@kvack.org,
+ cryptsetup@lists.linux.dev,
+ "dm-devel@lists.linux.dev" <dm-devel@lists.linux.dev>
+Cc: linux-kernel@vger.kernel.org, adrelanos@whonix.org,
+ Mikulas Patocka <mpatocka@redhat.com>
+References: <20251111231835.1232ad8f@kf-m2g5>
+Content-Language: en-US
+From: Milan Broz <gmazyland@gmail.com>
+Autocrypt: addr=gmazyland@gmail.com; keydata=
+ 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
+In-Reply-To: <20251111231835.1232ad8f@kf-m2g5>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---Sig_/Z4RQJJ68rzCF8i_e+DrlMou
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Not sure if this is a memory management issue, a LUKS issue, or both,
-so I wrote both mailing lists.
+On 11/12/25 6:18 AM, Aaron Rainbolt wrote:
+> Not sure if this is a memory management issue, a LUKS issue, or both,
+> so I wrote both mailing lists.
 
-I'm seeing an issue with both the latest mainline kernel (6.18-rc5) and
-Debian 13's 6.12 kernel package. When physical memory fills up, the
-entire system locks up hard, as if it hit rather severe thrashing,
-despite the fact that there appears to be disk cache that can still be
-evicted, and there is ample amounts of swap space remaining (gigabytes
-of it). This issue did not occur with the 6.1 kernel in Debian 12. I'm
-seeing this occur in very low-memory Debian VMs, with between 512 and
-900 MB RAM, running under VirtualBox and KVM. (I suspect, but have not
-verified, that I'm seeing similar behavior under Xen as well.) These
-VMs generally use a swappiness of 1, though I have seen a lockup occur
-even with a swappiness of 60. The filesystem in use, in case it
-matters, is ext4.
+It is not a LUKS issue; cryptsetup/LUKS activates the encrypted device,
+so it is only the kernel/dm-crypt handling IOs.
 
-To reproduce on a system running Linux 6.18-rc5, with :
+Adding cc to dm-devel as this would be another combination device-mapper
+and encrypted swap that could cause issues...
 
-* Follow the steps from
-  https://gitlab.com/cryptsetup/cryptsetup/-/wikis/FrequentlyAskedQuestions,
-  section "2.3 How do I set up encrypted swap?", but creating a
-  swapfile rather than a swap partition. I created an 8 GB swapfile
-  with fallocate. Reboot the system when done.
-* In a TTY, open a terminal multiplexer (or something you can abuse as
-  one, Vim works well), and open two terminals. In one terminal, run
-  `htop` so you can observe memory and swap usage.
-* In the `htop` terminal, sort by M_RESIDENT.
-* In the other terminal, create a new file `test.py`, that will
-  gradually fill memory at a relatively fast pace and print an
-  indicator that it's still alive. I used the following code for this:
+However, could you please specify exactly your storage configuration?
 
-    import time
+ From the subject, I expected you to have an encrypted swap, but it is
+not clear if there are other encrypted devices.
 
-    count =3D 0
-    mem_list =3D []
-    while True:
-        mem_list.append([x for x in range(2048)])
-        count +=3D 1
-        time.sleep(0.002)
-        print(count)
+Please paste at least lsblk, lsblk -f output, and also luksDump
+(or crypttab if it is not LUKS) for LUKS/dm-crypt configuration.
 
-* Run the script with `python3 test.py`.
-* While the script runs, observe the growing memory usage in `htop`.
-  Swap usage should start at or near 0, RAM usage will gradually
-  increase. Once RAM usage starts getting high, some data will start
-  being swapped out as expected, but after a short while the whole VM
-  will lock up despite there being gigabytes of swap left. (On my KVM
-  VM, the last time htop updated its screen, it showed RAM usage of
-  712M/846M, and swap usage of 328M/7.40G. The python3 process
-  running the script was consuming 551M memory. The VM is entirely
-  unresponsive. Incidentally, the python3 process also was in
-  uninterruptible sleep when htop last updated its screen, but that
-  could mean nothing since it might have come out of sleep between the
-  last screen update and the VM lockup.)
+Thanks,
+Milan
 
-Under Bookworm with Linux 6.1, the Python script would occasionally
-freeze, but the VM would remain responsive, and the script would
-eventually resume. Even with kernel 6.12, both unencrypted swapfiles and
-swapfiles that are technically unencrypted but live on a LUKS volume
-both behave as expected. It's only swapfiles that are themselves
-encrypted that seem to trigger these lockups.
 
-I haven't looked at the code at all, but it seems like maybe memory
-LUKS needs available in order to operate is being consumed, thus
-making it impossible to swap anything in and out of the swapfile? That
-seems like it would cause these symptoms or similar, though I don't
-know.
+> 
+> I'm seeing an issue with both the latest mainline kernel (6.18-rc5) and
+> Debian 13's 6.12 kernel package. When physical memory fills up, the
+> entire system locks up hard, as if it hit rather severe thrashing,
+> despite the fact that there appears to be disk cache that can still be
+> evicted, and there is ample amounts of swap space remaining (gigabytes
+> of it). This issue did not occur with the 6.1 kernel in Debian 12. I'm
+> seeing this occur in very low-memory Debian VMs, with between 512 and
+> 900 MB RAM, running under VirtualBox and KVM. (I suspect, but have not
+> verified, that I'm seeing similar behavior under Xen as well.) These
+> VMs generally use a swappiness of 1, though I have seen a lockup occur
+> even with a swappiness of 60. The filesystem in use, in case it
+> matters, is ext4.
+> 
+> To reproduce on a system running Linux 6.18-rc5, with :
+> 
+> * Follow the steps from
+>    https://gitlab.com/cryptsetup/cryptsetup/-/wikis/FrequentlyAskedQuestions,
+>    section "2.3 How do I set up encrypted swap?", but creating a
+>    swapfile rather than a swap partition. I created an 8 GB swapfile
+>    with fallocate. Reboot the system when done.
+> * In a TTY, open a terminal multiplexer (or something you can abuse as
+>    one, Vim works well), and open two terminals. In one terminal, run
+>    `htop` so you can observe memory and swap usage.
+> * In the `htop` terminal, sort by M_RESIDENT.
+> * In the other terminal, create a new file `test.py`, that will
+>    gradually fill memory at a relatively fast pace and print an
+>    indicator that it's still alive. I used the following code for this:
+> 
+>      import time
+> 
+>      count = 0
+>      mem_list = []
+>      while True:
+>          mem_list.append([x for x in range(2048)])
+>          count += 1
+>          time.sleep(0.002)
+>          print(count)
+> 
+> * Run the script with `python3 test.py`.
+> * While the script runs, observe the growing memory usage in `htop`.
+>    Swap usage should start at or near 0, RAM usage will gradually
+>    increase. Once RAM usage starts getting high, some data will start
+>    being swapped out as expected, but after a short while the whole VM
+>    will lock up despite there being gigabytes of swap left. (On my KVM
+>    VM, the last time htop updated its screen, it showed RAM usage of
+>    712M/846M, and swap usage of 328M/7.40G. The python3 process
+>    running the script was consuming 551M memory. The VM is entirely
+>    unresponsive. Incidentally, the python3 process also was in
+>    uninterruptible sleep when htop last updated its screen, but that
+>    could mean nothing since it might have come out of sleep between the
+>    last screen update and the VM lockup.)
+> 
+> Under Bookworm with Linux 6.1, the Python script would occasionally
+> freeze, but the VM would remain responsive, and the script would
+> eventually resume. Even with kernel 6.12, both unencrypted swapfiles and
+> swapfiles that are technically unencrypted but live on a LUKS volume
+> both behave as expected. It's only swapfiles that are themselves
+> encrypted that seem to trigger these lockups.
+> 
+> I haven't looked at the code at all, but it seems like maybe memory
+> LUKS needs available in order to operate is being consumed, thus
+> making it impossible to swap anything in and out of the swapfile? That
+> seems like it would cause these symptoms or similar, though I don't
+> know.
+> 
+> Let me know if I can provide any further information on the issue. I'm
+> happy to bisect the kernel if it will help.
+> 
+> --
+> Aaron
 
-Let me know if I can provide any further information on the issue. I'm
-happy to bisect the kernel if it will help.
-
---
-Aaron
-
---Sig_/Z4RQJJ68rzCF8i_e+DrlMou
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEudh48PFXwyPDa0wGpwkWDXPHkQkFAmkUGKsACgkQpwkWDXPH
-kQk4ARAAqk9d7FDHR97lXxeh1nY89u028mDQ/739cRtbBMzWbgbiEsNkgGPq+L+M
-Umbu80ExIyDXuNEE2fxWsYvqguj4YI9nuOFHIX+PGIGagiYFlwWlnaQcrmO8PmA4
-A9qXirRq+PxxBYMwsEcS++DafDtoH54fHMGjhKf8KCi/DmwES4bdbWkHRiYojmYE
-CpjyvLuCXOiXMe/pAgzfp++EpBX1AiF948MFKf6/a4qagycypVrX8AWluIVwEjBw
-w40yZjZ5t5Fwm6F86VfnalBf+YGFOeiLUbPe/+deYmhQUHSc8RXGq7SBaYJJhCpq
-lE90ypvTOCRnhGSe8PaTOvekAJhCzVCFqyUmgsUHAkb7uOKcdiaNVKJdpS9q6ZWf
-UF5vhWZ8AEe2qyISOQW4cFRsNF4MMxyJsDbi5XAJDii1UP+RoAJfcdvljVKfSfnD
-A5VXJAMmtCUFak67VYp7Cr8787LOs84b1HtjLpGH+aWOx4csJWKyKwq8KBbxayon
-DHW36A/8546cgHR2/P8ke8Hfi5QI+qq6v8M0ACCoYUsKXw/MSttNa4H7To0F+MW7
-9XUYisaBv/h0NM38aVl1E6FnRM/9HlBzUYmGVJLGg02IIZkqM77l0eJHhz1wVnm7
-+h7ExBaCaI57vjOkHGm2dH1XitrwKCjAWf4nVlzs+P8hOzLDSFM=
-=xCmb
------END PGP SIGNATURE-----
-
---Sig_/Z4RQJJ68rzCF8i_e+DrlMou--
