@@ -1,88 +1,107 @@
-Received: from artoo.va1der.ca (artoo.va1der.ca [66.70.202.72])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F101C861D;
-	Fri, 28 Nov 2025 01:00:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.70.202.72
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EA332D7C8
+	for <cryptsetup@lists.linux.dev>; Fri, 28 Nov 2025 13:07:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764291654; cv=none; b=gYhJuqmFar+l2AWp4TL7ZW6Lvf2aTxTH9hx7oOHSCrulUihpshakr2BiUomqThRk8OQWbnJB+7sKoGDKTkOfVl6B6MWv8R77ROdtCifTfCYzakgeB8mkgfCAgZrb2XDXCzishmt4JVScSRwctjzd6Z59GsC6zjKoclB3TXnEK8Q=
+	t=1764335229; cv=none; b=HqvVfEWUWDEZOP3ldiHU77FLFYNfKGLOmdDspxKd8UFrec06SmM4QuHkvgni0psdFqiETk7u0OpnYsqvdYiFEtazeIoQMxZiKsj8HpqwLDsZuKp2IGF71PYfmRmZOsVQCpTMY4BidrLWWxABvKpFwTzorwSPd6qwRPqbfQp7+Rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764291654; c=relaxed/simple;
-	bh=8ZMHeSGKTe7vN0wMOroGc/AYGvdF48EtzU7jpTtq5Vg=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=S1zxK69st30zURD25O7h5NsRQSueIt4ZcDXTL9MhCiqtPsbaNamR5F1E00P1jp3MIYl2QVhjJ3bNLJ4Yl6yZpKKczXuWTEpST68cUnauPyYlNsRA8aiE75JxtTjRayygKlBnFLSArymQa+zn7haMHIvcCWM/s/F7f8XuJ0sL7bM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=va1der.ca; spf=pass smtp.mailfrom=va1der.ca; dkim=pass (4096-bit key) header.d=va1der.ca header.i=@va1der.ca header.b=R31b8ACs; arc=none smtp.client-ip=66.70.202.72
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=va1der.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=va1der.ca
+	s=arc-20240116; t=1764335229; c=relaxed/simple;
+	bh=VHYHgexxgHbQ5OsrvArm20YDZku2gPKDHZpeBEhBbkM=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=t2kWHw1Al5UPhWxStCtUEhxn6kXDIC4SCyg03pquY09/V0M61+8pGZ+NBTLrBOxp4YO0Z/+dcmjIX88CDanhuC+5DQT1DHgWcwTkr1mvNXDdiX/+ky2EiNlKkKZwMPybhpnCbFNkZXvSLxFfpw3cG6bTUpNH1+5281jFph2ICpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=FCYLZkDd; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=va1der.ca header.i=@va1der.ca header.b="R31b8ACs"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=va1der.ca;
- i=@va1der.ca; q=dns/txt; s=rsa4k; t=1764291083; h=mime-version : date
- : from : to : cc : subject : in-reply-to : references : message-id :
- content-type : content-transfer-encoding : from;
- bh=5ehl7XowOsgc/Hdy6CsvYc8pNeY/UToxQM+P3jbw8Rc=;
- b=R31b8ACshIZzZrktnZnDDJEipbXH60inGf6csxDL+9JH+B0UnTulOITG8jgdR/YsP4Mq6
- p5smPfxCWpQol1uZ+E9d7MofkrNx5eUbxbO7RUL0P2Nf9crsSg/Qdj/TzhlzmoLXFomns/G
- fULSPxW8wmxbqVEtSXEW8SKMTvWnEF/nmHh7H9+Ghn0IoNy16GBxpuIWJIF7SyWPS8xctUj
- BnETTMjtowC1XD6bqkRc93KASGl1VfL3ua1Kbr4EOne9cyT+VX45JKCwV5P2RahCPT4rz4e
- d0hCDz3JCwkqdq3rQVcyT/aLHqtWQD2Nwr3GGNVSfXvjgEJkOAP8ohk0X8FHZAB4MOXZ/i9
- VdZSc11M89rVguO87aXQgzMBUAu7A8XUMQICPkJKLpb0CSI8K9kSSutbvr4UTfBP++mj9Xo
- VYcBvV0CToKntXwH4U/rOXq/cULbuqZEp9bx8Rujcfb7J17rg4tXYiusGJ9FEFHkL4sOsrQ
- UkP9Kl2FOEc5RMeiPz59jYThMKQ/GU/PQFGfk/On9Cu73eGJDrx0UsceZKUhmqUb5Edcy5e
- eN7SyeD4jPCjMgen5ecrcJNFKczO/vpmhvsADg8bskVsE4BxNgVsNXEyari1UHmf/ItJgkv
- l/MzRLvaxSK7CZ4ibWFqafCpzQFMFi41oVAmW4exNnQdYE=
-Received: from artoo (artoo.va1der.ca [66.70.202.72])
-	by artoo.va1der.ca (Postfix) with ESMTPSA id 877083E5B31;
-	Thu, 27 Nov 2025 20:51:23 -0400 (AST)
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="FCYLZkDd"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1764335227;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=WyCsOey8Tb1Q5O93zaNxc9kNDhLa6VYXzjywxnyvYKg=;
+	b=FCYLZkDdgdcf5FSFr4gJaRvaRYZAb36s/jFOdq+rEBF3vu/TgE4eXuIn0ftNm9UC1LXLNn
+	p3YRKAwuN/Zg/JXmUeD5fUXSVG0/QxE5Vsj4qBQvINxDyPrbfrr8VHWYtTOjFVHTAhV9lY
+	YqgVHdjK51k1Og6lCuGLuXmW1hiTOyg=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-184-fSAN69SkOnqKsAn7fqhwuQ-1; Fri,
+ 28 Nov 2025 08:07:05 -0500
+X-MC-Unique: fSAN69SkOnqKsAn7fqhwuQ-1
+X-Mimecast-MFC-AGG-ID: fSAN69SkOnqKsAn7fqhwuQ_1764335224
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 9CD071956071;
+	Fri, 28 Nov 2025 13:07:03 +0000 (UTC)
+Received: from [10.44.33.72] (unknown [10.44.33.72])
+	by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 1443A195608E;
+	Fri, 28 Nov 2025 13:07:00 +0000 (UTC)
+Date: Fri, 28 Nov 2025 14:06:54 +0100 (CET)
+From: Mikulas Patocka <mpatocka@redhat.com>
+To: Kurt Fitzner <kurt_cryptsetup@va1der.ca>
+cc: Aaron Rainbolt <arraybolt3@gmail.com>, Milan Broz <gmazyland@gmail.com>, 
+    linux-mm@kvack.org, cryptsetup@lists.linux.dev, dm-devel@lists.linux.dev, 
+    linux-kernel@vger.kernel.org, adrelanos@whonix.org
+Subject: Re: Hard system lock-ups when using encrypted swap and RAM is
+ exhausted
+In-Reply-To: <804601778974c504d42f4423d335a94d@va1der.ca>
+Message-ID: <32c2c4c6-d8c0-297a-b0eb-f06a939d5e44@redhat.com>
+References: <20251111231835.1232ad8f@kf-m2g5> <2b8b83fa-5cf5-4f97-b796-0c738ce3a548@gmail.com> <3f3d871a-6a86-354f-f83d-a871793a4a47@redhat.com> <804601778974c504d42f4423d335a94d@va1der.ca>
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Thu, 27 Nov 2025 20:51:23 -0400
-From: Kurt Fitzner <kurt_cryptsetup@va1der.ca>
-To: Mikulas Patocka <mpatocka@redhat.com>
-Cc: Aaron Rainbolt <arraybolt3@gmail.com>, Milan Broz <gmazyland@gmail.com>,
- linux-mm@kvack.org, cryptsetup@lists.linux.dev, dm-devel@lists.linux.dev,
- linux-kernel@vger.kernel.org, adrelanos@whonix.org
-Subject: Re: Hard system lock-ups when using encrypted swap and RAM is
- exhausted
-In-Reply-To: <3f3d871a-6a86-354f-f83d-a871793a4a47@redhat.com>
-References: <20251111231835.1232ad8f@kf-m2g5>
- <2b8b83fa-5cf5-4f97-b796-0c738ce3a548@gmail.com>
- <3f3d871a-6a86-354f-f83d-a871793a4a47@redhat.com>
-Message-ID: <804601778974c504d42f4423d335a94d@va1der.ca>
-X-Sender: kurt_cryptsetup@va1der.ca
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 
-On 2025-11-27 13:54, Mikulas Patocka wrote:
 
-> Encrypted swap file is not supposed to work.
 
-Do you have a reference for this?  The concept of encrypted swap files 
-has been a valid workflow for a very long time.
+On Thu, 27 Nov 2025, Kurt Fitzner wrote:
 
-> So, this is what happened to you - the machine runs out of memory, it
-> needs to swap out some pages, dm-crypt encrypts the pages and generates
-> write bios, the write bios are directed to the loop device, the loop
-> device directs them to the filesystem, the filesystem attempts to 
-> allocate
-> more memory => deadlock.
+> On 2025-11-27 13:54, Mikulas Patocka wrote:
+> 
+> > Encrypted swap file is not supposed to work.
+> 
+> Do you have a reference for this?  The concept of encrypted swap files has
+> been a valid workflow for a very long time.
+> 
+> > So, this is what happened to you - the machine runs out of memory, it
+> > needs to swap out some pages, dm-crypt encrypts the pages and generates
+> > write bios, the write bios are directed to the loop device, the loop
+> > device directs them to the filesystem, the filesystem attempts to allocate
+> > more memory => deadlock.
+> 
+> If it's the filesystem trying to allocate memory on writes to a swap file that
+> is causing a memory allocation/swap race, then any write to a swap file would
+> engender the same result, regardless of encryption. The encryption layer is
+> redundant under the failure mode you propose.
 
-If it's the filesystem trying to allocate memory on writes to a swap 
-file that is causing a memory allocation/swap race, then any write to a 
-swap file would engender the same result, regardless of encryption. The 
-encryption layer is redundant under the failure mode you propose.
+No - when you swap to unencrypted file, the kernel bypasses the 
+filesystem. It creates a block map of the file at swap activation time and 
+when it swaps to the file it uses this block map and it doesn't call any 
+filesystem functions.
 
-I can confirm I have put kernels up to and including 6.14 under heavy 
-memory stress and have never encountered anything that feels like a 
-memory allocation race.  All my systems have encrypted swap files.
+This bypass doesn't work when you put other block device drivers over the 
+file.
 
-I can't speak toward later kernels, or any bugs that may or may not be 
-presesnt, but I know of nothing to suggest that encrypted swap files 
-remain anything other than an intended feature.
+> I can confirm I have put kernels up to and including 6.14 under heavy memory
+> stress and have never encountered anything that feels like a memory allocation
+> race.  All my systems have encrypted swap files.
+> 
+> I can't speak toward later kernels, or any bugs that may or may not be
+> presesnt, but I know of nothing to suggest that encrypted swap files remain
+> anything other than an intended feature.
+> 
+>     Kurt
 
-     Kurt
+So, it works by chance, not by design.
+
+Mikulas
+
