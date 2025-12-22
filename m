@@ -1,134 +1,190 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11023072.outbound.protection.outlook.com [52.101.72.72])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87AD8321456
-	for <cryptsetup@lists.linux.dev>; Mon, 22 Dec 2025 15:17:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766416640; cv=none; b=ULZRaot2SyfvswPnKX6Y9cHzzUueUrv3uwcq1ir9dz+FlnH+vGG6JQ0okPUJLb+Yo1Gaq3F+IL7byX3jo828cRHs/DbaHKPRjVSuyeCdlDQgpQyBX5UOozBig398Y2UjJWUSZTLnCgRW7C872G4WEeovIU0VTnVE+f7j+fextC0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766416640; c=relaxed/simple;
-	bh=L8HvP/Drb4qv8Kw7jRMi5V0/Z0VgXoGM5sGGEMPmOlM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=WPGeFqvlP0D8HUS0nsOQNqt0rUrCZNqhWv2MHUiF3ogNEBDhRQTLpqs2pHEn5S1G3FaAXgVyYF/gt1GbcgB2l++GpRKDa0dblMcCOIesTYUm7Xkn25i9QgGejHlHw56MB6xEOhaW3FzzbAG0by/wfORIVSjj/YdgcYY6Vw6AfBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W5XarshH; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4062FE59B
+	for <cryptsetup@lists.linux.dev>; Mon, 22 Dec 2025 16:05:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.72
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1766419534; cv=fail; b=UCDrdf7t5h6CUiWrPIsQESeuMPHF4wbyNQE7PnUTVrJpyEWDtwtaqB3GtD65Qb0VdM/bN6fkRqnpbq4q03GLqqfrWEJwc5hL97aILRDz6bBPCMHivD0f6ZhZci/kd3DMQm2bMcj7vM3VbXU081PEf8waCiZkgpOzTBbUhCLmRAM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1766419534; c=relaxed/simple;
+	bh=IWSlcjouQsSoX0HkxPpIuVkdoq5gH4mH3mjH2Gc7Hiw=;
+	h=From:To:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=YU85OnmzCN6An3m/fyT0HjR0+Y/dO9NYzyIoLItjjpPygceQ2JYgSWM05f34biNoNRIvE6i+2DYOJpTpfzbUOmomlybd4BKCGd8h9tH6WrgsIGL+nHFwrZe8Wi/LgxzvUmD54hPJsYIon8USHrlvoTwqz9y01aXzB7oSfsxIFHc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wiora.co.uk; spf=pass smtp.mailfrom=wiora.co.uk; dkim=pass (1024-bit key) header.d=wioraglobal.onmicrosoft.com header.i=@wioraglobal.onmicrosoft.com header.b=NilLzdDp; arc=fail smtp.client-ip=52.101.72.72
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wiora.co.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wiora.co.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W5XarshH"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-47a80d4a065so20690755e9.2
-        for <cryptsetup@lists.linux.dev>; Mon, 22 Dec 2025 07:17:18 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=wioraglobal.onmicrosoft.com header.i=@wioraglobal.onmicrosoft.com header.b="NilLzdDp"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=e6p5gB6a2CqZs7KQPqzA9iwjtHVE2cS4+ebsrVgoLgJg+gMsEC3Ym6YNUs67LqYdtdFXhMMCKcyjhbm/7yreKIWtDNrUTxqaybEBWSdLd7pDvEloyPqsaK4gOfQCdcTG8GY2uhshYqV6e4VNt/icYqlcRjdmcJZ3qIWViVdXHliR0aoPEtvVs5k01Aob1nOhTP78v0gPBdXyC9kuYCGFdafS3k0l5TXP5EzaJsVZbzpX7aXTWGQJ3hsKsgaAgxGxMdfpXQMcexjIffKO+y4AEI23agbcAIKPkEG19N/GOxqdkrnn21RMWPY/HxCIsin6rx+X2AdSOiRR3Zu1ZMyYVg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=LMcHbds6fXnL5xNVi9M0wyF0pBJvBJ9dZNr2FlLMUJk=;
+ b=BbQ6QBrS8JjZkfm1o85NhjU0wro+PFmsDRH46Spv+nK86iYoFvNhlHXKsi+0Ue2lSs5EqLg63DFSwYWacBiCq4PGqsLNEcmkBrl9T94Efs42mPTpzNMxuS3TboREFZzdRnX3/IID4RTxb16EqoFWvw2LES+5Psesq3AHGseVCdp4X4/uodEdisPnCiXJCv9GrIJTrV/q0BTOkF5vsPhbpHm8DwJgRVE97ZRaAbewLoOGRcaCFBtSlqh8GpXEzq9JfZyDMZJxHlBwvPKbyae4gUF1e2Kp+WJzaYBVTFAAwG02FI7NcYgyquYcF5U+gIquPDrcc7/agZ63ZjP2RhQ8Og==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wiora.co.uk; dmarc=pass action=none header.from=wiora.co.uk;
+ dkim=pass header.d=wiora.co.uk; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766416637; x=1767021437; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=s/iXvheIeovG9qoUCaFRzVf6ehikgIvJAh9y+y4cLO8=;
-        b=W5XarshHe5EgdwLcajbOfYslluvqThwjcp2a85rVnLh8WssrubqCjLi70k4HnbYXT9
-         GXxIpzC/aIh1ms2Nk9X7dy51VDwlE3xowXd/1z6A9UDAi4dfnjDcsQdC7wbOvuSEtXbU
-         cRJtYTBLSjC2aZvSOZsbpoPJ1RnwPq2A9hWbgvkZEvo4chfI2lJJwOuwmT5UNRORjm62
-         ZnTTKUwHTgoycWFbLWQU2cPbP8nO5shlujW22ErefICr5gJoklVeQTrK4M679Cd8Hi4B
-         9Z4UJRZzOh5apFVIb0AeX+S2FkyZahpj/5OFyt/CZiyay7LSrUBi33F3EkQnEoXM+PIx
-         hBIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766416637; x=1767021437;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=s/iXvheIeovG9qoUCaFRzVf6ehikgIvJAh9y+y4cLO8=;
-        b=FwszrXHTWJpxle7mUJY6D7d3bLHUi9ySezii63Sz0I42oc1sw22S8K0X2wb/bxlzAF
-         nDW6pYxRyuFRq5+cxHC2KexGNwIxdHHeyK0bFb63nu0W0wRiBtAFkrOA4/m/+O8KUH1S
-         DUu8+FvVORJBQuSeYkTGj4obKLtvSjX5PNnoygcrpPsGE4zuZjJcFsLHwQbGA5WEh+iD
-         bUVBE7WzHjeaM9ZVC3xj0vecSqCBNE4xJZiAMwmQVZzQUp4X4Zq6M3QTVSbKOpM4D1/x
-         mo6r4c6MBDpyNTaGiF6EzoHrXG7UHJbc9JsBoOqfKesmzif1MUr4VETAWZmNsn+Qh456
-         zvhw==
-X-Forwarded-Encrypted: i=1; AJvYcCVYMbN2kij7y31r+PnXgqfhHWh0xDxRZBxCvdw3Xp/um7mvx9WwFI86/RKg3zi3J9EvNWTqttl3LFjc@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy8ebke+ys0Kd84ZWbiYzEa9l3PtxjwB7MeeWM5HRk3ZLIxfpGx
-	bCFitP64o78XuqKYmWacvpTZW3vvjiSjBU2JkZ9DESSx8dm1d19+cdCKpiLCVb/K
-X-Gm-Gg: AY/fxX6wpgEi+80Ij7U39oFtzQI7drBht1hB40Rxn8tFKfaiUABMorQlw0UR3Ss6GzJ
-	X6Dv59s4hAgapYazikvgDvpYTybLouI8NsN6RPVePKkY85YWp3HMMPy5E1YuDgB32Ak17uV5vw2
-	7iF/Uo+pOM0VAQsQGQqRgzLPJNAteVlpLS6dhE6mfcpd2omUfbExSlAxa3n9Nl9qL+toY5zAK9G
-	XhsDAhgGqlZ/5/6A+LKdcTr2Yh3wJLOml8j30guLvM9hBSfKwTTAsvE/U8z+dQYAoAa24BZ8Q74
-	25hwHYmXXGpfuS+eV+TK2FAAGxi2ENtAOWj55kfG89BjJsoPvOl/su8GCWrAktfNglmA+sc1v+j
-	wysCH7DcxoPjXtlKLhsU8j7T1a7BzHO42u1cdncBsGFE0lgUpBLSYNunwOgPmmXrYHjzh8FR66B
-	K6Gslm6fUpMjfwBw8=
-X-Google-Smtp-Source: AGHT+IEyxIBCKobqjTDKj4W8Jpy/6TGdMLT7SuFW5Dp8Vemi/M/+yXI2rpQeo/oOfHtC5uYgpaxm5A==
-X-Received: by 2002:a05:600c:3b15:b0:479:3a88:de5d with SMTP id 5b1f17b1804b1-47d247132b8mr81072755e9.36.1766416636779;
-        Mon, 22 Dec 2025 07:17:16 -0800 (PST)
-Received: from [192.168.1.27] ([176.74.141.242])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47be27b28a7sm253746385e9.12.2025.12.22.07.17.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Dec 2025 07:17:16 -0800 (PST)
-Message-ID: <d11da336-07bc-4871-9db3-9ef8e557611e@gmail.com>
-Date: Mon, 22 Dec 2025 16:17:15 +0100
+ d=wioraglobal.onmicrosoft.com; s=selector2-wioraglobal-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=LMcHbds6fXnL5xNVi9M0wyF0pBJvBJ9dZNr2FlLMUJk=;
+ b=NilLzdDpoccyuBpvcqIwOsEO3WGcFECFDQgefGWDoXivcI0snGWY6pOBR5VDV+SXO71q/vuTSZs44hboRPcBCpJ7dQ+d4nYPhnedJprTGHRt5cDXHwjwukr9EF03iu6AuDrJwtMop5RR6XVNFRQJGvcOdbSl1dllpcNUhvm/9Dg=
+Received: from AM0PR03MB6212.eurprd03.prod.outlook.com (2603:10a6:20b:15a::24)
+ by VI0PR03MB11062.eurprd03.prod.outlook.com (2603:10a6:800:2ce::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9434.11; Mon, 22 Dec
+ 2025 16:05:28 +0000
+Received: from AM0PR03MB6212.eurprd03.prod.outlook.com
+ ([fe80::f164:2f63:dc4b:4f78]) by AM0PR03MB6212.eurprd03.prod.outlook.com
+ ([fe80::f164:2f63:dc4b:4f78%4]) with mapi id 15.20.9434.009; Mon, 22 Dec 2025
+ 16:05:27 +0000
+From: "Matthias R. Wiora" <matthias@wiora.co.uk>
+To: Milan Broz <gmazyland@gmail.com>, "cryptsetup@lists.linux.dev"
+	<cryptsetup@lists.linux.dev>
+Subject: Re: PCR9 missmatches since latest updates
+Thread-Topic: PCR9 missmatches since latest updates
+Thread-Index: AQHcc0KJ9oF/kpq2BkS7JjDHZmin9bUtxZaAgAAMYBY=
+Date: Mon, 22 Dec 2025 16:05:27 +0000
+Message-ID:
+ <AM0PR03MB6212B0F513297E7F8018309895B4A@AM0PR03MB6212.eurprd03.prod.outlook.com>
+References:
+ <AM0PR03MB6212DD259913B638EE8741DC95B4A@AM0PR03MB6212.eurprd03.prod.outlook.com>
+ <d11da336-07bc-4871-9db3-9ef8e557611e@gmail.com>
+In-Reply-To: <d11da336-07bc-4871-9db3-9ef8e557611e@gmail.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-GB
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=wiora.co.uk;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM0PR03MB6212:EE_|VI0PR03MB11062:EE_
+x-ms-office365-filtering-correlation-id: b3d42154-ac22-49f8-1a9d-08de4173ec96
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|1800799024|366016|376014|38070700021;
+x-microsoft-antispam-message-info:
+ =?iso-8859-1?Q?xcMnuM7/d/fToBtQ6u816ZIWFzE+qre0HJ1PBEf0sMxM71S6+ZndGZWIqW?=
+ =?iso-8859-1?Q?tX05Nw6IK+c0MVwoVlGAKlhFCfy0a9idJdU24bP6QNJ2OFtfQaWvxU8Yfn?=
+ =?iso-8859-1?Q?wzFZQtzoZGoj51ltg1GZfIlUWNMroYHFSuRVpCzdNIltFTT/kZipBbMxzC?=
+ =?iso-8859-1?Q?wBkhQTdfWVYVy+sjIBeilDNIS9pJIziXPZ9hRENqZtJMxuTCibpAhQS4df?=
+ =?iso-8859-1?Q?LfWTVR0OFb542G0ihhecR8/GoKAPuzppG2bPCRadRpMp7c2avSM/8DUyUT?=
+ =?iso-8859-1?Q?IxqcWfKY5yN4EdkrYy4CK4EL2L7g02+0dgr64MuZDCP6KgurJr+ZStgX8O?=
+ =?iso-8859-1?Q?yV31gMqasXRAOZvuRmnEaoN0uek6XGa3tZ28Ib6QjslpzhjBanVwZPLkJN?=
+ =?iso-8859-1?Q?XFURH+RGsELeWhXbYmV2V12D4XDin5kxXBMk3lAAx3dg7DDiAY9l8b2sza?=
+ =?iso-8859-1?Q?HcFG+EqJ7r578S9cz4N8L0K4kPAWZDuV3Tu8qsdEkpywT3dlH002hxvpc8?=
+ =?iso-8859-1?Q?ACMiXNg7ZCLem26Jd5JySFlDgTi0CxbBlZMAQWbsrv/nLHH+8fbq/XE1Sj?=
+ =?iso-8859-1?Q?TfY5ba/CH7ZLdxAVmChPYmTYvgSuJSVYPaBrbHcBuQxKMImJqfMwaHQhUr?=
+ =?iso-8859-1?Q?YoQEdYKnYTUpJb2xtvJ4j/yYSduVSn6y1cz8VgN+tHr7mIiu70aaAFvQST?=
+ =?iso-8859-1?Q?AUhx8GNQf01v/O4jH48JK2phSAQbRBE7YKSnMiPSz5vD9if3cZuBX5zuTl?=
+ =?iso-8859-1?Q?5CXnACyv5onTrAvKTo1XG8PyvsjeYyDQqCoWKpQcsEu88ZS2m2fPLdJ/3o?=
+ =?iso-8859-1?Q?74PCZlKRconKlXXk6NXQuXzh+OQN0P3FygVJmpz/Ibpg+VU+d4RemcR/Ym?=
+ =?iso-8859-1?Q?Gmg6/08N3lNF4N4Nl0W8ggdhGWqynEhYyw7i8s2OD7/0HQ4GnwOwTIJyLB?=
+ =?iso-8859-1?Q?Qb2LtOjn0O3NJcnSK+c2w+gxDNnNOwwipFoyQamC0Kjq7LFVOOAgrGk2hS?=
+ =?iso-8859-1?Q?KjaT/VNMKP5CELd1SjeY4YqR4D5KRhUOqcaCszpcsJuHj8Yax2DzP7s+zl?=
+ =?iso-8859-1?Q?Ggf2n2P+dJr3IIk1EEwRmc97XHZtBHKmePp+C+upOMsOitIYutCL2ol3zf?=
+ =?iso-8859-1?Q?ATdliz3oV97TH4XJnYQRljGlRajkpBdBCyRoyOiK1O5p53RYMT4E5YWRq4?=
+ =?iso-8859-1?Q?EoZAuKLX5IHjZhb5UyttWnYbWAC42tV0QUE2mzGlDXh/YITJsYUZH06HHH?=
+ =?iso-8859-1?Q?JCc4JAqkGIDNYU9ReaovsNXaWoKscl0+qwxGHa06zcF8zprU68wZpSdRhQ?=
+ =?iso-8859-1?Q?JU0ouvGidw6KnhUr3vHpVg3KUUPDUBVgag+77QbE7YaVvvIgH5/9WcqKIq?=
+ =?iso-8859-1?Q?1w9E5VhrdWvd8WMSSXDu1F+FEvdTL7S3W3Oi8tuik3SplR7MmtZD7KsDdM?=
+ =?iso-8859-1?Q?M2VDd2eBpMklrTBfW+XHMTBxdx1Rp1sX8iNz0b3qUVuZBkO44Kge20jemK?=
+ =?iso-8859-1?Q?OgKf+ZQLJoSwhDsouzey4swJqf+tR/FfcuzOzDuIKdMAzQDAMzXkJO29LY?=
+ =?iso-8859-1?Q?yOieZioZqOcQct9r90B1FMnopIm/?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM0PR03MB6212.eurprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(38070700021);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?b8J3EWlkFqnjpFpc3mQskhxVwHe23ZPaN1/sI/IaKnVLrRKJ1yJ0VbFfbz?=
+ =?iso-8859-1?Q?Sq9NLsy03DhTEe6boiVZSYduP8cloavN7lRoep4L0FqkjoXEXBhC+xrZZE?=
+ =?iso-8859-1?Q?0t8NAut4ntWXtT5NFh36+mEWgky0EeedEXPRtMVXCO2NT6/Z/rwGgdiqpT?=
+ =?iso-8859-1?Q?cxdX2wSsnphMgMAmrq8XIlII5QvJJQCtfTwJ96i5hDhVdD8OmJghEZtKKB?=
+ =?iso-8859-1?Q?qgv03Zr4RxJV4Fm2s9sqN4dHcViX9h/c5l/1eQ8cj3tjIfcXTLdrG8OCTW?=
+ =?iso-8859-1?Q?69wOymWjDoA5qacaahaeSK1euh4x3lzOatCaU+kvS9Ja6EODClRYC3GSDo?=
+ =?iso-8859-1?Q?VBxq5Kb4Jg5eCAOzxURu7Nvi20aHT5xR7ew24L0PJIrii3Zj1RKi3uYt75?=
+ =?iso-8859-1?Q?SoQYxMxqQLN9Ia3Z/6PU+UZA7SIWpheoNq9kbw7xJLJr015Bu+rXIH3Fn/?=
+ =?iso-8859-1?Q?TBRd9ChBC0BcZl9AO/Nsh8Z1/VTlpRHoVqaff4b38xirSmwLOkgEKfuepV?=
+ =?iso-8859-1?Q?SWMLIYbJV1MeNEiyLuV12G6i2LI3j7tCRgJyGcp94QJUmqYLAUupIGewfY?=
+ =?iso-8859-1?Q?CZH7TT4+M2al7bWfN08Ixp7K5euJHLL4qDIjX96D2Tm2chTRIGK7jO1COw?=
+ =?iso-8859-1?Q?AVi5KzMtl5n0tPjn+joBPmS7rGmp/zxmRssT5MbKh9hEoljJAHmL9epqnR?=
+ =?iso-8859-1?Q?4yM9v1TuWiQMzAo3uuAZns/qrkQQNAvmAdPSaoxI5HfDVBygb5aUPtERsD?=
+ =?iso-8859-1?Q?vpGzXy2LNqxIsLObtnPCXH5fIdKY4roFeUBfHc0lKU3jvi1Xoa3gRqa68B?=
+ =?iso-8859-1?Q?1PKsuEDWmcUvXoSUwLT1S2W50vMO20tGJxeWkdYqMwsSCePA3DKODr/fWp?=
+ =?iso-8859-1?Q?ypfUDPELJIj0zxUxizSXlHjY1aaiROyxDmoF+Zy92v+1MjkQpcIfDcI15r?=
+ =?iso-8859-1?Q?ua+L8qzR5wdD4XqLHBVPVzeSABb2eSvJuNLwDdDqR/YWByBx71Pt22emGH?=
+ =?iso-8859-1?Q?r0OUkzpnggxO+jf4yCojwRBrzQp9SByRh69RDzrgCTi24z8geAmJpIK8OW?=
+ =?iso-8859-1?Q?W3rSn1YtxSMou+r05PRn7CTZUqEmbyrbZi55A7fygVkZqG2Ki+Mxznk3Ft?=
+ =?iso-8859-1?Q?aC4oRKUlGPsYnUU2bPpqMnc7tq2uQBEtIoHe1T6qNUV/H+58jSlaIXnaS8?=
+ =?iso-8859-1?Q?y4fqrANjKbuWsXKd2cIL1Kgw/6afoenGQ+it7EFoEASYUzBMtmAsHGlQiK?=
+ =?iso-8859-1?Q?Z8jiwxMR4i0DjMPMqAmUBGdLn1YN1HbslkDB7BcLJEznj+Eet2B7jzkad0?=
+ =?iso-8859-1?Q?QjMxvDL9nm8RlvetD9/cLe2d1Odzj8DBj2WF+JMQp5SfpDUmlVgsHgcWPR?=
+ =?iso-8859-1?Q?3aWnrMjdAIfifjrYsFuEiCOjnvKQjPcWmxiSMY+9m/1ocJLm1YepXoueix?=
+ =?iso-8859-1?Q?4VPQv8Dsd9NoNqE3nFHhyHye1oeWjIE5YZ+JNljj74et1jBJZDeKiRQIB4?=
+ =?iso-8859-1?Q?vcDYB/3g+Y5h03IbeTWref8K7oxDg63XGEdB9A4x7SnvUlgpydpzHLfCCY?=
+ =?iso-8859-1?Q?SXTueeE2ZQoP35EGlY/2l+alPOW4VT74tqyF5cqX2Eabyuv6tFtUio8Hag?=
+ =?iso-8859-1?Q?Jv5YmYesaz/OynjsdxGJYV6mXPucdVVw1kRWPeXGq+DuGJYrUSMsM5Sc+z?=
+ =?iso-8859-1?Q?h5Nw+MYkSpVrtubxh1HSZXKAlbTbQHsWZorFatavHGNeF2IF8SUnd3TrC8?=
+ =?iso-8859-1?Q?T4gY1sKBy7JNWdFpmO1qcGs3CSs0WoSPdXIGQm/ZO3UV1y?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: PCR9 missmatches since latest updates
-To: "Matthias R. Wiora" <matthias@wiora.co.uk>,
- "cryptsetup@lists.linux.dev" <cryptsetup@lists.linux.dev>
-References: <AM0PR03MB6212DD259913B638EE8741DC95B4A@AM0PR03MB6212.eurprd03.prod.outlook.com>
-Content-Language: en-US
-From: Milan Broz <gmazyland@gmail.com>
-Autocrypt: addr=gmazyland@gmail.com; keydata=
- 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
-In-Reply-To: <AM0PR03MB6212DD259913B638EE8741DC95B4A@AM0PR03MB6212.eurprd03.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-OriginatorOrg: wiora.co.uk
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM0PR03MB6212.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b3d42154-ac22-49f8-1a9d-08de4173ec96
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Dec 2025 16:05:27.9070
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: dc522372-3f69-4143-b880-ea1a60fedcfd
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 4Gl4jHmlNJpVlMf0x0cFLMVVpXCvy383+kgt6Lt5MTS7uWiLxc7O+c+gsLlGgZw4KT1NLEH84L+THAzBo4Nptg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR03MB11062
 
-On 12/22/25 3:32 PM, Matthias R. Wiora wrote:
-> Hi all,
-> 
-> with linux kernel 6.18.2-arch2-1 and cryptsetup-2.8.3-1 (running arch) I am experiencing issues when resealing my TPM2 protected enclave protected by measurements on PCR9 on my machine (verified on another device with a similar setup).
-> This behaviour changed recently and I could not find any release notes information, so I decided to start here with my investigations.
-
-I think you need to cc systemd list, or maybe better report issue to systemd, as it is systemd cryptsetup tools handling TPM2 PCRs.
-
-Milan
-
+Yeah! Your hint was perfect! Thanks!=0A=
+=0A=
+Obviously Systemd Release 259 caused the change:=0A=
+https://github.com/systemd/systemd/releases/tag/v259=0A=
+=0A=
+Extract:=0A=
+```=0A=
+Information about the=A0initialization of NvPCRs is measured into PCR 9, an=
+d finalized by a=0A=
+    separator measurement.=0A=
+```=0A=
+=0A=
+as this seems to be by intention with a good reason, I will investigate thi=
+s further and most probably adapt my tpm2-kira implementation to fullfil th=
+e expectations of PCR 9 at the moment before unlock :)=0A=
+=0A=
+Cheers,=0A=
+Matthias=0A=
+=0A=
+________________________________________=0A=
+From:=A0Milan Broz <gmazyland@gmail.com>=0A=
+Sent:=A022 December 2025 04:17 PM=0A=
+To:=A0Matthias R. Wiora <matthias@wiora.co.uk>; cryptsetup@lists.linux.dev =
+<cryptsetup@lists.linux.dev>=0A=
+Subject:=A0Re: PCR9 missmatches since latest updates=0A=
+=A0=0A=
+On 12/22/25 3:32 PM, Matthias R. Wiora wrote:=0A=
+> Hi all,=0A=
+>=0A=
+> with linux kernel 6.18.2-arch2-1 and cryptsetup-2.8.3-1 (running arch) I =
+am experiencing issues when resealing my TPM2 protected enclave protected b=
+y measurements on PCR9 on my machine (verified on another device with a sim=
+ilar setup).=0A=
+> This behaviour changed recently and I could not find any release notes in=
+formation, so I decided to start here with my investigations.=0A=
+=0A=
+I think you need to cc systemd list, or maybe better report issue to system=
+d, as it is systemd cryptsetup tools handling TPM2 PCRs.=0A=
+=0A=
+Milan=0A=
