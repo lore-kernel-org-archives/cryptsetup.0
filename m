@@ -1,133 +1,175 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192491A9FA7
-	for <cryptsetup@lists.linux.dev>; Sun, 11 Jan 2026 13:34:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0A836BCC0
+	for <cryptsetup@lists.linux.dev>; Thu, 15 Jan 2026 10:37:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768138468; cv=none; b=XFSrRm6ez3e/xWYOXCH6g44xC4yAj8QfWmlvBZM81x5vvuptAQNBjgSsnoknxoHWT40pSz01VeXoI57TOFAJOOe/fj4sZT9ybnucmO0HEPzpOxELcp/E5/l7p5Vyn2B3Ab3vlG0Kx2yetd3GxjX8esm9991lFaW3Thfd+yRZT4c=
+	t=1768473457; cv=none; b=YMv1HyKOqjKIKWZ3sDe6BAqCeA1wfqhl8HCf0kibGvMGldYcpUGal8kOT6Xc8J9HM8kDG8XRGjpKH6jt6rRexgvXFdJORF8Cir5o/sY3Nbe/8WnE0FUtPxaJy/Enx8iB5RFXEq0H0Vn1OyS+gJepAYDOxVmM5EqZwzsfo984xAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768138468; c=relaxed/simple;
-	bh=+fWdVbBVS+5ZieHGAy8VJ46GImYkPTn95DEhd287x7k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WAc2GYXxjJU37FK5U9SBVkvl/YKd0HqwzOZWtT35MlY8AHXSHlGVdvGpRlY003V+pHMNtlQhZm/0tEawCSLlQCKVgHkfbspmj0z8hEDZj9tuKinbFqeSyGLsymwbrUMF8gAwrNsz6N9QM+uXNS0V/omU/glxLLfSYLhT/c1av1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=HO0If3Vd; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1768473457; c=relaxed/simple;
+	bh=wMHfTGtCn/Cp5rCdpRSRQAoNuPzm8mGo2uEIkJzXPew=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NF8OY3/K8T0hhwDxEcS6YmVCSQagspZFfQzUYlG2XsO7cfjsdSlFkl5NvAgd1iJ9zkfCZkQDiaWutAU8HrAETLk0eryQvUshUPBvI4qoURaygIyuEC/x/SLJfNx2wMxSTMB1NE+xMOweiY9+J0Ai58qGLmmFtXAVMQK33gH7cnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OgvJkKKs; arc=none smtp.client-ip=74.125.224.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="HO0If3Vd"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1768138466;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=1iIwW7B3/vGlG96EY9fov8v0A5KtPeBu8NxLAHkqFGo=;
-	b=HO0If3VdBsdIm9YJ+dI7KNiRsRFVj84KcCRnk/70Nb5rO3kei0oZur5cbQAS+UE1yE+S8w
-	KVu3io4oMMpacChFCVPcsZrA2s2Cr1a9FgRLJUlXsSJJ2Vvj4fC9Owztza6eZrm3Ih59hK
-	btq0mOvJZPkjc1DE70MGiC9+Asi8wVw=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-195-HZlL2i5LMGm8dvQ4qd_rlw-1; Sun, 11 Jan 2026 08:34:24 -0500
-X-MC-Unique: HZlL2i5LMGm8dvQ4qd_rlw-1
-X-Mimecast-MFC-AGG-ID: HZlL2i5LMGm8dvQ4qd_rlw_1768138464
-Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-43284f60a8aso3143607f8f.3
-        for <cryptsetup@lists.linux.dev>; Sun, 11 Jan 2026 05:34:24 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768138463; x=1768743263;
-        h=content-transfer-encoding:in-reply-to:organization:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OgvJkKKs"
+Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-6420c08f886so1003756d50.3
+        for <cryptsetup@lists.linux.dev>; Thu, 15 Jan 2026 02:37:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768473455; x=1769078255; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1iIwW7B3/vGlG96EY9fov8v0A5KtPeBu8NxLAHkqFGo=;
-        b=J0NiA/Pnj3Zlx2cyLrlWE/BC+RI1GMyVRQr5MABTrFjjF/CQOEyF7pZ26kA4sEKyMR
-         YttRw4QA3cwYTs+R/Utjfgak1V6ZUIAFA8p4tACcDwI2NoYWtk5efCf7MHgdaWVkp1Y3
-         7cZdj22H9uDFK5q2E78PS+UTrf9nHF39ydyq3H6nIpw2JM/fKnMUcYPpwYDyPhc5h71N
-         jicK40M4eFkWXbZfV3iLDiJohSDi0N/Ohn0x7J9qZOgA7R8kNkM/URP52rn595CssiPS
-         fK20QEaOtM65Pc2Yzrse96EnXK2UzRSVx5KW+vNGNIyrIfVVCjrCByjsGcPsgTG9d3m+
-         y5Lw==
-X-Forwarded-Encrypted: i=1; AJvYcCVTJUliqZxVgpYwiRcOL6RDBz9aqfxWN4WHITKh0vc3zIIimePPWcNDqAKZHBaH5+qXC3lCXqZWOzEj@lists.linux.dev
-X-Gm-Message-State: AOJu0YwMb/V1pGAW/Tul5ofHG4DtbyyXnr9pCFQhwGBXASQ3M+xxqGqh
-	m4G45VBQyOxBIkl3KvUS4nCdaz1yUjnQJeUSKhkq9N/mU+tDyYw2oAWQQXo1PeKh3uo/xslbaml
-	isV6+OxRL2grZonGMaNIB76vCxdh2nFzBsSKrJciLMiB93TJetUxh84eg1dh/DF8=
-X-Gm-Gg: AY/fxX4pZJZYY+QWFhb3b0Lm0XGKzyu3h8lBI5Q8SKlZuNZxWceIz6+Gg4BYjuYJ7Ze
-	AHG4tSMBqUqVuUADLXnYmL6/TD7njTmNrzVuf/84Szy1ImGdnhGF6n/G9kvxaXS2+5p3fxUvKF0
-	5BRB2X3z8rdkl//6OW0ik9srao1UTKz6I1wgBIj1hRJE13B/Tu0OLwD+Jor6jVhrQd7nwaQ3rCr
-	rVLljYWZ68jCT1l1/kyJwmcwqgoN9UaoKR5RWnA575jATrU08kksvjHhwF9bhvwNIBuHcz30Mmk
-	j7wPaNd0A2S6dDfJ+RFmMORs2ruYe1+dG03k+tLi/lK675l0ApyAXGIdatZ7R+ef8Y2toDNG3la
-	01lbDOfXsfMOW
-X-Received: by 2002:a05:6000:18a5:b0:431:8f8:7f17 with SMTP id ffacd0b85a97d-432c362830dmr16282389f8f.10.1768138463554;
-        Sun, 11 Jan 2026 05:34:23 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEUrdZET3rEay41v44TRADbajgxRdDNJp4A+SRYJqr3oi8KK+Jf1Lh89iqwj9E2Qa02SJMCbA==
-X-Received: by 2002:a05:6000:18a5:b0:431:8f8:7f17 with SMTP id ffacd0b85a97d-432c362830dmr16282379f8f.10.1768138463142;
-        Sun, 11 Jan 2026 05:34:23 -0800 (PST)
-Received: from [192.168.0.99] ([212.20.115.16])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-432bd0dacdcsm32760448f8f.1.2026.01.11.05.34.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 11 Jan 2026 05:34:22 -0800 (PST)
-Message-ID: <fc1d7900-3a5f-4b31-8aa3-8c8cd317d646@redhat.com>
-Date: Sun, 11 Jan 2026 14:34:22 +0100
+        bh=wMHfTGtCn/Cp5rCdpRSRQAoNuPzm8mGo2uEIkJzXPew=;
+        b=OgvJkKKsOLjPT8H/5fwNuDbUj9XRIU24vLEtvryMy30pvs03BM9mFBLNZkddhoyciF
+         ZQxnuGiLcFynHBU5AEpmbuVe0CZULU8FCQqm0WGASLsYod1ACmciaJTkn4rS5gLWvyD5
+         QEYyNoB+dN7Z2Wnk2x5P0GEM/GnDO92G7lo9nms6pJ32Gf/iu5UrVsAeKJtWlXuBCj+G
+         OUp/ECXCPaRMPXIucHoBFCokAYgvzZzH7TI43Cfu9rZAcbHSu7MyWxVLMoGY22ggzTFq
+         TIyuRdUfjl554/4f+tQQi6+wkg3uuNRENOgsO1Q0EDBGtI0oPJjyZ5pHDgmY3tKied13
+         VLGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768473455; x=1769078255;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=wMHfTGtCn/Cp5rCdpRSRQAoNuPzm8mGo2uEIkJzXPew=;
+        b=hrR/RHOlrcxMGSp1dz946grwD3ES9DAq/uPtFdlvR/klgvIigdyVgjgOHN9FkxcTu8
+         3HOr8TKWjMDjlSfXUBuVOV659wvvEmJrRuV4PIqcHqiS55EwWE9mO+CwN1irhhyKWzfH
+         1i6CP4m0ijsnCT0Hf7UFkJBYHFQmXEujCroz/tG3IF2Gcxgl1GByDE9wSpY43GzBgAzG
+         2RNgSYW6VZzPhRqtpmh8hmcaZIQ18xLEjM31GFtTS/E4+Fi7x7/dmNorlkrWWGtNglTx
+         8PQCW+IT0/pLRaLuqPCcXXhdxJRHyUXBhQ6r+gsGIHg6IlSWwLks2SyCdgrQTv98eCsD
+         XYEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVKsHNjMIKNR8XtoLbzQeRR6I9gZOBTsaxY/mpcl6dnSbH0INRYh75PrCKtyR3V/TkzOFG2YQS/7ov6@lists.linux.dev
+X-Gm-Message-State: AOJu0YwONL2Lhp1K+Kkm+QOYHPIT0zg+4+uTUcEGYBE2rO2BWPODCdOM
+	EPk+/Y/eJ+aPVNYcUUHIAA+o2f8rqXLPsilrsv79B9PBGWcp5IIDjAIDwl4s/YHxEimg/GgKmTB
+	IhwtqTnZvCncmAPtXuAIgwzgdRv9ofTw=
+X-Gm-Gg: AY/fxX51gaN8nFqB2I3swFEMK6AlhUQqOHqAyLRpoCD61Tett5cwP3JcLpP7GAglPv5
+	3Wz5o7/zogvDCCUNJUbL/1Gxl1dYyrjqS8Czeb3gVTaYXXdOVC6Gk06ry4zUgYTEeM1zkTdm7sl
+	Kwt+HXISQYKR/WuXJTsB0hK36RI9U85twybGi3Lr/gaubZfaghzQAF/OdW49ksEjN7A7fRj9TQ0
+	zgGcKxBQOoH8jNdhsvnx8HW7YCNisNDMO7Mm4tOuQgnL3eqL5SIhRqQ+znAgqcKRDVYcXc=
+X-Received: by 2002:a05:690e:1893:b0:646:5127:ad81 with SMTP id
+ 956f58d0204a3-64901b29241mr4226063d50.95.1768473455240; Thu, 15 Jan 2026
+ 02:37:35 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Hard system lock-ups when using encrypted swap and RAM is
- exhausted
-To: Askar Safin <safinaskar@gmail.com>, Mikulas Patocka <mpatocka@redhat.com>
-Cc: adrelanos@whonix.org, arraybolt3@gmail.com, cryptsetup@lists.linux.dev,
- dm-devel@lists.linux.dev, gmazyland@gmail.com, linux-kernel@vger.kernel.org,
- linux-mm@kvack.org
 References: <3f3d871a-6a86-354f-f83d-a871793a4a47@redhat.com>
- <20251211182429.3300562-1-safinaskar@gmail.com>
- <eb3a9746-83a0-8271-6bd6-867ecfa49aad@redhat.com>
- <CAPnZJGAvA+SpkMeOdZx+SZG=qZxSXOThO+Or1bgw=3QqCoEDgw@mail.gmail.com>
-From: Zdenek Kabelac <zkabelac@redhat.com>
-Organization: RedHat
-In-Reply-To: <CAPnZJGAvA+SpkMeOdZx+SZG=qZxSXOThO+Or1bgw=3QqCoEDgw@mail.gmail.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: Rixs7-FV4Zbm6QzGlmd3sU54F3RGi51PJ4WgxHLpknw_1768138464
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US, cs
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+ <20251211182429.3300562-1-safinaskar@gmail.com> <eb3a9746-83a0-8271-6bd6-867ecfa49aad@redhat.com>
+ <CAPnZJGAvA+SpkMeOdZx+SZG=qZxSXOThO+Or1bgw=3QqCoEDgw@mail.gmail.com> <fc1d7900-3a5f-4b31-8aa3-8c8cd317d646@redhat.com>
+In-Reply-To: <fc1d7900-3a5f-4b31-8aa3-8c8cd317d646@redhat.com>
+From: Askar Safin <safinaskar@gmail.com>
+Date: Thu, 15 Jan 2026 13:36:58 +0300
+X-Gm-Features: AZwV_Qhtkh4Hv5K6ULjZc1z1XJ89DJDGm5amELxKsmdkaAk7JPublSpdt5t7sQM
+Message-ID: <CAPnZJGBkR-ossXKGAj-62Wf-stiuWUwKQUGNo286J_jEiA+nDw@mail.gmail.com>
+Subject: Re: Hard system lock-ups when using encrypted swap and RAM is exhausted
+To: Zdenek Kabelac <zkabelac@redhat.com>
+Cc: Mikulas Patocka <mpatocka@redhat.com>, adrelanos@whonix.org, arraybolt3@gmail.com, 
+	cryptsetup@lists.linux.dev, dm-devel@lists.linux.dev, gmazyland@gmail.com, 
+	linux-kernel@vger.kernel.org, linux-mm@kvack.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Dne 10. 01. 26 v 8:09 Askar Safin napsal(a):
-> On Fri, Jan 2, 2026 at 4:47 PM Mikulas Patocka <mpatocka@redhat.com> wrote:
->> Hi
->>
->> Dm integrity doesn't need to allocate memory when processing I/O requests
-> 
-> Thank you for answer!
-> 
-> Unfortunately, my experience shows the opposite thing.
-> 
-> [[ TL;DR: my experience shows that dm-integrity journaled mode is buggy, and
-> non-journaled mode is not. I. e. journaled mode seems to allocate memory, and
-> this causes temporary (for 4 minutes) lockups (on high specced
-> machine). Or maybe journaled mode has
-> some another bug, which causes such lockups. They are not reproducible in
-> non-journaled mode. ]]
+On Sun, Jan 11, 2026 at 4:34=E2=80=AFPM Zdenek Kabelac <zkabelac@redhat.com=
+> wrote:
+> You probably do need to configure your systemd-oom killer to prevent gett=
+ing
 
+[[ I think I know why I get this behaviour, see section "Why
+dm-integrity behaves so"
+below. ]]
 
-I think it's important to decipher what and how it's blocked - I kind of 
-suspect your system is not blocked on 'dm-integrity' itself - rather some 
-userland app being swapped out of CPU.
+I don't like systemd-oomd. It starts to kill processes long before
+both memory and
+swap is full.
 
-You probably do need to configure your systemd-oom killer to prevent getting 
-your system to it's knees - if you run your system to the moment whether it 
-takes 4 minutes to run a task - there is something seriously wrong with the 
-configuration - as OOM is supposed to kill userland RAM hogging task much 
-earlier (possibly even your overbloated google chrome APP if it run out of 
-bounds).
+Let me repeat what I need: I have big RAM and big swap. And I want OOM kill=
+er
+to kill processes only when absolutely necessary, i. e. when both RAM and s=
+wap
+is full. systemd-oomd is opposite of this: it kills processes long before t=
+hat
+moment, in misguided attempt to keep the system responsive.
 
-So I think you should also show whole device tree of your system and some more 
-information - so there is even 'remote' chance trying to reproduce your scenario.
+But for me my apps are more important than responsiveness. I. e. 4 minutes =
+long
+freezes I talk about are lesser evil than killing everything.
 
-Regards
+So I explicitly disabled systemd-oomd on my system.
 
-Zdenek
+> configuration - as OOM is supposed to kill userland RAM hogging task much
 
+I will repeat: "free -h" output at that moment showed that my RAM is full,
+but swap is 23% full (87 Gb out of 378 Gb are used). So, there is
+a lot of space.
+
+> So I think you should also show whole device tree of your system and some=
+ more
+
+My system is not unusual at all. It is a laptop. With 64 Gb memory and
+378 Gb swap.
+
+I will repeat: swap is located on dm-integrity.
+
+CPU is Intel Core i9.
+
+> information - so there is even 'remote' chance trying to reproduce your s=
+cenario.
+
+Here are steps to reproduce:
+- Take some high-specced machine. I. e. this should be machine, which
+is fast, and which never experiences
+slowdowns in normal situations
+- Put swap on dm-integrity in journaled mode
+- RAM should be 64 Gb and swap should be 378 Gb
+- Open a lot of Chromium tabs until your RAM is nearly full and your
+swap is 23% full
+- Work at your computer for some days (play Youtube videos and perform
+various other activity)
+- At some point your whole computer will freeze for some time, say 4 minute=
+s
+- You will also notice that this happens with journaled dm-integrity
+mode, but doesn't happen in non-journaled mode
+- (Kernel version is 6.12.48)
+
+I'm nearly sure that everybody will be able to successfully reproduce
+this. I don't think precise device tree matters.
+
+=3D Why dm-integrity behaves so =3D
+
+I think I know why this happens.
+
+- Some process needs memory, but RAM is full
+- So kernel attempts to send some memory (i. e. some page) to swap
+- But swap is located on top of dm-integrity
+- And dm-integrity (in journaled mode) write everything twice: once to
+journal and then to final place
+- So dm-integrity layer at first writes that page to journal
+- But journal is cached. Using so-called dm-bufio cache
+- And this cache is located in RAM as opposed to disk!
+- So that page is written to dm-bufio cache, which is located in memory!
+- Thus this page is not actually removed from memory, it is merely
+moved from one
+memory place to another (!!!!!!)
+- This means that the system is still short of memory (!!!!!)
+- Thus kernel attempts to flush to swap more memory
+- But this merely causes whole process to repeat
+
+I think that is why I experience freezes. But I'm not sure about this.
+
+Also, I will repeat: this is merely an experience report. I'm not
+really interested
+in fixing of this bug. I merely sent this report for your information.
+I personally
+switched to non-journaled mode, and I'm happy.
+
+I'm okay with sharing more info about my setup. But I will not test any pat=
+ches.
+
+--
+Askar Safin
