@@ -1,302 +1,172 @@
-Received: from mail-24426.protonmail.ch (mail-24426.protonmail.ch [109.224.244.26])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901E227FD44
-	for <cryptsetup@lists.linux.dev>; Sat, 21 Mar 2026 08:03:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.26
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 138E136894A
+	for <cryptsetup@lists.linux.dev>; Tue, 24 Mar 2026 09:17:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774080206; cv=none; b=j5AHd/JABSey0E8neBQGDHbvhcxV0bLv8APvDI12j3PNB219qkxCIpLS/KERMZGj+vi00Y+gLMRP/uOG+Jt1jvyD1Fgl6F2gTFg+gjudW5A2Iqzw7U3qh0nlEVB3ygAC5hgT+AlmCRKp+D2DPDIWukfyilwF6FF2nK4p7260HNc=
+	t=1774343867; cv=none; b=a/Qqx5v2Q18loIDruLGac0uQTp3mK7OXPkgm0dDrUyaGHWTIQ/Ao+pFuDdUVs+lxbnZ8x3xCw8HJZQXGRFMkzJnB41fbBC5hTUOnfwqPdIb6LBfKkwpntFGWwe8CG5PLslQyJHcy0xUiTUARYzv7xXcuRc86Ls7htW+OClCiMKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774080206; c=relaxed/simple;
-	bh=qXtursXk7Xlz1SwyfKTdvqGmxcaQKOJn5NPFJMECTIk=;
-	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=nElNDuCZfY5Rn0o1vmYxteWKz9wSnrhxrttcCTnTaM66ar2MVeTT1Pc+ugx+t3PgLOlVbfyID2MVwIohGG2Reixg7DMLPky3wjrkJ1VGsAfPEO+Fp9S7K4HIWBNiRb9pjo8X8o2ImnF8cvMneDkm6H4rw6n0E2L9Y5qAFD2G6Ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=KnTobR1U; arc=none smtp.client-ip=109.224.244.26
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+	s=arc-20240116; t=1774343867; c=relaxed/simple;
+	bh=FcXcGc3SGThzxi1wyIgl4s9gjUtW6WhuFKDhPIifbaQ=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=sc5SztcJwRmpX+vVEAIUxb9fQDylDDKapsLHObSfWzc5iWPt0lFtFIzdMnv6Z1sfoa0ex/owxyL9Jl2WPmuSARfqAha/L4+TmhddKSSd0xG5Fs7n6ZR0e4cVSuvCNHJo/Mty9EmUqwY6s+BZlZQDwxlQaXMIKOLPYIrkCTnuyaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=QG7DWSUm; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="KnTobR1U"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=e7ctjkpl5nafjcwyxhgjsaym7y.protonmail; t=1774080198; x=1774339398;
-	bh=qXtursXk7Xlz1SwyfKTdvqGmxcaQKOJn5NPFJMECTIk=;
-	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=KnTobR1UNXaAdAJY/VxpFdqG6kzguq1NndLSo1M04o+Zf9j+b8wCABA2Vdw1/NPqI
-	 ORTwIwKdwpmObVbQEez/6lHqcOgIS8lqgsBYh1ugnchK/hLdc3iNH15gbOgdoQ0CG9
-	 4AG0MuvrSWMb6fEakg2P3Q/LsihU6Fpz7+P0BhiEqJMzs9hce6c1Npxx09akuVq1Xa
-	 WAcvWJtD59BxayejeuODPxCvfxmQvRvUrvTHrDRePGxuR3kyaGFPmd97k0dVg5fhkY
-	 WNSAOKWtLZvmGr9ttLevZtaJRg6lR3g08UxCxcBFuEqq3xIdLxHtRvaYv/QWqGo7Qc
-	 TY3I33euK+xpg==
-Date: Sat, 21 Mar 2026 08:03:16 +0000
-To: "cryptsetup@lists.linux.dev" <cryptsetup@lists.linux.dev>
-From: Mike Wong <mikewongmai@proton.me>
-Subject: Cryptsetup renecrypt failed in LUKS2 metadata initialization
-Message-ID: <7XqkTH2BWNTfXhvFglwFhH9JKJD4Zk-w6454Gib-gGCqgQDBJZc1owm-UH9fVNGXuUHwOtj5mqBHatFNjawEouB-qpJTzv2G6njL-8TmT-I=@proton.me>
-Feedback-ID: 115009693:user:proton
-X-Pm-Message-ID: 0c965bb246ac1c67bf95e66b2ebea25dee7a4bc5
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="QG7DWSUm"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1774343856;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=B7bJOAAmshWZJGeWn2b2t5BVjq2X2GrOn+wJLznNGNw=;
+	b=QG7DWSUm4FRnLcRe7jrMHXr3p4fQvMbQ/MdynlQhw9Be1xkVjSTu8d00xlVRJfqt1K/GgQ
+	4g06dDoQpGK12uiuRAJ1jiSbfGxi0q+YPRPAVsNmdNptgsJmpk0zDLv5iJfwLMtEs5YWhI
+	cSH2lw8vIFyuov7+cJmpj50NJLAVq48=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-640-pV5Ripm8OPeamJ3Qn5kdEA-1; Tue, 24 Mar 2026 05:17:35 -0400
+X-MC-Unique: pV5Ripm8OPeamJ3Qn5kdEA-1
+X-Mimecast-MFC-AGG-ID: pV5Ripm8OPeamJ3Qn5kdEA_1774343854
+Received: by mail-ej1-f70.google.com with SMTP id a640c23a62f3a-b979930aafeso378557166b.2
+        for <cryptsetup@lists.linux.dev>; Tue, 24 Mar 2026 02:17:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774343854; x=1774948654;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:subject:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=B7bJOAAmshWZJGeWn2b2t5BVjq2X2GrOn+wJLznNGNw=;
+        b=WzY0paqDEHuKACJSUg8ITi0J0BjNKMrzeHpsQL+db7jJO0Dtwh2sdJfTXFOOh+B3sb
+         PM211yLDUIZ9jPd4vI/z7uGS63joi7TrG24Oc8JdBb9EnxHt6Pq28KrMuCUrngdJEnPj
+         Vhl13BzCAgd7a12JTV6a27hGy/1Fi12HseKWcFpr/VBYjJMyyPxTgOY13LLea/aF/aZ4
+         i4BUI2tJWhf8XYJ80qU6RS01d155qVVN2cEZ/PvWa7QMv3BF3OnmRSBbUziEhqTczjyE
+         q9V35fRpeRTCDo1/0gWibpYCRfhU8YsoKm8dhew1y/fgAzjulLROOTZihmGve44vWWOC
+         GGBg==
+X-Gm-Message-State: AOJu0YyRm/8D+lumYLL/HQYWgoZzpYzZr40ZvUJKPj4mbR1zPiqqoIjw
+	IisOuGp34q3ydFtwqOV8kSEkjg8hyp+6TrL2ahYEzyzYt11hr9N1vSXhHf15sjCI4T/o3tlctHN
+	h0MYiuBYK7cZesgOIDL425Ig2qJjHqK3TaA6GvyKvKoaPxi10fwsNe1AJY9FicbSEkmXtNSNbS3
+	J0BDJA7cnyKfLb+orm3ZIOE+lumUf20jex6yWJpsaa9TyF
+X-Gm-Gg: ATEYQzw+3vLdUc+kdv64YnZ/ltDWc8wYI5OUAWQZMdFvlhEkWOOU83gGLUCAu715Qc4
+	v4z92tvZFeatcwb2AGoNDrI7BQn991oxhvfWDa6yR9o2BxlcBBQzo1LEwK3VI1xLAizq+YlJRql
+	4K/yQd1kaBk2eFS2lDQmicKXDyp6yUW9LnYU4Mk/MbRAnhG05GhWfgy8O/gYQQwC5zLOGnEgxnm
+	r+JfR1wOlmtyOB2eixhFEb/ztu29nb4Ptnbb7eUp9BYZbXG2RRKcnJFjr5E2xUZiaU8KcLZOucv
+	IanQXbyIOVjAF5tqA0sqZB+g+/6oPAnE95RBMSCGGFWt44Jm/NS0z0pPlQWFhdqzjXbPQj/SZlr
+	TBm56vWYyLHE=
+X-Received: by 2002:a17:907:c70f:b0:b98:d58:f75e with SMTP id a640c23a62f3a-b982f21d51cmr1004548866b.2.1774343853760;
+        Tue, 24 Mar 2026 02:17:33 -0700 (PDT)
+X-Received: by 2002:a17:907:c70f:b0:b98:d58:f75e with SMTP id a640c23a62f3a-b982f21d51cmr1004546366b.2.1774343853151;
+        Tue, 24 Mar 2026 02:17:33 -0700 (PDT)
+Received: from [10.43.17.192] ([213.175.46.86])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-668cd050c4esm4465259a12.0.2026.03.24.02.17.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Mar 2026 02:17:32 -0700 (PDT)
+Message-ID: <a01a2cda-9cd6-4694-9df8-d23454ee1ed0@redhat.com>
+Date: Tue, 24 Mar 2026 10:17:31 +0100
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: Ondrej Kozina <okozina@redhat.com>
+Subject: Re: Cryptsetup renecrypt failed in LUKS2 metadata initialization
+To: "cryptsetup@lists.linux.dev" <cryptsetup@lists.linux.dev>
+Cc: Mike Wong <mikewongmai@proton.me>
+References: <7XqkTH2BWNTfXhvFglwFhH9JKJD4Zk-w6454Gib-gGCqgQDBJZc1owm-UH9fVNGXuUHwOtj5mqBHatFNjawEouB-qpJTzv2G6njL-8TmT-I=@proton.me>
+Autocrypt: addr=okozina@redhat.com; keydata=
+ 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
+In-Reply-To: <7XqkTH2BWNTfXhvFglwFhH9JKJD4Zk-w6454Gib-gGCqgQDBJZc1owm-UH9fVNGXuUHwOtj5mqBHatFNjawEouB-qpJTzv2G6njL-8TmT-I=@proton.me>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: 8z6wBD9Wk67WK_d4AKKguErZLf4q1lmjlTF3mXF46KI_1774343854
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 Hi,
 
-I got a "Command failed with code -1 (wrong or missing parameters)" error w=
-hen trying to reencrypt a plain btrfs partition. I'm using the latest versi=
-on 2.8.4 in a ubuntu 24.04 box.
+On 21/03/2026 09:03, Mike Wong wrote:
+> Hi,
+> 
+> I got a "Command failed with code -1 (wrong or missing parameters)" error when trying to reencrypt a plain btrfs partition. I'm using the latest version 2.8.4 in a ubuntu 24.04 box.
+> 
+> What's the cause of the problem and how could it be solved? Help is much appreciated.
+> 
+> Below is the --debug output:
+> ```
+> # cryptsetup 2.8.4 processing "cryptsetup reencrypt --encrypt --type luks2 --reduce-device-size 32M --init-only --debug /dev/sda4"
 
-What's the cause of the problem and how could it be solved? Help is much ap=
-preciated.
+(...)
 
-Below is the --debug output:
-```
-# cryptsetup 2.8.4 processing "cryptsetup reencrypt --encrypt --type luks2 =
---reduce-device-size 32M --init-only --debug /dev/sda4"
-# Verifying parameters for command reencrypt.
-# Running command reencrypt.
-# Installing SIGINT/SIGTERM handler.
-# Unblocking interruption on signal.
-# Allocating context for crypt device /dev/sda4.
-# Trying to open device /dev/sda4 with direct-io.
-# Initialising device-mapper backend library.
-# Trying to load any crypt type from device /dev/sda4.
-# Crypto backend (OpenSSL 3.0.13 30 Jan 2024 [default][legacy] [cryptsetup =
-libargon2]) initialized in cryptsetup library version 2.8.4.
-# Detected kernel Linux 6.17.0-19-generic x86_64.
-# Loading LUKS2 header (repair disabled).
-# Acquiring read lock for device /dev/sda4.
-# Opening lock resource file /run/cryptsetup/L_8:4
-# Verifying lock handle for /dev/sda4.
-# Device /dev/sda4 READ lock taken.
-# Trying to read primary LUKS2 header at offset 0x0.
-# Opening locked device /dev/sda4
-# Verifying locked device handle (bdev)
-# Trying to read secondary LUKS2 header at offset 0x4000.
-# Reusing open ro fd on device /dev/sda4
-# Trying to read secondary LUKS2 header at offset 0x8000.
-# Reusing open ro fd on device /dev/sda4
-# Trying to read secondary LUKS2 header at offset 0x10000.
-# Reusing open ro fd on device /dev/sda4
-# Trying to read secondary LUKS2 header at offset 0x20000.
-# Reusing open ro fd on device /dev/sda4
-# Trying to read secondary LUKS2 header at offset 0x40000.
-# Reusing open ro fd on device /dev/sda4
-# Trying to read secondary LUKS2 header at offset 0x80000.
-# Reusing open ro fd on device /dev/sda4
-# Trying to read secondary LUKS2 header at offset 0x100000.
-# Reusing open ro fd on device /dev/sda4
-# Trying to read secondary LUKS2 header at offset 0x200000.
-# Reusing open ro fd on device /dev/sda4
-# Trying to read secondary LUKS2 header at offset 0x400000.
-# Reusing open ro fd on device /dev/sda4
-# LUKS2 header read failed (-22).
-# Device /dev/sda4 READ lock released.
-# Releasing crypt device /dev/sda4 context.
-# Releasing device-mapper backend.
-# Closing read only fd for /dev/sda4.
-# Blkid check (LUKS only).
-# Allocating context for crypt device LUKS2-temp-93a07248-f438-413f-8606-04=
-a62d05852a.new.
-# Trying to open device LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a.new=
- with direct-io.
-# Direct-io read works.
-# Initialising device-mapper backend library.
-# Data offset set to 32768 (512-byte) sectors.
-# Blkid check (filter none).
+> # PBKDF benchmark: memory cost = 0, iterations = 642509, threads = 0 (took 51 ms)
+> # PBKDF benchmark: memory cost = 0, iterations = 642509, threads = 0 (took 816 ms)
+> # Benchmark returns pbkdf2(sha256) 642509 iterations, 0 memory, 0 threads (for 1640-bits key).
+> # Keyslot 1 unassigned from digest 0.
+> # Keyslot 1 unassigned from digest 1.
+> # Keyslot 1 assigned to digest 1.
+> # Failed to read data at offset 0 (size: 16777216)
+    ^^^^^^^^^^^^^^^^
 
-WARNING!
-=3D=3D=3D=3D=3D=3D=3D=3D
-This will overwrite data on LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a=
-.new irrevocably.
+There's fail in reading the inital data block on /dev/sda4. Do you see 
+anything significant in syslog (kernel) about it?
 
-Are you sure? (Type 'yes' in capital letters): # Interactive passphrase ent=
-ry requested.
-# PBKDF argon2id, time_ms 2000 (iterations 0), max_memory_kb 1048576, paral=
-lel_threads 4.
-# Formatting device LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a.new as =
-type LUKS2.
-# Trying to open device /dev/sda4 with direct-io.
-# Auto-detected optimal encryption sector size for device /dev/sda4 is 512 =
-bytes.
-# Checking if cipher aes-xts-plain64 is usable.
-# Using userspace crypto wrapper to access keyslot area.
-# Formatting LUKS2 with JSON metadata area 12288 bytes and keyslots area 16=
-744448 bytes.
-# Creating new digest 0 (pbkdf2).
-# Setting PBKDF2 type key digest 0.
-# Running pbkdf2(sha256) benchmark.
-# PBKDF benchmark: memory cost =3D 0, iterations =3D 2048000, threads =3D 0=
- (took 16 ms)
-# PBKDF benchmark: memory cost =3D 0, iterations =3D 2231012, threads =3D 0=
- (took 235 ms)
-# PBKDF benchmark: memory cost =3D 0, iterations =3D 2247751, threads =3D 0=
- (took 933 ms)
-# Benchmark returns pbkdf2(sha256) 2247751 iterations, 0 memory, 0 threads =
-(for 512-bits key).
-# Segment 0 assigned to digest 0.
-# Wiping LUKS areas (0x000000 - 0x001000) with zeroes.
-# Wipe device LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a.new [0], offs=
-et 0, length 4096, block 1048576, bsize 4096, align 4096.
-# Device size 4096, offset 16777216.
-# Wiping keyslots area (0x008000 - 0x1000000) with random data.
-# Wipe device LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a.new [1], offs=
-et 32768, length 16744448, block 1048576, bsize 4096, align 4096.
-# Reusing open rw fd on device LUKS2-temp-93a07248-f438-413f-8606-04a62d058=
-52a.new
-# Device size 16777216, offset 16777216.
-# Acquiring write lock for device LUKS2-temp-93a07248-f438-413f-8606-04a62d=
-05852a.new.
-# Verifying lock handle for LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a=
-.new.
-# Device LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a.new WRITE lock tak=
-en.
-# Trying to write LUKS2 header (12288 bytes) at offset 0.
-# Reusing open rw fd on device LUKS2-temp-93a07248-f438-413f-8606-04a62d058=
-52a.new
-# Checksum:995c0d19ed8dfa7ae16f803d0e9eae383e441358fcd005437480c37a61ce3f73=
- (in-memory)
-# Trying to write LUKS2 header (12288 bytes) at offset 16384.
-# Reusing open rw fd on device LUKS2-temp-93a07248-f438-413f-8606-04a62d058=
-52a.new
-# Checksum:e55b357382872b41071b3a7b22ad7319d95af4185736ede9aab0486b4fc9720f=
- (in-memory)
-# Device LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a.new WRITE lock rel=
-eased.
-# Adding new keyslot -1 by passphrase, volume key provided by key (-1).
-# Selected keyslot 0.
-# Keyslot 0 assigned to digest 0.
-# Trying to allocate LUKS2 keyslot 0.
-# Found area 32768 -> 290816
-# Running argon2id() benchmark.
-# PBKDF benchmark: memory cost =3D 65536, iterations =3D 4, threads =3D 4 (=
-took 73 ms)
-# PBKDF benchmark: memory cost =3D 224438, iterations =3D 4, threads =3D 4 =
-(took 214 ms)
-# PBKDF benchmark: memory cost =3D 262193, iterations =3D 4, threads =3D 4 =
-(took 239 ms)
-# PBKDF benchmark: memory cost =3D 274260, iterations =3D 4, threads =3D 4 =
-(took 247 ms)
-# PBKDF benchmark: memory cost =3D 277591, iterations =3D 4, threads =3D 4 =
-(took 247 ms)
-# PBKDF benchmark: memory cost =3D 280962, iterations =3D 4, threads =3D 4 =
-(took 254 ms)
-# PBKDF benchmark: memory cost =3D 1048576, iterations =3D 8, threads =3D 4=
- (took 1691 ms)
-# PBKDF benchmark: memory cost =3D 1048576, iterations =3D 9, threads =3D 4=
- (took 1898 ms)
-# Benchmark returns argon2id() 9 iterations, 1048576 memory, 4 threads (for=
- 512-bits key).
-# Calculating attributes for LUKS2 keyslot 0.
-# Acquiring write lock for device LUKS2-temp-93a07248-f438-413f-8606-04a62d=
-05852a.new.
-# Verifying lock handle for LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a=
-.new.
-# Device LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a.new WRITE lock tak=
-en.
-# Checking context sequence id matches value stored on disk.
-# Reusing open ro fd on device LUKS2-temp-93a07248-f438-413f-8606-04a62d058=
-52a.new
-# Running keyslot key derivation.
-# Updating keyslot area [0x8000].
-# Reusing open rw fd on device LUKS2-temp-93a07248-f438-413f-8606-04a62d058=
-52a.new
-# Device size 16777216, offset 16777216.
-# Device LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a.new WRITE lock alr=
-eady held.
-# Trying to write LUKS2 header (736 bytes) at offset 0.
-# Reusing open rw fd on device LUKS2-temp-93a07248-f438-413f-8606-04a62d058=
-52a.new
-# Checksum:3dce86f6be9d8c08c7914694137c862bda8578626f4e3c86d33377f96f25e2c2=
- (in-memory)
-# Trying to write LUKS2 header (736 bytes) at offset 16384.
-# Reusing open rw fd on device LUKS2-temp-93a07248-f438-413f-8606-04a62d058=
-52a.new
-# Checksum:026df6310fd08708181d75daa8ce8b14144a93b5a2d60c8f20839aaf86917443=
- (in-memory)
-# Device LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a.new WRITE lock rel=
-eased.
-Key slot 0 created.
-# Checking if cipher aes-xts-plain64 is usable (storage wrapper).
-# Acquiring write lock for device LUKS2-temp-93a07248-f438-413f-8606-04a62d=
-05852a.new.
-# Verifying lock handle for LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a=
-.new.
-# Device LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a.new WRITE lock tak=
-en.
-# Checking context sequence id matches value stored on disk.
-# Reusing open ro fd on device LUKS2-temp-93a07248-f438-413f-8606-04a62d058=
-52a.new
-# Initializing reencryption (mode: encrypt) in LUKS2 metadata.
-# Device size 790487891968, offset 16777216.
-# Device /dev/sda4 is blocked for exclusive open.
-# Segment 4 assigned to digest 0.
-# Allocating reencrypt keyslot 1.
-# Found area 290816 -> 294912
-# Setting reencrypt keyslot for datashift protection.
-# Checking new volume key (digest 0, segment: 4) using keyslot 0.
-# Creating new digest 1 (pbkdf2).
-# Setting PBKDF2 type key digest 1.
-# Running pbkdf2(sha256) benchmark.
-# PBKDF benchmark: memory cost =3D 0, iterations =3D 642509, threads =3D 0 =
-(took 51 ms)
-# PBKDF benchmark: memory cost =3D 0, iterations =3D 642509, threads =3D 0 =
-(took 816 ms)
-# Benchmark returns pbkdf2(sha256) 642509 iterations, 0 memory, 0 threads (=
-for 1640-bits key).
-# Keyslot 1 unassigned from digest 0.
-# Keyslot 1 unassigned from digest 1.
-# Keyslot 1 assigned to digest 1.
-# Failed to read data at offset 0 (size: 16777216)
-# Closed exclusive fd for /dev/sda4.
-# Rolling back in-memory LUKS2 json metadata.
-# Device LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a.new WRITE lock rel=
-eased.
-# Destroying keyslot 0.
-# Acquiring write lock for device LUKS2-temp-93a07248-f438-413f-8606-04a62d=
-05852a.new.
-# Verifying lock handle for LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a=
-.new.
-# Device LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a.new WRITE lock tak=
-en.
-# Checking context sequence id matches value stored on disk.
-# Reusing open ro fd on device LUKS2-temp-93a07248-f438-413f-8606-04a62d058=
-52a.new
-# Wipe device LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a.new [3], offs=
-et 32768, length 258048, block 258048, bsize 4096, align 4096.
-# Reusing open rw fd on device LUKS2-temp-93a07248-f438-413f-8606-04a62d058=
-52a.new
-# Non-rotational device, using random data wipe mode.
-# Keyslot 0 unassigned from digest 0.
-# Device size 16777216, offset 16777216.
-# Device LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a.new WRITE lock alr=
-eady held.
-# Trying to write LUKS2 header (736 bytes) at offset 0.
-# Reusing open rw fd on device LUKS2-temp-93a07248-f438-413f-8606-04a62d058=
-52a.new
-# Checksum:e47b39e9acab1c09e2432d111240e1f09bd116b11bab98d21dcb9990346ee4bd=
- (in-memory)
-# Trying to write LUKS2 header (736 bytes) at offset 16384.
-# Reusing open rw fd on device LUKS2-temp-93a07248-f438-413f-8606-04a62d058=
-52a.new
-# Checksum:96bec787fa065fa3ec65119ecd1e9d69a481ffb4cbc7f7f18d01407295ef722a=
- (in-memory)
-# Device LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a.new WRITE lock rel=
-eased.
-# Releasing crypt device LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a.ne=
-w context.
-# Releasing device-mapper backend.
-# Closing read write fd for /dev/sda4.
-# Closing read only fd for LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a.=
-new.
-# Closing read write fd for LUKS2-temp-93a07248-f438-413f-8606-04a62d05852a=
-.new.
-Command failed with code -1 (wrong or missing parameters).
-```
+Could you post "lsblk -t /dev/sda4" output?
 
-Regards,
-Mike
+Also, for bug reporting the 
+https://gitlab.com/cryptsetup/cryptsetup/-/work_items is better platform.
 
+Anyway, I'll take a more detailed look eventually, but without block 
+device parameters I will not be able to be of much help.
+
+One more thing, do you have the btrfs filesystem mounted by any chance?
+
+With regards
+O.
 
