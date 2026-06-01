@@ -1,73 +1,67 @@
-Received: from taslin.fdn.fr (taslin.fdn.fr [80.67.169.77])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.acc.umu.se (mail.acc.umu.se [130.239.18.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC5138655E
-	for <cryptsetup@lists.linux.dev>; Mon,  1 Jun 2026 07:50:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.67.169.77
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4783F1AD1
+	for <cryptsetup@lists.linux.dev>; Mon,  1 Jun 2026 20:47:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.239.18.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780300225; cv=none; b=AB8+vwRDgZLBocNOObbDyzDSjUyNHEM2BWm4eqNfEa70jfwxutRm5oeGOJFBpyP9wmuVt2mLXjoSG5XKBER2K0TWQXJGR7XNfiOVXB6KvR9woI4bDoHqznSFPofJCWvn1cGINddkhAS1cd7yi8GDDnvsX0R/HuQeqEOsmTcPydI=
+	t=1780346831; cv=none; b=l7B0P4JCxP56ekuT21e4ivtSWAE2UmMtNqSN4PQU8pTOQpSDTUhTA84qdvUMpbDWKtf00suKcw+t5PjC+sq0TOhzsF0XWCEcan2B2WHN8B9NWEVdeI5pK8U+LPUp1xUqzegYPOB43K3OYTsb0uWHqpzH17S2kAP5LtkW7YHGKTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780300225; c=relaxed/simple;
-	bh=7mB2dg8t6QjM7yFwKRBHgzueu2WKQ6OlJYqEpOv1PaM=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=E8cfTrQlGAA2TXR8lSy4ow8GVRVv+BFCEmbm7fJwpwWIIlibIOAiao+V05AyNYoNAjmmsKREMQnSWsLOCIiqGMr7VXgqAcYlJ9gT7Sxb5bq2Ul5IRDLM+Bxxc/FALcwW6BkpWIE1AqwT9wJ9ZZCDoYJPk5WVkVS2yzAiiAhI4FA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name; spf=pass smtp.mailfrom=max.gautier.name; dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b=ksyY+Kz/; arc=none smtp.client-ip=80.67.169.77
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=max.gautier.name
+	s=arc-20240116; t=1780346831; c=relaxed/simple;
+	bh=ty3b/pAPFH6o4HfDlNzvuzDoa8pE7P5YfW4zgFwAEOI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=II+XHg8rBusJytPDOUoETIsElo0ndB9pcZIQ2xkdWBk/cfnuBYwp/7KUGIpf3j/bCiDmRVDyOGCnkL9rFo0kAUX7VevRXSs+LYyLdIF5lLB6HZgxE1hvJKHz511NH5oR2Hxev9DHwYGmOjwKUIvquZUOGnl5V/oW9VsSSyMkztw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ac2.se; spf=pass smtp.mailfrom=accum.se; dkim=pass (1024-bit key) header.d=ac2.se header.i=@ac2.se header.b=LZsyMMz9; arc=none smtp.client-ip=130.239.18.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ac2.se
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=accum.se
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b="ksyY+Kz/"
-Received: from localhost (unknown [IPv6:2a0c:e303:0:cc00:1237:b476:26f2:cbd0])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by taslin.fdn.fr (Postfix) with ESMTPSA id D7C5B60242
-	for <cryptsetup@lists.linux.dev>; Mon,  1 Jun 2026 09:50:20 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=max.gautier.name;
-	s=fdn; t=1780300221;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=dKTy8BewX0Jf1MPKhhcqf0KRkKsfaNHl2jO9D6Gv3bM=;
-	b=ksyY+Kz/xKhBTNN2Mqf6I+zCIdK+3wLXswfZ2LQdpKcbEdYvSZnUv5KWNJiAK4MKKCGtHd
-	EOtG60kSWC8f8B6EUTms6ht1Gn+BqxDpu/pUAWxA0x8hK23evijNmhjWUxTsVB8zg866+y
-	T574jYvBs2tKwv9UBZL3msD6lFrNkxhx9Dog59qsp592zB1XDI1VIN3mJRJcnydB/Yig9T
-	i+ra51MFiWa2d6VrcqN9o3wdALPXX2oj2jD+d1lnVs65WSeadRb7dANGPCJaVNgS/xO1PQ
-	5hmdRrESMBWgmcI4ph42xLd7geIH6uSoCoi/8YR6IzcFEY1lHpl3EUzN71GnEA==
-Date: Mon, 1 Jun 2026 09:50:19 +0200
-From: Max Gautier <mg@max.gautier.name>
+	dkim=pass (1024-bit key) header.d=ac2.se header.i=@ac2.se header.b="LZsyMMz9"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by amavisd-new (Postfix) with ESMTP id AF59444B91;
+	Mon,  1 Jun 2026 22:37:03 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ac2.se; s=default;
+	t=1780346223; bh=ty3b/pAPFH6o4HfDlNzvuzDoa8pE7P5YfW4zgFwAEOI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=LZsyMMz9bjT6NfbUm1xh9lZV1heBKYmyveZ5Y2gAd1Rvxr2b9VrTw6l9gDdumr/hC
+	 X/9H0sH0W4cPesfCuV1LnZRghuv/UUBO/JZWmiJSSWJcGBYM+c0FRVjICtB9JEokxF
+	 4NDzJm/TijSVZN6WJF60EkdKw7GStguPsWPCk4U8=
+Received: from suiko.ac2.se (suiko.ac2.se [IPv6:2001:6b0:e:2018::162])
+	by mail.acc.umu.se (Postfix) with ESMTP id 21A0244B90;
+	Mon,  1 Jun 2026 22:37:03 +0200 (CEST)
+Received: by suiko.ac2.se (Postfix, from userid 24471)
+	id 1200C42B4B; Mon,  1 Jun 2026 22:37:03 +0200 (CEST)
+From: Anton Lundin <glance@ac2.se>
 To: cryptsetup@lists.linux.dev
-Subject: dm-integrity: estimate the size needed for separate integrity device
-Message-ID: <ah05u91w9wfghC8_@framework>
+Cc: Anton Lundin <glance@ac2.se>
+Subject: [PATCH] Add mbedtls to PKGMODULES
+Date: Mon,  1 Jun 2026 22:37:01 +0200
+Message-ID: <20260601203701.1740656-1-glance@ac2.se>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-Hello,
+When cryptsetup is built with --with-crypto_backend=mbedtls, the
+pkg-config file for libcryptsetup should include mbedtls.
+---
+ configure.ac | 1 +
+ 1 file changed, 1 insertion(+)
 
-I'm building a media server where I intend to use RAID10 on top of
-dm-integrity (and cryptsetup on top of that, but that's not really
-relevant, AFAIK). I plan to put the integrity tags of dm-integrity on my
-NVME, to avoid some of the performance penalty. 
-
-But I'm not sure what size each "integrity tags" partition should be,
-depending on the data device.
-
-I'm using this blog [1] as the base for the calculation, but I couldn't
-find a reference for the calculation in the dm-integrity kernel
-documentation, in cryptsetup wiki or in the integritysetup man page.
-
-Is there a reference for calculating that size ? I'm fine looking at
-some code, and it looks like the dm-integrity source[2] has some functions names
-which could be helpful, but any pointers would help :)
-
-Thanks !
-
-[1]: https://blog.tty8.org/posts/2025-04-02-moving-dm-integrity-tags-off-the-hdd-to-speed-up-raid.html
-[2]: https://codebrowser.dev/linux/linux/drivers/md/dm-integrity.c.html
-
+diff --git a/configure.ac b/configure.ac
+index 52ddf11b..260b0ab6 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -741,6 +741,7 @@ case $with_crypto_backend in
+ 	openssl) PKGMODULES="$PKGMODULES openssl" ;;
+ 	nss)     PKGMODULES="$PKGMODULES nss" ;;
+ 	nettle)  PKGMODULES="$PKGMODULES nettle" ;;
++	mbedtls) PKGMODULES="$PKGMODULES mbedtls" ;;
+ esac
+ if test "x$enable_libargon2" = "xyes"; then
+ 	PKGMODULES="$PKGMODULES libargon2"
 -- 
-Max Gautier
+2.47.3
+
