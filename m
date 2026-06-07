@@ -1,65 +1,66 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D283B42F6
-	for <cryptsetup@lists.linux.dev>; Fri,  5 Jun 2026 18:42:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC9F1DF254
+	for <cryptsetup@lists.linux.dev>; Sun,  7 Jun 2026 13:08:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780684952; cv=none; b=YzTI5uhbT6juNUikQb899GMzZIT5ikFX/APi6qqSgoqSZ0fbdIh68t/6QIKbTHKc1oFZwZnj8i2pOEvtkqeY1XpRnJ5idt6A1L4hkSqchiwTT+AxPzdfIrNryBHsALutzfnuvOIbjDDXgEER1XiZNrOnhJ/gXJsMcl0XkBs4RPs=
+	t=1780837726; cv=none; b=uQC3m0Q4bfZrjHdwvK6sHt1dj4OERsuCSO31ulsIEAwf9EOwgva7rlcOgJB0JLItUbd0RPaFWHBxOa2qVcR0wPpP0DP+CbsZMNWR1IwEBrHilmIULApyXG6MWFmHuxy10f0wpl+aD8IlZIKKs9m4vCoJr1sJAx7y23Q8/lu4+SE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780684952; c=relaxed/simple;
-	bh=RpVxc2muq3mrgdG5d3Q6HBdu9XObOWy6Z29ksS1a+7M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=g5I0D1txxRsTFXcXwIsATrVyovhWA5OUrOgVz/0oTZQlm47twZ3hwxzbawCo/4akSuuTb7y2PpHdrH2a0R1TEHGrNlGi1qrUmlPXd4ctWjk0n8CmqbFwDPvQnB8qTAKD1IAGuFlAr5euJvFTGTJYKTJEqfEokE2VuivRWxJGSeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iqtkx8x7; arc=none smtp.client-ip=209.85.221.45
+	s=arc-20240116; t=1780837726; c=relaxed/simple;
+	bh=vlGobOtkqLrQPkGvAwkTF5MuwRXLyQqo8Ko3p3o8P5g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:Cc:From:
+	 In-Reply-To:Content-Type; b=cFwh0LmqemnOOzZgCye5OiI3BrBHj3tuLvqTYHmVczQnkr24NpVxNSepLtc5WnfkVG8nBIVjCTONTyZ7VfQGj9OSSso2lMP36IeQwIFNWk39MTmUyH0ohH5yBft7kqEV85oyCpe2f7JcGSz/bj2lCIYVIggOMybyxdkRvx7R0uY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VE+pA8xI; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iqtkx8x7"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-45ef1629ff4so1547841f8f.0
-        for <cryptsetup@lists.linux.dev>; Fri, 05 Jun 2026 11:42:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VE+pA8xI"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-490ac10e337so30491505e9.3
+        for <cryptsetup@lists.linux.dev>; Sun, 07 Jun 2026 06:08:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780684949; x=1781289749; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=GTA2AVC3FssZEzOx8zoF2DkKPP1Hk/xwwowJVIPMLE0=;
-        b=iqtkx8x7o4kuu7SwQb5C86lWvV5mP5B8EUjCbKY2y3gvO4GBaNyPoEZjW8SEqpEQsm
-         cX8tV+Rmq6FoqDZKzh5bQGM5ZHLRHGHGtbQxa8Nws0MuJVgjgjqC9iOrL0lbVcyfuhcB
-         w+4RagFfwdSANTTQiOzFVL0PAlsBTj21kgybqcoBaeYhrWTcNn/x7If6FKQnCgXyXXCr
-         jiVNhcAu+Yo/c04t7O14Ukbl9UQk56QDNgB2N+g5H8EhGzjaJt7oSITSlzFEMD7rIBXd
-         ubsQ/qqn013Os6b4x4Ky26r/dgRxV9hwKvSeM9VKCCrx614LX6rF+ghWla8DjiPrNs6j
-         wpVQ==
+        d=gmail.com; s=20251104; t=1780837723; x=1781442523; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:cc
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=9UdTfUrmfp1HOyLdRC9A1DxbH6gT45G9QiDAhxEwm2k=;
+        b=VE+pA8xIhZytEcUYWlbQoP16H0p/xPFPrXqsa5VXlJaOGh+GObIshNLTuOdZuLphKe
+         6PEHkVZF0SDvIvcD/PIR4oJXNhrE8nFTgHgPR4aKfRTCIl/pvZYzyfGPRO1Ok+iPL62t
+         KtwAAuh42mA15TzfFtlg42ufxSLORWAjR3LDi2K3u+OrP9+AWsKJAXiGxosQg4Vlh0iz
+         F46CcrZguaFk6mZPiaTzUhgIc1BYJ8s7ory35IhWoYQCeOD8N9koKdE4Hcp36+kw86BM
+         JFHHwRsyx9pOAhQGJXk11L7VtBMsWPUJlAZn/4GF5kYJweEDOqV8jbcL7Ver/EPmQ1sP
+         HjaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780684949; x=1781289749;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1780837723; x=1781442523;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:cc
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GTA2AVC3FssZEzOx8zoF2DkKPP1Hk/xwwowJVIPMLE0=;
-        b=YfPU86mXuJKkKnCqsPtdT4RuUxUZ0SzjFSBPgIjSbMd/CcwNIh1yf1rBkx26NIcuTi
-         ZM3JPRlqZzheQV6ukr/SrAYw7ugMg7mbHFxYT1Q1ZgHgQj191F+JUrb34rk2p3kmv8eh
-         Xra1nOzUX+C3oAzgbp+YxVg0iy17JC0sCgMHwOW87iZ+pmxjkwW/XNNsF73OR/7qGi0U
-         ToxP/rv9hK2r930uKYE4Gi1pHrQrpcespC5jj5uz/F8YiI1JND00njAN+l6iSj38IYc7
-         WNPAU4NgDKoqsegItZxK1gkGlTYkb+OrvyrBWBV8heH8nhQqp8r06w0xmwhQN/2ulbUH
-         z8zA==
-X-Gm-Message-State: AOJu0YybGWFNc3Zap5toPxC4cHiXuCCR2TryA/r9iRhHcCpYrBnYNw69
-	r1E5Gj43mNmyHpswxIyyA+zTBTowX7kjRBBhgA1KyH6tCzOXTZN3bJ8mjajgSw==
-X-Gm-Gg: Acq92OGk6Ex2QKM43Q1ydWJfjE2X9Q/iKoWJkdwvUjfRcDQvcTy16GFebLujMU6JquK
-	0NWKVa60ziAK5aDkSIU/2cqVab+ai8QL6LwdeKlE6wQq0uO0eJlRWC4ewqU/6OhumLsyamvJ6IB
-	JAnDAZXFpSoKHFzXfxtrMaglVvDFUXEYndzcpvvjGlRdq7QIfVIxkU4Qd/9k/5mAT6V5UUj0UhX
-	2paOBuUdPu27SrOyNsJM0yiaZWaQwbzZk/c4kX/yxHMRO6suy5K0Ru5m+2r5B/yqwuN7ydNdbaB
-	OQcYE0IDzAT2cWXpXURXoO3Vz9QBhkLHwqZMFZ1vCXcOhD+AtMFk0lvCNa76vbcQXRjr2rrS0VI
-	SfqJcpCcKwj1a2mZIhy6o87rt3rWZlZ4V0YBtCjURKiKdXOd6KByjR89xbH9QsPic42y2CNTZ60
-	5Adus3t6XIRq75rIv7v0iKGJC+Ew9sNMVbQ/YUEl0NwWRMJPU0iiW5lIiwiqXT
-X-Received: by 2002:a05:6000:25c4:b0:454:35b9:803 with SMTP id ffacd0b85a97d-4603061fcfemr8372258f8f.30.1780684948881;
-        Fri, 05 Jun 2026 11:42:28 -0700 (PDT)
+        bh=9UdTfUrmfp1HOyLdRC9A1DxbH6gT45G9QiDAhxEwm2k=;
+        b=QVW+hMCKoaj1MgZs5GHBxF9kYiQaI364S1FydKbzSPdbHFoTAdajisJnKQzNKLNLj0
+         b6Vr8oFdVmkCv9mJXw6YbhSSWOxzkvQiUyTE1q3mgWLBB3XrHs1mnMloSIWhRKF/05kJ
+         sgFh592ylzI5nmUkr7CtVKjvkK4Eee68Hm6Ett+Ol3Vpd5QmLt9zjfIP98Ny+j2j9eIv
+         VBC9UrCWDcdcY6lBzLMRWCPteIg0UZPXxtgr2DWwGIrvSJMSwlgqoULqkmdEGIukWrz5
+         NFs1cUPEj9IK/5c6K9TW0vxpUDQ4L2AqdvEa6vDbNP0e6A7qajwB12E6NBCthbbmdx9u
+         MeEw==
+X-Forwarded-Encrypted: i=1; AFNElJ9iBYoh18vtwFJfKxUcmcBLojhRnO/slRMIhXnQbLr83+rzVt6JyzZKTrQ4GKjNUB8JGFq0yz8yWLGp@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy/L4yeJA4S9JU3BS58Mr4IXeJZuyusZQh5RvlwizoGVilOKWsQ
+	rAjfttM6yGtPlfZi4pzsC4sMSamUoZOjsAGXks74Yxr9YNPWkjCkWoao
+X-Gm-Gg: Acq92OE/K//GAmCBq+XENv4YOan48ujmH8k4Ua3D7mFVqKjYShY6mGXCcI30bLuZ18b
+	zCPBGWDRbpn7JzafRgYj4YRvKyMauS/odpgK6q1YodhYlzoSNta2goFpIgvtp/zweLF8b4icggR
+	XPKPoD15Iz81fo3IVgcuEISJL4U1X9QsgxU4zySPEqLyCLIyGLyNN5AkI3A/m1pXl44JNhmQnfk
+	AeeFslyLB1NYoIxFipKPCZc/+McfZF161T8JzdrC8Jy/DkS/k4i7uwIgppazGVsS+z3VZC2MZKy
+	B27X6TS7nRUgdsYPN/3j9gEl9nZJinUa4HE878w/65Q5AYmypclpxhKIgpMltAfiFIaMpACpvFp
+	knysGvdCHBNkoUrji+OpiZ/kay7kae6dTf3q4syQU8pvzEpvVaEVG2EgmAjP/ewZ/kLDoqUBzLj
+	Ddg3EimOc5GnEzps63CYcggyZxWWNuFabRcWBw7AjV3J58ShgEJ2NpGZ5zZgNV
+X-Received: by 2002:a05:600c:1387:b0:48a:75b9:b0bc with SMTP id 5b1f17b1804b1-490c2619945mr190672775e9.29.1780837722698;
+        Sun, 07 Jun 2026 06:08:42 -0700 (PDT)
 Received: from [192.168.8.101] (37-48-0-73.nat.epc.tmcz.cz. [37.48.0.73])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f2dc412sm28840761f8f.4.2026.06.05.11.42.28
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490bda4fd52sm292622755e9.0.2026.06.07.06.08.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Jun 2026 11:42:28 -0700 (PDT)
-Message-ID: <15f67003-4f1b-4b24-9b83-726e305907da@gmail.com>
-Date: Fri, 5 Jun 2026 20:42:27 +0200
+        Sun, 07 Jun 2026 06:08:42 -0700 (PDT)
+Message-ID: <20e7ea6e-1583-4274-a243-05e52f206a18@gmail.com>
+Date: Sun, 7 Jun 2026 15:08:41 +0200
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
@@ -67,12 +68,12 @@ List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Add mbedtls to PKGMODULES
-To: Anton Lundin <glance@ac2.se>
-Cc: cryptsetup development <cryptsetup@lists.linux.dev>
-References: <20260601203701.1740656-1-glance@ac2.se>
- <6251d03b-d923-4d64-87a3-1e5aa13c5e94@gmail.com> <aiMDN4xWore5ymZo@accum.se>
+Subject: Re: dm-integrity: estimate the size needed for separate integrity
+ device
+To: Max Gautier <mg@max.gautier.name>, cryptsetup@lists.linux.dev
+References: <ah05u91w9wfghC8_@framework>
 Content-Language: en-US
+Cc: Mikulas Patocka <mpatocka@redhat.com>
 From: Milan Broz <gmazyland@gmail.com>
 Autocrypt: addr=gmazyland@gmail.com; keydata=
  xsFNBE94p38BEADZRET8y1gVxlfDk44/XwBbFjC7eM6EanyCuivUPMmPwYDo9qRey0JdOGhW
@@ -117,28 +118,54 @@ Autocrypt: addr=gmazyland@gmail.com; keydata=
  vlB+GpT+iFRLvhCBe5kAERREfRfmWJq1bHod/ulrp/VLGAaZlOBTgsCzufWF5SOLbZkmV2b5
  xy2F/AU3oQUZncCvFMTWpBC+gO/o3kZCyyGCaQdQe4jS/FUJqR1suVwNMzcOJOP/LMQwujE/
  Ch7XLM35VICo9qqhih4OvLHUAWzC5dNSipL+rSGHvWBdfXDhbezJIl6sp7/1rJfS8qPs
-In-Reply-To: <aiMDN4xWore5ymZo@accum.se>
+In-Reply-To: <ah05u91w9wfghC8_@framework>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 6/5/26 7:11 PM, Anton Lundin wrote:
-> On 02 juni, 2026 - Milan Broz wrote:
-> 
->> Hi,
->>
->> I added the patch to MR for review
->> https://gitlab.com/cryptsetup/cryptsetup/-/merge_requests/931
->>
-> 
-> I was trying to figure out what the projects workflow was, and it looked
-> like there were both patches on the mailing list and MR's on gitlab, and
-> due to me not having a gitlab account since earlier it was just easier
-> to send it to the ML.
+Hi,
 
-Just for info (but I guess you already read that), workflow is documented here
+On 6/1/26 9:50 AM, Max Gautier wrote:
+> I'm building a media server where I intend to use RAID10 on top of
+> dm-integrity (and cryptsetup on top of that, but that's not really
+> relevant, AFAIK). I plan to put the integrity tags of dm-integrity on my
+> NVME, to avoid some of the performance penalty.
+> 
+> But I'm not sure what size each "integrity tags" partition should be,
+> depending on the data device.
 
-https://gitlab.com/cryptsetup/cryptsetup/-/blob/main/CONTRIBUTING.md
+Interesting, while we can print information about data size,
+there is actually no calculation of size in the case of an independent
+data device. (And even this is post-format, we cannot calculate it
+in userspace in advance.)
+
+The only place for this is actually kernel dm-integrity,
+but the code is tricky.
+
+CC to Mikulas - is there a simple way to calculate this size?
+
+Or at least provide userspace with information about the existing
+meta device size (we send only the meta_device option as part
+of the mapping table).
+Actually, integritysetup should check device size before activation...
+
+(We have such a calculation for dm-verity for hash and FEC device,
+but not for dm-integrity.)
 
 Milan
 
+
+> 
+> I'm using this blog [1] as the base for the calculation, but I couldn't
+> find a reference for the calculation in the dm-integrity kernel
+> documentation, in cryptsetup wiki or in the integritysetup man page.
+> 
+> Is there a reference for calculating that size ? I'm fine looking at
+> some code, and it looks like the dm-integrity source[2] has some functions names
+> which could be helpful, but any pointers would help :)
+> 
+> Thanks !
+> 
+> [1]: https://blog.tty8.org/posts/2025-04-02-moving-dm-integrity-tags-off-the-hdd-to-speed-up-raid.html
+> [2]: https://codebrowser.dev/linux/linux/drivers/md/dm-integrity.c.html
+> 
 
