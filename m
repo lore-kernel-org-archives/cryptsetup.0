@@ -1,41 +1,38 @@
 Received: from mail.w13.tutanota.de (mail.w13.tutanota.de [185.205.69.213])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78AF3F411D
-	for <cryptsetup@lists.linux.dev>; Tue, 16 Jun 2026 23:10:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6490C42189A
+	for <cryptsetup@lists.linux.dev>; Mon, 29 Jun 2026 16:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.205.69.213
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781651402; cv=none; b=PMVjJfa9ymXaxZt66dH2H2/FXXyE/5sE456ajGEqInB5654PWuMcV/A7e3g0djBRqMIXIamQi3Y6nGS2S+fYWuLYBlMadeGS2/2VXngxpNE0UYw7HeSd0F4cIn8WL/c0OIH0C4i+FC0GOLSjsjTqnyyjpAbPBBJRYDgIDXsPtQE=
+	t=1782750470; cv=none; b=ORfAhGXEx5Dyq89gmOXSVeMMSz8RRKsP7Ap3Dp00kLK7PykIbWNovuYjHjS8O6a+tMh/ERkW4PGE9BJxmKrgjagas/kSgSplNaZqshqrMRz2330EZs+xnZVNNFSGA/+qgZlk0nTSY0kQuseJ+HrJBU8BvnTsNfnFWW/EKEXdayg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781651402; c=relaxed/simple;
-	bh=6VsGmLswryEcGKbmT0Q2VJwjCCkjU1oQ+KEbQx4/Pt4=;
-	h=Date:From:To:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=FJuAfrQlbd/JUyVPZQ51UvFOBph1zhLiCWJy/EzqzJUT/sGimLGjmliH2rPBjKCA9v6rJmAFYV78czGLBIBN5m/5hReMJSstjFk/WqSULSvzkF3mEEjFMpaKPpJh33Uoi6bG0JTVm7/uhbhFMN0gZwb+I9xDSiauOOUKXqW1HOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tutanota.com; spf=pass smtp.mailfrom=tutanota.com; dkim=pass (2048-bit key) header.d=tutanota.com header.i=@tutanota.com header.b=htKV7nUP; arc=none smtp.client-ip=185.205.69.213
+	s=arc-20240116; t=1782750470; c=relaxed/simple;
+	bh=4h6OEmLAJvR//Tj7sqQK4oGGzTfQ7tjwHCwqVeTGMn0=;
+	h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type; b=ADhLpep4AW1nacbHvajJEzxUdSnxBKG70HzbBg/elFC0kgr6bpi+XK6aCj0/ZUX82JfH9KoOhbOI2dCEyDS3zPmqBGaSYFx/G5SiCvnkN6PKsdgmLEeWpzHCWxe3gpfPjEZhSKnMPgiJ5Zi/GsFeUgy/3IFeevaXqfUe3m6Jr4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tutanota.com; spf=pass smtp.mailfrom=tutanota.com; dkim=pass (2048-bit key) header.d=tutanota.com header.i=@tutanota.com header.b=ZRlJjK1Z; arc=none smtp.client-ip=185.205.69.213
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tutanota.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tutanota.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tutanota.com header.i=@tutanota.com header.b="htKV7nUP"
+	dkim=pass (2048-bit key) header.d=tutanota.com header.i=@tutanota.com header.b="ZRlJjK1Z"
 Received: from tutadb.w10.tutanota.de (w10.api.tuta.com [IPv6:fd:ac::d:10])
-	by mail.w13.tutanota.de (Postfix) with ESMTP id 7B6DB14EFAA1C
-	for <cryptsetup@lists.linux.dev>; Wed, 17 Jun 2026 01:09:53 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1781651393;
+	by mail.w13.tutanota.de (Postfix) with ESMTP id E055D155E66EC
+	for <cryptsetup@lists.linux.dev>; Mon, 29 Jun 2026 18:27:41 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1782750461;
 	s=s1; d=tutanota.com;
-	h=From:From:To:To:Subject:Subject:Content-Description:Content-ID:Content-Type:Content-Type:Content-Transfer-Encoding:Content-Transfer-Encoding:Cc:Date:Date:In-Reply-To:In-Reply-To:MIME-Version:MIME-Version:Message-ID:Message-ID:Reply-To:References:References:Sender;
-	bh=6VsGmLswryEcGKbmT0Q2VJwjCCkjU1oQ+KEbQx4/Pt4=;
-	b=htKV7nUPcqCM7uvBjUtZUdXLTCXqWZfn/lS3JAPHO4i0InNX3cbUAzUbtbxzBHy/
-	P2cTSrgzegMFaAVZJB636pQU/7LpWGNhk/JoYMiicQp4y85URj1ncaSQVWLkAvLyM19
-	uLQ1K3hfiD8dDpQ+f+2+bxEFOWIn7y7A1Pi2oN+yHzi4qBm11h224ZDVVkAyuGHBByR
-	pT7XT53sQyWyMVrngR2CsUOU/fbzNVXR4nioUSf1fSPTzRiA+V+B7ieklWUFiiYmtk1
-	7mYuVcwgVt8T5bteAulDejgGiJtCl/OOIWwxbm9e067PoyXy8o1QDhx6dgPdkUQ14QL
-	yxdne2JqmA==
-Date: Wed, 17 Jun 2026 01:09:53 +0200 (CEST)
-From: Borden <borden_c@tutanota.com>
+	h=From:From:To:To:Subject:Subject:Content-Description:Content-ID:Content-Type:Content-Type:Content-Transfer-Encoding:Content-Transfer-Encoding:Cc:Date:Date:In-Reply-To:MIME-Version:MIME-Version:Message-ID:Message-ID:Reply-To:References:Sender;
+	bh=4h6OEmLAJvR//Tj7sqQK4oGGzTfQ7tjwHCwqVeTGMn0=;
+	b=ZRlJjK1ZHr5YgIukYBwmNyQCZ9DpSV3it0C91avEQmFPRbjgm65jlGeXb+w7m272
+	4dAOc2CiT+vZNt/1749ZB0W/AzZYgSd9hqqVYZeM4WcQlJq1wBNkk+MTSdnABSNS0iG
+	FpbZ6zgbO8G6bYbu+iSKMnHs1+69CEz5lnW53iay7kMYamcGFn7t8/7IsPomeehHBnk
+	xqNa8IUnwZw34Dpt6Q2f+57j8xHVfR2PQX7Gm3Qs4Y3L/VdNVQK20Jdgxhp6tgRwPk/
+	NwUB5A5xDHbSYclmRaxjLQbxEElzO75cq9un3R2Uz1toG+PvgGf616aUU8QQ/kI+A3D
+	FKV2cPVegA==
+Date: Mon, 29 Jun 2026 18:27:41 +0200 (CEST)
+From: cyper@tutanota.com
 To: Cryptsetup <cryptsetup@lists.linux.dev>
-Message-ID: <OvHgcxy--F-9@tutanota.com>
-In-Reply-To: <488b1720-619f-475f-b5a8-2e6ca855b8b8@redhat.com>
-References: <OuyYP0g--F-9@tutanota.com> <488b1720-619f-475f-b5a8-2e6ca855b8b8@redhat.com>
-Subject: Re: What does cryptsetup luksAddKey --new-key-description do?
+Message-ID: <OwJ5x3r--N-9@tutanota.com>
+Subject: [feature] PQC KEM
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
@@ -43,18 +40,22 @@ List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Feedback-ID: 01860081bf58008fd8d0320d4bb6316e5e4961e4f91e2478b663adcef3724b3d54976dc41f0b2a26c03eae3bec7f4714cf205cada80020d14dd560b709983276f9:TurnOnPrivacy!:tutamail
+Content-Transfer-Encoding: quoted-printable
+Feedback-ID: 01c31dc8a5d4d6751b6f6ac02a78e46dc8b122f05e0198c33d2725066fef6ebaf2fef8f8a5859fcd950990ed82c624bcd61f0c6ba63d9a3ddbf9efb21fe5671f4a:TurnOnPrivacy!:tutamail
+
+Interested in introducing a new LUKS2 "xwing" keyslot type unlocked by an X=
+-Wing
+post-quantum hybrid KEM (ML-KEM-768 + X25519, draft-connolly-cfrg-xwing-kem=
+)
+instead of a passphrase to encrypt the kek (volume key)?
+
+1) asymmetric model won't shine in single user case but will be attractive =
+in multiple user/image enrollment cases.
+2) if per-device fresh wrapping key is desired
 
 
+I've implemented such keyslot type and tested.=C2=A0 But don't know if the =
+aforementioned two cases is worth discussion.
 
-
-Jun 15, 2026, 05:33 by okozina@redhat.com:
-
-> It reads a passphrase for a new keyslot from a kernel keyring key with the description provided as --new-key-desription value argument.
->
-> I'll improve the man pages description to make it clear. Feel free to open new issue on > https://gitlab.com/cryptsetup/cryptsetup
->
-Thank you. It was unclear that description refers specifically to the kernel keyring. I thought it might have been a LUKS label or something.
-
-As long as this shows up in search results so you don't have to be bothered about this again, I'm happy.
+Kind regards,
+Alan
