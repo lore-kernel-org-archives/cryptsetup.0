@@ -1,83 +1,70 @@
-Received: from mail.w13.tutanota.de (mail.w13.tutanota.de [185.205.69.213])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304BF349AFF
-	for <cryptsetup@lists.linux.dev>; Mon, 29 Jun 2026 17:50:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.205.69.213
+Received: from arnowagner.info (mail.tansi.org [84.19.178.47])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15A5F3F6C2D
+	for <cryptsetup@lists.linux.dev>; Mon, 29 Jun 2026 18:46:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.19.178.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782755446; cv=none; b=BWHksdQKW02xwv26QuVJcHFDqUuOzfZzBYm8UB1G9L/SO+CMheMYEBw4MutojFEiKRZxEWyXNLw8YufyQo+tUhKathVgPG6Na7d9cp+7ayS0mXFrl2vgivonkbGWD4WoAAUARnOukEjQ1GqCvGjFs03i3dr8XIB5bwP2Bxao3mc=
+	t=1782758767; cv=none; b=iqavzL5ubvEAl8nt5HAEqltyLkLGAuiJY5ohRrAdissYXRerEJ8/1xwedX98KP/ERNRRWLdMEE05W4x08xZV6nf7qvkM7ccuLRahBpKv8pZjf1btlFotX2uiLr4MgfY3L/2crLhZcypwWmRCKuvXU5A+MW27XPU4ATuXs64t4Rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782755446; c=relaxed/simple;
-	bh=AaoOSbWmnKJDBGUrSTnKf9jiXg6u0SE6aMxtf9nVp/U=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=mpdbXePneq3BCH/6xCVx2nU6424COiU7uTj2L+b8dWk+6+P+ZM/WNwUOaabGDa4Ac1+pJSQDBEHdOMSEOSI/OL1NSKBjBvLPdSjelXj5BQ9g3O/idsdZP/Q8o8b3UzJ84rmXjPhZS3Rn1LBPcq5wCQHiKrYzXexspTl5v3QNi9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tutanota.com; spf=pass smtp.mailfrom=tutanota.com; dkim=pass (2048-bit key) header.d=tutanota.com header.i=@tutanota.com header.b=W+1+FEmD; arc=none smtp.client-ip=185.205.69.213
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tutanota.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tutanota.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tutanota.com header.i=@tutanota.com header.b="W+1+FEmD"
-Received: from tutadb.w10.tutanota.de (w10.api.tuta.com [IPv6:fd:ac::d:10])
-	by mail.w13.tutanota.de (Postfix) with ESMTP id 37E5A155F1D6A
-	for <cryptsetup@lists.linux.dev>; Mon, 29 Jun 2026 19:50:43 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1782755443;
-	s=s1; d=tutanota.com;
-	h=From:From:To:To:Subject:Subject:Content-Description:Content-ID:Content-Type:Content-Type:Content-Transfer-Encoding:Content-Transfer-Encoding:Cc:Cc:Date:Date:In-Reply-To:In-Reply-To:MIME-Version:MIME-Version:Message-ID:Message-ID:Reply-To:References:References:Sender;
-	bh=AaoOSbWmnKJDBGUrSTnKf9jiXg6u0SE6aMxtf9nVp/U=;
-	b=W+1+FEmDo4We+VGXW2kjLvtKSe96IZ87AnwBeYoa1Y9Xcjed3MsIjdxYpmKbyTUM
-	bq/tRySv7u9EoveQRMfOxSh6AY9AdTt88SKd5GtpLoRuq579tWLakWPaxlKIPCUTl7G
-	hq+tZ+mbcL5jFalrRNzzR9c0/2nqdik6Rf9FFsmMH9MJdLXs26y33nQhYYbpkA2v3cK
-	t6Et6pSVpA+bubx/yL2jFdEoZfOysa79atEb9qNG8Rv3elLO0qEfSXydXNeVrwIc7/+
-	tk4nFT6Roj++VJ6xIf+Maqr26TuJe1/yPWfkznqDUGqpN0pT5YBb2jCyt9VWd3xCiQ4
-	RYw3yFlJHg==
-Date: Mon, 29 Jun 2026 19:50:43 +0200 (CEST)
-From: cyper@tutanota.com
+	s=arc-20240116; t=1782758767; c=relaxed/simple;
+	bh=dB3IIueXNVSARJc4MD6iZsWvHMDewJsqP+5eR+SRb2E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=F/QK9UgRvU1tbrzh9Ox1PSH98ywq3oDvCafs8I887AeF9MHNeObOSH9AhawUqJrrapcW6Fz6RUNjaZWMv6b8lfBm5OGNvvN7BiSrzQ95+P8cyqfb1gxuaYWAZQsrDI1iIFvENbjr/8OoV9ETKz1V71tT1qeREhln5+uzrkfGtcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=arnowagner.info; spf=pass smtp.mailfrom=arnowagner.info; arc=none smtp.client-ip=84.19.178.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=arnowagner.info
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arnowagner.info
+Received: from gate.tansi.org (81-6-44-245.init7.net [81.6.44.245])
+	by v1.tansi.org (Postfix) with ESMTPA id 3C605140057;
+	Mon, 29 Jun 2026 20:38:42 +0200 (CEST)
+Received: by gate.tansi.org (Postfix, from userid 1000)
+	id 1288117AD26; Mon, 29 Jun 2026 20:40:42 +0200 (CEST)
+Date: Mon, 29 Jun 2026 20:40:42 +0200
+From: Arno Wagner <wagner@arnowagner.info>
 To: Milan Broz <gmazyland@gmail.com>
-Cc: Cryptsetup <cryptsetup@lists.linux.dev>
-Message-ID: <OwJVFO9--F-9@tutanota.com>
-In-Reply-To: <eeba13d0-3337-4213-8751-53de0838c474@gmail.com>
-References: <OwJ5x3r--N-9@tutanota.com> <eeba13d0-3337-4213-8751-53de0838c474@gmail.com>
+Cc: cyper@tutanota.com, Cryptsetup <cryptsetup@lists.linux.dev>
 Subject: Re: [feature] PQC KEM
+Message-ID: <akK8KlVr8s3ZHdvb@tansi.org>
+Reply-To: Arno Wagner <arno@wagner.name>
+References: <OwJ5x3r--N-9@tutanota.com>
+ <eeba13d0-3337-4213-8751-53de0838c474@gmail.com>
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Feedback-ID: 01c31dc8a5d4d6751b6f6ac02a78e46dc8b122f05e0198c33d2725066fef6ebaf2fef8f8a5859fcd950990ed82c624bcd61f0c6ba63d9a3ddbf9efb21fe5671f4a:TurnOnPrivacy!:tutamail
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <eeba13d0-3337-4213-8751-53de0838c474@gmail.com>
 
-Avoid low-entropy passphrase. (I am aware of key file which is yet another =
-passphase pass to pbkdf)
-Avoid pbkdf cause the default one argon2 is not fips compliant.
-Enable public recipient access.
-
-29 Jun 2026 at 17:42 by gmazyland@gmail.com:
-
+On Mon, Jun 29, 2026 at 18:42:03 CEST, Milan Broz wrote:
 > On 6/29/26 6:27 PM, cyper@tutanota.com wrote:
->
->> Interested in introducing a new LUKS2 "xwing" keyslot type unlocked by a=
-n X-Wing
->> post-quantum hybrid KEM (ML-KEM-768 + X25519, draft-connolly-cfrg-xwing-=
-kem)
->> instead of a passphrase to encrypt the kek (volume key)?
->>
->> 1) asymmetric model won't shine in single user case but will be attracti=
-ve in multiple user/image enrollment cases.
->> 2) if per-device fresh wrapping key is desired
->>
->>
->> I've implemented such keyslot type and tested.=C2=A0 But don't know if t=
-he aforementioned two cases is worth discussion.
->>
->
-> This is typically something that should be done through LUKS2 external to=
-ken while keeping keyslot
-> encryption as it is defined in LUKS. (Maybe you did it that way, no idea.=
-)
->
+> > Interested in introducing a new LUKS2 "xwing" keyslot type unlocked by an X-Wing
+> > post-quantum hybrid KEM (ML-KEM-768 + X25519, draft-connolly-cfrg-xwing-kem)
+> > instead of a passphrase to encrypt the kek (volume key)?
+> > 
+> > 1) asymmetric model won't shine in single user case but will be attractive in multiple user/image enrollment cases.
+> > 2) if per-device fresh wrapping key is desired
+> > 
+> > 
+> > I've implemented such keyslot type and tested.  But don't know if the aforementioned two cases is worth discussion.
+> 
+> This is typically something that should be done through LUKS2 external token while keeping keyslot
+> encryption as it is defined in LUKS. (Maybe you did it that way, no idea.)
+> 
 > Anyway, what security issue this solves (except "it is PQC")?
->
-> Milan
->
 
+That seems to be the key question. 
+
+Also refer to https://www.cs.auckland.ac.nz/~pgut001/pubs/bollocks.pdf
+
+Arno
+
+-- 
+Arno Wagner,     Dr. sc. techn., Dipl. Inform.,    Email: arno@wagner.name
+GnuPG: ID: CB5D9718  FP: 12D6 C03B 1B30 33BB 13CF  B774 E35C 5FA1 CB5D 9718
+----
+A good decision is based on knowledge and not on numbers. -- Plato
+
+If it's in the news, don't worry about it.  The very definition of 
+"news" is "something that hardly ever happens." -- Bruce Schneier
