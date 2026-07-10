@@ -1,164 +1,113 @@
-Received: from toucan.tulip.relay.mailchannels.net (toucan.tulip.relay.mailchannels.net [23.83.218.254])
+Received: from evolvis.org (evolvis.org [217.144.135.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981DF3AC0F4
-	for <cryptsetup@lists.linux.dev>; Wed,  8 Jul 2026 01:09:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.83.218.254
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1029F35E1D8
+	for <cryptsetup@lists.linux.dev>; Fri, 10 Jul 2026 17:22:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.144.135.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783472995; cv=none; b=TFFoHefGC1MNLFy371iyC+Uz4zeLYRFiU8pZUVxsDg//d6OYgVK3O9gwni9l+sMySp7A7Nju829EEQpwkltFhtI+vG0yY6UMLogX1Ihur5jpLGKVxKZEfEI5uNEf7N4jEgbz7CE5YmNO/qbkxLrm/UF9d0OWdOXymJDDhfVwABM=
+	t=1783704161; cv=none; b=BbZNt0hNlQ+a9wg2brrPIf//erus8OrqAnNCXpJotrAvgiyTaNXwNdOxYHKB7XuVU8vDTc1XV5UP5jKfrEDd1PVngB6hjGzTMIknkRaRjsSkxuxeo8J3f+1aqmBeH2F51BTl6OnF4ysbali4eAgrYw0HClGdrFxAlGFP+kHVkXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783472995; c=relaxed/simple;
-	bh=HOeQ/YQZ42oztbITSPxmypbU9jNg6YrCA424ifUjGtI=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Uk6rtmTldngYxVvCHZeFx6PtASR1OQa7B/nuy7CmAAD2vJZurG+TbDIEkLDFEO0fSZtw5NOnUn/xl0W/FbNEZb5rQ6AV+7Dk1HwN5dZuZhkZOlQpqvIBNEm8eFGk0pPhngl7mDCBcvK+O25FpyJL8lyP6PqNLs98/0Hc04YXczw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=scientia.org; spf=pass smtp.mailfrom=scientia.org; arc=none smtp.client-ip=23.83.218.254
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=scientia.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=scientia.org
-X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 45853462573;
-	Wed, 08 Jul 2026 01:01:41 +0000 (UTC)
-Received: from cpanel-007-fra.hostingww.com (100-99-12-141.trex-nlb.outbound.svc.cluster.local [100.99.12.141])
-	(Authenticated sender: instrampxe0y3a)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 6D970462403;
-	Wed, 08 Jul 2026 01:01:40 +0000 (UTC)
-X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
-X-MC-Relay: Neutral
-X-MC-Copy: stored-urls
-X-MailChannels-SenderId: instrampxe0y3a|x-authuser|calestyo@scientia.org
-X-MailChannels-Auth-Id: instrampxe0y3a
-X-Coil-Illustrious: 5210bd4d748c61a3_1783472501160_2933258972
-X-MC-Loop-Signature: 1783472501160:573452517
-X-MC-Ingress-Time: 1783472501160
-Received: from cpanel-007-fra.hostingww.com (cpanel-007-fra.hostingww.com
- [3.69.87.180])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.99.12.141 (trex/8.0.2);
-	Wed, 08 Jul 2026 01:01:41 +0000
-Received: from p5b0ed87c.dip0.t-ipconnect.de ([91.14.216.124]:59373 helo=heisenberg.fritz.box)
-	by cpanel-007-fra.hostingww.com with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.99.4)
-	(envelope-from <calestyo@scientia.org>)
-	id 1whGfT-0000000EQpf-1WRy;
-	Wed, 08 Jul 2026 01:01:38 +0000
-Message-ID: <6a08a0e2917091ed5256bf5098d78a5d5735414c.camel@scientia.org>
-Subject: Re: cryptsetup 2.8.7-rc1
-From: Christoph Anton Mitterer <calestyo@scientia.org>
-To: cryptsetup development <cryptsetup@lists.linux.dev>
-Cc: Milan Broz <gmazyland@gmail.com>
-Date: Wed, 08 Jul 2026 03:01:37 +0200
-In-Reply-To: <dac6de42-1409-477b-ae57-5766c28b5c22@gmail.com>
-References: <5551ed2a-be50-49fe-af21-a78f8abe0315@gmail.com>
-	 <7989d6080792b67d7fac3ac9db863e280376a9e5.camel@scientia.org>
-	 <dac6de42-1409-477b-ae57-5766c28b5c22@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2-10 
+	s=arc-20240116; t=1783704161; c=relaxed/simple;
+	bh=sZKBR8RumsDdLRl87y/dsG0/Ay95icEOW048qF3+8nY=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type; b=i3cOqWIPsseYymv3DDheq+kGt8RcVJ8VxiCduPXKdz6aos6+W1s6rimpBG/WwDmtIXpm2sVN/yF3ZQSDuoXdNcXTsDAmOktgCyV6vXLqCDtqJhsbJPmPDT6Jc5vc2pIIYbLFpkcSGfRslzlxq/SQvexjEQiisf4NHpDyAPahikE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=evolvis.org; spf=pass smtp.mailfrom=evolvis.org; arc=none smtp.client-ip=217.144.135.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=evolvis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=evolvis.org
+Received: from x61p.mirbsd.org (p5b2babb5.dip0.t-ipconnect.de [91.43.171.181])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X448 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(Client did not present a certificate)
+	(Authenticated sender: x61p@relay.evolvis.org)
+	by evolvis.org (Postfix) with ESMTPSA id 07B2C1001D2
+	for <cryptsetup@lists.linux.dev>; Fri, 10 Jul 2026 17:14:56 +0000 (UTC)
+Received: by x61p.mirbsd.org (Postfix, from userid 1000)
+	id 6B320142715; Fri, 10 Jul 2026 19:14:55 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by x61p.mirbsd.org (Postfix) with ESMTP id 66050140129
+	for <cryptsetup@lists.linux.dev>; Fri, 10 Jul 2026 19:14:55 +0200 (CEST)
+Date: Fri, 10 Jul 2026 19:14:55 +0200 (CEST)
+From: Thorsten Glaser <tg@evolvis.org>
+To: cryptsetup@lists.linux.dev
+Subject: 4K sector size, cryptswap, with/-out dm-integrity?
+Message-ID: <91244f91-7fdd-780f-8860-dfa7e784b7dc@evolvis.org>
+x-ms-reactions: disallow
+Content-Language: ksh-Latn-DE-u-ca-iso8601-co-POSIX-kk-false-em-text-rg-denw-tz-utc-va-posix, de-DE-1901-u-ca-iso8601-co-POSIX-kk-false-em-text-rg-denw-tz-utc-va-posix, de-Latf-DE-1901-u-ca-iso8601-co-POSIX-kk-false-em-text-rg-denw-tz-utc-va-posix, en-GB-u-ca-iso8601-fw-mon-hc-h23-co-POSIX-kk-false-cu-eur-em-text-rg-denw-ms-metric-mu-celsius-tz-utc-va-posix, und-Zsym-u-ca-iso8601-fw-mon-hc-h23-co-POSIX-kk-false-cu-eur-em-text-rg-denw-ms-metric-mu-celsius-tz-utc-va-posix
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-AuthUser: calestyo@scientia.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Hey Milan.
+Hi,
 
+I=E2=80=99ve been looking a bit at how 4K sector sizes are passed
+through the stack today, and I=E2=80=99m wondering a bit about
+things the docs don=E2=80=99t have sufficiently deep details for.
 
-On Tue, 2026-06-30 at 07:46 +0200, Milan Broz wrote:
-> There is an ongoing effort to provide "crippled" af_alg, but I do no
-> think
-> it is a quite sensible approach. But if it lands in kernel, we adapt
-> to it.
+AIUI, and please correct me if I=E2=80=99m wrong anywhere:
 
-Do you by chance have any idea whether this would help with respect to
-Serpent and Twofish?
+First, the easy(?) cases:
 
+- HDD with 512 bytes underlying sector size =E2=87=92 4K sectors never ok
+- SSD with 512 bytes logical sector size and no 4K listed in
+  the =E2=80=9Csmartctl -c /dev/nvme0n1=E2=80=9D / =E2=80=9Cnvme id-ns -H /=
+dev/nvme0n1=E2=80=9D
+  output =E2=87=92 4K sectors likely not ok?
 
-> The interface cannot be completely removed (I hope the promise to not
-> break userspace still holds).
+- HDD/SSD with 4K logical sectors =E2=87=92 4K sectors ok
 
-Well, removing these algos would already kinda do so, wouldn't it? I
-mean I can understand if things shall be cleaned up and if for example
-drivers for decade old hardware is removed, but these alogs aren't
-broken or completely outdated.
+The documentation also says that this should be:
 
+- dm-integrity device with --sector-size 4096 in journalled mode =E2=87=92 =
+ok
+  - does this even differ between underlying 512/512, 512/4K, 4K/4K devices=
+?
+- same but in D (direct) mode =E2=87=92 not ok unless underlying device is
+  - 4K/4K?
+  - 512/4K or 4K/4K (see below)?
+- same but in B (bitmap) mode =E2=87=92 ?
+- same but in I (inline) mode =E2=87=92 only ok if the underlying device ma=
+tches?
+- R (recovery) mode is special anyway
 
-> Anyway, AF_ALG s is already marked as deprecated.
-> I am sure kernel people underestimated how many people using it.
-> Anyway, I gave up discussions in kernel lists, it is still a very
-> toxic environment.
+Then, there=E2=80=99s this one:
 
-FYI, I've posted[0] to linux-crypto, bringing up the concern of "lost"
-algorithms and that this may actually affect users.
+- HDD with 512b logical and 4K physical sectors according to
+  =E2=80=9Chdparm -I=E2=80=9D/=E2=80=9Csmartctl -i=E2=80=9D =E2=87=92 that =
+ok?
 
-So let's hope for some hopefully positive input from there.
+And the thing I=E2=80=99ve really been wondering about is:
 
+at the moment, I use encrypted swap like this (crypttab):
 
-> The whole point of this exercise was to prepare for people disabling
-> AF_ALG themselves.
-> We had already fallback, so it is used for everything now.
+# <target name> <source device>         <key file>      <options>
+cswp1           /dev/=E2=80=A6=E2=80=A6=E2=80=A6                /dev/urando=
+m    discard,cipher=3Daes-xts-plain64,size=3D512,plain,swap
 
-You mean cryptsetup has a fallback?
+Is it possible to add =E2=80=9C,sector-size=3D4096=E2=80=9D to that line an=
+d
+will it help (encrypting 4K in one go is faster than eight
+times 512b after all)? Does the kernel swapping subsystem
+work with that? (On amd64, so my page size is 4096, though
+since 4K pages on 512b devices works, 16K/64K pages on 4K
+devices will likely also work for things like MIPS, ARM=E2=80=A6)
 
-At least when I blacklist af_alg before, opening a dm-crypt device with
-serpent-xts-plain64 failed (as expected).
+If so, under the same circumstances as above? (Either 4K logical
+device (which I seem to not have) or 4K integritysetup with journal
+(also on 512/4K or 512/512 devices?) or MAYBE 512/4K devices?)
 
-
-> Depend how you use it, but if it is for LUKS, we can now fallback to
-> old
-> temporary dm-crypt mapping even for LUKS2, you just need to be root.
-
-This I don't quite understand, I'm afraid.
-
-I do use it with LUKS, so should Serpent/Twofish still continue the
-work then, I mean even if AF_ALG were to be removed completely?
-
-
-> For OpenSSL, it can be extended by providers and it should not be too
-> complicated
-> to write provider for Twofish and Serpent.
-
-Maybe not for a crypto expert and cryptsetup maintainer... ;-P
-
-And while I might be able to hack something together, I'm not really
-a=C2=A0crypto developer, and given the nature of the subject, it feels
-rather stupid trying to do so - a home-brew provider might look as if
-it would work, but still have security flaws.
-
-
-> Libgcrypt backend should support all of these, but definitely we do
-> not want to switch to it by default.
-
-Well and I wouldn't want to deviate from Debian's packaging anyway...=20
-
-
-Unrelated topic...
-
-Any news on [1] and apart from the questions therein in particular the
-availability of usable AEAD algos?
-When I just skimmed through linux/crypto/ I noticed that chacha.c seems
-to contain XChaCha support... which IIRC uses a 192bit nonce and should
-thus hopefully be secure enough for drive encryption?
-
-But even if that were available for cryptsetup/dm-crypt, it would still
-be nice to have alternatives, like in particular one with AES?
-Well, I don't really know how e.g. AES256 compares security with to
-[X]ChaCha20, AES has at least most likely seen far more crypto analysis
-than the latter?
-Any chance to lobby the kernel crypo folks to add a GCM mode with
-larger nonce?
-
-I mean cryptsetup has all that nice integrity support... but I guess no
-one is really using it, given that all available algos/modes were
-recommended against because of the too small nonce.
-
+I=E2=80=99ve been putting integritysetup with 4K sectors and journal
+under my RAID-1+LUKS recently already anyway, even if performance
+is=E2=80=A6 lacking. But I should stick to J (journal) mode with this, no?
 
 Thanks,
-Chris.
-
-
-
-[0] https://lore.kernel.org/linux-crypto/27816cc353731e8e5484adad7d0fc44777=
-7727d8.camel@scientia.org/T/#u
-[1] https://gitlab.com/cryptsetup/cryptsetup/-/work_items/668
+//mirabilos
+--=20
+=E2=80=9ECool, /usr/share/doc/mksh/examples/uhr.gz ist ja ein Grund,
+mksh auf jedem System zu installieren.=E2=80=9C
+=09-- XTaran auf der OpenRheinRuhr, ganz begeistert
+(EN: =E2=80=9C[=E2=80=A6]uhr.gz is a reason to install mksh on every system=
+=2E=E2=80=9D)
