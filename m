@@ -1,185 +1,170 @@
-Received: from mout.web.de (mout.web.de [212.227.15.4])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED90D37DAA3
-	for <cryptsetup@lists.linux.dev>; Tue, 14 Jul 2026 11:10:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC90A363C60
+	for <cryptsetup@lists.linux.dev>; Tue, 14 Jul 2026 11:19:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784027439; cv=none; b=ei5M9U8eMjRDJBldicDTZxb5fBcUY3MNLy4mGu0u2SZf73zjwlCeVdSctT1Wyjy9IqzAH+qOIclJE9Mvx3CobpuOu93VuMqdd319dYETW46JWLCjJ4aUZ3pfd+IlyceqNUb6SncCzwB/XriLG2yf9a7K1n50zZgR//19FI/pK9Y=
+	t=1784027973; cv=none; b=UKwzwyAk/HUJgjM3d/vjg1dgg244psUi/Np3L6VoGC96SeBt7yBAaJeHqMjITVjhVukVJu1t6LNvTWSls6U6P6/CGSvH6NPIRGKSwGqGyR6qSC3JaN8hxQs1Co6HGZUD5rxIRiwo8rBbP9CpOtFyGgtvxqA8LajRkqhSmT0KgJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784027439; c=relaxed/simple;
-	bh=P2DXZrsst/zYmLOF2qww1PajYwnUTIz5jJAD8i0qqVo=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kM0zdTTxI/HhnAzZOFHUYwW6iOgzUzqZNjlrfA7c8U99rKXLo9zWRBStSNGvKG1v3gsdBWQ9WMPVIXf9NDQm7lCJr5p4cAKT5Hc7nx1xpAoDUZ7w9Rkqg/eBzLoXal3EDl+2VyAXR2nPFte+B67deTAmCgPgw+KNR7ytBsbhMFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=johan.melkonyan1@web.de header.b=LUwqaSBp; arc=none smtp.client-ip=212.227.15.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1784027973; c=relaxed/simple;
+	bh=b77LobGzz3STgq6K5ug9HeFowLfUBEtareKeKR8LO8A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RgB7RDF3ZkhMSrlGmCDaqs6/lm8CpxBHC0Xn9C3bsPqd+CJmP4F89BM9VmsiDaNX+S8kN5R+GxlnR9gt+ixB9Chm3UWAEzHHfoZB9acUJMH8fsSnf6yXG6aj76daUjiWMovUJr/1T9U8GruNBqF/VaK33HqPK6tT3jC1HhOPeK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Pi7qCf2I; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=johan.melkonyan1@web.de header.b="LUwqaSBp"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1784027434; x=1784632234; i=johan.melkonyan1@web.de;
-	bh=P2DXZrsst/zYmLOF2qww1PajYwnUTIz5jJAD8i0qqVo=;
-	h=X-UI-Sender-Class:From:In-Reply-To:References:MIME-Version:Date:
-	 Message-ID:Subject:To:Cc:Content-Type:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=LUwqaSBpEayMSxYC9kYDcfny6iCB92L+VVrAP78xX34CCQuD/lvFYAdzzX7JcDE2
-	 RYdRhoa9FOKj7HtFpvpmAKGygfWpUDe40HafVS1Q8RI9iHqKgduFQ/rDXc1042CdN
-	 ce8P8RzxnZ43mJ+EOhFCmXpc5oUX5AGqCpPQiinZopj6y4gXIcYZLJakKG6PnL6Ke
-	 nKv9CFseaa0h594Hojb96eby1b9Fxcnw3ehlAB/CcMcp09pR2Zfu16+Ooen7Ylw8X
-	 1ZOcqHmmtGrW1WwJYXWM0scg1uJ5N2WvHEtAfWysdVy1HZy/X6tLtLofjEPeAy/K+
-	 YmeSGN0LozSDxD8DPg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from client.hidden.invalid by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MxYXF-1wzRzf1OZ7-00r2d6 for
- <cryptsetup@lists.linux.dev>; Tue, 14 Jul 2026 13:10:34 +0200
-Received: by mail-yx1-f50.google.com with SMTP id 956f58d0204a3-664d4478a64so5302134d50.3
-        for <cryptsetup@lists.linux.dev>; Tue, 14 Jul 2026 04:10:34 -0700 (PDT)
-X-Gm-Message-State: AOJu0Yzc8CGGbbzOE5uLikoPvtrKtK5ByyEQYgZJtg0lctwSUgZBBtsn
-	KJFlnN/duIHzyBIbmEXTrQSqs/tk5bcoj338GncizezqQqlAKDt9iEzelbktGom1A7fCdk96ZJl
-	yOKOMqwZPMqbkSUJ/BGXxzpY7xozg6OE=
-X-Received: by 2002:a05:690e:4881:10b0:664:cc3f:e2c with SMTP id
- 956f58d0204a3-667d7ac40cemr6750313d50.27.1784027433130; Tue, 14 Jul 2026
- 04:10:33 -0700 (PDT)
-Received: from 374364070962 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 14 Jul 2026 04:10:32 -0700
-Received: from 374364070962 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 14 Jul 2026 04:10:32 -0700
-From: oSumAtrIX <johan.melkonyan1@web.de>
-In-Reply-To: <96c530a1-d27a-4c27-86c0-04ac3abfef22@redhat.com>
-References: <CAK+fmzxEkGy+8X9BAwFKyU415Z4xm2uHfL+yaah-U1Rkw9YDYA@mail.gmail.com>
- <96c530a1-d27a-4c27-86c0-04ac3abfef22@redhat.com>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Pi7qCf2I"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1784027970;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=rOa16IfBAa+W5v5c+R/+2vrBrIaNnow9ooYdf2Ohr4s=;
+	b=Pi7qCf2I7QtL8h2MEpPHl/8KuN45tjqL45AMC4TraDwQVVXdgA/UyCFXuMJozkdDt+D3q4
+	iFKhTLy0sahsPwhKIwty5r61YHfguljF3AL5WTjNr9ja9WTdNv6vDy23jc9aMidiujqc8F
+	1Bjo/AZtuE7qXD3RwYVGfPYRSLSfo8Y=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-646-Bp5nrBDwN3a0xr1he-H2pA-1; Tue, 14 Jul 2026 07:19:29 -0400
+X-MC-Unique: Bp5nrBDwN3a0xr1he-H2pA-1
+X-Mimecast-MFC-AGG-ID: Bp5nrBDwN3a0xr1he-H2pA_1784027968
+Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-493c55d5ce5so22585555e9.0
+        for <cryptsetup@lists.linux.dev>; Tue, 14 Jul 2026 04:19:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784027968; x=1784632768;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=rOa16IfBAa+W5v5c+R/+2vrBrIaNnow9ooYdf2Ohr4s=;
+        b=hk2mgQbmVBQ8d+OxqrCXLq310bllqCaDGju3aTj5BdQ/hHsqW2f4fQylSc3XsSLiTX
+         IqgBEnt60FZgghiRbOsHRRGPkuNQpltAnmqpOc4DIgWkgOc6uqQUSmF5WVoqgzH57yH7
+         g1QfOn2yW9uxZOcuw+9sSy0ZLVM0SzisHXB82anE78No8JcVpy2W0q0npEjTRRT0/cSC
+         syxGn/ercWZQfnEZIK9kmSEH2SOlqOnxTMqYr5tpIPCU7L8YOcUSRDVNE9JSQAxfFzIu
+         uaYkRsxTqxl+Nmd9b15kA6T9+oodTr+vexJ4pvxQl2oqzZSjkhrS6OXAyX5WEl+AZRMh
+         rXVQ==
+X-Gm-Message-State: AOJu0Yw0eXu3NBfO9zFGdVDUQOncjBQ5IE7CsgqZCWEJ06mMuiBSvCAx
+	o01UmXUXGTTI+alZ2XXp26kaDe/ap18OL9Ho7cL5ffcnWZp5SXwtl44F6DmS1NlOxMGo8ustqt/
+	wYWohQmci46Orr7csIpmAUDzT+DbifUr+I7D6kdl2jzNPTaZLEd8w+7r5KkmqGldKx30Mz/DKCp
+	ZEVgs2Be2dciJPF01k8qMDhIBLaHTs5N6ythUXbPiWy7Pg
+X-Gm-Gg: AfdE7cl4NnTOr5YbZKFL4Pb27F586RQXyoJseougv4DzXRTJGRR4F3dQ380t3mvC73L
+	oJYCWl8YtCx2AcpRCxft9yjwhPzBSU+b6mT/R0jS7/xbQ8lMF4qTju1tMXF3H+UDGVqfBoIUuGT
+	7AE2PxblJ05XAwG0rP5o21MOXndFKoMwmIqiUWbWxAPvh0tQazpmuFW0v3bohegYJcd6uuyrmmy
+	13xGgltrj9md9/DOBXP5c+9OatkI4Cx6R86k1nvTx9zx2txdDYCqN2b1WgAP7e3Ayzmc40MDKHn
+	aFgeVMyB4mSZ4Lib+AkhMoMOFw2ry6PKr0pKYSi9Z6NszcyCNKdUSLwPcFBY5976FSBgFsG6ev8
+	g
+X-Received: by 2002:a05:600c:8284:b0:493:a5f9:d33d with SMTP id 5b1f17b1804b1-493f8824395mr136593735e9.18.1784027968102;
+        Tue, 14 Jul 2026 04:19:28 -0700 (PDT)
+X-Received: by 2002:a05:600c:8284:b0:493:a5f9:d33d with SMTP id 5b1f17b1804b1-493f8824395mr136593525e9.18.1784027967678;
+        Tue, 14 Jul 2026 04:19:27 -0700 (PDT)
+Received: from [10.43.17.192] ([213.175.37.14])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4950a32b9f3sm79972215e9.13.2026.07.14.04.19.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Jul 2026 04:19:27 -0700 (PDT)
+Message-ID: <e70a671d-c181-4178-8900-bf7fc1f7686f@redhat.com>
+Date: Tue, 14 Jul 2026 13:19:26 +0200
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: FlowCrypt_Android_1.6.4
-Date: Tue, 14 Jul 2026 04:10:32 -0700
-X-Gmail-Original-Message-ID: <CAK+fmzxwSgHcYw5FL-8RV4SBUyb6stzsdm_DaWURvOsfRnv3Dw@mail.gmail.com>
-X-Gm-Features: AUfX_mx3UHKZJcnVSYidoQ19lddOhlmbTgKnE7-gVLRkrg4NeSvsq9uMvuCBtc4
-Message-ID: <CAK+fmzxwSgHcYw5FL-8RV4SBUyb6stzsdm_DaWURvOsfRnv3Dw@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: Derive encryption key from PIN
-To: okozina@redhat.com
-Cc: cryptsetup@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:qJn93tguOWI5mJEeVvcLFGqdcU9mo6A3tF1B4sZ8RqD5+I1vHmf
- g38dHkz+VpphFhWOsyl7P40iBMVr0TUTM236X+Jd4dssoVHLxrpPmiy0vtyAvTtggZM1ypY
- QZj5BSzCO43lXLhWvm3d25iN3joEFvTqqUtxCvtdVFYIbSjakSnWIHvUVf35WUmD2jmfweL
- dlr0h9cyVu2PvIDo4rhnQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:JIkR+n5TdCQ=;pPxonTK4LOw4rvT5bV7pY+h9NBT
- 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
+To: cryptsetup@lists.linux.dev
+Cc: oSumAtrIX <johan.melkonyan1@web.de>
+References: <CAK+fmzxEkGy+8X9BAwFKyU415Z4xm2uHfL+yaah-U1Rkw9YDYA@mail.gmail.com>
+ <96c530a1-d27a-4c27-86c0-04ac3abfef22@redhat.com>
+ <CAK+fmzxwSgHcYw5FL-8RV4SBUyb6stzsdm_DaWURvOsfRnv3Dw@mail.gmail.com>
+From: Ondrej Kozina <okozina@redhat.com>
+Autocrypt: addr=okozina@redhat.com; keydata=
+ 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
+In-Reply-To: <CAK+fmzxwSgHcYw5FL-8RV4SBUyb6stzsdm_DaWURvOsfRnv3Dw@mail.gmail.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: 7rYT9F88ljPdi99SMnZ2TGhhPJI8-B3jLMvba1RcbFA_1784027968
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi,
+On 14/07/2026 13:10, oSumAtrIX wrote:
+> Hi,
+> 
+>> What do we talk about? systemd-tpm2 cryptsetup plugin? IIUCT it uses
+>> secret stored in TPM2 to get LUKS2 keyslot passphrase or KEK. The KEK
+>> later enter KDF to derive keyslot encryption key. And the keyslot
+>> contains encrypted volume key (MEK).
+>>
+>> Or, there's some other plugin or application that seals the actual
+>> volume key?!
+>>
+>> If there's something that could be improved in systemd-tmp2 plugin,
+>> please open RFE on systemd. They maintain the plugins for cryptsetup.
+>>
+>> Best regards
+>> O.
+> 
+> Please note that I have limited knowledge regarding the infrastructure
+> of LUKS or cryptsetup. Therefore, I would appreciate guidance on the
+> appropriate contact for my issue.
 
-> What do we talk about? systemd-tpm2 cryptsetup plugin? IIUCT it uses
-> secret stored in TPM2 to get LUKS2 keyslot passphrase or KEK. The KEK
-> later enter KDF to derive keyslot encryption key. And the keyslot
-> contains encrypted volume key (MEK).
->
-> Or, there's some other plugin or application that seals the actual
-> volume key?!
->
-> If there's something that could be improved in systemd-tmp2 plugin,
-> please open RFE on systemd. They maintain the plugins for cryptsetup.
->
-> Best regards
-> O.
+ From your description, I think it's related to systemd-tpm2 plugin. In 
+that case you can contact systemd people via systemd-devel list[1] or 
+take a look at systemd-tpm2 plugin sources[2].
 
-Please note that I have limited knowledge regarding the infrastructure
-of LUKS or cryptsetup. Therefore, I would appreciate guidance on the
-appropriate contact for my issue.
+I have ported systemd plugins into native libcryptsetup plugins some 
+time ago (hosted in systemd repository), but there were many changes to 
+those plugins over the time so the best approach would be to take a look 
+and open RFE or Issue with issue description if there are concerns about it.
 
-My understanding is that TPM+PIN authentication does not
-cryptographically utilize the PIN. Instead, the PIN serves as a TPM
-policy to seal the key. In contrast, BitLocker incorporates the PIN
-into the cryptographic derivation of the decryption key. With
-cryptsetup, the PIN's function is limited to sealing or saving a
-secret. Consequently, within a threat model where the TPM is
-compromised, the decryption key could be derived in plaintext without
-the PIN, as the PIN merely acts as an access policy within the TPM.
-The referenced paper demonstrates that BitLocker, however, uses the
-PIN for key derivation. A specific KDF in BitLocker relies on both the
-secret stored in the TPM and the PIN used to seal that secret, thus
-making the final decryption key cryptographically dependent on the
-PIN.
+[1] https://lists.freedesktop.org/mailman/listinfo/systemd-devel
+[2] https://github.com/systemd/systemd/
 
-Regards,
-Ohan Melkonyan
+Best regards
+O.
+
