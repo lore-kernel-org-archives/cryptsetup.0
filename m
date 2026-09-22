@@ -1,121 +1,111 @@
-Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E524DDB5C
-	for <cryptsetup@lists.linux.dev>; Tue, 22 Sep 2026 10:06:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E227547DF80
+	for <cryptsetup@lists.linux.dev>; Tue, 22 Sep 2026 12:07:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790071594; cv=none; b=KSl5shJCPekgK5NnXJ2yKsPvFe2zlY1fFRphTiOHpeMKh8KykyKCOkxCqG/+va8FbffYES4jaym05uKZD3TtAV4IruUxr82AT1xRw0PEU53E+rAQ1GVLerVOxywUrcMQpgKUajUK7M9FVUWI1IrwB98p/M8uDPBIpaHGJQa4hcc=
+	t=1790078837; cv=none; b=WR3lKJCrI9zLz5KgCCxItb98Lho4P3WQQObQ1/KKoTt7ZF4o1VPMal/IInEiT//0dz/BlBa678ozt7z4NrDFj9Teyhps8VYbzcIZpuZLoEkmmow0LbqrB/c6wl/aF5CIgsdDp2a6CSQcXUhN/9gq98hTeKJudLJI9WEn80MKRGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790071594; c=relaxed/simple;
-	bh=xhtr+TEwX4KPyZHnXlJdDXouchMlPdX9CdoqLNsFmYw=;
-	h=From:To:Subject:Date:Message-Id:MIME-Version; b=m1JyZ09Zz2bRMfjg13MDjl1iE6lufqii/7jkvMRspwREMKHL0E4CRIwczwUyAF73b1rxWJoE1u/gvXdMSxLuP5RQmacI4Wr7rkUV5tbe8kE+G4nEKavDZKEVrteqAvAf8mt4Pkb+QwP1xfzBUJ7NCxL8dMYAkqQe3N3eHD1YkJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D8Yoh5sm; arc=none smtp.client-ip=74.125.225.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790078837; c=relaxed/simple;
+	bh=W2iIFDSZ6eeEpPCf8gNg5AAWvNzFNZ3clTb4mw2whXo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=gtKhfw5wxbEv9VV8SmpQWG2bxU9jbNLhF02KZWO2hONggL9fvhURRAgGvIDcHM0txzGlhqh/w84gwm23iMvCSHLVzILNBV8OQuoXgb6qkGwmdDY6py3NPkqU5j9zMcfgqElCqppPnzB1vy5gMEsSlXiiWKEGGxlwrH6GbWVRjGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=YGcPuuuC; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D8Yoh5sm"
-Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49d0726cdbcso2123045e9.0
-        for <cryptsetup@lists.linux.dev>; Tue, 22 Sep 2026 03:06:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790071591; x=1790676391; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=YCS1UFOnTpwAxcMdPGUUbMbRnIPDetL/Q8BvtS7dkt4=;
-        b=D8Yoh5sm7Nk7xcm5O+htPB0Zl5v6fF8f8fIhSVRzC4xa9p7lXw4LwNLBAXA2WG4jo/
-         gfHaM6W6kJe7F5jRHVIl8hE7lNxCJJLRFOXcUINtBdyPqBiBSpN7P/v4dQV5f8HAVDKn
-         y/8QoRw6KvRmwTppB2y/izvhAVke91tlUj1FkVKm7+KTersU2y4RtJCXJlZRW6lZ+oJf
-         lInDOJSkyVvlMxPRyBlUNTmhOn5eXzmO0Wm6VqgVzOsddkc5L8rYNzLyIv43bBay8wxV
-         9uhbZtoROV+3ClRIQ+BH6VXjyjunBU3hgEL/bLdS0OnocUTCrR3LkSHj7h+//d2Fze8L
-         U/MA==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="YGcPuuuC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1790078830;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=NjYlLkXPetdxQggtr8YG5/B57aoar3ED4V6ZfMDM/l8=;
+	b=YGcPuuuC6X2okgktov0lehH1P8DYI62mjcVxCyFYQwQJ+kDV6dXXgCxQ3ck1bECh+SKDLL
+	jQ0dJb1gmAYvhrz+PcKRgX62120OWJ53BIFALp4EMRyEXtuZFORwxfh1xHP9p0xX6EbnvF
+	UZs52jXZhvChYHtMJC7BHoH/JO+ELiA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-622-_Do1CdrAMxejnmSFBSkcMw-1; Tue, 22 Sep 2026 08:07:09 -0400
+X-MC-Unique: _Do1CdrAMxejnmSFBSkcMw-1
+X-Mimecast-MFC-AGG-ID: _Do1CdrAMxejnmSFBSkcMw_1790078828
+Received: by mail-wr1-f72.google.com with SMTP id ffacd0b85a97d-4871575eebbso3560121f8f.2
+        for <cryptsetup@lists.linux.dev>; Tue, 22 Sep 2026 05:07:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790071591; x=1790676391;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=YCS1UFOnTpwAxcMdPGUUbMbRnIPDetL/Q8BvtS7dkt4=;
-        b=bO5d1ly3MIDIaHywx7ly1nt+ZFVC+rwOMqYlZxq1mg0fPiSyERW01R8dUr8WZwC1Zt
-         QzCJpaUei7Z6HY1Kf8fljuD7xdivEObTUwHHUS95pJsGBWojFm3IiBRpBcI5+sGH8dUA
-         5E84aXNcIIQOk/eMCdWeaZWCYrJoQF6vkNmomoqzAMCz90SJnHLvsdCZsfiYB2LGoajg
-         VO68F03xfFBy8pHMQs801u0ooGLEw8u+2+qFRNNd/LUbY2szNVJdoztWnleY3ZTnQz1t
-         /YMFyVaGqSAX5JDLXgNtA6wHYwID+nh+5ELtjf2T0A1eijUIsbzSnz0u1yuq9wMS+A9B
-         I1WA==
-X-Gm-Message-State: AFuF++l8xkLbkjBskmqrm5w9my3L7ILG1JDPnuSJS0tdnZocAB+S+g6H
-	/lYqg3zz6vOttK0d3bf64/Mj9Uv4lMwd2nk9jDfYz02srV1vj5ipeMOEQrB6UA==
-X-Gm-Gg: AYBFou105HQlaaIWtI1Oo7LPd12YUTl0Y9ZEWdQDmYGF7T6NLWzVrdXmwAQqiydemwc
-	WLo5ZBZOQfdGPhZD6r92Rs0m00wGKlKghiMdJ3H9HaL2wjnmj0Uq6JBqkxlC1nmW5zXS6zIsyBj
-	Nz/ZFwKSc35LdvGdXsuAbd1lcqZmQoGb0adslRztJ0ORQPhFt/RsicAS4dAAApnW7tYS6XSlft5
-	3ekIELLBI3hAMYoUVI1IFdR2jDF2KDdgSVPEq69r50jfVrCivvCHx2Bm9TPcAm+KJhs+HreMBwE
-	IbYyC7GU/bnN9irBza/mrNpkpsqHJl3oo1Asa0OqIz4uZaegJjV4Xo8kxzbOCltWC4RVczLc1Yo
-	XrKBWkIbjtU8ShcugPQvF/PeTl2OYvSdmD5Q9W92zhWErZM8E47PgsIsiJ8XZzifumXjLvh0k+R
-	u3vpnU5ijbjCl5DYlAJX3gHfN3CC86mX7+x991WSmiQ50j7qWIJidRT/zWKiyjqGttlq/Uz+LWO
-	z2fV70KiCV1zUiA5Xg=
-X-Received: by 2002:a05:600c:6992:b0:49b:9241:7ff0 with SMTP id 5b1f17b1804b1-49fc7b7a756mr233791995e9.0.1790071590877;
-        Tue, 22 Sep 2026 03:06:30 -0700 (PDT)
-Received: from L-P-ITAIH2-L-RF.rf.local ([193.169.70.108])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49fdaafa9cfsm44065645e9.4.2026.09.22.03.06.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Sep 2026 03:06:30 -0700 (PDT)
-From: Itai Handler <itai.handler@gmail.com>
-To: cryptsetup@lists.linux.dev,
-	Milan Broz <gmazyland@gmail.com>
-Subject: [PATCH] Reject LUKS2 header with out-of-range encryption sector size.
-Date: Tue, 22 Sep 2026 13:05:54 +0300
-Message-Id: <20260922100554.28692-1-itai.handler@gmail.com>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20260707; t=1790078828; x=1790683628;
+        h=content-transfer-encoding:content-type:in-reply-to:cc:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=NjYlLkXPetdxQggtr8YG5/B57aoar3ED4V6ZfMDM/l8=;
+        b=Fcf0RllzWYb2iNbD40YzESEo3ti8n0bcncxG3WaC5vKqFLDwO8dSOlobv1rre+6oFr
+         ylvxQGQ5Rnu3UFBMZDZPGAHuCpx+Dgt8rQBEmIKrK7I5/5WzTYwNQ0hlrPUKyMa37Y81
+         EoISLuqhwAv+rlWOQVs08bSlKHYO/jkWmlwo4E4Af7H6Ta/44d8tqxRRaNG6hfbRDbOz
+         pQl4QAb1cZZ7pqr4To2pwdxKa2024DY1O1aglZoQsoAYa9UxM0de2f7cT8nPuUz3tGGN
+         gQgn0+L0KxxvwMlYM30SN5uTw+0xrjnQRFFrvRiIM1Vr/wZbIK2KDd07VzcQ24c4H/qh
+         jIPg==
+X-Gm-Message-State: AFuF++k1NPPXSx8w9upnMYEviX9WetyprbTowr5QAb4g72wtfSaC3Ot+
+	YQOI/uq5T6jfiH/pYq31xBo1pfS1pZwK4nAgOBFaDd530hMBIP+uhBBifsIqj4etr9it9Wx14as
+	nUYG3bFJ3T2LRUHxnNgAsgwmr39WAxVj+SxhZcOyXf+yl8EmWLZbGggjZim8SnxKb2sDUDoxvKq
+	ZU9n9XQa+C+bFw3urA94sfRc2ds8Ax3qgLye3HJyeqJdqF
+X-Gm-Gg: AYBFou3RXKIMPxPqEZ67Zac6SlP8JxydMAE4kaaAwUZvO/XrUfAYOpNOLQrYm2M/RoE
+	Mkecp/oPSZTecdFFz/NuD0ybaGY4SvR3zwxmqS1EJeBpwxT6NhFiNQn2UHMai+9PyfbdqnUMX+f
+	ko2MtLH6feHDQL/EESsE1XmuWPLL3/X8bzXXx4y9LTN1dZaILWCFPq0J4/m96mI9OJYYbpzcRio
+	210x4ppr6Ho7RxsIacJLuVbhbyD7wPgCQgSWVA7VrowueLZCYA95esOcyCe1RDEKWED2ihUbJ8Y
+	c6zPSf/oUjp5qdTveZ/hMDkELnwcSHtaCy3R2gvjQM1MLac6Ih3SzXoTjfh1g1wLmUMtHs9C8Od
+	y5A==
+X-Received: by 2002:a05:6000:4809:b0:487:360:58d8 with SMTP id ffacd0b85a97d-4871e36fcf0mr20310625f8f.46.1790078827790;
+        Tue, 22 Sep 2026 05:07:07 -0700 (PDT)
+X-Received: by 2002:a05:6000:4809:b0:487:360:58d8 with SMTP id ffacd0b85a97d-4871e36fcf0mr20310568f8f.46.1790078827361;
+        Tue, 22 Sep 2026 05:07:07 -0700 (PDT)
+Received: from [10.202.148.237] ([213.175.37.14])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48862795215sm4312376f8f.37.2026.09.22.05.07.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Sep 2026 05:07:06 -0700 (PDT)
+Message-ID: <d3823e0b-3387-4b3a-b5e8-a3d5f266308a@redhat.com>
+Date: Tue, 22 Sep 2026 14:07:06 +0200
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Reject LUKS2 header with out-of-range encryption sector
+ size.
+To: cryptsetup@lists.linux.dev
+References: <20260922100554.28692-1-itai.handler@gmail.com>
+From: Ondrej Kozina <okozina@redhat.com>
+Cc: Itai Handler <itai.handler@gmail.com>
+In-Reply-To: <20260922100554.28692-1-itai.handler@gmail.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: MN_QBXGwXCNRLjzJxeaNyC5uaKzeUlx4Ku6ry_dAS70_1790078828
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-LUKS2 keeps the encryption sector size in the segment metadata.
-MAX_SECTOR_SIZE (4096 bytes, the smallest page size among the platforms
-cryptsetup runs on) is the largest value the format allows, because a
-LUKS device has to remain openable on all of them.
+Hi,
 
-Writing a header enforces that, through LUKS2_check_encryption_sector(),
-so cryptsetup never produces one that exceeds it. Reading a header does
-not: hdr_validate_crypt_segment() only requires "sector_size" to be
-non-zero and 512-aligned. A header carrying a larger value - after
-metadata corruption, or from anything that wrote it other than
-cryptsetup - therefore loads without complaint, and luksDump reports it
-as a valid LUKS device:
+I don't think this patch is necessary. We do not check the upper bound 
+value for sector_size in LUKS2 metadata validation code, but I believe 
+it's on purpose.
 
-	sector: 65536 [bytes]
+There may be support for larger sectors in future dm-crypt. If it 
+happens, older cryptsetup would refuse to unlock the device. Worse, it 
+would refuse to produce even luksDump and print out information about 
+the LUKS2 device.
 
-Activating it then fails, but only because dm-crypt applies a 4096-byte
-limit of its own. A constraint of the LUKS2 format is in effect being
-enforced by an implementation detail of one kernel target, which is the
-wrong place for it and leaves the tools reporting such a device as
-valid.
+Since dm-crypt contructor currently stops you from activating such 
+device (w/ sector_size > 4096), it's ok. Metadata corruption (accidental 
+overwrite, bitrot corruption) is detected on crypt_load due to 
+checksums. Only deliberate change is possible and LUKS2 metadata does 
+not protect against harmful changes. For example changing the value from 
+512 to 4096 bytes would make the device unusable as well.
 
-Check the limit where the rest of the header is checked, so that the
-same rule applies to a header being read as to one being written.
-
-This cannot reject anything cryptsetup has written. LUKS1 is unaffected,
-its encryption sector size is always 512 bytes.
-
-Assisted-by: LLM
----
- lib/luks2/luks2_json_metadata.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/lib/luks2/luks2_json_metadata.c b/lib/luks2/luks2_json_metadata.c
-index c532576..bb88846 100644
---- a/lib/luks2/luks2_json_metadata.c
-+++ b/lib/luks2/luks2_json_metadata.c
-@@ -555,7 +555,7 @@ static int hdr_validate_crypt_segment(struct crypt_device *cd, json_object *jobj
- 	}
- 
- 	sector_size = crypt_jobj_get_uint32(jobj_sector_size);
--	if (!sector_size || MISALIGNED_512(sector_size)) {
-+	if (!sector_size || MISALIGNED_512(sector_size) || sector_size > MAX_SECTOR_SIZE) {
- 		log_dbg(cd, "Illegal sector size: %" PRIu32, sector_size);
- 		return 1;
- 	}
--- 
-2.34.1
+With regards
+O.
 
