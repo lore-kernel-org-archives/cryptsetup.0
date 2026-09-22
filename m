@@ -1,274 +1,121 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF4B471CE8
-	for <cryptsetup@lists.linux.dev>; Mon,  7 Sep 2026 11:22:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E524DDB5C
+	for <cryptsetup@lists.linux.dev>; Tue, 22 Sep 2026 10:06:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788780172; cv=none; b=DCfQJYl3lQEEh62VWIUxxz6VCMNTSc8Ri6101Yq99YEDtMpwvX7zo+6jeXhqdpGVmnHclEgyfF3Oplc2XeUgV5v3Ih1hPgyNcuTrrlGZ8hCfWLR/nOOpW+ZlHv/SDizPrBNIyqqOPjAx3inQjp5+mqzNz5VELahOA4NYidxHeXE=
+	t=1790071594; cv=none; b=KSl5shJCPekgK5NnXJ2yKsPvFe2zlY1fFRphTiOHpeMKh8KykyKCOkxCqG/+va8FbffYES4jaym05uKZD3TtAV4IruUxr82AT1xRw0PEU53E+rAQ1GVLerVOxywUrcMQpgKUajUK7M9FVUWI1IrwB98p/M8uDPBIpaHGJQa4hcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788780172; c=relaxed/simple;
-	bh=Vwj0CMFOkdhLGZZUgUgRmmA+nmXXSTlQBBqyRpXRwIE=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=egS4U4Aolf1PKn4XhWpKmQz2AxxyV9i3X1YtE2oUgZw2XcYE9lwJjz/v0Q+2GVTcVAwbLUCHw9PaR2u2rRF6OjJwHfcUZy5jEcR5h/3/OhgkdwbpPT0TjUnDX1qeqhgRuFGcwTesRIF3H5jZYWwpJlXttgh3EH/5uxpAbhAu9Zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a0KiUkzw; arc=none smtp.client-ip=209.85.128.50
+	s=arc-20240116; t=1790071594; c=relaxed/simple;
+	bh=xhtr+TEwX4KPyZHnXlJdDXouchMlPdX9CdoqLNsFmYw=;
+	h=From:To:Subject:Date:Message-Id:MIME-Version; b=m1JyZ09Zz2bRMfjg13MDjl1iE6lufqii/7jkvMRspwREMKHL0E4CRIwczwUyAF73b1rxWJoE1u/gvXdMSxLuP5RQmacI4Wr7rkUV5tbe8kE+G4nEKavDZKEVrteqAvAf8mt4Pkb+QwP1xfzBUJ7NCxL8dMYAkqQe3N3eHD1YkJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D8Yoh5sm; arc=none smtp.client-ip=74.125.225.141
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a0KiUkzw"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-498028b3d5eso32635825e9.1
-        for <cryptsetup@lists.linux.dev>; Mon, 07 Sep 2026 04:22:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D8Yoh5sm"
+Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49d0726cdbcso2123045e9.0
+        for <cryptsetup@lists.linux.dev>; Tue, 22 Sep 2026 03:06:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788780165; x=1789384965; darn=lists.linux.dev;
-        h=content-type:autocrypt:content-language:to:subject:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=Vwj0CMFOkdhLGZZUgUgRmmA+nmXXSTlQBBqyRpXRwIE=;
-        b=a0KiUkzwikICR5Y+Vi/FcnomjZYpiOM57sie0BFho2S4S5D4QSH0YApyDS1RSX5gDQ
-         ui63TLBwMkKUiCN2y5rd/shwHV0eNEid2VvP/Plesys8e7sVtxsJiRCaDB4amn4jwP1f
-         s94L+B9O0PmM8+vKbs6usAkvtJiBJlQQMv9HVBJfO5RQl0zK0DFQmbZcGIvRBNeRHFsT
-         WxHnuSmJmBElHBEyOhVg1tR+TiOXlot2cBisz+IBJ0Ll/Laa06TCNPDWoyXkZJbrl+LR
-         CkQkJgdfoRknAwX2QFdnyC0/hqmUX3Aoa6/60NcoeX2JZwsfUn5f4FbrOD0M3IU+PNZC
-         +3pQ==
+        d=gmail.com; s=20251104; t=1790071591; x=1790676391; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=YCS1UFOnTpwAxcMdPGUUbMbRnIPDetL/Q8BvtS7dkt4=;
+        b=D8Yoh5sm7Nk7xcm5O+htPB0Zl5v6fF8f8fIhSVRzC4xa9p7lXw4LwNLBAXA2WG4jo/
+         gfHaM6W6kJe7F5jRHVIl8hE7lNxCJJLRFOXcUINtBdyPqBiBSpN7P/v4dQV5f8HAVDKn
+         y/8QoRw6KvRmwTppB2y/izvhAVke91tlUj1FkVKm7+KTersU2y4RtJCXJlZRW6lZ+oJf
+         lInDOJSkyVvlMxPRyBlUNTmhOn5eXzmO0Wm6VqgVzOsddkc5L8rYNzLyIv43bBay8wxV
+         9uhbZtoROV+3ClRIQ+BH6VXjyjunBU3hgEL/bLdS0OnocUTCrR3LkSHj7h+//d2Fze8L
+         U/MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788780165; x=1789384965;
-        h=content-type:autocrypt:content-language:to:subject:from:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=Vwj0CMFOkdhLGZZUgUgRmmA+nmXXSTlQBBqyRpXRwIE=;
-        b=grVbILe7D/oPRgjEj9H5yP7ZwXVatc0WAcD/6YMrkMt90Ws0A0O7QygLKzWKAT0VvN
-         wQWJ4P8m/nm2nQwHS5ePGQ8K7KHciioGpgeOK2UJGI5cj4Szqu9102Wx0EkoeGbJVXq/
-         ZXOrrbB28coMMqVSkbhglwx2vfnFSF96X7DbcgWSLUF4dt0/YE5bKWWgql9AihuUwJqQ
-         UfzyDdqbL06uRXqHQft9lYt9HmyxCsAjegLuESnw5H6pPGaFfkEei4RBcTA+qbCRXKlF
-         6SfpXQ/DyrH+cyB0ZV3QQmNCngzxlr6GLU582ecqFnNe7a87AOn4CgWqb0ty9hCklyMf
-         KAWA==
-X-Gm-Message-State: AFuF++lPZL/iaXxmEl5+s5I/g6TyVBCJDPYRIDdqmvqa2SpZrBMgXJht
-	fDYnwYwBL2mYWuSAv16tC6rVTyEcuaQJ7EK75ddkVxqloY88BWVmp0nWAAiN+A==
-X-Gm-Gg: AYBFou1yh6krAdlmycrOlFwuZeefGvL1PGy5VBlEigBSWY4e06Z3Qg44pJc5AfGJvGD
-	s23VqnONVXvs7w0pKVPNTAIcgv625gDK5jSq5Xci+Y6623rYVFHDzHKVOOBh1V2xRZiZNRV+SUJ
-	XzzCP0jH2cH4JbfQOATtuTIWwOHJOi9sb79cnFhtji1McRb5/lkdY26xz7TkiClkgpTa75lToLv
-	aW62Jkgoq9jOUw6VhNGqwq1SQNDVYjQVGFuyc6eny7aqehLTqLEbZXOh2KljcvCl6bKyJx4PnaY
-	UTTRjn1O8uQ9YMlj5loEF7XHjdjhsYP/ZXSC0NhIA9Y9FI4bKxh5LijN/eN09O98muJJXp9DChP
-	5V3ur6VwrXOLU8pGJvS4OYf1kT1mhcMq+jO+gnTkdXKao8LVwwPhvm7452s+6FDv5ptml/jGcJ3
-	tTbz9DHcPcuH1QRSXi47lcUtbN8Sb6K9pIq1Tk9jKZ2SaB9L1pk0B1dtmIDSNnKKJBLgTIQHUxD
-	7I=
-X-Received: by 2002:a05:600c:3495:b0:496:c1f3:e8f8 with SMTP id 5b1f17b1804b1-49cf8244bc5mr219088555e9.7.1788780160403;
-        Mon, 07 Sep 2026 04:22:40 -0700 (PDT)
-Received: from [192.168.1.220] ([176.74.141.242])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49d00031c95sm264360745e9.11.2026.09.07.04.22.39
-        for <cryptsetup@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Sep 2026 04:22:39 -0700 (PDT)
-Message-ID: <ee9cfcf8-d7a7-4122-b531-473fc62910f8@gmail.com>
-Date: Mon, 7 Sep 2026 13:22:31 +0200
+        d=1e100.net; s=20260707; t=1790071591; x=1790676391;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=YCS1UFOnTpwAxcMdPGUUbMbRnIPDetL/Q8BvtS7dkt4=;
+        b=bO5d1ly3MIDIaHywx7ly1nt+ZFVC+rwOMqYlZxq1mg0fPiSyERW01R8dUr8WZwC1Zt
+         QzCJpaUei7Z6HY1Kf8fljuD7xdivEObTUwHHUS95pJsGBWojFm3IiBRpBcI5+sGH8dUA
+         5E84aXNcIIQOk/eMCdWeaZWCYrJoQF6vkNmomoqzAMCz90SJnHLvsdCZsfiYB2LGoajg
+         VO68F03xfFBy8pHMQs801u0ooGLEw8u+2+qFRNNd/LUbY2szNVJdoztWnleY3ZTnQz1t
+         /YMFyVaGqSAX5JDLXgNtA6wHYwID+nh+5ELtjf2T0A1eijUIsbzSnz0u1yuq9wMS+A9B
+         I1WA==
+X-Gm-Message-State: AFuF++l8xkLbkjBskmqrm5w9my3L7ILG1JDPnuSJS0tdnZocAB+S+g6H
+	/lYqg3zz6vOttK0d3bf64/Mj9Uv4lMwd2nk9jDfYz02srV1vj5ipeMOEQrB6UA==
+X-Gm-Gg: AYBFou105HQlaaIWtI1Oo7LPd12YUTl0Y9ZEWdQDmYGF7T6NLWzVrdXmwAQqiydemwc
+	WLo5ZBZOQfdGPhZD6r92Rs0m00wGKlKghiMdJ3H9HaL2wjnmj0Uq6JBqkxlC1nmW5zXS6zIsyBj
+	Nz/ZFwKSc35LdvGdXsuAbd1lcqZmQoGb0adslRztJ0ORQPhFt/RsicAS4dAAApnW7tYS6XSlft5
+	3ekIELLBI3hAMYoUVI1IFdR2jDF2KDdgSVPEq69r50jfVrCivvCHx2Bm9TPcAm+KJhs+HreMBwE
+	IbYyC7GU/bnN9irBza/mrNpkpsqHJl3oo1Asa0OqIz4uZaegJjV4Xo8kxzbOCltWC4RVczLc1Yo
+	XrKBWkIbjtU8ShcugPQvF/PeTl2OYvSdmD5Q9W92zhWErZM8E47PgsIsiJ8XZzifumXjLvh0k+R
+	u3vpnU5ijbjCl5DYlAJX3gHfN3CC86mX7+x991WSmiQ50j7qWIJidRT/zWKiyjqGttlq/Uz+LWO
+	z2fV70KiCV1zUiA5Xg=
+X-Received: by 2002:a05:600c:6992:b0:49b:9241:7ff0 with SMTP id 5b1f17b1804b1-49fc7b7a756mr233791995e9.0.1790071590877;
+        Tue, 22 Sep 2026 03:06:30 -0700 (PDT)
+Received: from L-P-ITAIH2-L-RF.rf.local ([193.169.70.108])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49fdaafa9cfsm44065645e9.4.2026.09.22.03.06.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Sep 2026 03:06:30 -0700 (PDT)
+From: Itai Handler <itai.handler@gmail.com>
+To: cryptsetup@lists.linux.dev,
+	Milan Broz <gmazyland@gmail.com>
+Subject: [PATCH] Reject LUKS2 header with out-of-range encryption sector size.
+Date: Tue, 22 Sep 2026 13:05:54 +0300
+Message-Id: <20260922100554.28692-1-itai.handler@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Subscribe: <mailto:cryptsetup+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Milan Broz <gmazyland@gmail.com>
-Subject: [ANNOUNCE] cryptsetup 2.8.8
-To: cryptsetup development <cryptsetup@lists.linux.dev>
-Content-Language: en-US
-Autocrypt: addr=gmazyland@gmail.com; keydata=
- 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
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------A2P6is7ctQCyXwzNF1yDCXLk"
+Content-Transfer-Encoding: 8bit
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------A2P6is7ctQCyXwzNF1yDCXLk
-Content-Type: multipart/mixed; boundary="------------XamgQT4tmUBwTyRUdtzIqofM";
- protected-headers="v1"; hp="clear"
-Message-ID: <ee9cfcf8-d7a7-4122-b531-473fc62910f8@gmail.com>
-Date: Mon, 7 Sep 2026 13:22:31 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Milan Broz <gmazyland@gmail.com>
-Subject: [ANNOUNCE] cryptsetup 2.8.8
-To: cryptsetup development <cryptsetup@lists.linux.dev>
-Content-Language: en-US
-Autocrypt: addr=gmazyland@gmail.com; keydata=
- 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
+LUKS2 keeps the encryption sector size in the segment metadata.
+MAX_SECTOR_SIZE (4096 bytes, the smallest page size among the platforms
+cryptsetup runs on) is the largest value the format allows, because a
+LUKS device has to remain openable on all of them.
 
---------------XamgQT4tmUBwTyRUdtzIqofM
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Writing a header enforces that, through LUKS2_check_encryption_sector(),
+so cryptsetup never produces one that exceeds it. Reading a header does
+not: hdr_validate_crypt_segment() only requires "sector_size" to be
+non-zero and 512-aligned. A header carrying a larger value - after
+metadata corruption, or from anything that wrote it other than
+cryptsetup - therefore loads without complaint, and luksDump reports it
+as a valid LUKS device:
 
-VGhlIGNyeXB0c2V0dXAgMi44Ljggc3RhYmxlIHJlbGVhc2UgaXMgYXZhaWxhYmxlIGF0DQoN
-CiAgICAgICAgICBodHRwczovL2dpdGxhYi5jb20vY3J5cHRzZXR1cC9jcnlwdHNldHVwDQoN
-ClBsZWFzZSBub3RlIHRoYXQgcmVsZWFzZSBwYWNrYWdlcyBhcmUgbG9jYXRlZCBvbiBrZXJu
-ZWwub3JnDQoNCiAgICAgICAgICBodHRwczovL3d3dy5rZXJuZWwub3JnL3B1Yi9saW51eC91
-dGlscy9jcnlwdHNldHVwL3YyLjgvDQoNCkZlZWRiYWNrIGFuZCBidWcgcmVwb3J0cyBhcmUg
-d2VsY29tZWQgKHBsZWFzZSB1c2UgcHJvamVjdCBpc3N1ZSB0cmFja2VyKS4NCg0KQ3J5cHRz
-ZXR1cCAyLjguOCBSZWxlYXNlIE5vdGVzDQo9PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT0NClN0YWJsZSBidWctZml4IHJlbGVhc2Ugd2l0aCBtaW5vciBleHRlbnNpb25zLg0KDQpB
-bGwgdXNlcnMgb2YgY3J5cHRzZXR1cCBtdXN0IHVwZ3JhZGUgdG8gdGhpcyB2ZXJzaW9uLg0K
-DQpDaGFuZ2VzIHNpbmNlIHZlcnNpb24gMi44LjcNCn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+
-fn5+fg0KDQoqIGludGVncml0eXNldHVwOiBhZGQgc3VwcG9ydCBmb3Iga2V5ZWQgZGlzY2Fy
-ZHMuDQoNCiAgIEFuIGludGVncml0eSBkZXZpY2UgaW4gc3RhbmRhbG9uZSBtb2RlLCB3aXRo
-IGEga2V5ZWQgaW50ZWdyaXR5IGFsZ29yaXRobSBsaWtlIEhNQUMgYW5kDQogICBlbmFibGVk
-IGRpc2NhcmRzIChUUklNKSwgY291bGQgYmUgdnVsbmVyYWJsZSB0byB3aXBpbmcgcGFydCBv
-ZiB0aGUgZGV2aWNlIHVzaW5nIGEgZGlzY2FyZCBwYXR0ZXJuLg0KDQogICBUaGlzIGlzc3Vl
-IGNhbiBiZSB3b3JrZWQgYXJvdW5kIGJ5IHVzaW5nIGEga2V5ZWQgZGlzY2FyZHMgZmlsbGVy
-Lg0KICAgT25jZSBzZXQsIGl0IGlzIHNldCBwZXJtYW5lbnRseSBmb3IgdGhlIGludGVncml0
-eSBkZXZpY2UgYW5kIGNhbm5vdCBiZSByZXZlcnRlZC4NCg0KICAgSW50ZWdyaXR5c2V0dXAg
-bm93IHN1cHBvcnRzIGEgbmV3IC0tYWxsb3ctZGlzY2FyZHMta2V5ZWQgb3B0aW9uLg0KICAg
-T25jZSB1c2VkLCBpdCB3aWxsIHVwZ3JhZGUgdGhlIHN1cGVyYmxvY2sgYW5kIGFjdGl2YXRl
-IGtleWVkIGRpc2NhcmRzLg0KICAgQWZ0ZXIgdGhlIHVwZ3JhZGUsIGtleWVkIGRpc2NhcmRz
-IGFyZSBhbHdheXMgdXNlZCwgZXZlbiB3aXRoIHRoZSBvbGQgLS1hbGxvdy1kaXNjYXJkcyBv
-cHRpb24uDQoNCiAgIEtleWVkIGRpc2NhcmQgaXMgYXZhaWxhYmxlIHNpbmNlIExpbnV4IGtl
-cm5lbCA3LjMuDQoNCiAgIFRoZSBrZXJuZWwgaXNzdWUgd2FzIHJlcG9ydGVkIChhbmQgZml4
-ZWQpIGJ5IFNodWthaSBOaSBhbmQgSm8gVmFuIEJ1bGNrLCBEaXN0cmlOZXQsIEtVIExldXZl
-bi4NCg0KICAgTm90ZTogSW50ZWdyaXR5c2V0dXAgd2FzIGludGVuZGVkIHRvIGJlIHVzZWQg
-d2l0aCBub24tY3J5cHRvZ3JhcGhpYyBpbnRlZ3JpdHkgcHJvdGVjdGlvbiBvbmx5Lg0KICAg
-SWYgeW91IG5lZWQgY3J5cHRvZ3JhcGhpYyBwcm90ZWN0aW9uLCB1c2UgTFVLUzIgYW5kIEFF
-QUQgKGRpc2NhcmRzIGFyZSBub3Qgc3VwcG9ydGVkKS4NCg0KKiBBdm9pZCB0aW1lLW9mLWNo
-ZWNrL3RpbWUtb2YtdXNlIChUT0NUT1UpIGlzc3VlIGluIExVS1MgaGVhZGVyIHJlc3RvcmUu
-DQoNCiAgIFRoZSBMVUtTIGhlYWRlciByZXN0b3JlIGZ1bmN0aW9uIHZhbGlkYXRlcyB0aGUg
-cHJvdmlkZWQgaGVhZGVyIGZpbGUgYW5kIHRoZW4gcmVvcGVucyB0aGUgc2FtZQ0KICAgZmls
-ZSBwYXRoIHRvIHJlc3RvcmUgdGhlIExVS1MgaGVhZGVyLiBJbiBhIHNwZWNpZmljYWxseSBj
-cmFmdGVkIGVudmlyb25tZW50LCBhIHN5bWxpbmsgZmxpcCBjb3VsZA0KICAgb2NjdXIgYmV0
-d2VlbiB2YWxpZGF0aW5nIGFuZCByZXN0b3JpbmcgdGhlIGhlYWRlciwgcmVzdWx0aW5nIGlu
-IGEgZGlmZmVyZW50IGZpbGUgYmVpbmcgdXNlZCBmb3INCiAgIHRoZSBMVUtTIGhlYWRlciBy
-ZXN0b3JlIChwb3RlbnRpYWxseSBsZWFraW5nIHRoZSBmaWxlIGNvbnRlbnQpLg0KICAgVGhl
-IGxpYmNyeXB0c2V0dXAgbm93IG9wZW5zIHRoZSBkZXZpY2Ugb25seSBvbmNlLiBUaGUgaXNz
-dWUgYWZmZWN0cyBib3RoIExVS1MxIGFuZCBMVUtTMi4NCg0KICAgVGhlIGlzc3VlIHdhcyBy
-ZXBvcnRlZCBieSBWaXZlayBQYXJpa2gsIEJyZWFjaFggWmVybyBEYXkgTGFicy4NCg0KICAg
-Tm90ZTogTFVLUyBoZWFkZXIgYmFja3VwL3Jlc3RvcmUgaXMgYSBzeXN0ZW0gYWRtaW5pc3Ry
-YXRpdmUgdGFzayAoc2ltaWxhciB0byBmaWxlc3lzdGVtDQogICBiYWNrdXAvcmVzdG9yZSkg
-dGhhdCBtdXN0IHJ1biBpbiBhIHNlY3VyZSBlbnZpcm9ubWVudC4gU3VjaCBhIGJhY2t1cCBp
-cyB1c3VhbGx5IGEgbXVsdGktc3RlcA0KICAgcHJvY2VzcywgYW5kIGl0IGlzIHVwIHRvIHRo
-ZSBjYWxsZXIgdG8gZW5zdXJlIHNlY3VyaXR5IG9mIHRoYXQgZW52aXJvbm1lbnQuDQoNCiog
-QklUTEs6IGhhcmRlbiBtZXRhZGF0YSB2YWxpZGF0aW9uLg0KDQogICBJZiBhIGNyYWZ0ZWQg
-QklUTEsgKEJpdExvY2tlci1jb21wYXRpYmxlKSBpbWFnZSBpcyBvcGVuZWQsIHRoZSBhbGxv
-Y2F0ZWQgYnVmZmVyIHNpemUgZm9yIHRoZSBrZXkNCiAgIGNhbiBiZSBpbmNvcnJlY3QuIFRo
-aXMgY2FuIGhhcHBlbiBpZiB0aGUgZW5jcnlwdGlvbiBpcyBjaGFuZ2VkIGZyb20gQUVTLUNC
-Qy0xMjggdG8gYSBtb2RlIHdpdGgNCiAgIGFuIEVsZXBoYW50IGRpZmZ1c2VyLCB3aXRob3V0
-IHJlY2FsY3VsYXRpbmcgdGhlIHN0b3JlZCBrZXkuDQoNCiAgIEFsc28sIHRoZSBkYXRhIG9m
-ZnNldCBjYW4gYmUgaW50ZW50aW9uYWxseSB3cm9uZywgd2hpY2ggY291bGQgbGVhZCB0byBh
-biBpbmZpbml0ZSBsb29wIHdoZW4NCiAgIHBhcnNpbmcgbWV0YWRhdGEuDQoNCiAgIE5vdGUg
-dGhhdCBjcmVhdGluZyBzdWNoIGFuIGluY29ycmVjdCBpbWFnZSByZXF1aXJlcyBrbm93bGVk
-Z2Ugb2YgdGhlIGRpc2sgcGFzc3dvcmQsIGFzIE1BQw0KICAgcHJvdGVjdHMgdGhlIG1ldGFk
-YXRhLCBhbmQgdGhpcyBNQUMgaXMgY2hlY2tlZCBieSBjcnlwdHNldHVwLg0KDQogICBUaGVz
-ZSBpc3N1ZXMgd2VyZSByZXBvcnRlZCBieSBBaXNsZSBSZXNlYXJjaC4NCg0KKiBGaXggcG9z
-c2libGUgaW50ZWdlciBvdmVyZmxvdyBpbiBMVUtTIG1ldGFkYXRhIHBhcnNpbmcuDQoNCiAg
-IE9uIHN5c3RlbXMgd2l0aCBhIDMyLWJpdCBpbnRlZ2VyIHNpemUsIHRoZSBhbnRpLWZvcmVu
-c2ljIChBRikgZGF0YSBzaXplIGNhbGN1bGF0aW9uIGNvdWxkDQogICBvdmVyZmxvdywgY2F1
-c2luZyBhbiBhcHBsaWNhdGlvbiBjcmFzaC4NCg0KICAgVGhlIGlzc3VlIHdhcyByZXBvcnRl
-ZCBieSBBaXNsZSBSZXNlYXJjaC4NCg0KKiBjcnlwdHNldHVwOiBmaXggbG9jYWwgbWVtb3J5
-IGNvcnJ1cHRpb24gYnVnIGluIHJlZW5jcnlwdCBpbml0Lg0KDQogICBJZiBhIGRldmljZSBp
-bnRlbmRlZCBmb3IgcmVlbmNyeXB0aW9uIGNvbnRhaW5zIG1vcmUgdGhhbiAxNiBhY3RpdmUg
-TFVLUzIga2V5c2xvdHMgb3IgdG9rZW5zLA0KICAgdGhlIHJlZW5jcnlwdGlvbiBpbml0aWFs
-aXphdGlvbiBjb3VsZCBjb3JydXB0IGludGVybmFsIG1lbW9yeSwgbGVhZGluZyB0byBhbiBh
-cHBsaWNhdGlvbiBjcmFzaC4NCg0KICAgVGhlIGlzc3VlIHdhcyByZXBvcnRlZCBieSBBaXNs
-ZSBSZXNlYXJjaC4NCg==
+	sector: 65536 [bytes]
 
---------------XamgQT4tmUBwTyRUdtzIqofM--
+Activating it then fails, but only because dm-crypt applies a 4096-byte
+limit of its own. A constraint of the LUKS2 format is in effect being
+enforced by an implementation detail of one kernel target, which is the
+wrong place for it and leaves the tools reporting such a device as
+valid.
 
---------------A2P6is7ctQCyXwzNF1yDCXLk
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+Check the limit where the rest of the header is checked, so that the
+same rule applies to a header being read as to one being written.
 
------BEGIN PGP SIGNATURE-----
+This cannot reject anything cryptsetup has written. LUKS1 is unaffected,
+its encryption sector size is always 512 bytes.
 
-iQIzBAEBCAAdFiEEKikYJD/eRmSNBob52bBXe9k+mPwFAmqenncACgkQ2bBXe9k+
-mPwlyQ//TR3tmZLRQ+EnZMwhjavFmF9fDHRaJzPtC4gOy+UcAgBrVKmXD2rw0wyZ
-qH8PAdf9eeIEutk1AGzg/ZwgU+2XyFoxDc5CY8XRfSmA0REB30/il89dYto5zF+u
-L58shJPQitkGMyn9ZZpI8n15SaW8rhw7kfvDoNBj2wGZqQ/o6cKunvZHUwH3FSdC
-IfPj6jaPhtacJCy1J1gS4BSp5Vwnn+t5zIQhRa04e1sfaebv5Kizco0MZREtXT7J
-gEoq4vI0iUAL4BEQ7MlMclsbY79j6aiO9riEbqEZmjB6N31X3nUMSpg3aqnUB5bR
-712tOW4DJtYZfth5SNLbWrbFgHculVdNrn/fdEu9JXpEZebrqDjKdfVbfAcJtF2Z
-h/QULhGhisqio81hNWzr5Oe4V65XnSvfbILKSFU8Ysj4TnymKbrokZvn/kU0mOqK
-Kp9Wk6vnzmnnfZ8mpTpfU7Leymc3V6/FBvRmFixyyiJuPkQZGVhDFrCP0nkzfmtO
-3dXb60/Si/sTE/SEQZD572CPSHAULiC44xtTs9LNzS7PeuLFFqZu7429AgqyQ40N
-lC4+WRHcDcmRPPLDxSxUdv7+bzIKaYetIvPLNJ69mBP2Qka0YmZY0iJQCRd1R8Zm
-8jD9nP3oyra8k4WIZPfcz4NKrj5yiKAsalWJGBobGZKW0ps5v1U=
-=adx2
------END PGP SIGNATURE-----
+Assisted-by: LLM
+---
+ lib/luks2/luks2_json_metadata.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---------------A2P6is7ctQCyXwzNF1yDCXLk--
+diff --git a/lib/luks2/luks2_json_metadata.c b/lib/luks2/luks2_json_metadata.c
+index c532576..bb88846 100644
+--- a/lib/luks2/luks2_json_metadata.c
++++ b/lib/luks2/luks2_json_metadata.c
+@@ -555,7 +555,7 @@ static int hdr_validate_crypt_segment(struct crypt_device *cd, json_object *jobj
+ 	}
+ 
+ 	sector_size = crypt_jobj_get_uint32(jobj_sector_size);
+-	if (!sector_size || MISALIGNED_512(sector_size)) {
++	if (!sector_size || MISALIGNED_512(sector_size) || sector_size > MAX_SECTOR_SIZE) {
+ 		log_dbg(cd, "Illegal sector size: %" PRIu32, sector_size);
+ 		return 1;
+ 	}
+-- 
+2.34.1
+
