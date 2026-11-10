@@ -1,99 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.178
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793375592;
-	b=D1iU6cDSiXIwD2gMvcQlqBP0CFOl/bzvaLxvu9e65TGYRRu9u8eEaM2o2u6c08iZeRX1
-	 CW0GHgRb+zAWd2VaEj9bQD3ibGatShfvgFCtpQW19jwydtwZsOKXicdPabkX2AHBK20OP
-	 iImjhhQa/0dRkdskWdMSydieoSt9dCPDTv9jKcUXOtdaaGnyxCKOsh9ZivJJxCec0Twue
-	 nvvNDHqmwQiVcKVGGNlYatGKOSSBQeZOXtOQtVsIiU0+TIfTt4IIHAdNPd2EANzR4SJ4P
-	 lKBGHvObZ/zGjzKYNFVwLfV2CwNDKY9fGknGzORE5aPhKg1Z5GVn97Ux5TJRQ4OxbBw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793375592;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.43
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794287353;
+	b=K7z3dH5d/l5i/ez3WGE4gcHaxLWGKgHeoAQAAx4VnyONqCflrI+OvqIi60cqLfxQDGZN
+	 YjeIT7fnolaZoMD+zWRUGo0deu4eUOziStAbaL3XwSFk3v0hvtKiKuIndZn9ryQSn0x0o
+	 hKzoR53WVeR6tUflDF/+Q48qAEtptcl+5lm2bGhVsJAGRTs1eI/awnoGJMT5IlZ2aSKmU
+	 N1DvwtX4ReRlknsIz1dsVbRepXMOhMOE81jWgDE27shGkWU5s1oqoUlRO4Fbde0h/Wr+2
+	 wZWt1w8H7pdZrnc333sq1Qzo5PSNK6R6SUpxK8Fp+bV9PXTmiz+AXpFVgEysWwAzE5w==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794287353;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=6Rq1yMOxDjvQPThwcGwIFvV5Q5uMqUSm0cqr5AFrnLs=;
-	b=FKR7eYnkm6Qv6hrl5tKvU2ZJDuU3ebAktDK/NGHTq93Z24R++ySxJGUih1Gx5azHCmHV
-	 BSKNIc63LcOJQwPokxjrxGkL5ucKGkUchlUENBfSIane40alY3x+M9769O35litgikm6Q
-	 5umZiCtiV3hi+zpFKMfX82RfpjmtX+BCn26DO39uO/Mt+JgKkEVLbc5pP9byWVaNEJwmG
-	 MoCvn5MPKo/grIpWbzuo6OSp/0E6IvwdaH8WLNOQP7mfolkGA/sQewaFpXzfXevJDrLPU
-	 DMXJBMtt69fHUB6j/lE6xcoKEIP3f27b4aIs7EbEx9zbf2B/c7+2dvSBw983Sqmuh5Q==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:
+	 MIME-Version:From:To:Date:Subject:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=fNhlSxM/S0RlUexinQBeTEwfNRrR2oNaaSd5BPADc4k=;
+	b=xsiS5O8zJN4ef/RZ5e6L8o6NRh3NTmdxG6M3HrE6YK9kCgq0XYP5vgYMo6uLRs9vBz/T
+	 XnugMUVkEz7vI1NCypEWoZbT9c1Nh4M98EUjgq6Ek1ve/mkm5362w9PPKEgfllgd97D1e
+	 v6hevNr+YsgDRMqiEgRTgV5xY4MvmYPwEBthGkGWG9eW0Hv/cLaSsmJ6iYzYzAwuTakrN
+	 QMMHrQLSNx2LzHWo27MWgOXsb8muiFhf6MuS9yr7gG+ch0QMG47ys6MEBx1xwtUb5QYJq
+	 9OjgY2eN3ynZUOxsbC1pmKWT5gdzTSppZrjBR75iClmUoPksZvbtmFYe+dWb9HmeJYw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=G6SCGgYx;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.178
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=rokUMd+f;
+	arc=none smtp.remote-ip=209.85.221.43
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD018606A31C
-	for <cryptsetup@lists.linux.dev>; Fri, 30 Oct 2026 15:53:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CD018606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7D4606A31C
+	for <cryptsetup@lists.linux.dev>; Tue, 10 Nov 2026 05:09:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2C7D4606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=G6SCGgYx
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-8a376759900so1501627b3.3
-        for <cryptsetup@lists.linux.dev>; Fri, 30 Oct 2026 08:53:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793375591; cv=none;
-        d=google.com; s=arc-20260327;
-        b=fH6LLOiXnxCTbLOiO5kYDVeQgS3DJ+uOX3t9h3wg0kbNNWIqfKhgscFMRkX8rO1eNM
-         hUGbsvDd2mP8Jvug/hkaeShRruwtemalsT6ip9pPrx220Ekh0FS6/l15RIj6GVaaWy/U
-         mWO0ErG4LlPi3Idm0znJ5u28chcbAbfwfm/Ar8MOARr/8IMLVn22Ck0GfG9Vu5sHRRSI
-         Ndy1Uv5FyA2JGXs/ACdHZl6fNS1OkyhzJtbFkwkn36mL9melj8KudV9/S3MgTg47k02I
-         QWw64PUgk1PugWeSL5Btu7qdh+jpxj+MX4oH7t2QCDCC1I+ypPUe9Qh2s0Vx9MLyQGu1
-         VxqA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=6Rq1yMOxDjvQPThwcGwIFvV5Q5uMqUSm0cqr5AFrnLs=;
-        fh=wDW+69BXdBDBu96a/du9fHRw36ZO1yF13s3DAOaJGO8=;
-        b=V7ZDD+zfbF1b7TiIvxBqzZPFRfrmd1c4bFpr446CBPFlUsfR9LNVPFzDVnr0+2JLwp
-         l+VtshKC1MCddoxgNC/xPFeVQ87yTdvDJzI2XxyDDJ/OqyVpw7oorIbwjICghgFbaVvX
-         WNtCfXdQEavBDLBg6kg0KDO/QQ2UA1HghFL5G3iPI6Q7YZU5VNBtt2bv8pbRNQlFS09i
-         x2+ydPNzJyHGGkp672lcXySv0avy11aU8R0Ypu/eCZ6b3AiqI4j2a2qzIVNrnt4CrAF8
-         mOBTztLh3p+gPxIHrGP6pVgAkYJY/f0hGwB349d5uGeC5+8LqyI4hpAPuT9YCASSyNBQ
-         Y4nA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=rokUMd+f
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-48dfc0421d9so1344202f8f.1
+        for <cryptsetup@lists.linux.dev>; Mon, 09 Nov 2026 21:09:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793375591; x=1793980391; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=6Rq1yMOxDjvQPThwcGwIFvV5Q5uMqUSm0cqr5AFrnLs=;
-        b=G6SCGgYxnYRi+tg3O5tO5XdzM7OENIkYgn6z3CW8oIC/qQk/FtK8GuAD/URbLUvhEv
-         IluJ9Nj5OaK1l+rUHb+FjEHpUS1p+NhFzSGcjL7kV99QcgRG1SrdkVy3b7abwU+gBsXO
-         zOjZJIACZbpl++wTjMfcozH7VQTm11MlivtCZfOvDubZwLIXRRMis/ZoRDaSy56Nq/z4
-         VKGsRGy99t6km5uxM+nHYjrwlm2wY9ayyAWbqNhh27vZoS4EoTIOyuLRA9MHofbto6Rw
-         Xmz92VwiiQgqNkjle9n/lcZO0LRdD71dJ8hu9TY/HDWNzZJrUJGIZeDA7xonqngiR1jI
-         5INw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793375591; x=1793980391;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20260707; t=1794287351; x=1794892151; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:subject:date:to:from
+         :mime-version:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=6Rq1yMOxDjvQPThwcGwIFvV5Q5uMqUSm0cqr5AFrnLs=;
-        b=PNEQv3IW9OEjJpYM6SzSwIKXnUPmLTLIFgpXfHQyzCcGo2/LLUaVN1rWmmxPIvc+a7
-         aCbCuXzBCjZENwXQYRZoN3JTfNe/MAbtuad7AkF79Qt71JmUKqfVhyRJOYpFzw3opVnq
-         Hla5eGd/8zvB4UNSsVbQpfaR12dIpWi0KdvH2wRRnlD6f3lslphIRdJAQB1eocSTsiwW
-         vquuBgyWUQ7MgxBJOsr9EZ1JBSOXNBGRWgWSuYvN0bBN6rvQiehrb/PtkKrfHPJrnZfl
-         9ILWxV3ZkQhXd7WmJCM/+KLFFzcgAxa2Dnw/gmueLej8RpcBJhMqxlDyaYQqgoifbIIt
-         egcg==
-X-Gm-Message-State: AFq9FYJivHCyWSp52Ide39jsqHjJAgM86MNePcEaA87iWlsNF53epbK5
-	CUIhERhUng0GsvxFiG2z9UaTvQbv2Ce2f2ll7/e1hPE/f+BPDXZyKPsZFrEtNX4jUnlgzBzS9f8
-	HodXKImR51Mgvy8+w+5RvIgpHuQ3etMNlt9fH
-X-Gm-Gg: AYBFou0wTyJyTbHKbN07z2D4KZORhUys7oEn7qozFofHWlkPeNdkmcw0xYV25fGID48
-	r1GejUFc2ritYdadc7ijoyEAOT+kHvwlyUZUyKC/UNRS6L3l7qYaiWV9OC/AI7XbsgtM9SCGE9i
-	WziZpBjBpbu1/GBM/wkkMbOeCZ8+99se5vJsUtM6EnsAM4ASnv0MnEjQpRMNEBtRtgOEdFiDBAY
-	Sw37V7lx9kCS5hGAtzMCymS0jnlSgI7hyRnzNeGYYf0nfor5yzdcFKo3FT48UcRoKPEE2nhSuW4
-	wqZwwda7gMFHJrRD9Ui7/5wZ3a0ZppvpqVQquYajn8K6KqS2b4i+nRJ5O9SrWlUzzmJ+4IrWJ9b
-	nSbaX6+NaGDHAOgEG5ZI4PeMW5VsQd+VdXdY=
-X-Received: by 2002:a05:690e:b89:b0:679:9f7f:5668 with SMTP id
- 956f58d0204a3-67ba4d38bf9mr3422206d50.2.1793375590833; Fri, 30 Oct 2026
- 08:53:10 -0700 (PDT)
+        bh=fNhlSxM/S0RlUexinQBeTEwfNRrR2oNaaSd5BPADc4k=;
+        b=rokUMd+f/5wfAiyCQ16Vv1kPypMDy2GlgAhyyHm61xF6J8kc1lypMRtzGbysMMMigf
+         sXCgMCjDdXgP34W8uHgBNcdf8baRHiM8HeM3OdUM2LkWDEWyElsPS7FFs2wknSXNkqvV
+         GPTcEl7jfF3flaKUZ/vzDZrsKsXWjuJUH13RfzOkwHHUUHqzvmZd2V3f2PfLhtvWP4C6
+         +UWfRJqYXtJzCRwGpKfY/f4DSvZvbunir7r6rAm4UjIkRdlit2xm5sNmSxLCsvDsx2AW
+         krB29/mxoUcNUdbXT1YZpV0pHJVCz2jkWR61zpZnuJS3C3dY9K1u2vE8R38a6PodNhY6
+         3fZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794287351; x=1794892151;
+        h=content-transfer-encoding:content-type:subject:date:to:from
+         :mime-version:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=fNhlSxM/S0RlUexinQBeTEwfNRrR2oNaaSd5BPADc4k=;
+        b=T2S3+MzY3ezhstumlZZn1RiMWayyop6DZGk1GRFXzkXAMfTRxNsImGT3m8nc8AfZvF
+         Jsm0VsjfXXbnTsNaYkYtx8rYC3zvFTrCDXpuQ4UUZdgwudulxyu0NQNTgbJA9/ngXbVb
+         5hxLT7IwVTv6UrTwC5huhFonEnE0baZ56YEdruoYpaVHp+iSRsgORvcc7/xc6zeF2qGR
+         YFCXEJuz5Hw2JgiI0Q3IhCE0ShFwabSyn6Nte9X8zhyk1HPEUA72n8DDK5LZ25F3s8xi
+         c2+0p+CZ5HWYKloM8a/OR5lhpEpoTvzwVTE1tBq6HZERrXQkKRIyC5+SXeUYCV2lCjNC
+         EFQQ==
+X-Gm-Message-State: APuU4Z9eRc5Esg6nCqoig4s7+v5Pe0+VpfwkZVwfS22AyQGJSMlUmQmn
+	87JknOu4T4bohMqZrPQKOMAhu3JKjbYfri5YNJhLN65p6vxTr/7jDrTP3LeFjSqantg=
+X-Gm-Gg: AYBFou0sYCrnbKSXT6AKd+p/QyWEXlNZR7F2Ki45npOPo6NtX0YluIbAF+mSkUl37NF
+	x87NrDlMQB/k0xavI8kkeH/rrcvM06bIx5QCVr946ZEmdz54BNTUXeKzu1PxzZdpy8bwVvBbNJL
+	o3hX6vxCxBwTMdxg3ZLMi/jYtw22JiVHh3qbKg4ge8OkU1PHLkuGnBghqSAgRJmi22VXk6yE9wx
+	toXdzQ+oZm6klFbXnc+QwQ04UndfD6/aPz0hp7TP/3wqrKdb1PW4M806mFKj2iPLL/YtfoU+8cv
+	P8nnMftZKzWkbibg8+C82C3o3Ubti2ZrkBtx164IRb42BVpCCtBW1/OfOeVoGoFOXP363oxvI0f
+	fE2uXOHK1jSP0wQ+E+WJMJNeBLxFrH7SZkslQ7Sg9n22TyNYMCo2cMPcjg6w2CuAqBoZRMfC684
+	Tya+XyBt81EatZh8NicDO0qCAa/BI52m8dSQcrYLWDBx+MAYS7BuTjD3MC6wEqAwykhqSs8vu+a
+	lfh2SYleysM0rVfnfvnZMB+v56iT2hvSZrZKtIxww0Ij6rBfCEBU1SpVuIsdIkys+cxaIjY/7/T
+	010kzr1YBYOWRYvWJt/yZGXVjahPGm1U/1rZW7vBXIL9B3JNuEBbUA==
+X-Received: by 2002:a05:6000:402b:b0:48e:e98:8b6a with SMTP id ffacd0b85a97d-4982b848ec1mr2822370f8f.4.1794287351570;
+        Mon, 09 Nov 2026 21:09:11 -0800 (PST)
+Received: from DESKTOP-52F5LT2 ([105.112.179.237])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4983600bc8fsm2639543f8f.30.2026.11.09.21.09.10
+        for <cryptsetup@lists.linux.dev>
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Mon, 09 Nov 2026 21:09:11 -0800 (PST)
+Message-ID: <6af2a6f7.b659fc54.892c0.fe7e@mx.google.com>
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Post: <mailto:cryptsetup@lists.linux.dev>
@@ -103,28 +88,31 @@ List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:cryptsetup+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261029115338.3599814-1-itai.handler@gmail.com> <a19090a8-06f1-43c3-8d10-dd20e58230aa@gmail.com>
-In-Reply-To: <a19090a8-06f1-43c3-8d10-dd20e58230aa@gmail.com>
-From: Itai Handler <itai.handler@gmail.com>
-Date: Fri, 30 Oct 2026 17:52:59 +0200
-X-Gm-Features: AclHuK-b9hyh76-1yvj2zJpafem4hWNxqRiE-gdhAUlWX8WGs-TiWnamARNb2HM
-Message-ID: <CAFpOueQgZF4rws6MWcGX0YonwsOsXVVCAvYV5FkkkpGC6jZUWA@mail.gmail.com>
-Subject: Re: [PATCH] Allow encryption sector size up to 64 KiB for plain devices.
-To: Milan Broz <gmazyland@gmail.com>
-Cc: cryptsetup@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From: bapcoenergies989@gmail.com
+To: cryptsetup@lists.linux.dev
+Date: 9 Nov 2026 21:09:11 -0800
+Subject: =?utf-8?B?VmVuZG9yIEV4cHJlc3Npb24gb2YgSW50ZXJlc3QgSW52aXRh?=
+ =?utf-8?B?dGlvbiBCYXBjbyBFbmVyZ2llcyDigJMgMjAyNi8yMDI3?=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
 
-On Fri, Oct 30, 2026 at 12:33=E2=80=AFPM Milan Broz <gmazyland@gmail.com> w=
-rote:
+RGVhciBTdXBwbGllciwNCg0KR3JlZXRpbmdzLg0KDQpXZSBhcmUgcGxlYXNlZCB0byBp
+bnZpdGUgeW91ciBlc3RlZW1lZCBvcmdhbml6YXRpb24gdG8gcGFydGljaXBhdGUgaW4g
+dGhlIFZlbmRvciBFeHByZXNzaW9uIG9mIEludGVyZXN0IChFT0kpIGZvciBCYXBjbyBF
+bmVyZ2llc+KAmSB1cGNvbWluZyBwcm9qZWN0cyBwbGFubmVkIGZvciB0aGUgMjAyNuKA
+kzIwMjcgcGVyaW9kLg0KDQpUaGlzIG9wcG9ydHVuaXR5IGlzIG9wZW4gdG8gcXVhbGlm
+aWVkIGNvbXBhbmllcyB3b3JsZHdpZGUuIE9yZ2FuaXphdGlvbnMgaW50ZXJlc3RlZCBp
+biBjb2xsYWJvcmF0aW5nIHdpdGggQmFwY28gRW5lcmdpZXMgYXJlIGtpbmRseSByZXF1
+ZXN0ZWQgdG8gZXhwcmVzcyB0aGVpciBpbnRlcmVzdCBieSByZXF1ZXN0aW5nIHRoZSBW
+ZW5kb3IgUXVlc3Rpb25uYWlyZSBhbmQgRU9JIGRvY3VtZW50YXRpb24uDQoNClNob3Vs
+ZCB5b3UgcmVxdWlyZSBhbnkgYWRkaXRpb25hbCBpbmZvcm1hdGlvbiBvciBjbGFyaWZp
+Y2F0aW9uLCBwbGVhc2UgZmVlbCBmcmVlIHRvIGNvbnRhY3QgdXMuIFdlIHZhbHVlIHlv
+dXIgaW50ZXJlc3QgYW5kIGxvb2sgZm9yd2FyZCB0byB0aGUgcG9zc2liaWxpdHkgb2Yg
+YSBzdWNjZXNzZnVsIGNvbGxhYm9yYXRpb24uIFlvdSBjYW4gYXMgd2VsbCBzZW5kIG1l
+IHlvdXIgZW1haWwgSUQgc28gaSB3aWxsIHdyaXRlIHlvdS4NCg0KV2UgbG9vayBmb3J3
+YXJkIHRvIHlvdXIgZmF2b3JhYmxlIHJlc3BvbnNlLg0KDQpSZXNwZWN0ZnVsbHksDQoN
+Ck1yLkZpcmRhdXMgUGFudGhha2kNClByb2N1cmVtZW50L1N1cHBseSBDaGllZiBQcm9j
+dXJlbWVudCBPZmZpY2VyDQpCYXBjbyBFbmVyZ3kuDQpFbWFpbDogdGVuZGVyQGJhcGNv
+Z3JvdXBiaC5jb20NCkFkZDogUC5PLiBCb3ggMjU1NTUgQXdhbGkgLUtpbmdkb20gb2Yg
+QmFocmFpbg0KV2Vic2l0ZTog8J+MkCB3d3cuYmFwY29lbmVyZ2llcy5jb20=
 
-> Could you please submit this as merge request to project
->    https://gitlab.com/cryptsetup/cryptsetup/-/merge_requests
->
-> That way we get full CI run and can do review there.
-
-Hi Milan,
-
-I've submitted the patch as a merge request for review:
-
-https://gitlab.com/cryptsetup/cryptsetup/-/merge_requests/979
