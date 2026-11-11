@@ -1,84 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.43
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794287353;
-	b=K7z3dH5d/l5i/ez3WGE4gcHaxLWGKgHeoAQAAx4VnyONqCflrI+OvqIi60cqLfxQDGZN
-	 YjeIT7fnolaZoMD+zWRUGo0deu4eUOziStAbaL3XwSFk3v0hvtKiKuIndZn9ryQSn0x0o
-	 hKzoR53WVeR6tUflDF/+Q48qAEtptcl+5lm2bGhVsJAGRTs1eI/awnoGJMT5IlZ2aSKmU
-	 N1DvwtX4ReRlknsIz1dsVbRepXMOhMOE81jWgDE27shGkWU5s1oqoUlRO4Fbde0h/Wr+2
-	 wZWt1w8H7pdZrnc333sq1Qzo5PSNK6R6SUpxK8Fp+bV9PXTmiz+AXpFVgEysWwAzE5w==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794287353;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.43
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794416536;
+	b=InRMQRnmTcKj8QNm8uEPGkt864DwOgYUMlwdJlNimWHFg5u6YOrWotmrjId4GbtefGMQ
+	 d6TIsJUtLlkr5DkngsqBtFZL1FtMLcdhA0bygFwq+HW7vONbfmNmVMGfT/xUxMFFODCFh
+	 +a/SR4vDIgVuDT/FWwcQWjtagGYSId8IaOBotmX74v1rlYojN0cwkajEGuJBwflWB/yJb
+	 0NyZ4wkBJIaLRt91Bo+eG3SC6pgeFx52OyL1kXV6bgkzYaXocIqio0YBidSuSHZbLz4hR
+	 XaZe2j5pNSKSIPFW8zlT074bTfCzvU1iUgHM783mC14aLKiogLlE6vhmMPaBvGZJ1+A==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794416536;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:
-	 MIME-Version:From:To:Date:Subject:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=fNhlSxM/S0RlUexinQBeTEwfNRrR2oNaaSd5BPADc4k=;
-	b=xsiS5O8zJN4ef/RZ5e6L8o6NRh3NTmdxG6M3HrE6YK9kCgq0XYP5vgYMo6uLRs9vBz/T
-	 XnugMUVkEz7vI1NCypEWoZbT9c1Nh4M98EUjgq6Ek1ve/mkm5362w9PPKEgfllgd97D1e
-	 v6hevNr+YsgDRMqiEgRTgV5xY4MvmYPwEBthGkGWG9eW0Hv/cLaSsmJ6iYzYzAwuTakrN
-	 QMMHrQLSNx2LzHWo27MWgOXsb8muiFhf6MuS9yr7gG+ch0QMG47ys6MEBx1xwtUb5QYJq
-	 9OjgY2eN3ynZUOxsbC1pmKWT5gdzTSppZrjBR75iClmUoPksZvbtmFYe+dWb9HmeJYw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:From:Date:
+	 X-Gm-Features:Message-ID:Subject:To:Content-Type;
+	bh=B4ZQlB6f4pzKrX+D23dmLEBv1BoTaeHmp9h5tLRfUO0=;
+	b=AvF/Q2GEt/GcJjQQ4zIgDUyHCo67zzis4aoBeSsXCVus6RK5Cdrv7zvRtrPifsTiNJYN
+	 CysDZua7AmrlMuknkdjYN57TBI97vzKoQZknNOu3fQwNGwMZinQLWzZJzi366nI8lgrgJ
+	 ApecScAF/Ef9cMlJPK5UYwahXfnHqkmrB6SCr460p+UDp43IL9lAkN+zA40cVaClGSK2Y
+	 bHgH5QNY4UUhwfc2GN5eysQa4UUKgMnxDqbFuwslm4PV/LLeaSrnRzk4DIgNAfWkGZxdq
+	 +9VNtaC+Wf0JE6Z8HRhaw8ABmRGkd3TYYqZ6LkyBaGvH2vGoYhe919J0H0pou6JB60g==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=rokUMd+f;
-	arc=none smtp.remote-ip=209.85.221.43
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=rOb00Br8;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.43
+Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7D4606A31C
-	for <cryptsetup@lists.linux.dev>; Tue, 10 Nov 2026 05:09:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2C7D4606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0615606A334
+	for <cryptsetup@lists.linux.dev>; Wed, 11 Nov 2026 17:02:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C0615606A334
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=rokUMd+f
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-48dfc0421d9so1344202f8f.1
-        for <cryptsetup@lists.linux.dev>; Mon, 09 Nov 2026 21:09:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=rOb00Br8
+Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-6df0b02fe91so36853eaf.0
+        for <cryptsetup@lists.linux.dev>; Wed, 11 Nov 2026 09:02:15 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794416534; cv=none;
+        d=google.com; s=arc-20260327;
+        b=ddtwGm6KXivOzro6zcfLIfZv9NDVk41bpmX35YuzKCLE+ILZ7BSR7jAbbUN5i9jPIl
+         odyos2qo3zkOZAV3rDES9vByTK+myUcU65+OWI8NzPzr86TYKwRpGSxjOoFkoMMqGSds
+         y7Uc8p/cujq4DTo3MRYOeIykqOgFKK+YhcYv2lhKfrFtBpzAdLwNDzLqtrLr+P/ZKZ3Z
+         3A1qdhRpZJ+mzTAg9UbBxv7MoRRfVZJ00jBCb4ZNkeHdj4TnO+Mash42yPyKcsJsxX6T
+         5dDM2ssHcd/QcRon0hAn+sSqWdhB8p6I6ZhFmostPqjGiOwwa1CCSN0JfA2iFBBHYOMi
+         qKaQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=B4ZQlB6f4pzKrX+D23dmLEBv1BoTaeHmp9h5tLRfUO0=;
+        fh=utADXtLkPiKS2hXB71aeoagFkVnFKmPav6Pf9j2RSNc=;
+        b=QKto1gMHXDHt2Rb3GMEy+954qSkyABzGPQDCjOqIUztU0VPLWbDTCq+5Br4EDuMbri
+         mPA80XbiQoWYF2KZjAA528tJJNZFh8Jd2Q3lUCbL+sCkKvQqoFiBY7kK7JoPDh/BFqS5
+         5wajOI30wqjwfT7YUOpRIsFDq3WymDSJH7f0+qR96hWLsb8VrRJ9psMfHZdDI6j0rdY9
+         OoIBwhDqUMDnJDo4XUKleQjhT1wZdR1ezHJ+/Mxf65hJalUPNEeB62tJ3y7/w4jI1ZGS
+         rIOEBUnyWd6mQ42yz/3fW/paR808VfNgkVFziWqAEPnKIXhe+XqPTMmdLc1cj17GQUtk
+         G96g==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794287351; x=1794892151; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:subject:date:to:from
-         :mime-version:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=fNhlSxM/S0RlUexinQBeTEwfNRrR2oNaaSd5BPADc4k=;
-        b=rokUMd+f/5wfAiyCQ16Vv1kPypMDy2GlgAhyyHm61xF6J8kc1lypMRtzGbysMMMigf
-         sXCgMCjDdXgP34W8uHgBNcdf8baRHiM8HeM3OdUM2LkWDEWyElsPS7FFs2wknSXNkqvV
-         GPTcEl7jfF3flaKUZ/vzDZrsKsXWjuJUH13RfzOkwHHUUHqzvmZd2V3f2PfLhtvWP4C6
-         +UWfRJqYXtJzCRwGpKfY/f4DSvZvbunir7r6rAm4UjIkRdlit2xm5sNmSxLCsvDsx2AW
-         krB29/mxoUcNUdbXT1YZpV0pHJVCz2jkWR61zpZnuJS3C3dY9K1u2vE8R38a6PodNhY6
-         3fZQ==
+        d=gmail.com; s=20260707; t=1794416534; x=1795021334; darn=lists.linux.dev;
+        h=content-type:to:subject:message-id:date:from:mime-version:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=B4ZQlB6f4pzKrX+D23dmLEBv1BoTaeHmp9h5tLRfUO0=;
+        b=rOb00Br8ZxIvPVZN1SFd63uYnybelf0px+/VcTrFCihbOHBTZOLTP5KDsMcE5gJHF3
+         d5ARkGKJnRIKr6H6/EvpcDKUKwH1Hc0GpkuMm/Q9aB+kz6d5Xse71h6t0320plpTaKkZ
+         fyei5zlIPTi64ClFMJmXsE8yT0+cEoAkO6ESOshO5MpWUipzW0W6C8pnnWDccvAKs4XY
+         9pnyhtUBMmhg0VWAdzg1C8cc5O3AdIM8SQY4Qn17X+FBp5L8wyM5aa80AzFKJWFaOVEp
+         03eodK1Jr0ABbszKZTp2GKwInVzdm/e4XpQwneXb0swTI4fRmWq857ebY0WeUbtqFvjm
+         tpQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794287351; x=1794892151;
-        h=content-transfer-encoding:content-type:subject:date:to:from
-         :mime-version:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=fNhlSxM/S0RlUexinQBeTEwfNRrR2oNaaSd5BPADc4k=;
-        b=T2S3+MzY3ezhstumlZZn1RiMWayyop6DZGk1GRFXzkXAMfTRxNsImGT3m8nc8AfZvF
-         Jsm0VsjfXXbnTsNaYkYtx8rYC3zvFTrCDXpuQ4UUZdgwudulxyu0NQNTgbJA9/ngXbVb
-         5hxLT7IwVTv6UrTwC5huhFonEnE0baZ56YEdruoYpaVHp+iSRsgORvcc7/xc6zeF2qGR
-         YFCXEJuz5Hw2JgiI0Q3IhCE0ShFwabSyn6Nte9X8zhyk1HPEUA72n8DDK5LZ25F3s8xi
-         c2+0p+CZ5HWYKloM8a/OR5lhpEpoTvzwVTE1tBq6HZERrXQkKRIyC5+SXeUYCV2lCjNC
-         EFQQ==
-X-Gm-Message-State: APuU4Z9eRc5Esg6nCqoig4s7+v5Pe0+VpfwkZVwfS22AyQGJSMlUmQmn
-	87JknOu4T4bohMqZrPQKOMAhu3JKjbYfri5YNJhLN65p6vxTr/7jDrTP3LeFjSqantg=
-X-Gm-Gg: AYBFou0sYCrnbKSXT6AKd+p/QyWEXlNZR7F2Ki45npOPo6NtX0YluIbAF+mSkUl37NF
-	x87NrDlMQB/k0xavI8kkeH/rrcvM06bIx5QCVr946ZEmdz54BNTUXeKzu1PxzZdpy8bwVvBbNJL
-	o3hX6vxCxBwTMdxg3ZLMi/jYtw22JiVHh3qbKg4ge8OkU1PHLkuGnBghqSAgRJmi22VXk6yE9wx
-	toXdzQ+oZm6klFbXnc+QwQ04UndfD6/aPz0hp7TP/3wqrKdb1PW4M806mFKj2iPLL/YtfoU+8cv
-	P8nnMftZKzWkbibg8+C82C3o3Ubti2ZrkBtx164IRb42BVpCCtBW1/OfOeVoGoFOXP363oxvI0f
-	fE2uXOHK1jSP0wQ+E+WJMJNeBLxFrH7SZkslQ7Sg9n22TyNYMCo2cMPcjg6w2CuAqBoZRMfC684
-	Tya+XyBt81EatZh8NicDO0qCAa/BI52m8dSQcrYLWDBx+MAYS7BuTjD3MC6wEqAwykhqSs8vu+a
-	lfh2SYleysM0rVfnfvnZMB+v56iT2hvSZrZKtIxww0Ij6rBfCEBU1SpVuIsdIkys+cxaIjY/7/T
-	010kzr1YBYOWRYvWJt/yZGXVjahPGm1U/1rZW7vBXIL9B3JNuEBbUA==
-X-Received: by 2002:a05:6000:402b:b0:48e:e98:8b6a with SMTP id ffacd0b85a97d-4982b848ec1mr2822370f8f.4.1794287351570;
-        Mon, 09 Nov 2026 21:09:11 -0800 (PST)
-Received: from DESKTOP-52F5LT2 ([105.112.179.237])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4983600bc8fsm2639543f8f.30.2026.11.09.21.09.10
-        for <cryptsetup@lists.linux.dev>
-        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
-        Mon, 09 Nov 2026 21:09:11 -0800 (PST)
-Message-ID: <6af2a6f7.b659fc54.892c0.fe7e@mx.google.com>
+        d=1e100.net; s=20260707; t=1794416534; x=1795021334;
+        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=B4ZQlB6f4pzKrX+D23dmLEBv1BoTaeHmp9h5tLRfUO0=;
+        b=NATqRSJ5EgSllx05Hj0BLp6OgavG8b+YgQvA8kFraCYyT5Gvu2wXqfG+a/WUQc7KwR
+         usEeGxpe0/ZI2vVq3mDm7OeHS3JEt8YNIp4rPXftTg2mF2csRJgj/wazKapbu/ZsFXC2
+         O6IZv/4JpbVZsFqAMcSVtrvvEQOeEwvmNob5hN+3n7j6lbqbqhMjZlbqT1uJkriIxTqJ
+         3Q7sCSfxyd5zEhwwESonSCfLxv4OdWflBxnzW5U140TaMja8hZI1Aq0uHWGo+i8ho/LZ
+         P9R319OOd++EOS0o3uDDg6QfekmL1nX/2fAz3xUPj/j3i0IcHDBk9cOg1G4WJ4PsWfAA
+         8abQ==
+X-Gm-Message-State: APuU4Z9KqWczCtreT23RNjQQGJAL5J2QuDhUef1NEXgWHnie8kehbVMG
+	N2iPAwA4JSc3/o4VTEB6M5Nmb2gzBdKk0EtxgP5nwKxMPXq8Uf8GAH3j4FhdTswPt0hNzGGC6DM
+	it89i+p3QLG9ApK36Uvp6o/T9I14j7+Jb+r7gutE=
+X-Gm-Gg: AYBFou0ycDiPRtQfEW9uzNX9HTwRU/hGlcOVqj7vW1Wktk8wzc/C+bJT6b1dnCkmDdx
+	TWbQliW/PAoV2id0ZIQiiEM9jZkTwLbY4CCrCFQZGqYxffGUbGkvQdz5gklpml0fBBkgZSI0EWp
+	sUD5ALOw0rF3dpgHnGniH3FQDUoLEsnJBTNvy1pfB4c66ri9tI7+Zc3DKPBtVTSLnASXu6mQSZZ
+	3dE2tmHOg11qQFNURFUfVKyk6fBDzH3SuydkBvP4qdIZnlmXuyXC+Pvu212rdA4XyKuqdTtSZUb
+	Z6fjPqM3vYuAITk0IGNEuwBg1PmwBMn3AbA+/BBwhYDL3ln/8atoN1dQzOEnASX3BO8f3dbOPkn
+	z4PO6q2StxD+t6II1X1w7dX4EeNBGN31Xvd0bmrJ53L1EKx13YsV7tilZANwrBKe9M3tmUe44bo
+	PVJxLofxqMmUIMupkGJB3kRfIn6ijLG6u0OiEB3X8j75aB7+eJZkaj
+X-Received: by 2002:a05:6820:1692:b0:715:2424:db14 with SMTP id
+ 006d021491bc7-71974182f34mr36258eaf.19.1794416534288; Wed, 11 Nov 2026
+ 09:02:14 -0800 (PST)
 X-Mailing-List: cryptsetup@lists.linux.dev
 List-Id: <cryptsetup.lists.linux.dev>
 List-Post: <mailto:cryptsetup@lists.linux.dev>
@@ -88,31 +100,28 @@ List-Unsubscribe: <mailto:cryptsetup+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:cryptsetup+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-From: bapcoenergies989@gmail.com
+From: xeyrion@gmail.com
+Date: Wed, 11 Nov 2026 11:02:03 -0600
+X-Gm-Features: AclHuK9VFQtbAHV-m635mf5V_ZkoPxoFoYmKayjZRqL_3VE_eT6Fusa2cNyaezo
+Message-ID: <CAB9Cg3=1UKw0KHYDh42P69wPDm1DABfLNDsftjdTJp6s6YvE2A@mail.gmail.com>
+Subject: Rotating OPAL range key
 To: cryptsetup@lists.linux.dev
-Date: 9 Nov 2026 21:09:11 -0800
-Subject: =?utf-8?B?VmVuZG9yIEV4cHJlc3Npb24gb2YgSW50ZXJlc3QgSW52aXRh?=
- =?utf-8?B?dGlvbiBCYXBjbyBFbmVyZ2llcyDigJMgMjAyNi8yMDI3?=
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="UTF-8"
 
-RGVhciBTdXBwbGllciwNCg0KR3JlZXRpbmdzLg0KDQpXZSBhcmUgcGxlYXNlZCB0byBp
-bnZpdGUgeW91ciBlc3RlZW1lZCBvcmdhbml6YXRpb24gdG8gcGFydGljaXBhdGUgaW4g
-dGhlIFZlbmRvciBFeHByZXNzaW9uIG9mIEludGVyZXN0IChFT0kpIGZvciBCYXBjbyBF
-bmVyZ2llc+KAmSB1cGNvbWluZyBwcm9qZWN0cyBwbGFubmVkIGZvciB0aGUgMjAyNuKA
-kzIwMjcgcGVyaW9kLg0KDQpUaGlzIG9wcG9ydHVuaXR5IGlzIG9wZW4gdG8gcXVhbGlm
-aWVkIGNvbXBhbmllcyB3b3JsZHdpZGUuIE9yZ2FuaXphdGlvbnMgaW50ZXJlc3RlZCBp
-biBjb2xsYWJvcmF0aW5nIHdpdGggQmFwY28gRW5lcmdpZXMgYXJlIGtpbmRseSByZXF1
-ZXN0ZWQgdG8gZXhwcmVzcyB0aGVpciBpbnRlcmVzdCBieSByZXF1ZXN0aW5nIHRoZSBW
-ZW5kb3IgUXVlc3Rpb25uYWlyZSBhbmQgRU9JIGRvY3VtZW50YXRpb24uDQoNClNob3Vs
-ZCB5b3UgcmVxdWlyZSBhbnkgYWRkaXRpb25hbCBpbmZvcm1hdGlvbiBvciBjbGFyaWZp
-Y2F0aW9uLCBwbGVhc2UgZmVlbCBmcmVlIHRvIGNvbnRhY3QgdXMuIFdlIHZhbHVlIHlv
-dXIgaW50ZXJlc3QgYW5kIGxvb2sgZm9yd2FyZCB0byB0aGUgcG9zc2liaWxpdHkgb2Yg
-YSBzdWNjZXNzZnVsIGNvbGxhYm9yYXRpb24uIFlvdSBjYW4gYXMgd2VsbCBzZW5kIG1l
-IHlvdXIgZW1haWwgSUQgc28gaSB3aWxsIHdyaXRlIHlvdS4NCg0KV2UgbG9vayBmb3J3
-YXJkIHRvIHlvdXIgZmF2b3JhYmxlIHJlc3BvbnNlLg0KDQpSZXNwZWN0ZnVsbHksDQoN
-Ck1yLkZpcmRhdXMgUGFudGhha2kNClByb2N1cmVtZW50L1N1cHBseSBDaGllZiBQcm9j
-dXJlbWVudCBPZmZpY2VyDQpCYXBjbyBFbmVyZ3kuDQpFbWFpbDogdGVuZGVyQGJhcGNv
-Z3JvdXBiaC5jb20NCkFkZDogUC5PLiBCb3ggMjU1NTUgQXdhbGkgLUtpbmdkb20gb2Yg
-QmFocmFpbg0KV2Vic2l0ZTog8J+MkCB3d3cuYmFwY29lbmVyZ2llcy5jb20=
+Hello,
 
+If my LUKS key gets compromised and I am using '--hw-opal-only', what
+is the procedure to do proper key rotation?
+
+I can rotate LUKS key using 'luksChangeKey', but as far as I can tell,
+that will keep the OPAL range key unchanged. And since nothing is ever
+reliably deleted on flash drives, OPAL key is still available with the
+compromised LUKS key, making the rotation moot.
+
+Since OPAL range key can be trivially rotated using eg sed-util, is
+this just a missing feature in cryptsetup, or is there any technical
+reason why this cannot/should not be done? If it's a missing feature,
+are there any manual workarounds possible? Can a new OPAL key somehow
+be "injected" into LUKS key slot?
+
+Thanks in advance.
